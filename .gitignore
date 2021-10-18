@@ -1,0 +1,10 @@
+.classpath
+.project
+/target/
+/.DS_Store
+work
+output
+.nextflow
+.nextflow.*
+.settings
+params.json

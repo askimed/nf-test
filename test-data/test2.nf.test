@@ -1,0 +1,20 @@
+nextflow {
+
+  name "An other Testsuite for test1.nf"
+
+  script "test-data/test1.nf" //main.nf is default
+  profile "docker"
+
+
+  test("Test from an other testsuite") {
+
+   when {
+     params.outdir = "output"
+   }
+
+   then {
+     assert 22 == 21
+   }
+
+  }
+}
