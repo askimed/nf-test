@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.function.Executable;
 
-import com.github.lukfor.testflight.util.Command;
+import com.github.lukfor.testflight.core.NextflowCommand;
 
 import groovy.json.JsonOutput;
 import groovy.lang.Closure;
@@ -55,30 +55,17 @@ public class NextflowTest implements Executable {
 		NextflowTestContext context = new NextflowTestContext();
 
 		when.execute(context);
-
-		NextflowTestContext.Workflow workflow = runNextflow(parent.getScript(), context.getParams());
-		context.setWorkflow(workflow);
-
-		then.execute(context);
-
-	}
-
-	protected NextflowTestContext.Workflow runNextflow(String script, Map<String, Object> params) throws IOException {
-
-		writeParamsJson(params, "params.json");
-
-		Command nextflow = new Command("/usr/local/bin/nextflow", "run", script, "-params-file", "params.json",
-				"-ansi-log", "false");
-		nextflow.setSilent(!debug);
+		
+		NextflowCommand nextflow = new NextflowCommand();
+		nextflow.setScript(parent.getScript());
+		nextflow.setParams(context.getParams());
+		nextflow.setProfile(parent.getProfile());
+		nextflow.setSilent(!debug);		
 		int exitCode = nextflow.execute();
 
-		NextflowTestContext.Workflow workflow = new NextflowTestContext.Workflow();
+		context.getWorkflow().setExitCode(exitCode);
 
-		workflow.exitCode = exitCode;
-		workflow.success = (exitCode == 0);
-		workflow.failed = (exitCode != 0);
-
-		return workflow;
+		then.execute(context);
 
 	}
 

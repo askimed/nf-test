@@ -29,7 +29,7 @@ public class Command {
 		this.cmd = cmd;
 	}
 
-	public void setParams(String... params) {
+	public void setArgs(String... params) {
 		this.params = params;
 	}
 
@@ -63,8 +63,6 @@ public class Command {
 		try {
 
 			ProcessBuilder builder = new ProcessBuilder(command);
-			builder.environment().put("JAVA_HOME", "/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home");
-			// builder.redirectErrorStream(true);
 			if (directory != null) {
 				builder.directory(new File(directory));
 			}
