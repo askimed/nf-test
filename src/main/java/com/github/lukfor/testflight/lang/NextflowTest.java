@@ -19,14 +19,21 @@ public class NextflowTest implements Executable {
 
 	private boolean debug;
 
+	private NextflowTestCode setup;
+
+	private NextflowTestCode cleanup;
+
 	private NextflowTestCode when;
 
 	private NextflowTestCode then;
 
 	private NextflowTestSuite parent;
 
+	private NextflowTestContext context;
+
 	public NextflowTest(NextflowTestSuite parent) {
 		this.parent = parent;
+		context = new NextflowTestContext();
 	}
 
 	public void name(String name) {
@@ -35,6 +42,16 @@ public class NextflowTest implements Executable {
 
 	public String getName() {
 		return name;
+	}
+
+	public void setup(
+			@DelegatesTo(value = NextflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		setup = new NextflowTestCode(closure);
+	}
+
+	public void cleanup(
+			@DelegatesTo(value = NextflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		cleanup = new NextflowTestCode(closure);
 	}
 
 	public void when(@DelegatesTo(value = NextflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
@@ -52,21 +69,29 @@ public class NextflowTest implements Executable {
 	@Override
 	public void execute() throws Throwable {
 
-		NextflowTestContext context = new NextflowTestContext();
+		if (setup != null) {
+			setup.execute(context);
+		}
 
 		when.execute(context);
-		
+
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(parent.getScript());
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
-		nextflow.setSilent(!debug);		
+		nextflow.setSilent(!debug);
 		int exitCode = nextflow.execute();
 
 		context.getWorkflow().setExitCode(exitCode);
 
 		then.execute(context);
 
+	}
+
+	public void cleanup() {
+		if (cleanup != null) {
+			cleanup.execute(context);
+		}
 	}
 
 	protected void writeParamsJson(Map<String, Object> params, String filename) throws IOException {
