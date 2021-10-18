@@ -34,7 +34,7 @@ public class App {
 		System.out.println();
 		System.out.println(Emoji.ROCKET + AnsiText.bold(" nf-testflight " + App.VERSION));
 		System.out.println("https://github.com/lukfor/nf-testflight");
-		System.out.println("(c) 2021 Lukas Forer amd Sebastian Schoenherr");
+		System.out.println("(c) 2021 Lukas Forer and Sebastian Schoenherr");
 		System.out.println();
 
 	}
