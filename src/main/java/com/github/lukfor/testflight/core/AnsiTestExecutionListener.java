@@ -41,7 +41,7 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 			System.out.print(AnsiText.bold(AnsiColors.green("SUCCESS: ")));
 		}
 
-		System.out.print("Executed " + count + " tests in " + executionTime + " s");
+		System.out.print("Executed " + count + " tests in " + executionTime + "s");
 
 		if (failed > 0) {
 			System.out.print(" (" + failed + " failed)");
@@ -84,16 +84,16 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 		switch (result.getStatus()) {
 
 		case PASSED:
-			System.out.println(AnsiColors.green("PASSED") + " (" + result.getExecutionTimeInSecs() + " s)");
+			System.out.println(AnsiColors.green("PASSED") + " (" + result.getExecutionTimeInSecs() + "s)");
 			break;
 
 		case ABORTED:
-			System.out.println(AnsiColors.red("ABORTED") + " (" + result.getExecutionTimeInSecs() + " s)");
+			System.out.println(AnsiColors.red("ABORTED") + " (" + result.getExecutionTimeInSecs() + "s)");
 			break;
 
 		case FAILED:
 			failed++;
-			System.out.println(AnsiColors.red("FAILED") + " (" + result.getExecutionTimeInSecs() + " s)");
+			System.out.println(AnsiColors.red("FAILED") + " (" + result.getExecutionTimeInSecs() + "s)");
 			System.out.println();
 			System.out.println(AnsiText.padding(AnsiColors.red(result.getThrowable().toString()), TEST_PADDING));
 			System.out.println();
