@@ -130,8 +130,6 @@ public class ProcessTest implements ITest {
 		if (!script.startsWith("/") && !script.startsWith("./")) {
 			script = "./" + script;
 		}
-
-		System.out.println(script);
 		
 		Map<Object, Object> binding = new HashMap<Object, Object>();
 		binding.put("process", parent.getProcess());
