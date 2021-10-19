@@ -23,4 +23,29 @@ public class FileUtil {
 		return result;
 	}
 
+	public static boolean createDirectory(String dir) {
+		return createDirectory(new File(dir));
+	}
+
+	public static boolean createDirectory(File output) {
+		if (!output.exists()) {
+			return output.mkdirs();
+		}
+		return true;
+	}
+
+	static public boolean deleteDirectory(File path) {
+		if (path.exists()) {
+			File[] files = path.listFiles();
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].isDirectory()) {
+					deleteDirectory(files[i]);
+				} else {
+					files[i].delete();
+				}
+			}
+		}
+		return (path.delete());
+	}
+
 }

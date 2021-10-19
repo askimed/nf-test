@@ -19,7 +19,7 @@ public class ProcessTestSuite implements ITestSuite {
 
 	private String process;
 
-	List<ITest> tests = new Vector<ITest>();
+	private List<ITest> tests = new Vector<ITest>();
 
 	public void name(String name) {
 		this.name = name;
@@ -69,19 +69,16 @@ public class ProcessTestSuite implements ITestSuite {
 		this.script = script;
 	}
 
-	public void debug(String message) {
-		System.out.println(message);
-	}
-
 	public void test(String name,
 			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		final ProcessTest dsl = new ProcessTest(this);
-		dsl.name(name);
-		closure.setDelegate(dsl);
+
+		final ProcessTest test = new ProcessTest(this);
+		test.name(name);
+		closure.setDelegate(test);
 		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
 		closure.call();
-		tests.add(dsl);
-		// return dsl;
+		tests.add(test);
+
 	}
 
 	public List<ITest> getTests() {

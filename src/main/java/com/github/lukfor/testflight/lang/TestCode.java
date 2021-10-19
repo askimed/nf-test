@@ -2,11 +2,11 @@ package com.github.lukfor.testflight.lang;
 
 import groovy.lang.Closure;
 
-public class WorkflowTestCode {
+public class TestCode {
 
 	private Closure closure;
 
-	public WorkflowTestCode(Closure closure) {
+	public TestCode(Closure closure) {
 		this.closure = closure;
 	}
 

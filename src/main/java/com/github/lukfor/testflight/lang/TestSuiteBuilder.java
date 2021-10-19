@@ -13,39 +13,37 @@ import groovy.lang.GroovyShell;
 
 public class TestSuiteBuilder {
 
-	static WorkflowTestSuite nextflow(
+	static ITestSuite nextflow(
 			@DelegatesTo(value = WorkflowTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 
-		final WorkflowTestSuite dsl = new WorkflowTestSuite();
+		final WorkflowTestSuite suite = new WorkflowTestSuite();
 
-		closure.setDelegate(dsl);
+		closure.setDelegate(suite);
 		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
 		closure.call();
 
-		return dsl;
+		return suite;
 
 	}
 
-	static WorkflowTestSuite process(
+	static ITestSuite nextflow_process(
 			@DelegatesTo(value = WorkflowTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 
-		final WorkflowTestSuite dsl = new WorkflowTestSuite();
+		final ProcessTestSuite suite = new ProcessTestSuite();
 
-		closure.setDelegate(dsl);
+		closure.setDelegate(suite);
 		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
 		closure.call();
 
-		return dsl;
+		return suite;
 
 	}
 
-	
 	public static ITestSuite parse(String filename) throws Exception {
 
 		ImportCustomizer customizer = new ImportCustomizer();
 		customizer.addStaticImport("com.github.lukfor.testflight.lang.TestSuiteBuilder", "nextflow");
-		customizer.addStaticImport("com.github.lukfor.testflight.lang.TestSuiteBuilder", "process");
-
+		customizer.addStaticImport("com.github.lukfor.testflight.lang.TestSuiteBuilder", "nextflow_process");
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
 		compilerConfiguration.addCompilationCustomizers(customizer);

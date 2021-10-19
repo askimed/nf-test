@@ -13,11 +13,11 @@ public class WorkflowTestSuite implements ITestSuite {
 
 	private String name;
 
-	String script = "main.nf";
+	private String script = "main.nf";
 
-	String profile = null;
+	private String profile = null;
 
-	List<ITest> tests = new Vector<ITest>();
+	private List<ITest> tests = new Vector<ITest>();
 	
 	public void name(String name) {
 		this.name = name;
@@ -54,18 +54,14 @@ public class WorkflowTestSuite implements ITestSuite {
 		this.script = script;
 	}
 
-	public void debug(String message) {
-		System.out.println(message);
-	}
-
 	public void test(String name, 
 			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		final WorkflowTest dsl = new WorkflowTest(this);
-		dsl.name(name);	
-		closure.setDelegate(dsl);
+		final WorkflowTest test = new WorkflowTest(this);
+		test.name(name);	
+		closure.setDelegate(test);
 		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
 		closure.call();
-		tests.add(dsl);
+		tests.add(test);
 		//return dsl;
 	}
 	

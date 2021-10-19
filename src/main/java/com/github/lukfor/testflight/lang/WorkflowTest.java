@@ -1,14 +1,8 @@
 package com.github.lukfor.testflight.lang;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Map;
-
 import com.github.lukfor.testflight.core.ITest;
 import com.github.lukfor.testflight.nextflow.NextflowCommand;
 
-import groovy.json.JsonOutput;
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
 
@@ -18,13 +12,13 @@ public class WorkflowTest implements ITest {
 
 	private boolean debug;
 
-	private WorkflowTestCode setup;
+	private TestCode setup;
 
-	private WorkflowTestCode cleanup;
+	private TestCode cleanup;
 
-	private WorkflowTestCode when;
+	private TestCode when;
 
-	private WorkflowTestCode then;
+	private TestCode then;
 
 	private WorkflowTestSuite parent;
 
@@ -45,20 +39,20 @@ public class WorkflowTest implements ITest {
 
 	public void setup(
 			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		setup = new WorkflowTestCode(closure);
+		setup = new TestCode(closure);
 	}
 
 	public void cleanup(
 			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		cleanup = new WorkflowTestCode(closure);
+		cleanup = new TestCode(closure);
 	}
 
 	public void when(@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		when = new WorkflowTestCode(closure);
+		when = new TestCode(closure);
 	}
 
 	public void then(@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		then = new WorkflowTestCode(closure);
+		then = new TestCode(closure);
 	}
 
 	public void debug(boolean debug) {
@@ -67,6 +61,8 @@ public class WorkflowTest implements ITest {
 
 	@Override
 	public void execute() throws Throwable {
+
+		// TODO: check if script exisits
 
 		if (setup != null) {
 			setup.execute(context);
@@ -91,14 +87,6 @@ public class WorkflowTest implements ITest {
 		if (cleanup != null) {
 			cleanup.execute(context);
 		}
-	}
-
-	protected void writeParamsJson(Map<String, Object> params, String filename) throws IOException {
-
-		BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-		writer.write(JsonOutput.toJson(params));
-		writer.close();
-
 	}
 
 }
