@@ -8,3 +8,4 @@ output
 .nextflow.*
 .settings
 params.json
+test_mock.nf
