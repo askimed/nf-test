@@ -41,6 +41,10 @@ public class TestContext {
 		return output;
 	}
 
+	public void output() {
+		System.out.println(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(output)));
+	}
+
 	public static class Workflow {
 
 		public boolean success = true;
