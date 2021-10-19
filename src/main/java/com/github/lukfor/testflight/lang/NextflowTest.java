@@ -5,15 +5,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
-import org.junit.jupiter.api.function.Executable;
-
+import com.github.lukfor.testflight.core.ITest;
 import com.github.lukfor.testflight.core.NextflowCommand;
 
 import groovy.json.JsonOutput;
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
 
-public class NextflowTest implements Executable {
+public class NextflowTest implements ITest {
 
 	private String name;
 

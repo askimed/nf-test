@@ -1,8 +1,6 @@
 
 package com.github.lukfor.testflight.core;
 
-import com.github.lukfor.testflight.lang.NextflowTest;
-import com.github.lukfor.testflight.lang.NextflowTestSuite;
 import com.github.lukfor.testflight.util.AnsiColors;
 import com.github.lukfor.testflight.util.AnsiText;
 
@@ -52,7 +50,7 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 	}
 
 	@Override
-	public void testSuiteExecutionStarted(NextflowTestSuite testSuite) {
+	public void testSuiteExecutionStarted(ITestSuite testSuite) {
 		
 		System.out.println();
 		System.out.println(AnsiText.bold(testSuite.getName()));
@@ -61,17 +59,17 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 	}
 
 	@Override
-	public void testSuiteExecutionFinished(NextflowTestSuite testSuite) {
+	public void testSuiteExecutionFinished(ITestSuite testSuite) {
 
 	}
 
 	@Override
-	public void executionSkipped(NextflowTest test, String reason) {
+	public void executionSkipped(ITest test, String reason) {
 
 	}
 
 	@Override
-	public void executionStarted(NextflowTest test) {
+	public void executionStarted(ITest test) {
 
 		count++;
 		System.out.print(AnsiText.padding(AnsiText.bold("Test") + " '" + test.getName() + "' ", TEST_PADDING));
@@ -79,7 +77,7 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 	}
 
 	@Override
-	public void executionFinished(NextflowTest test, TestExecutionResult result) {
+	public void executionFinished(ITest test, TestExecutionResult result) {
 
 		switch (result.getStatus()) {
 

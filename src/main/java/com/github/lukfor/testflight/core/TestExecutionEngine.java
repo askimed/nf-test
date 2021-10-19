@@ -5,8 +5,6 @@ import java.util.Vector;
 
 import com.github.lukfor.testflight.lang.NextflowTestSuiteBuilder;
 import com.github.lukfor.testflight.util.AnsiColors;
-import com.github.lukfor.testflight.lang.NextflowTest;
-import com.github.lukfor.testflight.lang.NextflowTestSuite;
 
 public class TestExecutionEngine {
 
@@ -18,12 +16,12 @@ public class TestExecutionEngine {
 		this.scripts = scripts;
 	}
 
-	protected List<NextflowTestSuite> parse() throws Exception {
+	protected List<ITestSuite> parse() throws Exception {
 
-		List<NextflowTestSuite> testSuits = new Vector<NextflowTestSuite>();
+		List<ITestSuite> testSuits = new Vector<ITestSuite>();
 
 		for (String script : scripts) {
-			NextflowTestSuite testSuite = NextflowTestSuiteBuilder.parse(script);
+			ITestSuite testSuite = NextflowTestSuiteBuilder.parse(script);
 			testSuits.add(testSuite);
 		}
 
@@ -33,7 +31,7 @@ public class TestExecutionEngine {
 
 	public int execute() throws Throwable {
 
-		List<NextflowTestSuite> testSuits = parse();
+		List<ITestSuite> testSuits = parse();
 
 		if (testSuits.size() == 0) {
 			System.out.println(AnsiColors.red("Error: no valid tests found."));
@@ -43,11 +41,11 @@ public class TestExecutionEngine {
 
 		listener.testPlanExecutionStarted();
 
-		for (NextflowTestSuite testSuite : testSuits) {
+		for (ITestSuite testSuite : testSuits) {
 
 			listener.testSuiteExecutionStarted(testSuite);
 
-			for (NextflowTest test : testSuite.getTests()) {
+			for (ITest test : testSuite.getTests()) {
 				listener.executionStarted(test);
 				TestExecutionResult result = new TestExecutionResult();
 
@@ -65,6 +63,7 @@ public class TestExecutionEngine {
 				}
 				result.setEndTime(System.currentTimeMillis());
 				listener.executionFinished(test, result);
+				
 			}
 
 			listener.testSuiteExecutionFinished(testSuite);

@@ -3,10 +3,13 @@ package com.github.lukfor.testflight.lang;
 import java.util.List;
 import java.util.Vector;
 
+import com.github.lukfor.testflight.core.ITest;
+import com.github.lukfor.testflight.core.ITestSuite;
+
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
 
-public class NextflowTestSuite {
+public class NextflowTestSuite implements ITestSuite {
 
 	private String name;
 
@@ -14,7 +17,7 @@ public class NextflowTestSuite {
 
 	String profile = null;
 
-	List<NextflowTest> tests = new Vector<NextflowTest>();
+	List<ITest> tests = new Vector<ITest>();
 	
 	public void name(String name) {
 		this.name = name;
@@ -66,7 +69,8 @@ public class NextflowTestSuite {
 		//return dsl;
 	}
 	
-	public List<NextflowTest> getTests() {
+	@Override
+	public List<ITest> getTests() {
 		return tests;
 	}
 	
