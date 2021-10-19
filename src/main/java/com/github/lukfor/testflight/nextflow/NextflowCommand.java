@@ -1,4 +1,4 @@
-package com.github.lukfor.testflight.core;
+package com.github.lukfor.testflight.nextflow;
 
 import java.io.BufferedWriter;
 import java.io.File;

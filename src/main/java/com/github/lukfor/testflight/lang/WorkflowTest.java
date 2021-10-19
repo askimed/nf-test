@@ -6,33 +6,33 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.github.lukfor.testflight.core.ITest;
-import com.github.lukfor.testflight.core.NextflowCommand;
+import com.github.lukfor.testflight.nextflow.NextflowCommand;
 
 import groovy.json.JsonOutput;
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
 
-public class NextflowTest implements ITest {
+public class WorkflowTest implements ITest {
 
 	private String name;
 
 	private boolean debug;
 
-	private NextflowTestCode setup;
+	private WorkflowTestCode setup;
 
-	private NextflowTestCode cleanup;
+	private WorkflowTestCode cleanup;
 
-	private NextflowTestCode when;
+	private WorkflowTestCode when;
 
-	private NextflowTestCode then;
+	private WorkflowTestCode then;
 
-	private NextflowTestSuite parent;
+	private WorkflowTestSuite parent;
 
-	private NextflowTestContext context;
+	private TestContext context;
 
-	public NextflowTest(NextflowTestSuite parent) {
+	public WorkflowTest(WorkflowTestSuite parent) {
 		this.parent = parent;
-		context = new NextflowTestContext();
+		context = new TestContext();
 	}
 
 	public void name(String name) {
@@ -44,21 +44,21 @@ public class NextflowTest implements ITest {
 	}
 
 	public void setup(
-			@DelegatesTo(value = NextflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		setup = new NextflowTestCode(closure);
+			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		setup = new WorkflowTestCode(closure);
 	}
 
 	public void cleanup(
-			@DelegatesTo(value = NextflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		cleanup = new NextflowTestCode(closure);
+			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		cleanup = new WorkflowTestCode(closure);
 	}
 
-	public void when(@DelegatesTo(value = NextflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		when = new NextflowTestCode(closure);
+	public void when(@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		when = new WorkflowTestCode(closure);
 	}
 
-	public void then(@DelegatesTo(value = NextflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		then = new NextflowTestCode(closure);
+	public void then(@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		then = new WorkflowTestCode(closure);
 	}
 
 	public void debug(boolean debug) {

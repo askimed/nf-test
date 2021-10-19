@@ -6,7 +6,7 @@ public class NextflowTestSuiteBuilderTest {
 
 	@Test
 	public void testParse() throws Exception {
-		NextflowTestSuiteBuilder.parse("test-data/test1.nf.test");
+		TestSuiteBuilder.parse("test-data/test1.nf.test");
 	}
 	
 }

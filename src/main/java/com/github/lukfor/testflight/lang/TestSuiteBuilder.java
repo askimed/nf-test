@@ -11,12 +11,12 @@ import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
 import groovy.lang.GroovyShell;
 
-public class NextflowTestSuiteBuilder {
+public class TestSuiteBuilder {
 
-	static NextflowTestSuite nextflow(
-			@DelegatesTo(value = NextflowTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+	static WorkflowTestSuite nextflow(
+			@DelegatesTo(value = WorkflowTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 
-		final NextflowTestSuite dsl = new NextflowTestSuite();
+		final WorkflowTestSuite dsl = new WorkflowTestSuite();
 
 		closure.setDelegate(dsl);
 		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
@@ -26,10 +26,10 @@ public class NextflowTestSuiteBuilder {
 
 	}
 
-	static NextflowTestSuite process(
-			@DelegatesTo(value = NextflowTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+	static WorkflowTestSuite process(
+			@DelegatesTo(value = WorkflowTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 
-		final NextflowTestSuite dsl = new NextflowTestSuite();
+		final WorkflowTestSuite dsl = new WorkflowTestSuite();
 
 		closure.setDelegate(dsl);
 		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
@@ -43,8 +43,8 @@ public class NextflowTestSuiteBuilder {
 	public static ITestSuite parse(String filename) throws Exception {
 
 		ImportCustomizer customizer = new ImportCustomizer();
-		customizer.addStaticImport("com.github.lukfor.testflight.lang.NextflowTestSuiteBuilder", "nextflow");
-		customizer.addStaticImport("com.github.lukfor.testflight.lang.NextflowTestSuiteBuilder", "process");
+		customizer.addStaticImport("com.github.lukfor.testflight.lang.TestSuiteBuilder", "nextflow");
+		customizer.addStaticImport("com.github.lukfor.testflight.lang.TestSuiteBuilder", "process");
 
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();

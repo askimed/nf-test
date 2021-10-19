@@ -3,7 +3,7 @@ package com.github.lukfor.testflight.lang;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NextflowTestContext {
+public class TestContext {
 
 	private Map<String, Object> params = new HashMap<String, Object>();
 

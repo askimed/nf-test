@@ -3,7 +3,7 @@ package com.github.lukfor.testflight.core;
 import java.util.List;
 import java.util.Vector;
 
-import com.github.lukfor.testflight.lang.NextflowTestSuiteBuilder;
+import com.github.lukfor.testflight.lang.TestSuiteBuilder;
 import com.github.lukfor.testflight.util.AnsiColors;
 
 public class TestExecutionEngine {
@@ -21,7 +21,7 @@ public class TestExecutionEngine {
 		List<ITestSuite> testSuits = new Vector<ITestSuite>();
 
 		for (String script : scripts) {
-			ITestSuite testSuite = NextflowTestSuiteBuilder.parse(script);
+			ITestSuite testSuite = TestSuiteBuilder.parse(script);
 			testSuits.add(testSuite);
 		}
 
