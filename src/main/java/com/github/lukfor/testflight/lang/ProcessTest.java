@@ -30,7 +30,7 @@ public class ProcessTest implements ITest {
 
 	private TestCode cleanup;
 
-	private String when;
+	private ExternalTestCode when;
 
 	private TestCode then;
 
@@ -64,8 +64,8 @@ public class ProcessTest implements ITest {
 		then = new TestCode(closure);
 	}
 
-	public void when(String when) {
-		this.when = when;
+	public void when(@DelegatesTo(value = ProcessTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		when = new ExternalTestCode(closure);
 	}
 
 	public void debug(boolean debug) {
@@ -84,7 +84,7 @@ public class ProcessTest implements ITest {
 		writeWorkflowMock(file);
 
 		File jsonFolder = new File("json");
-		FileUtil.deleteDirectory(jsonFolder);		
+		FileUtil.deleteDirectory(jsonFolder);
 		FileUtil.createDirectory(jsonFolder);
 
 		context.getParams().put("nf_testflight_output", jsonFolder.getAbsolutePath());
@@ -105,13 +105,13 @@ public class ProcessTest implements ITest {
 			Map map = (Map) jsonSlurper.parse(jsonFile);
 			context.getOutput().putAll(map);
 		}
-		
+
 		// delete jsonFolder
 		FileUtil.deleteDirectory(jsonFolder);
 
 		context.getWorkflow().setExitCode(exitCode);
 		context.getProcess().setExitCode(exitCode);
-		
+
 		then.execute(context);
 
 	}
@@ -126,17 +126,17 @@ public class ProcessTest implements ITest {
 
 		String script = parent.getScript();
 
-		//TODO: check if script exisits
+		// TODO: check if script exisits
 		if (!script.startsWith("/") && !script.startsWith("./")) {
 			script = "./" + script;
 		}
-		
+
 		Map<Object, Object> binding = new HashMap<Object, Object>();
 		binding.put("process", parent.getProcess());
 		binding.put("script", script);
 
 		// Get body of when closure
-		binding.put("when", when);
+		binding.put("when", when.getCode(context));
 
 		URL templateUrl = this.getClass().getResource("WorkflowMock.nf");
 		SimpleTemplateEngine engine = new SimpleTemplateEngine();

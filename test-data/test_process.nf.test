@@ -11,11 +11,13 @@ nextflow_process {
 
     debug true
 
-    when """
+    when {
+      """
       input[0] = Channel.of(1..5)
       input[1] = "test"
       params.outdir = "seb7"
-    """
+      """
+    }
 
     then {
       assert process.success
