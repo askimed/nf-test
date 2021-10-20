@@ -12,6 +12,7 @@ import org.codehaus.groovy.control.CompilationFailedException;
 
 import com.github.lukfor.testflight.core.ITest;
 import com.github.lukfor.testflight.nextflow.NextflowCommand;
+import com.github.lukfor.testflight.util.AnsiText;
 import com.github.lukfor.testflight.util.FileUtil;
 
 import groovy.json.JsonSlurper;
@@ -89,6 +90,10 @@ public class ProcessTest implements ITest {
 
 		context.getParams().put("nf_testflight_output", jsonFolder.getAbsolutePath());
 
+		if (debug) {
+			System.out.println();
+		}
+		
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(file.getAbsolutePath());
 		nextflow.setParams(context.getParams());
@@ -106,6 +111,11 @@ public class ProcessTest implements ITest {
 			context.getOutput().putAll(map);
 		}
 
+		if (debug) {
+			System.out.println(AnsiText.padding("Output Channels:", 4));
+			context.output();
+		}
+		
 		// delete jsonFolder
 		FileUtil.deleteDirectory(jsonFolder);
 

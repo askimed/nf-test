@@ -70,6 +70,10 @@ public class WorkflowTest implements ITest {
 
 		when.execute(context);
 
+		if (debug) {
+			System.out.println();
+		}
+
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(parent.getScript());
 		nextflow.setParams(context.getParams());

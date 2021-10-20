@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.lukfor.testflight.util.AnsiText;
 import com.github.lukfor.testflight.util.FileUtil;
 
 import groovy.lang.Closure;
@@ -47,15 +48,16 @@ public class TestContext {
 	}
 
 	public void output() {
-		System.out.println(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(output)));
+		System.out.println(
+				AnsiText.padding(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(output)), 4));
 	}
-	
+
 	public void params(Closure closure) {
 		closure.setDelegate(params);
 		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
 		closure.call();
 	}
-	
+
 	public void clean(String path) {
 		File file = new File(path);
 		if (file.exists()) {
