@@ -23,9 +23,9 @@ nextflow_process {
       assert process.success
       assert output.my_output_files
       assert output.my_output_files.size() == 5
-      def file1 = new File(output.my_output_files.get(0))
-      //assert file1.name == "1_test.txt" //TODO: needs a sorted list. sort in nf-testflight
-      assert file1.name.endsWith("_test.txt")
+      def file1 = path output.my_output_files.get(0)
+      //assert file1.filename == "1_test.txt" //TODO: needs a sorted list. sort in nf-testflight
+      assert file1.fileName.toString().endsWith("test.txt")
       assert file1.text == 'lukas forer\n'
 
       assert output.my_output_tuple

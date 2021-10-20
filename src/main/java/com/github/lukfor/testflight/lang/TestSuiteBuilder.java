@@ -44,6 +44,7 @@ public class TestSuiteBuilder {
 		ImportCustomizer customizer = new ImportCustomizer();
 		customizer.addStaticImport("com.github.lukfor.testflight.lang.TestSuiteBuilder", "nextflow");
 		customizer.addStaticImport("com.github.lukfor.testflight.lang.TestSuiteBuilder", "nextflow_process");
+		customizer.addStaticStars("com.github.lukfor.testflight.util.FileAndPathMethods");
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
 		compilerConfiguration.addCompilationCustomizers(customizer);
