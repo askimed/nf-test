@@ -1,7 +1,10 @@
 package com.github.lukfor.testflight.lang;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.github.lukfor.testflight.util.FileUtil;
 
 import groovy.lang.Closure;
 
@@ -51,6 +54,17 @@ public class TestContext {
 		closure.setDelegate(params);
 		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
 		closure.call();
+	}
+	
+	public void clean(String path) {
+		File file = new File(path);
+		if (file.exists()) {
+			if (file.isDirectory()) {
+				FileUtil.deleteDirectory(file);
+			} else {
+				file.delete();
+			}
+		}
 	}
 
 	public static class Workflow {
