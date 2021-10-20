@@ -3,6 +3,8 @@ package com.github.lukfor.testflight.lang;
 import java.util.HashMap;
 import java.util.Map;
 
+import groovy.lang.Closure;
+
 public class TestContext {
 
 	private Map<String, Object> params = new HashMap<String, Object>();
@@ -43,6 +45,12 @@ public class TestContext {
 
 	public void output() {
 		System.out.println(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(output)));
+	}
+	
+	public void params(Closure closure) {
+		closure.setDelegate(params);
+		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
+		closure.call();
 	}
 
 	public static class Workflow {
