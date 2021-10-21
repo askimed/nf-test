@@ -12,17 +12,21 @@ nextflow_process {
     debug true
 
     whennnnnnnn {
-      """
-      inputs[0] = Channel.of(1..5)
-      input[1] = "test"
-      params.outdir = "seb7"
-      """
+      params {
+        outdir = "seb7"
+      }
+      process {
+        """
+        input[0] = Channel.of(1..5)
+        input[1] = "test"
+        """
+      }
     }
 
     then {
       assert process.success
-      assert output.my_output_files
-      assert output.my_output_files.size() == 6
+      assert process.out.my_output_files
+      assert process.out.my_output_files.size() == 6
     }
 
   }

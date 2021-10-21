@@ -8,12 +8,11 @@ import com.github.lukfor.testflight.util.AnsiText;
 import com.github.lukfor.testflight.util.FileUtil;
 
 import groovy.lang.Closure;
+import groovy.lang.GString;
 
 public class TestContext {
 
 	private Map<String, Object> params = new HashMap<String, Object>();
-
-	private Map<String, Object> output = new HashMap<String, Object>();
 
 	private Workflow workflow = new Workflow();
 
@@ -43,19 +42,18 @@ public class TestContext {
 		this.process = process;
 	}
 
-	public Map<String, Object> getOutput() {
-		return output;
-	}
-
-	public void output() {
-		System.out.println(
-				AnsiText.padding(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(output)), 4));
-	}
-
 	public void params(Closure closure) {
 		closure.setDelegate(params);
 		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
 		closure.call();
+	}
+
+	public void process(Closure<Object> closure) {
+		closure.setDelegate(this);
+		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
+		closure.call();
+		Object code = closure.call();
+		process.setCode(code.toString());
 	}
 
 	public void clean(String path) {
@@ -89,11 +87,15 @@ public class TestContext {
 
 	public static class Process {
 
+		private Map<String, Object> out = new HashMap<String, Object>();
+
 		public boolean success = true;
 
 		public int exitCode = 0;
 
 		public boolean failed = false;
+
+		private String code = "";
 
 		public void setExitCode(int exitCode) {
 
@@ -103,6 +105,24 @@ public class TestContext {
 
 		}
 
+		public void setCode(String code) {
+			this.code = code;
+		}
+
+		public String getCode() {
+			return code;
+		}
+
+		public Map<String, Object> getOut() {
+			return out;
+		}
+
+		//TODO: sort all lists to get reproducible lists
+		
+		public void out() {
+			System.out.println(
+					AnsiText.padding(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(out)), 4));
+		}
 	}
 
 }

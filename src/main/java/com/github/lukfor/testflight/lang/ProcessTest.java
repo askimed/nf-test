@@ -29,7 +29,7 @@ public class ProcessTest implements ITest {
 
 	private TestCode cleanup;
 
-	private ExternalTestCode when;
+	private TestCode when;
 
 	private TestCode then;
 
@@ -64,7 +64,7 @@ public class ProcessTest implements ITest {
 	}
 
 	public void when(@DelegatesTo(value = ProcessTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		when = new ExternalTestCode(closure);
+		when = new TestCode(closure);
 	}
 
 	public void debug(boolean debug) {
@@ -89,6 +89,8 @@ public class ProcessTest implements ITest {
 			setup.execute(context);
 		}
 
+		when.execute(context);
+
 		// Create workflow mock
 		File workflow = new File("test_mock.nf");
 		writeWorkflowMock(workflow);
@@ -112,16 +114,16 @@ public class ProcessTest implements ITest {
 
 		workflow.delete();
 
-		// Parse json output. TODO: sort all lists to get reproducible lists
+		// Parse json output
 		for (File jsonFile : jsonFolder.listFiles()) {
 			JsonSlurper jsonSlurper = new JsonSlurper();
 			Map map = (Map) jsonSlurper.parse(jsonFile);
-			context.getOutput().putAll(map);
+			context.getProcess().getOut().putAll(map);
 		}
 
 		if (debug) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
-			context.output();
+			context.getProcess().out();
 		}
 
 		// delete jsonFolder
@@ -153,7 +155,7 @@ public class ProcessTest implements ITest {
 		binding.put("script", script);
 
 		// Get body of when closure
-		binding.put("when", when.getCode(context));
+		binding.put("when", context.getProcess().getCode());
 
 		URL templateUrl = this.getClass().getResource("WorkflowMock.nf");
 		SimpleTemplateEngine engine = new SimpleTemplateEngine();

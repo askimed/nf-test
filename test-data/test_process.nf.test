@@ -12,25 +12,29 @@ nextflow_process {
     debug true
 
     when {
-      """
-      input[0] = Channel.of(1..5)
-      input[1] = "test"
-      params.outdir = "seb7"
-      """
+      params {
+        outdir = "seb7"
+      }
+      process {
+        """
+        input[0] = Channel.of(1..5)
+        input[1] = "test"
+        """
+      }
     }
 
     then {
       assert process.success
-      assert output.my_output_files
-      assert output.my_output_files.size() == 5
-      def file1 = path output.my_output_files.get(0)
+      assert process.out.my_output_files
+      assert process.out.my_output_files.size() == 5
+      def file1 = path process.out.my_output_files.get(0)
       //assert file1.filename == "1_test.txt" //TODO: needs a sorted list. sort in nf-testflight
       assert file1.fileName.toString().endsWith("test.txt")
       assert file1.text == 'lukas forer\n'
 
-      assert output.my_output_tuple
-      assert output.my_output_tuple.size() == 5
-      assert output.my_output_tuple.get(0).size() == 3
+      assert process.out.my_output_tuple
+      assert process.out.my_output_tuple.size() == 5
+      assert process.out.my_output_tuple.get(0).size() == 3
     }
 
   }
