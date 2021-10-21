@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import com.github.lukfor.testflight.commands.generate.ITestGenerator;
 import com.github.lukfor.testflight.commands.generate.ProcessTestGenerator;
 import com.github.lukfor.testflight.commands.generate.WorkflowTestGenerator;
+import com.github.lukfor.testflight.config.Config;
 import com.github.lukfor.testflight.util.AnsiColors;
 import com.github.lukfor.testflight.util.FileUtil;
 
@@ -34,8 +35,11 @@ public class GenerateTestsCommand implements Callable<Integer> {
 
 	protected int generate(List<File> scripts, ITestGenerator generator) {
 
+		
 		try {
 
+			Config config = Config.parse(new File(Config.FILENAME));
+			
 			int count = 0;
 
 			if (scripts.isEmpty()) {
@@ -49,7 +53,7 @@ public class GenerateTestsCommand implements Callable<Integer> {
 					return 1;
 				}
 
-				String targetPath = FileUtil.path(TEST_DIRECTORY, script.getPath() + ".test");
+				String targetPath = FileUtil.path(config.getTestsDir(), script.getPath() + ".test");
 				File target = new File(targetPath);
 
 				System.out.println();
@@ -69,7 +73,6 @@ public class GenerateTestsCommand implements Callable<Integer> {
 		} catch (Throwable e) {
 
 			System.out.println(AnsiColors.red("Error: " + e));
-			e.printStackTrace();
 			return 1;
 
 		}

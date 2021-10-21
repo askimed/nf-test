@@ -9,10 +9,6 @@ nextflow_process {
 
   test("Should create 5 files") {
 
-    debug true
-    
-    autoSort false
-
     when {
       params {
         outdir = "seb7"
