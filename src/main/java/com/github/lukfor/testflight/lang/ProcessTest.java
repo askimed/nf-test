@@ -76,13 +76,19 @@ public class ProcessTest implements ITest {
 	@Override
 	public void execute() throws Throwable {
 
+		File script = new File(parent.getScript());
+
+		if (!script.exists()) {
+			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
+		}
+
 		if (setup != null) {
 			setup.execute(context);
 		}
 
 		// Create workflow mock
-		File file = new File("test_mock.nf");
-		writeWorkflowMock(file);
+		File workflow = new File("test_mock.nf");
+		writeWorkflowMock(workflow);
 
 		File jsonFolder = new File("json");
 		FileUtil.deleteDirectory(jsonFolder);
@@ -93,18 +99,17 @@ public class ProcessTest implements ITest {
 		if (debug) {
 			System.out.println();
 		}
-		
+
 		NextflowCommand nextflow = new NextflowCommand();
-		nextflow.setScript(file.getAbsolutePath());
+		nextflow.setScript(workflow);
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setSilent(!debug);
 		int exitCode = nextflow.execute();
 
-		file.delete();
+		workflow.delete();
 
-		// Parse json output
-		// context.s
+		// Parse json output. TODO: sort all lists to get reproducible lists
 		for (File jsonFile : jsonFolder.listFiles()) {
 			JsonSlurper jsonSlurper = new JsonSlurper();
 			Map map = (Map) jsonSlurper.parse(jsonFile);
@@ -115,7 +120,7 @@ public class ProcessTest implements ITest {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.output();
 		}
-		
+
 		// delete jsonFolder
 		FileUtil.deleteDirectory(jsonFolder);
 
@@ -136,7 +141,6 @@ public class ProcessTest implements ITest {
 
 		String script = parent.getScript();
 
-		// TODO: check if script exisits
 		if (!script.startsWith("/") && !script.startsWith("./")) {
 			script = "./" + script;
 		}

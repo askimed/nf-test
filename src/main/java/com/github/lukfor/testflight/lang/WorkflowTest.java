@@ -1,5 +1,8 @@
 package com.github.lukfor.testflight.lang;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 import com.github.lukfor.testflight.core.ITest;
 import com.github.lukfor.testflight.nextflow.NextflowCommand;
 
@@ -62,8 +65,13 @@ public class WorkflowTest implements ITest {
 	@Override
 	public void execute() throws Throwable {
 
-		// TODO: check if script exisits
-
+		File script = new File(parent.getScript());
+		
+		if (!script.exists()) {
+			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
+		}
+		
+		
 		if (setup != null) {
 			setup.execute(context);
 		}
@@ -75,7 +83,7 @@ public class WorkflowTest implements ITest {
 		}
 
 		NextflowCommand nextflow = new NextflowCommand();
-		nextflow.setScript(parent.getScript());
+		nextflow.setScript(script);
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setSilent(!debug);

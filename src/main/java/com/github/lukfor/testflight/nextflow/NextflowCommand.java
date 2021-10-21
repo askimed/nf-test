@@ -17,7 +17,7 @@ public class NextflowCommand {
 
 	private String binary;
 
-	private String script;
+	private File script;
 
 	private String profile;
 
@@ -33,7 +33,7 @@ public class NextflowCommand {
 		return binary != null;
 	}
 
-	public void setScript(String script) {
+	public void setScript(File script) {
 		this.script = script;
 	}
 
@@ -62,7 +62,7 @@ public class NextflowCommand {
 
 		List<String> args = new Vector<String>();
 		args.add("run");
-		args.add(script);
+		args.add(script.getAbsolutePath());
 		args.add("-params-file");
 		args.add(paramsFile.getAbsolutePath());
 		args.add("-ansi-log");
