@@ -39,7 +39,7 @@ public class TestSuiteBuilder {
 
 	}
 
-	public static ITestSuite parse(String filename) throws Exception {
+	public static ITestSuite parse(File script) throws Exception {
 
 		ImportCustomizer customizer = new ImportCustomizer();
 		customizer.addStaticImport("com.github.lukfor.testflight.lang.TestSuiteBuilder", "nextflow");
@@ -51,7 +51,7 @@ public class TestSuiteBuilder {
 
 		GroovyShell shell = new GroovyShell(compilerConfiguration);
 
-		Object object = shell.evaluate(new File(filename));
+		Object object = shell.evaluate(script);
 		ITestSuite nextflowDsl = (ITestSuite) object;
 
 		return nextflowDsl;

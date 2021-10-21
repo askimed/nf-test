@@ -1,5 +1,6 @@
 package com.github.lukfor.testflight.core;
 
+import java.io.File;
 import java.util.List;
 import java.util.Vector;
 
@@ -8,11 +9,11 @@ import com.github.lukfor.testflight.util.AnsiColors;
 
 public class TestExecutionEngine {
 
-	private String[] scripts;
+	private List<File> scripts;
 
 	private ITestExecutionListener listener = new AnsiTestExecutionListener();
 
-	public void setScripts(String... scripts) {
+	public void setScripts(List<File> scripts) {
 		this.scripts = scripts;
 	}
 
@@ -20,7 +21,10 @@ public class TestExecutionEngine {
 
 		List<ITestSuite> testSuits = new Vector<ITestSuite>();
 
-		for (String script : scripts) {
+		for (File script : scripts) {
+			if (!script.exists()) {
+				throw new Exception("Test file '" + script.getAbsolutePath() + "' not found.");
+			}
 			ITestSuite testSuite = TestSuiteBuilder.parse(script);
 			testSuits.add(testSuite);
 		}
@@ -63,7 +67,7 @@ public class TestExecutionEngine {
 				}
 				result.setEndTime(System.currentTimeMillis());
 				listener.executionFinished(test, result);
-				
+
 			}
 
 			listener.testSuiteExecutionFinished(testSuite);

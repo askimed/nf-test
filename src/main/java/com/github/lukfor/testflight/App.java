@@ -1,38 +1,30 @@
 package com.github.lukfor.testflight;
 
-import com.github.lukfor.testflight.core.TestExecutionEngine;
+import com.github.lukfor.testflight.commands.RunTestsCommand;
 import com.github.lukfor.testflight.util.AnsiText;
 import com.github.lukfor.testflight.util.Emoji;
 
+import picocli.CommandLine;
+
 public class App {
+
+	public static final String NAME = "nf-testflight";
 
 	public static final String VERSION = "0.1.0";
 
 	public int run(String[] args) {
 
-		try {
+		printHeader();
 
-			printHeader();
-
-			TestExecutionEngine engine = new TestExecutionEngine();
-			engine.setScripts(args);
-			int exitCode = engine.execute();
-			return exitCode;
-
-		} catch (Throwable e) {
-
-			System.out.println("Error: ");
-			e.printStackTrace();
-			return 1;
-
-		}
+		int exitCode = new CommandLine(new RunTestsCommand()).execute(args);
+		return exitCode;
 
 	}
 
 	private void printHeader() {
 
 		System.out.println();
-		System.out.println(Emoji.ROCKET + AnsiText.bold(" nf-testflight " + App.VERSION));
+		System.out.println(Emoji.ROCKET + AnsiText.bold(" " + App.NAME + " " + App.VERSION));
 		System.out.println("https://github.com/lukfor/nf-testflight");
 		System.out.println("(c) 2021 Lukas Forer and Sebastian Schoenherr");
 		System.out.println();

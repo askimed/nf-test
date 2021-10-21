@@ -1,0 +1,30 @@
+nextflow_process {
+
+  name "Test process xy"
+
+  script "test-data/test_process.nf"
+  process "TEST_PROCESS"
+
+  profile "docker"
+
+  test("Should create 5 files") {
+
+    debug true
+
+    when {
+      """
+      input[0] = Channel.of(1..5)
+      input[1] = "test"
+      params.outdir = "seb7"
+      """
+    }
+
+    then {
+      assert process.success
+      assert output.my_output_files
+      assert output.my_output_files.size() == 6
+    }
+
+  }
+
+}
