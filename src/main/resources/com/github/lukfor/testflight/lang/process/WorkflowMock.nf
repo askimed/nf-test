@@ -35,7 +35,7 @@ workflow {
   }
 
   channel.subscribe { outputTupel ->
-    def sortedList = outputTupel[1] | toSortedList
+    def sortedList = outputTupel[1].toList()
     sortedList.subscribe { list ->
       def map = new HashMap()
       def outputName = outputTupel[0]

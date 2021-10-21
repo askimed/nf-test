@@ -10,6 +10,8 @@ nextflow_process {
   test("Should create 5 files") {
 
     debug true
+    
+    autoSort false
 
     when {
       params {
@@ -25,10 +27,12 @@ nextflow_process {
 
     then {
       assert process.success
+      assert process.out.my_output_numbers == [1,2,3,4,5]      
+      
       assert process.out.my_output_files
       assert process.out.my_output_files.size() == 5
       def file1 = path process.out.my_output_files.get(0)
-      //assert file1.filename == "1_test.txt" //TODO: needs a sorted list. sort in nf-testflight
+      assert file1.fileName.toString() == "1_test.txt"
       assert file1.fileName.toString().endsWith("test.txt")
       assert file1.text == 'lukas forer\n'
 

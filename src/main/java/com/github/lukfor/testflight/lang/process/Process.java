@@ -11,6 +11,12 @@ public class Process {
 	public boolean failed = false;
 
 	private String mapping = "";
+	
+	private String name = "process";
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public void setExitCode(int exitCode) {
 
@@ -30,6 +36,11 @@ public class Process {
 
 	public ProcessOutput getOut() {
 		return out;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 
 }

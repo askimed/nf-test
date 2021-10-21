@@ -1,7 +1,6 @@
 package com.github.lukfor.testflight.lang.workflow;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 import com.github.lukfor.testflight.core.ITest;
 import com.github.lukfor.testflight.lang.TestCode;
@@ -13,9 +12,9 @@ import groovy.lang.DelegatesTo;
 
 public class WorkflowTest implements ITest {
 
-	private String name;
+	private String name = "Unknown test";
 
-	private boolean debug;
+	private boolean debug = false;
 
 	private TestCode setup;
 

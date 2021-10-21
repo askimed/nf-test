@@ -15,7 +15,6 @@ import com.github.lukfor.testflight.nextflow.NextflowCommand;
 import com.github.lukfor.testflight.util.AnsiText;
 import com.github.lukfor.testflight.util.FileUtil;
 
-import groovy.json.JsonSlurper;
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
 import groovy.lang.Writable;
@@ -23,9 +22,11 @@ import groovy.text.SimpleTemplateEngine;
 
 public class ProcessTest implements ITest {
 
-	private String name;
+	private String name = "Unknown test";
 
-	private boolean debug;
+	private boolean debug = false;
+
+	private boolean autoSort = true;
 
 	private TestCode setup;
 
@@ -42,6 +43,7 @@ public class ProcessTest implements ITest {
 	public ProcessTest(ProcessTestSuite parent) {
 		this.parent = parent;
 		context = new TestContext();
+		context.setName(parent.getProcess());
 	}
 
 	public void name(String name) {
@@ -76,6 +78,10 @@ public class ProcessTest implements ITest {
 	@Override
 	public void setDebug(boolean debug) {
 		this.debug = debug;
+	}
+
+	public void autoSort(boolean autoSort) {
+		this.autoSort = autoSort;
 	}
 
 	@Override
@@ -117,7 +123,7 @@ public class ProcessTest implements ITest {
 		workflow.delete();
 
 		// Parse json output
-		context.getProcess().getOut().loadFromFolder(jsonFolder);
+		context.getProcess().getOut().loadFromFolder(jsonFolder, autoSort);
 
 		if (debug) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
