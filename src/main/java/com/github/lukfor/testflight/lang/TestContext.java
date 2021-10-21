@@ -52,8 +52,10 @@ public class TestContext {
 		closure.setDelegate(this);
 		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
 		closure.call();
-		Object code = closure.call();
-		process.setCode(code.toString());
+		Object mapping = closure.call();
+		if (mapping != null) {
+			process.setMapping(mapping.toString());
+		}
 	}
 
 	public void clean(String path) {
@@ -95,7 +97,7 @@ public class TestContext {
 
 		public boolean failed = false;
 
-		private String code = "";
+		private String mapping = "";
 
 		public void setExitCode(int exitCode) {
 
@@ -105,12 +107,12 @@ public class TestContext {
 
 		}
 
-		public void setCode(String code) {
-			this.code = code;
+		public void setMapping(String mapping) {
+			this.mapping = mapping;
 		}
 
-		public String getCode() {
-			return code;
+		public String getMapping() {
+			return mapping;
 		}
 
 		public Map<String, Object> getOut() {

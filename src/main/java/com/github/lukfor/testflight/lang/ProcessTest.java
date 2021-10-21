@@ -155,7 +155,7 @@ public class ProcessTest implements ITest {
 		binding.put("script", script);
 
 		// Get body of when closure
-		binding.put("when", context.getProcess().getCode());
+		binding.put("mapping", context.getProcess().getMapping());
 
 		URL templateUrl = this.getClass().getResource("WorkflowMock.nf");
 		SimpleTemplateEngine engine = new SimpleTemplateEngine();

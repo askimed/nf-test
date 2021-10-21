@@ -7,9 +7,9 @@ nextflow.enable.dsl=2
 // comes from testflight to find json files
 params.nf_testflight_output  = "json"
 
+// process mapping
 def input = []
-//--- when ----
-${when}
+${mapping}
 //----
 
 // include test process
