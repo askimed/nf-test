@@ -63,15 +63,19 @@ public class WorkflowTest implements ITest {
 	}
 
 	@Override
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+
+	@Override
 	public void execute() throws Throwable {
 
 		File script = new File(parent.getScript());
-		
+
 		if (!script.exists()) {
 			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
 		}
-		
-		
+
 		if (setup != null) {
 			setup.execute(context);
 		}

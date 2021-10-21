@@ -6,4 +6,6 @@ public interface ITest {
 
 	public String getName();
 
+	public void setDebug(boolean debug);
+
 }

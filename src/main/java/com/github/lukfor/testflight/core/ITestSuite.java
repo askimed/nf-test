@@ -8,4 +8,6 @@ public interface ITestSuite {
 
 	public String getName();
 	
+	public void setProfile(String profile);
+
 }

@@ -13,8 +13,20 @@ public class TestExecutionEngine {
 
 	private ITestExecutionListener listener = new AnsiTestExecutionListener();
 
+	private boolean debug = false;
+
+	private String profile = null;
+
 	public void setScripts(List<File> scripts) {
 		this.scripts = scripts;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 
 	protected List<ITestSuite> parse() throws Exception {
@@ -46,7 +58,12 @@ public class TestExecutionEngine {
 		listener.testPlanExecutionStarted();
 
 		for (ITestSuite testSuite : testSuits) {
-
+			
+			// override profile from CLI
+			if (profile != null) {
+				testSuite.setProfile(profile);
+			}
+			
 			listener.testSuiteExecutionStarted(testSuite);
 
 			for (ITest test : testSuite.getTests()) {
@@ -54,6 +71,11 @@ public class TestExecutionEngine {
 				TestExecutionResult result = new TestExecutionResult();
 
 				try {
+
+					// override debug flag from CLI
+					if (debug) {
+						test.setDebug(true);
+					}
 
 					result.setStartTime(System.currentTimeMillis());
 					test.execute();

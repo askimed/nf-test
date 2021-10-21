@@ -1,8 +1,6 @@
 package com.github.lukfor.testflight.lang;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -70,6 +68,11 @@ public class ProcessTest implements ITest {
 	}
 
 	public void debug(boolean debug) {
+		setDebug(debug);
+	}
+
+	@Override
+	public void setDebug(boolean debug) {
 		this.debug = debug;
 	}
 
