@@ -1,10 +1,11 @@
-package com.github.lukfor.testflight.lang;
+package com.github.lukfor.testflight.lang.process;
 
 import java.util.List;
 import java.util.Vector;
 
 import com.github.lukfor.testflight.core.ITest;
 import com.github.lukfor.testflight.core.ITestSuite;
+import com.github.lukfor.testflight.lang.workflow.WorkflowTest;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;

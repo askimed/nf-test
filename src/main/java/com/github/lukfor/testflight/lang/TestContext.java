@@ -4,11 +4,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.github.lukfor.testflight.util.AnsiText;
+import com.github.lukfor.testflight.lang.process.Process;
 import com.github.lukfor.testflight.util.FileUtil;
 
 import groovy.lang.Closure;
-import groovy.lang.GString;
 
 public class TestContext {
 
@@ -85,46 +84,6 @@ public class TestContext {
 
 		}
 
-	}
-
-	public static class Process {
-
-		private Map<String, Object> out = new HashMap<String, Object>();
-
-		public boolean success = true;
-
-		public int exitCode = 0;
-
-		public boolean failed = false;
-
-		private String mapping = "";
-
-		public void setExitCode(int exitCode) {
-
-			this.exitCode = exitCode;
-			this.success = (exitCode == 0);
-			this.failed = (exitCode != 0);
-
-		}
-
-		public void setMapping(String mapping) {
-			this.mapping = mapping;
-		}
-
-		public String getMapping() {
-			return mapping;
-		}
-
-		public Map<String, Object> getOut() {
-			return out;
-		}
-
-		//TODO: sort all lists to get reproducible lists
-		
-		public void out() {
-			System.out.println(
-					AnsiText.padding(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(out)), 4));
-		}
 	}
 
 }

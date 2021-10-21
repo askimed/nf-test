@@ -1,4 +1,4 @@
-package com.github.lukfor.testflight.lang;
+package com.github.lukfor.testflight.lang.workflow;
 
 import java.util.List;
 import java.util.Vector;

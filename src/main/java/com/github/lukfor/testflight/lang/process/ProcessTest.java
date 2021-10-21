@@ -1,4 +1,4 @@
-package com.github.lukfor.testflight.lang;
+package com.github.lukfor.testflight.lang.process;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,8 @@ import java.util.Map;
 import org.codehaus.groovy.control.CompilationFailedException;
 
 import com.github.lukfor.testflight.core.ITest;
+import com.github.lukfor.testflight.lang.TestCode;
+import com.github.lukfor.testflight.lang.TestContext;
 import com.github.lukfor.testflight.nextflow.NextflowCommand;
 import com.github.lukfor.testflight.util.AnsiText;
 import com.github.lukfor.testflight.util.FileUtil;
@@ -115,15 +117,11 @@ public class ProcessTest implements ITest {
 		workflow.delete();
 
 		// Parse json output
-		for (File jsonFile : jsonFolder.listFiles()) {
-			JsonSlurper jsonSlurper = new JsonSlurper();
-			Map map = (Map) jsonSlurper.parse(jsonFile);
-			context.getProcess().getOut().putAll(map);
-		}
+		context.getProcess().getOut().loadFromFolder(jsonFolder);
 
 		if (debug) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
-			context.getProcess().out();
+			context.getProcess().getOut().view();
 		}
 
 		// delete jsonFolder

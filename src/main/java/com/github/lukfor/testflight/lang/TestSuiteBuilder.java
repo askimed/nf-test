@@ -6,6 +6,8 @@ import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
 import com.github.lukfor.testflight.core.ITestSuite;
+import com.github.lukfor.testflight.lang.process.ProcessTestSuite;
+import com.github.lukfor.testflight.lang.workflow.WorkflowTestSuite;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;

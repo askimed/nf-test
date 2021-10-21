@@ -1,9 +1,11 @@
-package com.github.lukfor.testflight.lang;
+package com.github.lukfor.testflight.lang.workflow;
 
 import java.io.File;
 import java.nio.file.Paths;
 
 import com.github.lukfor.testflight.core.ITest;
+import com.github.lukfor.testflight.lang.TestCode;
+import com.github.lukfor.testflight.lang.TestContext;
 import com.github.lukfor.testflight.nextflow.NextflowCommand;
 
 import groovy.lang.Closure;
