@@ -5,7 +5,9 @@ import com.github.lukfor.testflight.util.AnsiText;
 import com.github.lukfor.testflight.util.Emoji;
 
 import picocli.CommandLine;
+import picocli.CommandLine.Command;
 
+@Command(name = App.NAME, version = App.VERSION)
 public class App {
 
 	public static final String NAME = "nf-testflight";
@@ -16,8 +18,10 @@ public class App {
 
 		printHeader();
 
-		int exitCode = new CommandLine(new RunTestsCommand()).execute(args);
-		return exitCode;
+		CommandLine commandLine = new CommandLine(new App());
+		commandLine.addSubcommand("test", new RunTestsCommand());
+		commandLine.setExecutionStrategy(new CommandLine.RunLast());
+		return commandLine.execute(args);
 
 	}
 

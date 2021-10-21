@@ -6,12 +6,11 @@ import java.util.concurrent.Callable;
 
 import com.github.lukfor.testflight.core.TestExecutionEngine;
 import com.github.lukfor.testflight.util.AnsiColors;
-import com.github.lukfor.testflight.App;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@Command(name = App.NAME, version = App.VERSION)
+@Command(name = "Run Tests")
 public class RunTestsCommand implements Callable<Integer> {
 
 	@Parameters(description = "test files")

@@ -19,36 +19,36 @@ public class ProcessTestTest {
 	public void testScriptSucces() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test-data/test_process.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/test_process.nf.test" });
 		assertEquals(0, exitCode);
-		
+
 	}
-	
+
 	@Test
 	public void testMissingScript() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test-data/wrong-filename.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/wrong-filename.nf.test" });
 		assertEquals(1, exitCode);
-		
+
 	}
-	
+
 	@Test
 	public void testScriptFailed() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test-data/test_process_failed.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/test_process_failed.nf.test" });
 		assertEquals(1, exitCode);
-		
+
 	}
-	
+
 	@Test
 	public void testScriptWithSyntaxError() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test-data/test_process_syntax_error.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/test_process_syntax_error.nf.test" });
 		assertEquals(1, exitCode);
-		
+
 	}
 
 }
