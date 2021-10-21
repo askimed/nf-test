@@ -1,5 +1,6 @@
 package com.github.lukfor.testflight;
 
+import com.github.lukfor.testflight.commands.GenerateTestsCommand;
 import com.github.lukfor.testflight.commands.RunTestsCommand;
 import com.github.lukfor.testflight.util.AnsiText;
 import com.github.lukfor.testflight.util.Emoji;
@@ -20,6 +21,7 @@ public class App {
 
 		CommandLine commandLine = new CommandLine(new App());
 		commandLine.addSubcommand("test", new RunTestsCommand());
+		commandLine.addSubcommand("generate", new GenerateTestsCommand());
 		commandLine.setExecutionStrategy(new CommandLine.RunLast());
 		return commandLine.execute(args);
 

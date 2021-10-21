@@ -156,9 +156,7 @@ public class ProcessTest implements ITest {
 		SimpleTemplateEngine engine = new SimpleTemplateEngine();
 		Writable template = engine.createTemplate(templateUrl).make(binding);
 
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-		writer.write(template.toString());
-		writer.close();
+		FileUtil.write(file, template);
 
 	}
 

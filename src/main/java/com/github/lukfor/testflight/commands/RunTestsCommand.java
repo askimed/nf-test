@@ -10,7 +10,7 @@ import com.github.lukfor.testflight.util.AnsiColors;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "Run Tests")
+@Command(name = "test")
 public class RunTestsCommand implements Callable<Integer> {
 
 	@Parameters(description = "test files")
