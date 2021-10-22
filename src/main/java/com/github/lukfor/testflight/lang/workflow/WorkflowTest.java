@@ -91,6 +91,7 @@ public class WorkflowTest implements ITest {
 		nextflow.setScript(script);
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
+		nextflow.setConfig(parent.getConfig());
 		nextflow.setSilent(!debug);
 		int exitCode = nextflow.execute();
 

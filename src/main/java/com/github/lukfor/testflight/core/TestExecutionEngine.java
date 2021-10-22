@@ -17,6 +17,8 @@ public class TestExecutionEngine {
 
 	private String profile = null;
 
+	private File configFile = null;
+
 	public void setScripts(List<File> scripts) {
 		this.scripts = scripts;
 	}
@@ -27,6 +29,10 @@ public class TestExecutionEngine {
 
 	public void setProfile(String profile) {
 		this.profile = profile;
+	}
+
+	public void setConfigFile(File configFile) {
+		this.configFile = configFile;
 	}
 
 	protected List<ITestSuite> parse() throws Exception {
@@ -47,6 +53,15 @@ public class TestExecutionEngine {
 
 	public int execute() throws Throwable {
 
+		if (configFile != null) {
+			if (!configFile.exists()) {
+				System.out.println(
+						AnsiColors.red("Error: Test config file '" + configFile.getAbsolutePath() + "'not found"));
+				System.out.println();
+				return 1;
+			}
+		}
+
 		List<ITestSuite> testSuits = parse();
 
 		if (testSuits.size() == 0) {
@@ -58,12 +73,16 @@ public class TestExecutionEngine {
 		listener.testPlanExecutionStarted();
 
 		for (ITestSuite testSuite : testSuits) {
-			
+
 			// override profile from CLI
 			if (profile != null) {
 				testSuite.setProfile(profile);
 			}
-			
+
+			if (configFile != null) {
+				testSuite.setConfigFile(configFile);
+			}
+
 			listener.testSuiteExecutionStarted(testSuite);
 
 			for (ITest test : testSuite.getTests()) {

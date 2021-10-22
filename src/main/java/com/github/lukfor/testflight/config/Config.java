@@ -13,11 +13,15 @@ import groovy.lang.GroovyShell;
 
 public class Config {
 
-	public static final String FILENAME = "nf-flighttest.config";
+	public static final String FILENAME = "nf-testflight.config";
+	
+	public static final String DEFAULT_NEXTFLOW_CONFIG = "tests/nextflow.config";
 
 	private String testsDir = "tests";
 
 	private String profile = null;
+
+	private String configFile = DEFAULT_NEXTFLOW_CONFIG;
 
 	public void testsDir(String testsDir) {
 		this.testsDir = testsDir;
@@ -32,7 +36,23 @@ public class Config {
 	}
 
 	public String getProfile() {
-		return profile;
+		if (profile != null) {
+			if (profile.trim().isEmpty()) {
+				return null;
+			} else {
+				return profile;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	public void configFile(String config) {
+		this.configFile = config;
+	}
+
+	public File getConfigFile() {
+		return new File(configFile);
 	}
 
 	static Config config(
@@ -51,7 +71,8 @@ public class Config {
 	public static Config parse(File script) throws Exception {
 
 		if (!script.exists()) {
-			throw new Exception("Error: This pipeline has no valid nf-flightest config file. Create one with the init command.");
+			throw new Exception(
+					"Error: This pipeline has no valid nf-flightest config file. Create one with the init command.");
 		}
 
 		ImportCustomizer customizer = new ImportCustomizer();

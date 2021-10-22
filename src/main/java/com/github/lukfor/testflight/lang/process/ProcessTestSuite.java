@@ -1,5 +1,6 @@
 package com.github.lukfor.testflight.lang.process;
 
+import java.io.File;
 import java.util.List;
 import java.util.Vector;
 
@@ -17,6 +18,8 @@ public class ProcessTestSuite implements ITestSuite {
 	private String script = null;
 
 	private String profile = null;
+
+	private File config = null;
 
 	private String process;
 
@@ -52,6 +55,15 @@ public class ProcessTestSuite implements ITestSuite {
 
 	public String getProfile() {
 		return profile;
+	}
+
+	@Override
+	public void setConfigFile(File config) {
+		this.config = config;
+	}
+
+	public File getConfig() {
+		return config;
 	}
 
 	public void setProcess(String process) {

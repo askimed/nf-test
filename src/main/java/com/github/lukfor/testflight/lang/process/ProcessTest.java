@@ -117,6 +117,7 @@ public class ProcessTest implements ITest {
 		nextflow.setScript(workflow);
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
+		nextflow.setConfig(parent.getConfig());
 		nextflow.setSilent(!debug);
 		int exitCode = nextflow.execute();
 

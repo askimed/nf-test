@@ -21,6 +21,8 @@ public class NextflowCommand {
 
 	private String profile;
 
+	private File config;
+
 	private boolean silent = true;
 
 	private Map<String, Object> params;
@@ -39,6 +41,10 @@ public class NextflowCommand {
 
 	public void setProfile(String profile) {
 		this.profile = profile;
+	}
+
+	public void setConfig(File config) {
+		this.config = config;
 	}
 
 	public void setParams(Map<String, Object> params) {
@@ -63,6 +69,10 @@ public class NextflowCommand {
 		List<String> args = new Vector<String>();
 		args.add("run");
 		args.add(script.getAbsolutePath());
+				if (config != null) {
+			args.add("-c");
+			args.add(config.getAbsolutePath());
+		}
 		args.add("-params-file");
 		args.add(paramsFile.getAbsolutePath());
 		args.add("-ansi-log");
@@ -75,6 +85,9 @@ public class NextflowCommand {
 		Command nextflow = new Command(binary);
 		nextflow.setParams(args);
 		nextflow.setSilent(silent);
+		if (!silent) {
+			System.out.println("Command: " + nextflow.getExecutedCommand());
+		}
 		return nextflow.execute();
 
 	}

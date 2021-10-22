@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.concurrent.Callable;
 
 import com.github.lukfor.testflight.App;
-import com.github.lukfor.testflight.commands.init.ConfigTemplate;
+import com.github.lukfor.testflight.commands.init.InitTemplates;
 import com.github.lukfor.testflight.config.Config;
 import com.github.lukfor.testflight.util.AnsiColors;
 
@@ -18,14 +18,24 @@ public class InitCommand implements Callable<Integer> {
 
 		try {
 
-			File file = new File(Config.FILENAME);
+			File configFile = new File(Config.FILENAME);
 
-			if (file.exists()) {
+			if (configFile.exists()) {
 				System.out.println(AnsiColors.red("Error:" + App.NAME + " is already setup for this project."));
 				return 1;
 			}
 
-			ConfigTemplate.create(file);
+			InitTemplates.createConfig(configFile);
+			
+			
+			File nextflowConfigFile = new File(Config.DEFAULT_NEXTFLOW_CONFIG);
+
+			if (nextflowConfigFile.exists()) {
+				System.out.println(AnsiColors.red("Error:" + App.NAME + " is already setup for this project."));
+				return 1;
+			}
+			
+			InitTemplates.createNextflowConfig(nextflowConfigFile);
 
 			System.out.println(
 					AnsiColors.green("Project configured.") + " Configuration is stored in " + Config.FILENAME);
