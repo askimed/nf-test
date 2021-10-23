@@ -1,0 +1,26 @@
+site_name: nftest
+theme:
+  name: material
+  feature:
+    tabs: true
+extra_css:
+  - extra.css
+repo_url: https://github.com/lukfor/nftest/
+
+pages:
+  - Getting Started: getting_started.md
+  - Assertions: assertions.md
+  - Configuration: configuration.md
+
+
+extra:
+  feature:
+    tabs: true
+
+
+markdown_extensions:
+  - codehilite
+  - admonition
+  - toc:
+      permalink: true
+  - footnotes
