@@ -1,4 +1,4 @@
-# :rocket: nf-testflight
+# :rocket: nf-test
 
 > Simple test framework for Nextflow pipelines
 
@@ -7,7 +7,7 @@
 
 
 ```
-./nf-testflight test-data/*.nf.test
+./nf-test test test-data/*.nf.test
 ```
 
 ## Contact
