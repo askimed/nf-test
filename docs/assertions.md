@@ -22,13 +22,13 @@ assert process.out.imputed_plink2.get(0).get(2) ==~ ".*/example.vcf.psam"
 assert process.out.imputed_plink2.get(0).get(3) ==~ ".*/example.vcf.pvar"
 ```
 
-... can be written by using `.with{}` to improve readability:
+... can be written by using `with(){}` to improve readability:
 
 ```groovy
 assert process.out.imputed_plink2
 with(process.out.imputed_plink2) {
     assert size() == 1
-    get(0).with {
+    with(get(0)) {
         assert get(0) == "example.vcf"
         assert get(1) ==~ ".*/example.vcf.pgen"
         assert get(2) ==~ ".*/example.vcf.psam"
