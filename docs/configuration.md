@@ -25,9 +25,9 @@ config {
 
 This `nextflow.config` file is used to execute tests. This is a good place to set default `params` for all your tests. Example number of threads:
 
-```
+```groovy
 params {
-    //run all tests with 1 threads
+    // run all tests with 1 threads
     threads = 1
 }
 ```

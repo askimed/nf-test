@@ -1,26 +1,39 @@
-site_name: nftest
+site_name: nf-test
+
 theme:
   name: material
-  feature:
-    tabs: true
+  features:
+    - navigation.instant
+    - tabs
+  palette:
+    primary: teal
+    accent: teal
+  icon:
+    logo: material/sticker-check-outline
+  favicon: images/favicon.svg
+  font:
+    text: Roboto
+    code: Roboto Mono
+
 extra_css:
   - extra.css
-repo_url: https://github.com/lukfor/nftest/
+repo_url: https://github.com/lukfor/nf-test/
 
-pages:
-  - Getting Started: getting_started.md
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
   - Assertions: assertions.md
   - Configuration: configuration.md
 
 
-extra:
-  feature:
-    tabs: true
-
-
 markdown_extensions:
-  - codehilite
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
   - admonition
-  - toc:
-      permalink: true
   - footnotes
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
