@@ -1,0 +1,32 @@
+nextflow_process {
+
+    name "Test Process ${process}"
+    script "${script}"
+    process "${process}"
+
+    test("Should run without failures") {
+
+        when {
+            params {
+                // define parameters here. Example:
+                // outdir = "tests/results"
+            }
+            process {
+                """
+                // define inputs of the process here. Example:
+                // input[0] = file("test-file.txt")
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            process.out.with {
+              //Make assertions about the content and elements of output channels here. Example:
+              // assert outdir != null
+            }
+        }
+
+    }
+
+}

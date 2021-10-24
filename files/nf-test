@@ -1,0 +1,4 @@
+#!/bin/bash
+export JAVA_PROGRAM_ARGS=`echo "$@"`
+FILE_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+java -Xmx10G -jar "$FILE_PATH/nf-test.jar" $JAVA_PROGRAM_ARGS

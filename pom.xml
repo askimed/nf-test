@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.lukfor</groupId>
-	<artifactId>nf-testflight</artifactId>
+	<artifactId>nf-test</artifactId>
 	<version>0.1.0</version>
 	<name>bf-testflight</name>
 	<description>Simple test framework for Nextflow pipelines</description>
-	<url>https://github.com/lukfor/nf-testflight</url>
+	<url>https://github.com/lukfor/nf-test</url>
 
 	<licenses>
 		<license>
@@ -17,9 +17,9 @@
 	</licenses>
 
 	<scm>
-		<url>https://github.com/lukfor/nf-testflight/tree/master</url>
-		<connection>scm:git:https://github.com/lukfor/nf-testflight</connection>
-		<developerConnection>scm:git:ssh://github.com:lukfor/nf-testflight.git</developerConnection>
+		<url>https://github.com/lukfor/nf-test/tree/master</url>
+		<connection>scm:git:https://github.com/lukfor/nf-test</connection>
+		<developerConnection>scm:git:ssh://github.com:lukfor/nf-test.git</developerConnection>
 	</scm>
 
 	<properties>
@@ -95,7 +95,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>com.github.lukfor.testflight.App</mainClass>
+									<mainClass>com.github.lukfor.nf.test.App</mainClass>
 								</transformer>
 							</transformers>
 							<filters>
