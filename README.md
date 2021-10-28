@@ -3,6 +3,10 @@
 > Simple test framework for Nextflow pipelines
 
 
+## Documentation
+
+Documentation can be found [here](https://www.forer.it/nf-test)
+
 ## Usage
 
 
