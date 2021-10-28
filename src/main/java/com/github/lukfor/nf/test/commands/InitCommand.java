@@ -31,8 +31,7 @@ public class InitCommand implements Callable<Integer> {
 			File nextflowConfigFile = new File(Config.DEFAULT_NEXTFLOW_CONFIG);
 
 			if (nextflowConfigFile.exists()) {
-				System.out.println(AnsiColors.red("Error:" + App.NAME + " is already setup for this project."));
-				return 1;
+				System.out.println(AnsiColors.yellow("Skipped:" + Config.DEFAULT_NEXTFLOW_CONFIG + " is already setup for this project."));
 			}
 			
 			InitTemplates.createNextflowConfig(nextflowConfigFile);
