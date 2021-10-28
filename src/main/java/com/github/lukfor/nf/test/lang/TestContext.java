@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.github.lukfor.nf.test.lang.process.Process;
+import com.github.lukfor.nf.test.lang.workflow.Workflow;
 import com.github.lukfor.nf.test.util.FileUtil;
 
 import groovy.lang.Closure;
@@ -71,24 +72,6 @@ public class TestContext {
 				file.delete();
 			}
 		}
-	}
-
-	public static class Workflow {
-
-		public boolean success = true;
-
-		public int exitCode = 0;
-
-		public boolean failed = false;
-
-		public void setExitCode(int exitCode) {
-
-			this.exitCode = exitCode;
-			this.success = (exitCode == 0);
-			this.failed = (exitCode != 0);
-
-		}
-
 	}
 
 }

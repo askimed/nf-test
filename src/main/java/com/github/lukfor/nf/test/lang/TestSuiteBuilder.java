@@ -8,6 +8,7 @@ import org.codehaus.groovy.control.customizers.ImportCustomizer;
 import com.github.lukfor.nf.test.core.ITestSuite;
 import com.github.lukfor.nf.test.lang.pipeline.PipelineTestSuite;
 import com.github.lukfor.nf.test.lang.process.ProcessTestSuite;
+import com.github.lukfor.nf.test.lang.workflow.WorkflowTestSuite;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
@@ -19,6 +20,19 @@ public class TestSuiteBuilder {
 			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 
 		final PipelineTestSuite suite = new PipelineTestSuite();
+
+		closure.setDelegate(suite);
+		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
+		closure.call();
+
+		return suite;
+
+	}
+
+	static ITestSuite nextflow_workflow(
+			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+
+		final WorkflowTestSuite suite = new WorkflowTestSuite();
 
 		closure.setDelegate(suite);
 		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
