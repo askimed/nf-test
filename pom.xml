@@ -7,7 +7,7 @@
 	<version>0.1.0</version>
 	<name>bf-testflight</name>
 	<description>Simple test framework for Nextflow pipelines</description>
-	<url>https://github.com/lukfor/nf-test</url>
+	<url>https://github.com/askimed/nf-test</url>
 
 	<licenses>
 		<license>
@@ -17,9 +17,9 @@
 	</licenses>
 
 	<scm>
-		<url>https://github.com/lukfor/nf-test/tree/master</url>
-		<connection>scm:git:https://github.com/lukfor/nf-test</connection>
-		<developerConnection>scm:git:ssh://github.com:lukfor/nf-test.git</developerConnection>
+		<url>https://github.com/askimed/nf-test/tree/master</url>
+		<connection>scm:git:https://github.com/askimed/nf-test</connection>
+		<developerConnection>scm:git:ssh://github.com:askimed/nf-test.git</developerConnection>
 	</scm>
 
 	<properties>

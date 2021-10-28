@@ -17,7 +17,7 @@ theme:
 
 extra_css:
   - extra.css
-repo_url: https://github.com/lukfor/nf-test/
+repo_url: https://github.com/askimed/nf-test
 
 nav:
   - Home: index.md

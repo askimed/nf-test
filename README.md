@@ -5,7 +5,7 @@
 
 ## Documentation
 
-Documentation can be found [here](https://www.forer.it/nf-test)
+Documentation can be found [here](https://askimed.github.io/nf-test)
 
 ## Usage
 
