@@ -21,7 +21,16 @@ repo_url: https://github.com/lukfor/nf-test/
 
 nav:
   - Home: index.md
+  - Installation: installation.md
   - Getting Started: getting-started.md
+  - Testcases:
+    - nextflow_process: testcases/nextflow_process.md
+    - nextflow_workflow: testcases/nextflow_workflow.md
+    - nextflow_pipeline: testcases/nextflow_pipeline.md
+  - Command line interface (CLI):
+    - init: cli/init.md
+    - generate: cli/generate.md
+    - test: cli/test.md
   - Assertions: assertions.md
   - Configuration: configuration.md
 
