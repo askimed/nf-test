@@ -12,7 +12,7 @@ import com.github.lukfor.nf.test.util.AnsiText;
 
 import groovy.json.JsonSlurper;
 
-public class ProcessOutput extends HashMap<Object, Object> {
+public class ChannelsOutput extends HashMap<Object, Object> {
 
 	private static final long serialVersionUID = 1L;
 

@@ -25,6 +25,8 @@ public class NextflowCommand {
 
 	private boolean silent = true;
 
+	private File trace = null;
+
 	private Map<String, Object> params;
 
 	public NextflowCommand() {
@@ -55,6 +57,14 @@ public class NextflowCommand {
 		this.silent = silent;
 	}
 
+	public void setTrace(File trace) {
+		this.trace = trace;
+	}
+
+	public File getTrace() {
+		return trace;
+	}
+
 	public int execute() throws IOException {
 
 		if (binary == null) {
@@ -69,7 +79,7 @@ public class NextflowCommand {
 		List<String> args = new Vector<String>();
 		args.add("run");
 		args.add(script.getAbsolutePath());
-				if (config != null) {
+		if (config != null) {
 			args.add("-c");
 			args.add(config.getAbsolutePath());
 		}
@@ -80,6 +90,10 @@ public class NextflowCommand {
 		if (profile != null) {
 			args.add("-profile");
 			args.add(profile);
+		}
+		if (trace != null) {
+			args.add("-with-trace");
+			args.add(trace.getAbsolutePath());
 		}
 
 		Command nextflow = new Command(binary);

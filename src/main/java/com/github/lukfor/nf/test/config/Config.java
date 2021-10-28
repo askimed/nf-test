@@ -5,7 +5,7 @@ import java.io.File;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
-import com.github.lukfor.nf.test.lang.workflow.WorkflowTestSuite;
+import com.github.lukfor.nf.test.lang.pipeline.PipelineTestSuite;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
@@ -56,7 +56,7 @@ public class Config {
 	}
 
 	static Config config(
-			@DelegatesTo(value = WorkflowTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 
 		final Config config = new Config();
 

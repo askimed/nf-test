@@ -1,4 +1,4 @@
-package com.github.lukfor.nf.test.lang.workflow;
+package com.github.lukfor.nf.test.lang.pipeline;
 
 import java.io.File;
 import java.util.List;
@@ -10,7 +10,7 @@ import com.github.lukfor.nf.test.core.ITestSuite;
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
 
-public class WorkflowTestSuite implements ITestSuite {
+public class PipelineTestSuite implements ITestSuite {
 
 	private String name;
 
@@ -68,8 +68,8 @@ public class WorkflowTestSuite implements ITestSuite {
 	}
 
 	public void test(String name,
-			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
-		final WorkflowTest test = new WorkflowTest(this);
+			@DelegatesTo(value = PipelineTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		final PipelineTest test = new PipelineTest(this);
 		test.name(name);
 		closure.setDelegate(test);
 		closure.setResolveStrategy(Closure.DELEGATE_ONLY);

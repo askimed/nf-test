@@ -1,4 +1,4 @@
-package com.github.lukfor.nf.test.lang.workflow;
+package com.github.lukfor.nf.test.lang.pipeline;
 
 import java.io.File;
 
@@ -10,7 +10,7 @@ import com.github.lukfor.nf.test.nextflow.NextflowCommand;
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
 
-public class WorkflowTest implements ITest {
+public class PipelineTest implements ITest {
 
 	private String name = "Unknown test";
 
@@ -24,11 +24,11 @@ public class WorkflowTest implements ITest {
 
 	private TestCode then;
 
-	private WorkflowTestSuite parent;
+	private PipelineTestSuite parent;
 
 	private TestContext context;
 
-	public WorkflowTest(WorkflowTestSuite parent) {
+	public PipelineTest(PipelineTestSuite parent) {
 		this.parent = parent;
 		context = new TestContext();
 	}
@@ -42,20 +42,20 @@ public class WorkflowTest implements ITest {
 	}
 
 	public void setup(
-			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+			@DelegatesTo(value = PipelineTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		setup = new TestCode(closure);
 	}
 
 	public void cleanup(
-			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+			@DelegatesTo(value = PipelineTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		cleanup = new TestCode(closure);
 	}
 
-	public void when(@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+	public void when(@DelegatesTo(value = PipelineTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		when = new TestCode(closure);
 	}
 
-	public void then(@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+	public void then(@DelegatesTo(value = PipelineTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		then = new TestCode(closure);
 	}
 

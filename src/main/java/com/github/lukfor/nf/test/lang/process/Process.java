@@ -2,7 +2,7 @@ package com.github.lukfor.nf.test.lang.process;
 
 public class Process {
 
-	private ProcessOutput out = new ProcessOutput();
+	private ChannelsOutput out = new ChannelsOutput();
 
 	public boolean success = true;
 
@@ -34,7 +34,7 @@ public class Process {
 		return mapping;
 	}
 
-	public ProcessOutput getOut() {
+	public ChannelsOutput getOut() {
 		return out;
 	}
 	

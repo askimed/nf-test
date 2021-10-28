@@ -6,8 +6,8 @@ import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
 import com.github.lukfor.nf.test.core.ITestSuite;
+import com.github.lukfor.nf.test.lang.pipeline.PipelineTestSuite;
 import com.github.lukfor.nf.test.lang.process.ProcessTestSuite;
-import com.github.lukfor.nf.test.lang.workflow.WorkflowTestSuite;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
@@ -15,10 +15,10 @@ import groovy.lang.GroovyShell;
 
 public class TestSuiteBuilder {
 
-	static ITestSuite nextflow(
-			@DelegatesTo(value = WorkflowTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+	static ITestSuite nextflow_pipeline(
+			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 
-		final WorkflowTestSuite suite = new WorkflowTestSuite();
+		final PipelineTestSuite suite = new PipelineTestSuite();
 
 		closure.setDelegate(suite);
 		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
@@ -29,7 +29,7 @@ public class TestSuiteBuilder {
 	}
 
 	static ITestSuite nextflow_process(
-			@DelegatesTo(value = WorkflowTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 
 		final ProcessTestSuite suite = new ProcessTestSuite();
 
@@ -44,7 +44,7 @@ public class TestSuiteBuilder {
 	public static ITestSuite parse(File script) throws Exception {
 
 		ImportCustomizer customizer = new ImportCustomizer();
-		customizer.addStaticImport("com.github.lukfor.nf.test.lang.TestSuiteBuilder", "nextflow");
+		customizer.addStaticImport("com.github.lukfor.nf.test.lang.TestSuiteBuilder", "nextflow_pipeline");
 		customizer.addStaticImport("com.github.lukfor.nf.test.lang.TestSuiteBuilder", "nextflow_process");
 		customizer.addStaticStars("com.github.lukfor.nf.test.util.FileAndPathMethods");
 

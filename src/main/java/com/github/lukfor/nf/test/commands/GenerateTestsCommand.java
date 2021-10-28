@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 
 import com.github.lukfor.nf.test.commands.generate.ITestGenerator;
 import com.github.lukfor.nf.test.commands.generate.ProcessTestGenerator;
-import com.github.lukfor.nf.test.commands.generate.WorkflowTestGenerator;
+import com.github.lukfor.nf.test.commands.generate.PipelineTestGenerator;
 import com.github.lukfor.nf.test.config.Config;
 import com.github.lukfor.nf.test.util.AnsiColors;
 import com.github.lukfor.nf.test.util.FileUtil;
@@ -26,10 +26,10 @@ public class GenerateTestsCommand implements Callable<Integer> {
 
 	}
 
-	@Command(name = "workflow")
-	public Integer workflow(@Parameters(description = "source files") List<File> scripts) {
+	@Command(name = "pipeline")
+	public Integer pipeline(@Parameters(description = "source files") List<File> scripts) {
 
-		return generate(scripts, new WorkflowTestGenerator());
+		return generate(scripts, new PipelineTestGenerator());
 
 	}
 

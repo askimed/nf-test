@@ -1,4 +1,4 @@
-nextflow {
+nextflow_pipeline {
 
   name "An other Testsuite for test1.nf"
 

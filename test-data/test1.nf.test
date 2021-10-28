@@ -1,4 +1,4 @@
-nextflow {
+nextflow_pipeline {
 
   name "Test test1.nf"
 

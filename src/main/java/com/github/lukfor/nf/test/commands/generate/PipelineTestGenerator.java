@@ -11,9 +11,9 @@ import com.github.lukfor.nf.test.util.FileUtil;
 import groovy.lang.Writable;
 import groovy.text.SimpleTemplateEngine;
 
-public class WorkflowTestGenerator implements ITestGenerator {
+public class PipelineTestGenerator implements ITestGenerator {
 
-	public static final String TEMPLATE = "WorkflowTestTemplate.nf.test";
+	public static final String TEMPLATE = "PipelineTestTemplate.nf.test";
 
 	public boolean generate(File source, File target) throws Exception {
 
@@ -32,7 +32,7 @@ public class WorkflowTestGenerator implements ITestGenerator {
 		binding.put("name", name);
 		binding.put("script", script);
 
-		URL templateUrl = WorkflowTestGenerator.class.getResource(TEMPLATE);
+		URL templateUrl = PipelineTestGenerator.class.getResource(TEMPLATE);
 		SimpleTemplateEngine engine = new SimpleTemplateEngine();
 		Writable template = engine.createTemplate(templateUrl).make(binding);
 
@@ -41,7 +41,7 @@ public class WorkflowTestGenerator implements ITestGenerator {
 
 		FileUtil.write(target, template);
 
-		System.out.println(AnsiColors.green("Wrote workflow test file '" + target.getAbsolutePath() + ""));
+		System.out.println(AnsiColors.green("Wrote pipeline test file '" + target.getAbsolutePath() + ""));
 
 		return true;
 
