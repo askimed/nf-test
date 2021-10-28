@@ -3,8 +3,6 @@ nextflow_pipeline {
   name "Test test1.nf"
 
   script "test-data/test1.nf" //main.nf is default
-  profile "docker"
-
 
   test("Should create 5 output files") {
 

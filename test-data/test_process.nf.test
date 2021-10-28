@@ -5,8 +5,6 @@ nextflow_process {
   script "test-data/test_process.nf"
   process "TEST_PROCESS"
 
-  profile "docker"
-
   test("Should create 5 files") {
 
     when {
@@ -30,7 +28,7 @@ nextflow_process {
       def file1 = path process.out.my_output_files.get(0)
       assert file1.fileName.toString() == "1_test.txt"
       assert file1.fileName.toString().endsWith("test.txt")
-      assert file1.text == 'lukas forer\n'
+      assert file1.readLines() == ['lukas forer']
 
       assert process.out.my_output_tuple
       assert process.out.my_output_tuple.size() == 5

@@ -17,7 +17,7 @@ public class AppTest {
 	public void testScript() throws Exception {
 
 		App app = new App();
-		app.run(new String[] { "test-data/test2.nf.test", "test-data/test1.nf.test" });
+		app.run(new String[] { "test", "test-data/test2.nf.test", "test-data/test1.nf.test" });
 
 	}
 

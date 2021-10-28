@@ -37,7 +37,7 @@ public class ProcessTestTest {
 	public void testScriptFailed() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/test_process_failed.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/failures/test_process_failed.nf.test" });
 		assertEquals(1, exitCode);
 
 	}
@@ -46,7 +46,7 @@ public class ProcessTestTest {
 	public void testScriptWithSyntaxError() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/test_process_syntax_error.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/failures/test_process_syntax_error.nf.test" });
 		assertEquals(1, exitCode);
 
 	}

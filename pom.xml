@@ -44,7 +44,6 @@
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-nio</artifactId>
 			<version>3.0.9</version>
-			<type>pom</type>
 		</dependency>
 
 		<dependency>
