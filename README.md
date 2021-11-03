@@ -11,7 +11,7 @@ Documentation can be found [here](https://askimed.github.io/nf-test)
 
 
 ```
-./nf-test test test-data/*.nf.test
+./nf-test test example/*.nf.test
 ```
 
 ## Contact

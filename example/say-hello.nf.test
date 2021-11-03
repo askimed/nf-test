@@ -19,7 +19,8 @@ nextflow_process {
     then {
       assert process.success
       assert process.out.my_tuples == [[1, "sebastian"], [2, "sebastian"], [3, "sebastian"]]
-
+      assert workflow.trace.succeeded().size() == 3
+      assert workflow.trace.failed().size() == 0
     }
 
   }

@@ -113,11 +113,14 @@ public class WorkflowTest implements ITest {
 			System.out.println();
 		}
 
+		File traceFile = new File(jsonFolder, "trace.csv");
+		
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(workflow);
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setConfig(parent.getConfig());
+		nextflow.setTrace(traceFile);
 		nextflow.setSilent(!debug);
 		int exitCode = nextflow.execute();
 

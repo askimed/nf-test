@@ -1,9 +1,11 @@
 package com.askimed.nf.test.lang;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 
-import com.askimed.nf.test.util.FileUtil;
+import com.opencsv.exceptions.CsvValidationException;
 
 import groovy.json.JsonSlurper;
 
@@ -23,7 +25,7 @@ public class WorkflowMeta {
 
 	public void loadFromFolder(File folder) {
 
-		File file = new File(FileUtil.path(folder.getAbsolutePath(), "workflow.json"));
+		File file = new File(folder, "workflow.json");
 
 		if (file.exists()) {
 			JsonSlurper jsonSlurper = new JsonSlurper();
@@ -34,6 +36,23 @@ public class WorkflowMeta {
 			this.errorMessage = getString(map, "errorMessage");
 			this.errorReport = getString(map, "errorReport");
 		}
+
+		File traceFile = new File(folder, "trace.csv");
+		if (traceFile.exists()) {
+			try {
+				trace = new WorkflowTrace(traceFile);
+			} catch (CsvValidationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 	private String getString(Map<Object, Object> map, String key) {
