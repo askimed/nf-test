@@ -95,8 +95,7 @@ public class PipelineTest implements ITest {
 		nextflow.setSilent(!debug);
 		int exitCode = nextflow.execute();
 
-		context.getWorkflow().setExitCode(exitCode);
-
+		context.getWorkflow().exitStatus = exitCode;
 		then.execute(context);
 
 	}

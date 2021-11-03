@@ -17,8 +17,10 @@ public class ChannelsOutput extends HashMap<Object, Object> {
 
 	public void loadFromFolder(File folder, boolean autoSort) {
 		for (File file : folder.listFiles()) {
-			Map<Object, Object> channel = loadFromFile(file, autoSort);
-			putAll(channel);
+			if (file.getName().startsWith("output_")) {
+				Map<Object, Object> channel = loadFromFile(file, autoSort);
+				putAll(channel);
+			}
 		}
 	}
 

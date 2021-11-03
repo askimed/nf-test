@@ -125,6 +125,9 @@ public class ProcessTest implements ITest {
 
 		// Parse json output
 		context.getProcess().getOut().loadFromFolder(jsonFolder, autoSort);
+		context.getProcess().loadFromFolder(jsonFolder);
+		context.getWorkflow().loadFromFolder(jsonFolder);
+		context.getWorkflow().exitStatus = exitCode;
 
 		if (debug) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
@@ -133,9 +136,6 @@ public class ProcessTest implements ITest {
 
 		// delete jsonFolder
 		FileUtil.deleteDirectory(jsonFolder);
-
-		context.getWorkflow().setExitCode(exitCode);
-		context.getProcess().setExitCode(exitCode);
 
 		then.execute(context);
 

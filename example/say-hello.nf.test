@@ -1,0 +1,45 @@
+nextflow_process {
+
+  name "Test process SAY_HELLO"
+
+  script "example/say-hello.nf"
+  process "SAY_HELLO"
+
+  test("Running with positive number should succeed") {
+
+    when {
+      process {
+        """
+        input[0] = "sebastian"
+        input[1] = Channel.of(1,2,3)
+        """
+      }
+    }
+
+    then {
+      assert process.success
+      assert process.out.my_tuples == [[1, "sebastian"], [2, "sebastian"], [3, "sebastian"]]
+
+    }
+
+  }
+
+  test("Running with negative number should fail") {
+
+    when {
+      process {
+        """
+        input[0] = "sebastian"
+        input[1] = Channel.of(-1,2,3)
+        """
+      }
+    }
+
+    then {
+      assert process.failed
+      assert process.errorReport.contains("Negative numbers not allowed")
+    }
+
+  }
+
+}
