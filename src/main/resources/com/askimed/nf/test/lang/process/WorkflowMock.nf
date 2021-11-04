@@ -45,3 +45,16 @@ workflow {
   }
   
 }
+
+
+workflow.onComplete {
+
+	def result = [
+		success: workflow.success,
+		exitStatus: workflow.exitStatus,
+		errorMessage: workflow.errorMessage,
+		errorReport: workflow.errorReport
+	]
+    new File("\${params.nf_testflight_output}/workflow.json").text = jsonOutput.toJson(result)
+    
+}

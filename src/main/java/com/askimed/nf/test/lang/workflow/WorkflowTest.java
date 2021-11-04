@@ -54,7 +54,8 @@ public class WorkflowTest implements ITest {
 		return name;
 	}
 
-	public void setup(@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+	public void setup(
+			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		setup = new TestCode(closure);
 	}
 
@@ -103,25 +104,35 @@ public class WorkflowTest implements ITest {
 		File workflow = new File("test_mock.nf");
 		writeWorkflowMock(workflow);
 
+		File jsonFolder = new File("json");
+		FileUtil.deleteDirectory(jsonFolder);
+		FileUtil.createDirectory(jsonFolder);
+
+		context.getParams().put("nf_testflight_output", jsonFolder.getAbsolutePath());
 		if (debug) {
 			System.out.println();
 		}
 
+		File traceFile = new File(jsonFolder, "trace.csv");
+		
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(workflow);
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setConfig(parent.getConfig());
+		nextflow.setTrace(traceFile);
 		nextflow.setSilent(!debug);
 		int exitCode = nextflow.execute();
 
 		workflow.delete();
 
-		context.getWorkflow().setExitCode(exitCode);
-		context.getProcess().setExitCode(exitCode);
+		context.getWorkflow().loadFromFolder(jsonFolder);
+		context.getWorkflow().exitStatus = exitCode;
 
 		then.execute(context);
 
+		// delete jsonFolder
+		FileUtil.deleteDirectory(jsonFolder);
 	}
 
 	public void cleanup() {

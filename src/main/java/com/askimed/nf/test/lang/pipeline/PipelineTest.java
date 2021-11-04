@@ -6,6 +6,7 @@ import com.askimed.nf.test.core.ITest;
 import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.nextflow.NextflowCommand;
+import com.askimed.nf.test.util.FileUtil;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
@@ -83,19 +84,30 @@ public class PipelineTest implements ITest {
 
 		when.execute(context);
 
+		File jsonFolder = new File("json");
+		FileUtil.deleteDirectory(jsonFolder);
+		FileUtil.createDirectory(jsonFolder);
+
 		if (debug) {
 			System.out.println();
 		}
+
+		File traceFile = new File(jsonFolder, "trace.csv");
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(script);
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setConfig(parent.getConfig());
+		nextflow.setTrace(traceFile);
 		nextflow.setSilent(!debug);
 		int exitCode = nextflow.execute();
 
-		context.getWorkflow().setExitCode(exitCode);
+		context.getWorkflow().loadFromFolder(jsonFolder);
+		context.getWorkflow().exitStatus = exitCode;
+
+		// delete jsonFolder
+		FileUtil.deleteDirectory(jsonFolder);
 
 		then.execute(context);
 
