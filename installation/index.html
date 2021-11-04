@@ -236,9 +236,48 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Installation
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#manual-installation" class="md-nav__link">
+    Manual installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading" class="md-nav__link">
+    Upgrading
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -462,6 +501,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#manual-installation" class="md-nav__link">
+    Manual installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading" class="md-nav__link">
+    Upgrading
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -478,7 +539,20 @@
                 
                 
                 <h1 id="installation">Installation</h1>
-<p>Coming soon....</p>
+<p>nf-test can be used on POSIX compatible systems like Linux or OS X. You can install nf-test using the following script:</p>
+<div class="highlight"><pre><span></span><code>curl -fsSL https://code.askimed.com/install/nf-test <span class="p">|</span> bash
+</code></pre></div>
+<p>If you don't have curl installed, you could use wget:</p>
+<div class="highlight"><pre><span></span><code>wget -qO- https://code.askimed.com/install/nf-test <span class="p">|</span> bash
+</code></pre></div>
+<p>It will create the <code>nf-test</code> executable file in the current directory. Optionally, move the <code>nf-test</code> file to a directory accessible by your <code>$PATH</code> variable.</p>
+<p>Test the installation with the following command:</p>
+<div class="highlight"><pre><span></span><code>nf-test version
+</code></pre></div>
+<h2 id="manual-installation">Manual installation</h2>
+<p>All releases are also available on <a href="https://github.com/askimed/nf-test/releases">Github</a>.</p>
+<h2 id="upgrading">Upgrading</h2>
+<p>TODO</p>
                 
               
               
