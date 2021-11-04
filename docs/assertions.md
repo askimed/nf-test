@@ -1,5 +1,37 @@
 # Assertions
 
+## `process` and `workflow` objects
+
+Examples:
+
+```groovy
+// process status
+assert process.success
+assert process.failed
+assert process.exitStatus == 0
+
+// process error message
+assert process.errorReport.contains("....")
+
+// workflow status
+assert workflow.success
+assert workflow.failed
+assert workflow.exitStatus == 0
+
+// workflow error message
+assert workflow.errorReport.contains("....")
+
+// trace
+//returns a list containing succeeded tasks
+assert workflow.trace.succeeded().size() == 3
+
+//returns a list containing failed tasks
+assert workflow.trace.failed().size() == 0
+
+//returns a list containing all tasks
+assert workflow.trace.tasks().size() == 3
+```
+
 ## Use regular expressions
 
 The operator `==~` can be used to check if a string matches a regular expression:

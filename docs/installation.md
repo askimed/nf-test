@@ -1,6 +1,6 @@
 # Installation
 
-nf-test can be used on POSIX compatible systems like Linux or OS X. You can install nf-test using the following script:
+nf-test has the same requirements as MExtflow and can be used on POSIX compatible systems like Linux or OS X. You can install nf-test using the following command:
 
 ```bash
 curl -fsSL https://code.askimed.com/install/nf-test | bash
