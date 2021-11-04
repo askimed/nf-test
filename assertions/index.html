@@ -444,6 +444,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#process-and-workflow-objects" class="md-nav__link">
+    process and workflow objects
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#use-regular-expressions" class="md-nav__link">
     Use regular expressions
   </a>
@@ -515,6 +522,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#process-and-workflow-objects" class="md-nav__link">
+    process and workflow objects
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#use-regular-expressions" class="md-nav__link">
     Use regular expressions
   </a>
@@ -553,6 +567,34 @@
                 
                 
                 <h1 id="assertions">Assertions</h1>
+<h2 id="process-and-workflow-objects"><code>process</code> and <code>workflow</code> objects</h2>
+<p>Examples:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// process status</span>
+<span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">success</span>
+<span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">failed</span>
+<span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">exitStatus</span> <span class="o">==</span> <span class="mi">0</span>
+
+<span class="c1">// process error message</span>
+<span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">errorReport</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;....&quot;</span><span class="o">)</span>
+
+<span class="c1">// workflow status</span>
+<span class="k">assert</span> <span class="n">workflow</span><span class="o">.</span><span class="na">success</span>
+<span class="k">assert</span> <span class="n">workflow</span><span class="o">.</span><span class="na">failed</span>
+<span class="k">assert</span> <span class="n">workflow</span><span class="o">.</span><span class="na">exitStatus</span> <span class="o">==</span> <span class="mi">0</span>
+
+<span class="c1">// workflow error message</span>
+<span class="k">assert</span> <span class="n">workflow</span><span class="o">.</span><span class="na">errorReport</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;....&quot;</span><span class="o">)</span>
+
+<span class="c1">// trace</span>
+<span class="c1">//returns a list containing succeeded tasks</span>
+<span class="k">assert</span> <span class="n">workflow</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">succeeded</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">3</span>
+
+<span class="c1">//returns a list containing failed tasks</span>
+<span class="k">assert</span> <span class="n">workflow</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">failed</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span>
+
+<span class="c1">//returns a list containing all tasks</span>
+<span class="k">assert</span> <span class="n">workflow</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">3</span>
+</code></pre></div>
 <h2 id="use-regular-expressions">Use regular expressions</h2>
 <p>The operator <code>==~</code> can be used to check if a string matches a regular expression:</p>
 <div class="highlight"><pre><span></span><code>assert &quot;/my/full/path/to/process/dir/example.vcf.pgen&quot; ==~ &quot;.*/example.vcf.pgen&quot;
