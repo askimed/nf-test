@@ -1,10 +1,42 @@
-# `nextflow_workflow`
+# Workflow Testing
 
-## Properties
+## Syntax
+```Groovy
+nextflow_workflow {
 
-### `name`
-### `script`
-### `workflow`
+    name "<NAME>"
+    script "<PATH/TO/NEXTFLOW_SCRIPT.nf>"
+    workflow "<WORKFLOW_NAME>"
+
+    test("<TEST_NAME>") {
+
+    }
+}
+```
+
+## Assertions
+
+The `workflow` object can be used in asserts to check its status, error messages or traces.
+
+```groovy
+// workflow status
+assert workflow.success
+assert workflow.failed
+assert workflow.exitStatus == 0
+
+// workflow error message
+assert workflow.errorReport.contains("....")
+
+// trace
+//returns a list containing succeeded tasks
+assert workflow.trace.succeeded().size() == 3
+
+//returns a list containing failed tasks
+assert workflow.trace.failed().size() == 0
+
+//returns a list containing all tasks
+assert workflow.trace.tasks().size() == 3
+```
 
 
 ## Example
@@ -20,20 +52,18 @@ nextflow_workflow {
 
         when {
             params {
-                // define parameters here. Example:
-                // outdir = "tests/results"
+                outdir = "tests/results"
             }
             workflow {
                 """
-                // define inputs of the process here. Example:
-                // input[0] = file("test-file.txt")
+                input[0] = file("test-file.txt")
                 """
             }
         }
 
         then {
             assert workflow.success
-
+            assert path("tests/results/output.txt").exists()
         }
 
     }

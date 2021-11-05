@@ -1,5 +1,8 @@
 # Getting started
 
+This guide helps you to understand the concepts of nf-test and to learn writing your first testcase. You have to [install](installation.md) nf-test properly on your computer before you can start. Moreover, this guide assumes that you have a basic knowledge of Groovy and unit testing. The [Groovy documentation](http://groovy-lang.org/documentation.html) is the best place to learn its syntax.
+
+
 For this example we use the [`gwas-regenie`](https://github.com/genepi/gwas-regenie) pipeline. Open the terminal and clone the pipeline:
 
 ```bash
@@ -17,7 +20,7 @@ We use the [`imputed_to_plink2.nf`]() process to create a testcase from scratch.
 Before we start creating our testcases, we use the `init` command to setup nf-test:
 
 ```bash
-$ nf-test init
+nf-test init
 ```
 
 The `init` command creates the following files in the root directory of the pipeline: `nf-test.config` and `tests/nextflow.config`. It also creates a folder `tests` which is the home of your testcode.
@@ -32,7 +35,7 @@ The `generate` command helps you to create skeleton test code for a Nextflow pro
 Here we generate a testcase for the process `imputed_to_plink2.nf`:
 
 ```bash
-$ nf-test generate process modules/local/imputed_to_plink2.nf
+nf-test generate process modules/local/imputed_to_plink2.nf
 ```
 
 This command creates a new file `tests/modules/local/imputed_to_plink2.nf.test` with the following content:
@@ -104,7 +107,7 @@ Everything that is defined in the process block is later executed in the Nextflo
 
 The `then` block describes the expected output channels of the process when we execute it with the input parameters from the `when` block.
 
-The `then` block typically contains mainly assertions to check for example the size and the content of an output channel. However, this block accepts every Groovy script so you can import also third party libraries to define very specific assertions (e.g. a VCF-File Reader can be used to check number of variants).
+The `then` block typically contains mainly assertions to check assumptions (e.g. the size and the content of an output channel). However, this block accepts every Groovy script so you can import also third party libraries to define very specific assertions (e.g. a VCF-File Reader can be used to check number of variants).
 
 nf-test automatically loads all output channels of the process and all their items into a map named `process.out`. You can then use this map to formulate your assertions.
 
@@ -186,7 +189,7 @@ nextflow_process {
 Now, the `test` command can be used to run your test:
 
 ```bash
-$ nf-test test tests/modules/local/imputed_to_plink2.nf.test --profile docker
+nf-test test tests/modules/local/imputed_to_plink2.nf.test --profile docker
 ```
 
 In this case, the `docker` profile defined in the Nextflow pipeline is used to execute the test. The profile is set using the `--profile` parameter, but you can also define a default profile in the [configuration file](configuration.md).

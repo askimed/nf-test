@@ -23,15 +23,19 @@ nav:
   - Home: index.md
   - Installation: installation.md
   - Getting Started: getting-started.md
-  - Testcases:
-    - nextflow_process: testcases/nextflow_process.md
-    - nextflow_workflow: testcases/nextflow_workflow.md
-    - nextflow_pipeline: testcases/nextflow_pipeline.md
+  - Writing Tests:
+    - Process Testing: testcases/nextflow_process.md
+    - Workflow Testing: testcases/nextflow_workflow.md
+    - Pipeline Testing: testcases/nextflow_pipeline.md
+  - Writing Assertions:
+    - Power Assertions: assertions/assertions.md
+    - Files: assertions/files.md
+    - Regular Expressions: assertions/regular-expressions.md
+    - Using Third-Party Libraries: assertions/libraries.md
   - Command line interface (CLI):
     - init: cli/init.md
     - generate: cli/generate.md
     - test: cli/test.md
-  - Assertions: assertions.md
   - Configuration: configuration.md
 
 
