@@ -356,14 +356,14 @@
       
       
         <label class="md-nav__link" for="__nav_4">
-          Testcases
+          Writing Tests
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Testcases" data-md-level="1">
+      <nav class="md-nav" aria-label="Writing Tests" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          Testcases
+          Writing Tests
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -374,7 +374,7 @@
   
     <li class="md-nav__item">
       <a href="../testcases/nextflow_process/" class="md-nav__link">
-        nextflow_process
+        Process Testing
       </a>
     </li>
   
@@ -388,7 +388,7 @@
   
     <li class="md-nav__item">
       <a href="../testcases/nextflow_workflow/" class="md-nav__link">
-        nextflow_workflow
+        Workflow Testing
       </a>
     </li>
   
@@ -402,7 +402,7 @@
   
     <li class="md-nav__item">
       <a href="../testcases/nextflow_pipeline/" class="md-nav__link">
-        nextflow_pipeline
+        Pipeline Testing
       </a>
     </li>
   
@@ -432,12 +432,102 @@
       
       
         <label class="md-nav__link" for="__nav_5">
+          Writing Assertions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Writing Assertions" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Writing Assertions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/assertions/" class="md-nav__link">
+        Power Assertions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/files/" class="md-nav__link">
+        Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/regular-expressions/" class="md-nav__link">
+        Regular Expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/libraries/" class="md-nav__link">
+        Using Third-Party Libraries
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
           Command line interface (CLI)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Command line interface (CLI)" data-md-level="1">
-        <label class="md-nav__title" for="__nav_5">
+        <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Command line interface (CLI)
         </label>
@@ -487,21 +577,6 @@
           
         </ul>
       </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../assertions/" class="md-nav__link">
-        Assertions
-      </a>
     </li>
   
 
@@ -621,6 +696,7 @@
                 
                 
                 <h1 id="getting-started">Getting started</h1>
+<p>This guide helps you to understand the concepts of nf-test and to learn writing your first testcase. You have to <a href="../installation/">install</a> nf-test properly on your computer before you can start. Moreover, this guide assumes that you have a basic knowledge of Groovy and unit testing. The <a href="http://groovy-lang.org/documentation.html">Groovy documentation</a> is the best place to learn its syntax.</p>
 <p>For this example we use the <a href="https://github.com/genepi/gwas-regenie"><code>gwas-regenie</code></a> pipeline. Open the terminal and clone the pipeline:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># clone nextflow pipeline</span>
 git clone https://github.com/genepi/gwas-regenie
@@ -631,14 +707,14 @@ git clone https://github.com/genepi/gwas-regenie
 <p>We use the <a href=""><code>imputed_to_plink2.nf</code></a> process to create a testcase from scratch. This process takes a vcf file as input and converts it into the Plink2 format.</p>
 <h2 id="init">Init</h2>
 <p>Before we start creating our testcases, we use the <code>init</code> command to setup nf-test:</p>
-<div class="highlight"><pre><span></span><code>$ nf-test init
+<div class="highlight"><pre><span></span><code>nf-test init
 </code></pre></div>
 <p>The <code>init</code> command creates the following files in the root directory of the pipeline: <code>nf-test.config</code> and <code>tests/nextflow.config</code>. It also creates a folder <code>tests</code> which is the home of your testcode.</p>
 <p>In the <a href="../configuration/">configuration</a> section you can learn more about this files.</p>
 <h2 id="create-your-first-test">Create your first test</h2>
 <p>The <code>generate</code> command helps you to create skeleton test code for a Nextflow process or the whole workflow.</p>
 <p>Here we generate a testcase for the process <code>imputed_to_plink2.nf</code>:</p>
-<div class="highlight"><pre><span></span><code>$ nf-test generate process modules/local/imputed_to_plink2.nf
+<div class="highlight"><pre><span></span><code>nf-test generate process modules/local/imputed_to_plink2.nf
 </code></pre></div>
 <p>This command creates a new file <code>tests/modules/local/imputed_to_plink2.nf.test</code> with the following content:</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span> <span class="o">{</span>
@@ -695,7 +771,7 @@ git clone https://github.com/genepi/gwas-regenie
 <p>Everything that is defined in the process block is later executed in the Nextflow script that is created automatically to test your process. Therefore, you can use every Nextflow specific functions and commands to define the values of the input array (e.g. Channels, files, ...).</p>
 <h3 id="the-then-block">The <code>then</code> block</h3>
 <p>The <code>then</code> block describes the expected output channels of the process when we execute it with the input parameters from the <code>when</code> block.</p>
-<p>The <code>then</code> block typically contains mainly assertions to check for example the size and the content of an output channel. However, this block accepts every Groovy script so you can import also third party libraries to define very specific assertions (e.g. a VCF-File Reader can be used to check number of variants).</p>
+<p>The <code>then</code> block typically contains mainly assertions to check assumptions (e.g. the size and the content of an output channel). However, this block accepts every Groovy script so you can import also third party libraries to define very specific assertions (e.g. a VCF-File Reader can be used to check number of variants).</p>
 <p>nf-test automatically loads all output channels of the process and all their items into a map named <code>process.out</code>. You can then use this map to formulate your assertions.</p>
 <p>For example, in the <code>imputed_to_plink2</code> process we expect to get an tuple that contains the filename, the pgen file, the psam file and the pvar file. Let us update the <code>then</code> section with some assertions that describe our expectations:</p>
 <div class="highlight"><pre><span></span><code><span class="n">then</span> <span class="o">{</span>
@@ -721,7 +797,7 @@ git clone https://github.com/genepi/gwas-regenie
 </code></pre></div>
 <p><small>
 1️⃣  we use a regular expression matching to check the filename, because the channels contains always the full path to an output file.</p>
-<p>2️⃣  since we get the full path to a file, we can open it and compare the number of lines. We can also calculate a hash of the file and compare it with an expected one. See <a href="../assertions/">Assertions</a> for some examples and inspiration.
+<p>2️⃣  since we get the full path to a file, we can open it and compare the number of lines. We can also calculate a hash of the file and compare it with an expected one. See <a href="assertions.md">Assertions</a> for some examples and inspiration.
 </small></p>
 <p>The items of a channel are always sorted by nf-test. This provides a deterministic order inside the channel and enables you to write reproducible tests.</p>
 <h2 id="your-first-test-specification">Your first test specification</h2>
@@ -762,7 +838,7 @@ git clone https://github.com/genepi/gwas-regenie
 </code></pre></div>
 <h2 id="run-your-first-test">Run your first test</h2>
 <p>Now, the <code>test</code> command can be used to run your test:</p>
-<div class="highlight"><pre><span></span><code>$ nf-test <span class="nb">test</span> tests/modules/local/imputed_to_plink2.nf.test --profile docker
+<div class="highlight"><pre><span></span><code>nf-test <span class="nb">test</span> tests/modules/local/imputed_to_plink2.nf.test --profile docker
 </code></pre></div>
 <p>In this case, the <code>docker</code> profile defined in the Nextflow pipeline is used to execute the test. The profile is set using the <code>--profile</code> parameter, but you can also define a default profile in the <a href="../configuration/">configuration file</a>.</p>
 <p>Congratulation! You created you first nf-test specification.</p>
@@ -807,13 +883,13 @@ git clone https://github.com/genepi/gwas-regenie
       
       
         
-        <a href="../testcases/nextflow_process/" class="md-footer__link md-footer__link--next" aria-label="Next: nextflow_process" rel="next">
+        <a href="../testcases/nextflow_process/" class="md-footer__link md-footer__link--next" aria-label="Next: Process Testing" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              nextflow_process
+              Process Testing
             </div>
           </div>
           <div class="md-footer__button md-icon">
