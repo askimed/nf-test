@@ -24,6 +24,10 @@ nf-test version
 
 All releases are also available on [Github](https://github.com/askimed/nf-test/releases).
 
-## Upgrading
+## Updating
 
-TODO
+To update an existing nf-test installtion to the latest version, run the following command:
+
+```sh
+nf-test update
+```
