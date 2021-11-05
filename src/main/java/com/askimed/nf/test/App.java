@@ -3,6 +3,7 @@ package com.askimed.nf.test;
 import com.askimed.nf.test.commands.GenerateTestsCommand;
 import com.askimed.nf.test.commands.InitCommand;
 import com.askimed.nf.test.commands.RunTestsCommand;
+import com.askimed.nf.test.commands.VersionCommand;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.Emoji;
 
@@ -24,6 +25,7 @@ public class App {
 		commandLine.addSubcommand("init", new InitCommand());
 		commandLine.addSubcommand("test", new RunTestsCommand());
 		commandLine.addSubcommand("generate", new GenerateTestsCommand());
+		commandLine.addSubcommand("version", new VersionCommand());
 		commandLine.setExecutionStrategy(new CommandLine.RunLast());
 		return commandLine.execute(args);
 

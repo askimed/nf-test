@@ -29,6 +29,8 @@ public class NextflowCommand {
 
 	private Map<String, Object> params;
 
+	public static String ERROR = "Nextflow Binary not found. Please check if Nextflow is in a directory accessible by your $PATH variable or set $NEXTFLOW_HOME.";
+
 	public NextflowCommand() {
 		binary = new BinaryFinder("nextflow").env("NEXTFLOW_HOME").envPath().path("/usr/local/bin").find();
 	}
@@ -68,7 +70,7 @@ public class NextflowCommand {
 	public int execute() throws IOException {
 
 		if (binary == null) {
-			throw new IOException("Nextflow Binary not found. Please check PATH or set NEXTFLOW_HOME.");
+			throw new IOException(ERROR);
 		}
 
 		File paramsFile = File.createTempFile("params", ".json");
@@ -102,6 +104,23 @@ public class NextflowCommand {
 		if (!silent) {
 			System.out.println("Command: " + nextflow.getExecutedCommand());
 		}
+		return nextflow.execute();
+
+	}
+
+	public int printVersion() throws IOException {
+
+		if (binary == null) {
+			throw new IOException(ERROR);
+		}
+
+		List<String> args = new Vector<String>();
+		args.add("-version");
+
+		Command nextflow = new Command(binary);
+		nextflow.setParams(args);
+		nextflow.setSilent(false);
+
 		return nextflow.execute();
 
 	}
