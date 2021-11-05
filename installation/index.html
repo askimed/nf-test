@@ -262,8 +262,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#manual-installation" class="md-nav__link">
-    Manual installation
+  <a href="#nextflow-binary-not-found" class="md-nav__link">
+    Nextflow Binary not found
   </a>
   
 </li>
@@ -271,6 +271,13 @@
         <li class="md-nav__item">
   <a href="#updating" class="md-nav__link">
     Updating
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-installation" class="md-nav__link">
+    Manual installation
   </a>
   
 </li>
@@ -508,8 +515,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#manual-installation" class="md-nav__link">
-    Manual installation
+  <a href="#nextflow-binary-not-found" class="md-nav__link">
+    Nextflow Binary not found
   </a>
   
 </li>
@@ -517,6 +524,13 @@
         <li class="md-nav__item">
   <a href="#updating" class="md-nav__link">
     Updating
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-installation" class="md-nav__link">
+    Manual installation
   </a>
   
 </li>
@@ -549,12 +563,40 @@
 <p>Test the installation with the following command:</p>
 <div class="highlight"><pre><span></span><code>nf-test version
 </code></pre></div>
-<h2 id="manual-installation">Manual installation</h2>
-<p>All releases are also available on <a href="https://github.com/askimed/nf-test/releases">Github</a>.</p>
+<p>You should see something like this:</p>
+<div class="highlight"><pre><span></span><code>🚀 nf-test 0.2.2
+https://code.askimed.com/nf-test
+(c) 2021 Lukas Forer and Sebastian Schoenherr
+
+Nextflow Runtime:
+
+      N E X T F L O W
+      version 21.04.3 build 5560
+      created 21-07-2021 15:09 UTC (17:09 CEST)
+      cite doi:10.1038/nbt.3820
+      http://nextflow.io
+</code></pre></div>
+<p>Now you are ready to write your <a href="../getting-started/">first testcase</a>.</p>
+<h3 id="nextflow-binary-not-found">Nextflow Binary not found</h3>
+<p>If you get an error message like this, then nf-test was not able to detect your nextflow installation.</p>
+<div class="highlight"><pre><span></span><code>🚀 nf-test 0.2.2
+https://code.askimed.com/nf-test
+(c) 2021 Lukas Forer and Sebastian Schoenherr
+
+Nextflow Runtime:
+Error: Nextflow Binary not found. Please check if Nextflow is in a directory accessible by your $PATH variable or set $NEXTFLOW_HOME.
+</code></pre></div>
+<p>To solve this issue you have two possibilites:</p>
+<ul>
+<li>Move your Nextflow binary to a directory accessible by your <code>$PATH</code> variable.</li>
+<li>Set the environment variable <code>NEXTFLOW_HOME</code> to the directory that contains the Nextflow binary.</li>
+</ul>
 <h2 id="updating">Updating</h2>
 <p>To update an existing nf-test installtion to the latest version, run the following command:</p>
 <div class="highlight"><pre><span></span><code>nf-test update
 </code></pre></div>
+<h2 id="manual-installation">Manual installation</h2>
+<p>All releases are also available on <a href="https://github.com/askimed/nf-test/releases">Github</a>.</p>
                 
               
               
