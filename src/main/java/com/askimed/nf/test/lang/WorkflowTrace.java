@@ -25,7 +25,6 @@ public class WorkflowTrace {
 		Map<String, String> values = reader.readMap();
 		while (values != null) {
 			WorkflowTask task = new WorkflowTask();
-			System.out.println(values);
 			task.success = values.get("status").equals("COMPLETED");
 			task.name = values.get("name");
 			tasks.add(task);
