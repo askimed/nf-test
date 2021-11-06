@@ -1,0 +1,21 @@
+nextflow_pipeline {
+
+  name "Test Hello World"
+  script "nextflow-io/hello"
+
+  test("hello world example should start 4 processes") {
+
+    when {
+
+    }
+
+    then {
+      assert workflow.success
+      assert workflow.trace.tasks().size() == 4
+      assert workflow.trace.succeeded().size() == 4
+      assert workflow.trace.failed().size() == 0      
+    }
+
+  }
+
+}

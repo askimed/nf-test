@@ -116,7 +116,7 @@ public class WorkflowTest implements ITest {
 		File traceFile = new File(jsonFolder, "trace.csv");
 		
 		NextflowCommand nextflow = new NextflowCommand();
-		nextflow.setScript(workflow);
+		nextflow.setScript(workflow.getAbsolutePath());
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setConfig(parent.getConfig());

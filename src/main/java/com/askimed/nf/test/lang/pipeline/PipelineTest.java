@@ -74,9 +74,9 @@ public class PipelineTest implements ITest {
 
 		File script = new File(parent.getScript());
 
-		if (!script.exists()) {
-			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
-		}
+		//if (!script.exists()) {
+	//		throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
+	//	}
 
 		if (setup != null) {
 			setup.execute(context);
@@ -95,7 +95,7 @@ public class PipelineTest implements ITest {
 		File traceFile = new File(jsonFolder, "trace.csv");
 
 		NextflowCommand nextflow = new NextflowCommand();
-		nextflow.setScript(script);
+		nextflow.setScript(parent.getScript());
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setConfig(parent.getConfig());
