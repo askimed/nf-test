@@ -661,6 +661,9 @@
 
 <span class="c1">//returns a list containing all tasks</span>
 <span class="k">assert</span> <span class="n">workflow</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">3</span>
+
+<span class="c1">//returns a list containing all lines from stdout</span>
+<span class="k">assert</span> <span class="n">workflow</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Hello World&quot;</span><span class="o">)</span> <span class="o">==</span> <span class="mi">3</span>
 </code></pre></div>
 <h2 id="example">Example</h2>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_workflow</span> <span class="o">{</span>

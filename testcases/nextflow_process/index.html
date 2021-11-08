@@ -692,6 +692,9 @@
 
 <span class="c1">// process error message</span>
 <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">errorReport</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;....&quot;</span><span class="o">)</span>
+
+<span class="c1">//returns a list containing all lines from stdout</span>
+<span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Hello World&quot;</span><span class="o">)</span> <span class="o">==</span> <span class="mi">3</span>
 </code></pre></div>
 <h3 id="output-channels">Output Channels</h3>
 <p>The <code>process.out</code> object provides access to the content of all named output Channels (see Nextflow <code>emit</code>):</p>
