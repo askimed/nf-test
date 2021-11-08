@@ -56,6 +56,11 @@ public class PipelineTest extends AbstractTest {
 		when = new TestCode(closure);
 	}
 
+	public void expect(
+			@DelegatesTo(value = PipelineTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		then = new TestCode(closure);
+	}
+
 	public void then(@DelegatesTo(value = PipelineTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		then = new TestCode(closure);
 	}
@@ -76,7 +81,9 @@ public class PipelineTest extends AbstractTest {
 			setup.execute(context);
 		}
 
-		when.execute(context);
+		if (when != null) {
+			when.execute(context);
+		}
 
 		if (debug) {
 			System.out.println();
