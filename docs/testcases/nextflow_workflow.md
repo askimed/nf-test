@@ -36,6 +36,10 @@ assert workflow.trace.failed().size() == 0
 
 //returns a list containing all tasks
 assert workflow.trace.tasks().size() == 3
+
+//returns a list containing all lines from stdout
+assert workflow.stdout.contains("Hello World") == 3
+
 ```
 
 

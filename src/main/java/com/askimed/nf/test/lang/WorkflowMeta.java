@@ -3,7 +3,13 @@ package com.askimed.nf.test.lang;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
+
+import org.apache.ivy.util.FileUtil;
+import org.apache.tools.ant.util.FileUtils;
 
 import com.opencsv.exceptions.CsvValidationException;
 
@@ -23,6 +29,8 @@ public class WorkflowMeta {
 
 	public WorkflowTrace trace;
 
+	public List<String> stdout = new Vector<String>();
+
 	public void loadFromFolder(File folder) {
 
 		File file = new File(folder, "workflow.json");
@@ -30,11 +38,21 @@ public class WorkflowMeta {
 		if (file.exists()) {
 			JsonSlurper jsonSlurper = new JsonSlurper();
 			Map<Object, Object> map = (Map<Object, Object>) jsonSlurper.parse(file);
+			System.out.println("Success: " + getBoolean(map, "success"));
 			this.success = getBoolean(map, "success");
 			this.failed = !this.success;
 			this.exitStatus = getInteger(map, "exitStatus");
 			this.errorMessage = getString(map, "errorMessage");
 			this.errorReport = getString(map, "errorReport");
+		}
+
+		File outFile = new File(folder, "std.out");
+		if (outFile.exists()) {		
+			try {
+				stdout =Files.readAllLines(outFile.toPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		File traceFile = new File(folder, "trace.csv");

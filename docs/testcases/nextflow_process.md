@@ -29,6 +29,9 @@ assert process.exitStatus == 0
 
 // process error message
 assert process.errorReport.contains("....")
+
+//returns a list containing all lines from stdout
+assert process.stdout.contains("Hello World") == 3
 ```
 
 ### Output Channels

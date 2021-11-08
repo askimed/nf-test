@@ -6,6 +6,8 @@ public class TestExecutionResult {
 
 	private Throwable throwable;
 
+	private String errorReport;
+
 	private long startTime;
 
 	private long endTime;
@@ -44,6 +46,14 @@ public class TestExecutionResult {
 
 	public double getExecutionTimeInSecs() {
 		return (endTime - startTime) / 1000.0;
+	}
+
+	public void setErrorReport(String errorReport) {
+		this.errorReport = errorReport;
+	}
+
+	public String getErrorReport() {
+		return errorReport;
 	}
 
 }

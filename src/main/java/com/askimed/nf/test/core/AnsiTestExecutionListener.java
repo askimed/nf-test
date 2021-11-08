@@ -99,6 +99,9 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 			if (debug) {
 				result.getThrowable().printStackTrace();
 			}
+			if (result.getErrorReport() != null) {
+				System.out.println(AnsiText.padding(AnsiColors.red(result.getErrorReport()), TEST_PADDING));
+			}
 			System.out.println();
 			break;
 

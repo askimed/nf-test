@@ -2,16 +2,15 @@ package com.askimed.nf.test.lang.pipeline;
 
 import java.io.File;
 
-import com.askimed.nf.test.core.ITest;
+import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.nextflow.NextflowCommand;
-import com.askimed.nf.test.util.FileUtil;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
 
-public class PipelineTest implements ITest {
+public class PipelineTest extends AbstractTest {
 
 	private String name = "Unknown test";
 
@@ -30,6 +29,7 @@ public class PipelineTest implements ITest {
 	private TestContext context;
 
 	public PipelineTest(PipelineTestSuite parent) {
+		super();
 		this.parent = parent;
 		context = new TestContext();
 	}
@@ -72,27 +72,18 @@ public class PipelineTest implements ITest {
 	@Override
 	public void execute() throws Throwable {
 
-		File script = new File(parent.getScript());
-
-		//if (!script.exists()) {
-	//		throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
-	//	}
-
 		if (setup != null) {
 			setup.execute(context);
 		}
 
 		when.execute(context);
 
-		File jsonFolder = new File("json");
-		FileUtil.deleteDirectory(jsonFolder);
-		FileUtil.createDirectory(jsonFolder);
-
 		if (debug) {
 			System.out.println();
 		}
 
-		File traceFile = new File(jsonFolder, "trace.csv");
+		File traceFile = new File(directory, "trace.csv");
+		File outFile = new File(directory, "std.out");
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(parent.getScript());
@@ -100,14 +91,14 @@ public class PipelineTest implements ITest {
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setConfig(parent.getConfig());
 		nextflow.setTrace(traceFile);
+		nextflow.setOut(outFile);
 		nextflow.setSilent(!debug);
 		int exitCode = nextflow.execute();
 
-		context.getWorkflow().loadFromFolder(jsonFolder);
+		context.getWorkflow().loadFromFolder(directory);
 		context.getWorkflow().exitStatus = exitCode;
-
-		// delete jsonFolder
-		FileUtil.deleteDirectory(jsonFolder);
+		context.getWorkflow().success = (exitCode == 0);
+		context.getWorkflow().failed = (exitCode != 0);
 
 		then.execute(context);
 

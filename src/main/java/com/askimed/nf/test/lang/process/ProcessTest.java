@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.codehaus.groovy.control.CompilationFailedException;
 
-import com.askimed.nf.test.core.ITest;
+import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.nextflow.NextflowCommand;
@@ -20,7 +20,7 @@ import groovy.lang.DelegatesTo;
 import groovy.lang.Writable;
 import groovy.text.SimpleTemplateEngine;
 
-public class ProcessTest implements ITest {
+public class ProcessTest extends AbstractTest {
 
 	private String name = "Unknown test";
 
@@ -41,6 +41,7 @@ public class ProcessTest implements ITest {
 	private TestContext context;
 
 	public ProcessTest(ProcessTestSuite parent) {
+		super();
 		this.parent = parent;
 		context = new TestContext();
 		context.setName(parent.getProcess());
@@ -103,17 +104,13 @@ public class ProcessTest implements ITest {
 		File workflow = new File("test_mock.nf");
 		writeWorkflowMock(workflow);
 
-		File jsonFolder = new File("json");
-		FileUtil.deleteDirectory(jsonFolder);
-		FileUtil.createDirectory(jsonFolder);
-
-		context.getParams().put("nf_testflight_output", jsonFolder.getAbsolutePath());
+		context.getParams().put("nf_testflight_output", directory.getAbsolutePath());
 
 		if (debug) {
 			System.out.println();
 		}
 
-		File traceFile = new File(jsonFolder, "trace.csv");
+		File traceFile = new File(directory, "trace.csv");
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(workflow.getAbsolutePath());
@@ -127,19 +124,16 @@ public class ProcessTest implements ITest {
 		workflow.delete();
 
 		// Parse json output
-		context.getProcess().getOut().loadFromFolder(jsonFolder, autoSort);
-		context.getProcess().loadFromFolder(jsonFolder);
+		context.getProcess().getOut().loadFromFolder(directory, autoSort);
+		context.getProcess().loadFromFolder(directory);
 		context.getProcess().exitStatus = exitCode;
-		context.getWorkflow().loadFromFolder(jsonFolder);
+		context.getWorkflow().loadFromFolder(directory);
 		context.getWorkflow().exitStatus = exitCode;
 
 		if (debug) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.getProcess().getOut().view();
 		}
-
-		// delete jsonFolder
-		FileUtil.deleteDirectory(jsonFolder);
 
 		then.execute(context);
 
@@ -150,7 +144,7 @@ public class ProcessTest implements ITest {
 			cleanup.execute(context);
 		}
 	}
-
+	
 	protected void writeWorkflowMock(File file) throws IOException, CompilationFailedException, ClassNotFoundException {
 
 		String script = parent.getScript();

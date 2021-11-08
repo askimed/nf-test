@@ -11,9 +11,12 @@ nextflow_pipeline {
 
     then {
       assert workflow.success
-      assert workflow.trace.tasks().size() == 4
-      assert workflow.trace.succeeded().size() == 4
-      assert workflow.trace.failed().size() == 0      
+      with(workflow.trace){
+       	assert tasks().size() == 4
+        assert succeeded().size() == 4
+        assert failed().size() == 0
+      }
+      assert workflow.stdout.containsAll(['Ciao world!', 'Bonjour world!', 'Hello world!', 'Hola world!'])
     }
 
   }

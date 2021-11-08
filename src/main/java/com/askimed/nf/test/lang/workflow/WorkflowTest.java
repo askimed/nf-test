@@ -8,11 +8,10 @@ import java.util.Map;
 
 import org.codehaus.groovy.control.CompilationFailedException;
 
-import com.askimed.nf.test.core.ITest;
+import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.nextflow.NextflowCommand;
-import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
 
 import groovy.lang.Closure;
@@ -20,13 +19,11 @@ import groovy.lang.DelegatesTo;
 import groovy.lang.Writable;
 import groovy.text.SimpleTemplateEngine;
 
-public class WorkflowTest implements ITest {
+public class WorkflowTest extends AbstractTest {
 
 	private String name = "Unknown test";
 
 	private boolean debug = false;
-
-	private boolean autoSort = true;
 
 	private TestCode setup;
 
@@ -41,6 +38,7 @@ public class WorkflowTest implements ITest {
 	private TestContext context;
 
 	public WorkflowTest(WorkflowTestSuite parent) {
+		super();
 		this.parent = parent;
 		context = new TestContext();
 		context.setName(parent.getWorkflow());
@@ -81,10 +79,6 @@ public class WorkflowTest implements ITest {
 		this.debug = debug;
 	}
 
-	public void autoSort(boolean autoSort) {
-		this.autoSort = autoSort;
-	}
-
 	@Override
 	public void execute() throws Throwable {
 
@@ -104,17 +98,13 @@ public class WorkflowTest implements ITest {
 		File workflow = new File("test_mock.nf");
 		writeWorkflowMock(workflow);
 
-		File jsonFolder = new File("json");
-		FileUtil.deleteDirectory(jsonFolder);
-		FileUtil.createDirectory(jsonFolder);
-
-		context.getParams().put("nf_testflight_output", jsonFolder.getAbsolutePath());
+		context.getParams().put("nf_testflight_output", directory.getAbsolutePath());
 		if (debug) {
 			System.out.println();
 		}
 
-		File traceFile = new File(jsonFolder, "trace.csv");
-		
+		File traceFile = new File(directory, "trace.csv");
+
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(workflow.getAbsolutePath());
 		nextflow.setParams(context.getParams());
@@ -126,13 +116,11 @@ public class WorkflowTest implements ITest {
 
 		workflow.delete();
 
-		context.getWorkflow().loadFromFolder(jsonFolder);
+		context.getWorkflow().loadFromFolder(directory);
 		context.getWorkflow().exitStatus = exitCode;
 
 		then.execute(context);
 
-		// delete jsonFolder
-		FileUtil.deleteDirectory(jsonFolder);
 	}
 
 	public void cleanup() {

@@ -90,7 +90,7 @@ public class TestExecutionEngine {
 			for (ITest test : testSuite.getTests()) {
 				listener.executionStarted(test);
 				TestExecutionResult result = new TestExecutionResult();
-
+				test.setup();
 				try {
 
 					// override debug flag from CLI
@@ -106,8 +106,10 @@ public class TestExecutionEngine {
 
 					result.setStatus(TestExecutionResultStatus.FAILED);
 					result.setThrowable(e);
+					result.setErrorReport(test.getErrorReport());
 
 				}
+				test.cleanup();
 				result.setEndTime(System.currentTimeMillis());
 				listener.executionFinished(test, result);
 
