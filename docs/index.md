@@ -18,7 +18,7 @@ nextflow_pipeline {
     expect {
       with(workflow){
         assert success
-        assert trace.taks().size() == 4
+        assert trace.tasks().size() == 4
         assert "Ciao world!" in stdout
         assert "Bonjour world!" in stdout
         assert "Hello world!" in stdout
