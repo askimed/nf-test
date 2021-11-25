@@ -17,12 +17,13 @@ public class TestContext {
 	private Workflow workflow = new Workflow();
 
 	private Process process = new Process();
-	
+
+	public String baseDir = System.getProperty("user.dir");
+
 	public void setName(String name) {
 		process.setName(name);
 	}
-	
-	
+
 	public Map<String, Object> getParams() {
 		return params;
 	}
