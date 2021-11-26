@@ -8,9 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.ivy.util.FileUtil;
-import org.apache.tools.ant.util.FileUtils;
-
 import com.opencsv.exceptions.CsvValidationException;
 
 import groovy.json.JsonSlurper;
@@ -38,7 +35,6 @@ public class WorkflowMeta {
 		if (file.exists()) {
 			JsonSlurper jsonSlurper = new JsonSlurper();
 			Map<Object, Object> map = (Map<Object, Object>) jsonSlurper.parse(file);
-			System.out.println("Success: " + getBoolean(map, "success"));
 			this.success = getBoolean(map, "success");
 			this.failed = !this.success;
 			this.exitStatus = getInteger(map, "exitStatus");
@@ -47,9 +43,9 @@ public class WorkflowMeta {
 		}
 
 		File outFile = new File(folder, "std.out");
-		if (outFile.exists()) {		
+		if (outFile.exists()) {
 			try {
-				stdout =Files.readAllLines(outFile.toPath());
+				stdout = Files.readAllLines(outFile.toPath());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -111,6 +111,9 @@ public class ProcessTest extends AbstractTest {
 		}
 
 		File traceFile = new File(metaDir, "trace.csv");
+		File outFile = new File(metaDir, "std.out");
+		File errFile = new File(metaDir, "std.err");
+		File logFile = new File(metaDir, "nextflow.log");
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(workflow.getAbsolutePath());
@@ -118,7 +121,11 @@ public class ProcessTest extends AbstractTest {
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setConfig(parent.getConfig());
 		nextflow.setTrace(traceFile);
+		nextflow.setOut(outFile);
+		nextflow.setErr(errFile);
 		nextflow.setSilent(!debug);
+		nextflow.setLog(logFile);
+		nextflow.setWork(workDir);
 		int exitCode = nextflow.execute();
 
 		workflow.delete();

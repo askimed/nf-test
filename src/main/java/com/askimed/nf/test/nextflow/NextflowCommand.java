@@ -27,6 +27,8 @@ public class NextflowCommand {
 
 	private File err;
 
+	private File work;
+
 	private boolean silent = true;
 
 	private File trace = null;
@@ -97,6 +99,14 @@ public class NextflowCommand {
 		return log;
 	}
 
+	public void setWork(File work) {
+		this.work = work;
+	}
+
+	public File getWork() {
+		return work;
+	}
+
 	public int execute() throws IOException {
 
 		if (binary == null) {
@@ -131,6 +141,10 @@ public class NextflowCommand {
 		if (trace != null) {
 			args.add("-with-trace");
 			args.add(trace.getAbsolutePath());
+		}
+		if (work != null) {
+			args.add("-w");
+			args.add(work.getAbsolutePath());
 		}
 
 		Command nextflow = new Command(binary);

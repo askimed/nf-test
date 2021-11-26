@@ -104,6 +104,7 @@ public class PipelineTest extends AbstractTest {
 		nextflow.setErr(errFile);
 		nextflow.setSilent(!debug);
 		nextflow.setLog(logFile);
+		nextflow.setWork(workDir);
 		int exitCode = nextflow.execute();
 
 		context.getWorkflow().loadFromFolder(metaDir);

@@ -2,7 +2,6 @@ package com.askimed.nf.test.core;
 
 import java.io.File;
 import java.math.BigInteger;
-import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -13,6 +12,8 @@ public abstract class AbstractTest implements ITest {
 	protected File metaDir;
 
 	protected File outputDir;
+
+	protected File workDir;
 
 	public AbstractTest() {
 
@@ -29,6 +30,11 @@ public abstract class AbstractTest implements ITest {
 		this.outputDir = new File(outputDir);
 		FileUtil.deleteDirectory(this.outputDir);
 		FileUtil.createDirectory(this.outputDir);
+
+		String workDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "work");
+		this.workDir = new File(workDir);
+		FileUtil.deleteDirectory(this.workDir);
+		FileUtil.createDirectory(this.workDir);
 
 	}
 
