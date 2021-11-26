@@ -93,6 +93,7 @@ public class PipelineTest extends AbstractTest {
 		File outFile = new File(metaDir, "std.out");
 		File errFile = new File(metaDir, "std.err");
 		File logFile = new File(metaDir, "nextflow.log");
+		File paramsFile = new File(metaDir, "params.json");
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(parent.getScript());
@@ -105,6 +106,7 @@ public class PipelineTest extends AbstractTest {
 		nextflow.setSilent(!debug);
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
+		nextflow.setParamsFile(paramsFile);
 		int exitCode = nextflow.execute();
 
 		context.getWorkflow().loadFromFolder(metaDir);

@@ -101,7 +101,7 @@ public class ProcessTest extends AbstractTest {
 		when.execute(context);
 
 		// Create workflow mock
-		File workflow = new File("test_mock.nf");
+		File workflow = new File(metaDir, "mock.nf");
 		writeWorkflowMock(workflow);
 
 		context.getParams().put("nf_testflight_output", metaDir.getAbsolutePath());
@@ -114,6 +114,7 @@ public class ProcessTest extends AbstractTest {
 		File outFile = new File(metaDir, "std.out");
 		File errFile = new File(metaDir, "std.err");
 		File logFile = new File(metaDir, "nextflow.log");
+		File paramsFile = new File(metaDir, "params.json");
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(workflow.getAbsolutePath());
@@ -126,9 +127,8 @@ public class ProcessTest extends AbstractTest {
 		nextflow.setSilent(!debug);
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
+		nextflow.setParamsFile(paramsFile);
 		int exitCode = nextflow.execute();
-
-		workflow.delete();
 
 		// Parse json output
 		context.getProcess().getOut().loadFromFolder(metaDir, autoSort);
@@ -151,7 +151,7 @@ public class ProcessTest extends AbstractTest {
 			cleanup.execute(context);
 		}
 	}
-	
+
 	protected void writeWorkflowMock(File file) throws IOException, CompilationFailedException, ClassNotFoundException {
 
 		String script = parent.getScript();

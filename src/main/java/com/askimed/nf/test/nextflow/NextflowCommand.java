@@ -35,6 +35,8 @@ public class NextflowCommand {
 
 	private File log = null;
 
+	private File paramsFile;
+
 	private Map<String, Object> params;
 
 	public static String ERROR = "Nextflow Binary not found. Please check if Nextflow is in a directory accessible by your $PATH variable or set $NEXTFLOW_HOME.";
@@ -107,14 +109,24 @@ public class NextflowCommand {
 		return work;
 	}
 
+	public void setParamsFile(File paramsFile) {
+		this.paramsFile = paramsFile;
+	}
+
+	public File getParamsFile() {
+		return paramsFile;
+	}
+
 	public int execute() throws IOException {
 
 		if (binary == null) {
 			throw new IOException(ERROR);
 		}
 
-		File paramsFile = File.createTempFile("params", ".json");
-		paramsFile.deleteOnExit();
+		if (paramsFile == null) {
+			paramsFile = File.createTempFile("params", ".json");
+			paramsFile.deleteOnExit();
+		}
 
 		writeParamsJson(params, paramsFile);
 

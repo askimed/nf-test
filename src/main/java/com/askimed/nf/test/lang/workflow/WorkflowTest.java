@@ -95,7 +95,7 @@ public class WorkflowTest extends AbstractTest {
 		when.execute(context);
 
 		// Create workflow mock
-		File workflow = new File("test_mock.nf");
+		File workflow = new File(metaDir, "mock.nf");
 		writeWorkflowMock(workflow);
 
 		context.getParams().put("nf_testflight_output", metaDir.getAbsolutePath());
@@ -106,7 +106,8 @@ public class WorkflowTest extends AbstractTest {
 		File traceFile = new File(metaDir, "trace.csv");
 		File outFile = new File(metaDir, "std.out");
 		File errFile = new File(metaDir, "std.err");
-		File logFile = new File(metaDir, "nextflow.log");		
+		File logFile = new File(metaDir, "nextflow.log");
+		File paramsFile = new File(metaDir, "params.json");
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(workflow.getAbsolutePath());
@@ -119,9 +120,8 @@ public class WorkflowTest extends AbstractTest {
 		nextflow.setSilent(!debug);
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
+		nextflow.setParamsFile(paramsFile);
 		int exitCode = nextflow.execute();
-
-		workflow.delete();
 
 		context.getWorkflow().loadFromFolder(metaDir);
 		context.getWorkflow().exitStatus = exitCode;
