@@ -56,7 +56,7 @@ public class RunTestsCommand implements Callable<Integer> {
 
 			} catch (Exception e) {
 
-				System.out.println(AnsiColors.yellow("Warning: This pipeline has no valid nf-flightest config file."));
+				System.out.println(AnsiColors.yellow("Warning: This pipeline has no valid nf-test config file."));
 
 				if (debug) {
 					e.printStackTrace();
@@ -95,7 +95,7 @@ public class RunTestsCommand implements Callable<Integer> {
 
 	}
 
-	public List<File> findTests(File folder) throws Exception {
+	public static List<File> findTests(File folder) throws Exception {
 
 		final List<File> scripts = new Vector<File>();
 

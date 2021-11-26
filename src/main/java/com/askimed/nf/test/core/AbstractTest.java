@@ -17,6 +17,8 @@ public abstract class AbstractTest implements ITest {
 
 	public String baseDir = System.getProperty("user.dir");
 	
+	public boolean skipped = false;
+	
 	public AbstractTest() {
 
 	}
@@ -76,6 +78,15 @@ public abstract class AbstractTest implements ITest {
 			e.printStackTrace();
 			return "??";
 		}
+	}
+	
+	@Override
+	public void skip() {
+		skipped = true;
+	}
+	
+	public boolean isSkipped() {
+		return skipped;
 	}
 
 }

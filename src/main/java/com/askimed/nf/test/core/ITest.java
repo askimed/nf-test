@@ -13,7 +13,11 @@ public interface ITest {
 	public String getErrorReport() throws Throwable;
 
 	public String getName();
+	
+	public void skip();
 
+	public boolean isSkipped();
+	
 	public void setDebug(boolean debug);
 
 	public String getHash();
