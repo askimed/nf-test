@@ -23,6 +23,8 @@ public class TestExecutionEngine {
 
 	private File configFile = null;
 
+	private File baseDir = new File(System.getProperty("user.dir"));
+
 	public void setScripts(List<File> scripts) {
 		this.scripts = scripts;
 	}
@@ -59,7 +61,7 @@ public class TestExecutionEngine {
 			}
 			ITestSuite testSuite = TestSuiteBuilder.parse(script);
 			if (testId != null) {
-				for (ITest test: testSuite.getTests()) {
+				for (ITest test : testSuite.getTests()) {
 					if (!test.getHash().startsWith(testId)) {
 						test.skip();
 					}
@@ -115,8 +117,8 @@ public class TestExecutionEngine {
 
 			for (ITest test : testSuite.getTests()) {
 				if (test.isSkipped()) {
-				listener.executionSkipped(test, "");
-				continue;
+					listener.executionSkipped(test, "");
+					continue;
 				}
 				listener.executionStarted(test);
 				TestExecutionResult result = new TestExecutionResult();
@@ -161,6 +163,8 @@ public class TestExecutionEngine {
 
 	public int listTests() throws Throwable {
 
+		int count = 0;
+
 		if (configFile != null) {
 			if (!configFile.exists()) {
 				System.out.println(
@@ -178,19 +182,26 @@ public class TestExecutionEngine {
 			return 1;
 		}
 
+		int index = 0;
 		for (ITestSuite testSuite : testSuits) {
 
 			System.out.println();
-			System.out.println(AnsiText.bold(testSuite.getName()));
+			System.out.println("[" + FileUtil.makeRelative(baseDir, scripts.get(index)) + "] "
+					+ AnsiText.bold(testSuite.getName()));
 			System.out.println();
 
 			for (ITest test : testSuite.getTests()) {
-				System.out.println(AnsiText.padding(AnsiText.bold("Test") + " [" + test.getHash().substring(0, 8) + "]"
-						+ " '" + test.getName() + "' ", 2));
+				System.out.println(AnsiText.padding("[" + FileUtil.makeRelative(baseDir, scripts.get(index)) + "@"
+						+ test.getHash().substring(0, 8) + "] " + AnsiText.bold(test.getName()), 2));
+				count++;
 
 			}
-
+			index++;
 		}
+
+		System.out.println();
+		System.out.println("Found " + count + " tests.");
+		System.out.println();
 
 		return 0;
 

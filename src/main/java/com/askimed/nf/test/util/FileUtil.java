@@ -76,5 +76,10 @@ public class FileUtil {
 		return fileData.toString();
 
 	}
+	
+	
+	public static String makeRelative(File baseDir, File absoluteFile) {
+		return baseDir.toURI().relativize(absoluteFile.toURI()).getPath();
+	}
 
 }
