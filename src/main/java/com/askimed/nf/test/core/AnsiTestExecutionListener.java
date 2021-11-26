@@ -74,7 +74,7 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 	public void executionStarted(ITest test) {
 
 		count++;
-		System.out.print(AnsiText.padding(AnsiText.bold("Test") + " '" + test.getName() + "' ", TEST_PADDING));
+		System.out.print(AnsiText.padding(AnsiText.bold("Test") +  " [" + test.getHash().substring(0,8) + "]" + " '" + test.getName() + "' ", TEST_PADDING));
 
 	}
 

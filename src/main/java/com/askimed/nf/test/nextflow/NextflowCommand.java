@@ -25,9 +25,13 @@ public class NextflowCommand {
 
 	private File out;
 
+	private File err;
+
 	private boolean silent = true;
 
 	private File trace = null;
+
+	private File log = null;
 
 	private Map<String, Object> params;
 
@@ -77,6 +81,22 @@ public class NextflowCommand {
 		return out;
 	}
 
+	public void setErr(File err) {
+		this.err = err;
+	}
+
+	public File getErr() {
+		return err;
+	}
+
+	public void setLog(File log) {
+		this.log = log;
+	}
+
+	public File getLog() {
+		return log;
+	}
+
 	public int execute() throws IOException {
 
 		if (binary == null) {
@@ -90,6 +110,10 @@ public class NextflowCommand {
 
 		List<String> args = new Vector<String>();
 		args.add("-quiet");
+		if (log != null) {
+			args.add("-log");
+			args.add(log.getAbsolutePath());
+		}
 		args.add("run");
 		args.add(script);
 		if (config != null) {
@@ -108,11 +132,15 @@ public class NextflowCommand {
 			args.add("-with-trace");
 			args.add(trace.getAbsolutePath());
 		}
+
 		Command nextflow = new Command(binary);
 		nextflow.setParams(args);
 		nextflow.setSilent(silent);
 		if (out != null) {
 			nextflow.saveStdOut(out.getAbsolutePath());
+		}
+		if (err != null) {
+			nextflow.saveStdErr(err.getAbsolutePath());
 		}
 		if (!silent) {
 			System.out.println("Command: " + nextflow.getExecutedCommand());

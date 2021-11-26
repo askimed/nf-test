@@ -98,12 +98,12 @@ public class WorkflowTest extends AbstractTest {
 		File workflow = new File("test_mock.nf");
 		writeWorkflowMock(workflow);
 
-		context.getParams().put("nf_testflight_output", directory.getAbsolutePath());
+		context.getParams().put("nf_testflight_output", metaDir.getAbsolutePath());
 		if (debug) {
 			System.out.println();
 		}
 
-		File traceFile = new File(directory, "trace.csv");
+		File traceFile = new File(metaDir, "trace.csv");
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(workflow.getAbsolutePath());
@@ -116,7 +116,7 @@ public class WorkflowTest extends AbstractTest {
 
 		workflow.delete();
 
-		context.getWorkflow().loadFromFolder(directory);
+		context.getWorkflow().loadFromFolder(metaDir);
 		context.getWorkflow().exitStatus = exitCode;
 
 		then.execute(context);

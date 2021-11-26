@@ -39,12 +39,14 @@ public class RunTestsCommand implements Callable<Integer> {
 
 			String defaultProfile = null;
 			File defaultConfigFile = null;
+			File workDir = new File("nf-test");
 
 			try {
 
 				Config config = Config.parse(new File(Config.FILENAME));
 				defaultProfile = config.getProfile();
 				defaultConfigFile = config.getConfigFile();
+				workDir = new File(config.getWorkDir());
 
 				if (scripts == null) {
 					File folder = new File(config.getTestsDir());
@@ -56,10 +58,10 @@ public class RunTestsCommand implements Callable<Integer> {
 
 				System.out.println(AnsiColors.yellow("Warning: This pipeline has no valid nf-flightest config file."));
 
-				if (debug ) {
-					e.printStackTrace();					
+				if (debug) {
+					e.printStackTrace();
 				}
-				
+
 				if (scripts == null) {
 					System.out.println(AnsiColors.red("Error: No tests provided and no test directory set."));
 					return 2;
@@ -70,6 +72,7 @@ public class RunTestsCommand implements Callable<Integer> {
 			TestExecutionEngine engine = new TestExecutionEngine();
 			engine.setScripts(scripts);
 			engine.setDebug(debug);
+			engine.setWorkDir(workDir);
 			if (profile != null) {
 				engine.setProfile(profile);
 			} else {
@@ -81,11 +84,11 @@ public class RunTestsCommand implements Callable<Integer> {
 		} catch (Throwable e) {
 
 			System.out.println(AnsiColors.red("Error: " + e));
-			
-			if (debug ) {
-				e.printStackTrace();					
+
+			if (debug) {
+				e.printStackTrace();
 			}
-			
+
 			return 1;
 
 		}

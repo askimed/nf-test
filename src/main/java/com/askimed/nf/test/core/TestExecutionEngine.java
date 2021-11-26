@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import com.askimed.nf.test.lang.TestSuiteBuilder;
 import com.askimed.nf.test.util.AnsiColors;
+import com.askimed.nf.test.util.FileUtil;
 
 public class TestExecutionEngine {
 
@@ -16,6 +17,8 @@ public class TestExecutionEngine {
 	private boolean debug = false;
 
 	private String profile = null;
+
+	private File workDir = null;
 
 	private File configFile = null;
 
@@ -33,6 +36,10 @@ public class TestExecutionEngine {
 
 	public void setConfigFile(File configFile) {
 		this.configFile = configFile;
+	}
+
+	public void setWorkDir(File workDir) {
+		this.workDir = workDir;
 	}
 
 	protected List<ITestSuite> parse() throws Exception {
@@ -71,6 +78,11 @@ public class TestExecutionEngine {
 		}
 
 		listener.setDebug(debug);
+
+		//cleanup
+		
+		FileUtil.deleteDirectory(workDir);
+		FileUtil.createDirectory(workDir);
 		
 		listener.testPlanExecutionStarted();
 
@@ -90,7 +102,7 @@ public class TestExecutionEngine {
 			for (ITest test : testSuite.getTests()) {
 				listener.executionStarted(test);
 				TestExecutionResult result = new TestExecutionResult();
-				test.setup();
+				test.setup(workDir);
 				try {
 
 					// override debug flag from CLI

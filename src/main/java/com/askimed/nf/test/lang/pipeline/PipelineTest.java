@@ -89,8 +89,10 @@ public class PipelineTest extends AbstractTest {
 			System.out.println();
 		}
 
-		File traceFile = new File(directory, "trace.csv");
-		File outFile = new File(directory, "std.out");
+		File traceFile = new File(metaDir, "trace.csv");
+		File outFile = new File(metaDir, "std.out");
+		File errFile = new File(metaDir, "std.err");
+		File logFile = new File(metaDir, "nextflow.log");
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(parent.getScript());
@@ -99,10 +101,12 @@ public class PipelineTest extends AbstractTest {
 		nextflow.setConfig(parent.getConfig());
 		nextflow.setTrace(traceFile);
 		nextflow.setOut(outFile);
+		nextflow.setErr(errFile);
 		nextflow.setSilent(!debug);
+		nextflow.setLog(logFile);
 		int exitCode = nextflow.execute();
 
-		context.getWorkflow().loadFromFolder(directory);
+		context.getWorkflow().loadFromFolder(metaDir);
 		context.getWorkflow().exitStatus = exitCode;
 		context.getWorkflow().success = (exitCode == 0);
 		context.getWorkflow().failed = (exitCode != 0);
