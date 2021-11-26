@@ -15,7 +15,7 @@ import groovy.text.SimpleTemplateEngine;
 
 public class InitTemplates {
 
-	public static final String TEMPLATE_CONFIG = "nf-testflight.config";
+	public static final String TEMPLATE_CONFIG = "nf-test.config";
 	
 	public static final String TEMPLATE_NEXTFLOW_CONFIG = "nextflow.config";
 	

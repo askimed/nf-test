@@ -14,8 +14,10 @@ import groovy.lang.GroovyShell;
 public class Config {
 
 	public static final String FILENAME = "nf-test.config";
-	
+
 	public static final String DEFAULT_NEXTFLOW_CONFIG = "tests/nextflow.config";
+
+	private String workDir = "nf-test";
 
 	private String testsDir = "tests";
 
@@ -29,6 +31,14 @@ public class Config {
 
 	public String getTestsDir() {
 		return testsDir;
+	}
+
+	public void workDir(String workDir) {
+		this.workDir = workDir;
+	}
+
+	public String getWorkDir() {
+		return workDir;
 	}
 
 	public void profile(String profile) {
