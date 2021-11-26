@@ -9,12 +9,14 @@ import com.askimed.nf.test.util.FileUtil;
 
 public abstract class AbstractTest implements ITest {
 
-	protected File metaDir;
+	public File metaDir;
 
-	protected File outputDir;
+	public File outputDir;
 
-	protected File workDir;
+	public File workDir;
 
+	public String baseDir = System.getProperty("user.dir");
+	
 	public AbstractTest() {
 
 	}
