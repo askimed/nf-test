@@ -141,7 +141,7 @@ public class WorkflowTest extends AbstractTest {
 		String script = parent.getScript();
 
 		if (!script.startsWith("/") && !script.startsWith("./")) {
-			script = "./" + script;
+			script = new File(script).getAbsolutePath();
 		}
 
 		Map<Object, Object> binding = new HashMap<Object, Object>();
