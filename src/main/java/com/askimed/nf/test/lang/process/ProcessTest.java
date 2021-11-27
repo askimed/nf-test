@@ -134,9 +134,13 @@ public class ProcessTest extends AbstractTest {
 		context.getProcess().getOut().loadFromFolder(metaDir, autoSort);
 		context.getProcess().loadFromFolder(metaDir);
 		context.getProcess().exitStatus = exitCode;
+		context.getProcess().success = (exitCode == 0);
+		context.getProcess().failed = (exitCode != 0);
+		
 		context.getWorkflow().loadFromFolder(metaDir);
 		context.getWorkflow().exitStatus = exitCode;
-
+		context.getWorkflow().success = (exitCode == 0);
+		context.getWorkflow().failed = (exitCode != 0);
 		if (debug) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.getProcess().getOut().view();
