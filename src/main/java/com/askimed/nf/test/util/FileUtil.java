@@ -44,6 +44,9 @@ public class FileUtil {
 	static public boolean deleteDirectory(File path) {
 		if (path.exists()) {
 			File[] files = path.listFiles();
+			if (files == null) {
+				return false;
+			}
 			for (int i = 0; i < files.length; i++) {
 				if (files[i].isDirectory()) {
 					deleteDirectory(files[i]);
@@ -51,8 +54,9 @@ public class FileUtil {
 					files[i].delete();
 				}
 			}
+			return path.delete();
 		}
-		return (path.delete());
+		return false;
 	}
 
 	static public void write(File file, Writable writable) throws IOException {
