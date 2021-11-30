@@ -588,7 +588,7 @@
 
 <span class="o">}</span>
 </code></pre></div>
-<p>Or you can even use nf-test to test Nextflow modules using a when/then pattern. In this example we test the <a href="https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow">index creation using Salmon</a>.</p>
+<p>You can also use nf-test to test Nextflow modules using when/then closures. In the example below we add some basic checks to a <a href="https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow">index creation</a> module.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@Grab</span><span class="o">(</span><span class="s1">&#39;org.codehaus.groovy:groovy-json:3.0.9&#39;</span><span class="o">)</span>
 <span class="kn">import</span> <span class="nn">groovy.json.JsonSlurper</span>
 
