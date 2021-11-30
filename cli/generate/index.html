@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.1">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.2">
     
     
       
@@ -592,6 +592,21 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nftest_in_action/" class="md-nav__link">
+        nf-test in Action
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -698,16 +713,16 @@
 <h4 id="workflow"><code>workflow</code></h4>
 <h4 id="pipeline"><code>pipeline</code></h4>
 <h2 id="examples">Examples</h2>
-<p>Create a testcase for a process:</p>
-<div class="highlight"><pre><span></span><code>nf-test generate process modules/local/vcf_to_plink.nf
+<p>Create a test case for a process:</p>
+<div class="highlight"><pre><span></span><code>nf-test generate process modules/local/salmon_index.nf
 </code></pre></div>
-<p>Create a testcases for all processes in folder <code>modules</code>:</p>
+<p>Create a test cases for all processes in folder <code>modules</code>:</p>
 <div class="highlight"><pre><span></span><code>nf-test generate process modules/**/*.nf
 </code></pre></div>
-<p>Create a testcase for a subworkflow:</p>
-<div class="highlight"><pre><span></span><code>nf-test generate workflow workflows/vcf_workflow.nf
+<p>Create a test case for a sub workflow:</p>
+<div class="highlight"><pre><span></span><code>nf-test generate workflow workflows/some_workflow.nf
 </code></pre></div>
-<p>Create a testcase for the whole pipeline:</p>
+<p>Create a test case for the whole pipeline:</p>
 <div class="highlight"><pre><span></span><code>nf-test generate pipeline main.nf
 </code></pre></div>
 
@@ -778,7 +793,7 @@
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.01824240.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.a87c2adc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ff0eccb3.min.js"></script>
       
     
   </body>

@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.1">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.2">
     
     
       
@@ -272,6 +272,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#lets-get-started" class="md-nav__link">
+    Let's get started
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#init" class="md-nav__link">
     Init
   </a>
@@ -316,6 +323,19 @@
   <a href="#run-your-first-test" class="md-nav__link">
     Run your first test
   </a>
+  
+    <nav class="md-nav" aria-label="Run your first test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#specifying-profiles" class="md-nav__link">
+    Specifying profiles
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -591,6 +611,21 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nftest_in_action/" class="md-nav__link">
+        nf-test in Action
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -616,6 +651,13 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lets-get-started" class="md-nav__link">
+    Let's get started
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#init" class="md-nav__link">
@@ -663,6 +705,19 @@
     Run your first test
   </a>
   
+    <nav class="md-nav" aria-label="Run your first test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#specifying-profiles" class="md-nav__link">
+    Specifying profiles
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -690,32 +745,33 @@
 
 
 <h1 id="getting-started">Getting started</h1>
-<p>This guide helps you to understand the concepts of nf-test and to learn writing your first testcase. You have to <a href="../installation/">install</a> nf-test properly on your computer before you can start. Moreover, this guide assumes that you have a basic knowledge of Groovy and unit testing. The <a href="http://groovy-lang.org/documentation.html">Groovy documentation</a> is the best place to learn its syntax.</p>
-<p>For this example we use the <a href="https://github.com/genepi/gwas-regenie"><code>gwas-regenie</code></a> pipeline. Open the terminal and clone the pipeline:</p>
+<p>This guide helps you to understand the concepts of nf-test and to learn writing your first test cases. Please check if you have <a href="../installation/">installed</a> nf-test properly on your computer before you start. Also, this guide assumes that you have a basic knowledge of Groovy and unit testing. The <a href="http://groovy-lang.org/documentation.html">Groovy documentation</a> is the best place to learn its syntax.</p>
+<h2 id="lets-get-started">Let's get started</h2>
+<p>For this example we use the <a href="https://github.com/askimed/nf-test-examples"><code>nf-test-examples</code></a> pipeline. The included example code has been developed by the Nextflow community for a <a href="https://www.nature.com/articles/s41592-021-01254-9">recent paper</a>. We used the code and adapted it to the new DSL2 syntax using modules (required by nf-test). Open the terminal and clone the pipeline:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># clone nextflow pipeline</span>
-git clone https://github.com/genepi/gwas-regenie
+git clone https://github.com/askimed/nf-test-examples
 
 <span class="c1"># enter project directory</span>
-<span class="nb">cd</span> gwas-regenie
+<span class="nb">cd</span> nf-test-examples
 </code></pre></div>
-<p>We use the <a href=""><code>imputed_to_plink2.nf</code></a> process to create a testcase from scratch. This process takes a vcf file as input and converts it into the Plink2 format.</p>
+<p>The pipeline consists of three modules (<code>salmon.index.nf</code>, <code>salmon_align_quant.nf</code>,<code>fastqc.nf</code>). We use the <a href=""><code>salmon.index.nf</code></a> process to create a test case from scratch. This process takes a reference and creates an index for it.</p>
 <h2 id="init">Init</h2>
-<p>Before we start creating our testcases, we use the <code>init</code> command to setup nf-test:</p>
+<p>Before we start creating our test cases, we use the <code>init</code> command to setup nf-test:</p>
 <div class="highlight"><pre><span></span><code>nf-test init
 </code></pre></div>
-<p>The <code>init</code> command creates the following files in the root directory of the pipeline: <code>nf-test.config</code> and <code>tests/nextflow.config</code>. It also creates a folder <code>tests</code> which is the home of your testcode.</p>
+<p>The <code>init</code> command creates the following files in the root directory of the pipeline: <code>nf-test.config</code> and <code>tests/nextflow.config</code>. It also creates a folder <code>tests</code> which is the home of your test code.</p>
 <p>In the <a href="../configuration/">configuration</a> section you can learn more about this files.</p>
 <h2 id="create-your-first-test">Create your first test</h2>
 <p>The <code>generate</code> command helps you to create skeleton test code for a Nextflow process or the whole workflow.</p>
-<p>Here we generate a testcase for the process <code>imputed_to_plink2.nf</code>:</p>
-<div class="highlight"><pre><span></span><code>nf-test generate process modules/local/imputed_to_plink2.nf
+<p>Here we generate a test case for the process <code>salmon.index.nf</code>:</p>
+<div class="highlight"><pre><span></span><code>nf-test generate process modules/local/fastqc.nf
 </code></pre></div>
-<p>This command creates a new file <code>tests/modules/local/imputed_to_plink2.nf.test</code> with the following content:</p>
+<p>This command creates a new file <code>tests/modules/local/salmon.index.nf</code> with the following content:</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span> <span class="o">{</span>
 
-  <span class="n">name</span> <span class="s2">&quot;Test Process IMPUTED_TO_PLINK2&quot;</span>
-  <span class="n">script</span> <span class="s2">&quot;modules/local/imputed_to_plink2.nf&quot;</span>
-  <span class="n">process</span> <span class="s2">&quot;IMPUTED_TO_PLINK2&quot;</span>
+    <span class="n">name</span> <span class="s2">&quot;Test Process SALMON_INDEX&quot;</span>
+    <span class="n">script</span> <span class="s2">&quot;modules/local/salmon_index.nf&quot;</span>
+    <span class="n">process</span> <span class="s2">&quot;SALMON_INDEX&quot;</span>
 
     <span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run without failures&quot;</span><span class="o">)</span> <span class="o">{</span>
 
@@ -734,9 +790,9 @@ git clone https://github.com/genepi/gwas-regenie
 
         <span class="n">then</span> <span class="o">{</span>
             <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">success</span>
-            <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">with</span> <span class="o">{</span>
+            <span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">)</span> <span class="o">{</span>
               <span class="c1">// Make assertions about the content and elements of output channels here. Example:</span>
-              <span class="c1">// assert outdir != null</span>
+              <span class="c1">// assert out_channel != null</span>
             <span class="o">}</span>
         <span class="o">}</span>
 
@@ -744,101 +800,105 @@ git clone https://github.com/genepi/gwas-regenie
 
 <span class="o">}</span>
 </code></pre></div>
-<p>The <code>generate</code> command filled automatically the name, script and process of our testcase as well as created a skeleton for your first <code>test</code> method. Typically you create one file per process and use different <code>test</code> methods to describe the expected behaviour of the process.</p>
+<p>The <code>generate</code> command filled automatically the name, script and process of our test case as well as created a skeleton for your first <code>test</code> method. Typically you create one file per process and use different <code>test</code> methods to describe the expected behaviour of the process.</p>
 <p>A <code>test</code> has a name, a <code>when</code> and a <code>then</code> closure. The <code>when</code> block describes the input parameters of the workflow or the process. nf-test executes the process with exactly this parameters and parses the content of the output channels. Then, it evaluates the assertions defined in the <code>then</code> block to check if content of the output channels matches your expectations.</p>
 <h3 id="the-when-block">The <code>when</code> block</h3>
 <p>The <code>when</code> block describes the input of our process and/or the Nextflow <code>params</code>.</p>
-<p>The <code>params</code> block is optional and is a simple map that can be used to override Nextflows input <code>params</code>.</p>
-<p>The <code>process</code> block is a multiline string and you can use the <code>input</code> array to set the different inputs arguments of the process. In our example, we have only one input that expects a file. Let us update the <code>process</code> block by setting the first element of the <code>input</code> array to the path of a small VCF file:</p>
+<p>The <code>params</code> block is optional and is a simple map that can be used to override Nextflow's input <code>params</code>.</p>
+<p>The <code>process</code> block is a multi-line string and you can use the <code>input</code> array to set the different inputs arguments of the process. In our example, we have only one input that expects a file. Let us update the <code>process</code> block by setting the first element of the <code>input</code> array to the path of our reference file:</p>
 <div class="highlight"><pre><span></span><code><span class="n">when</span> <span class="o">{</span>
     <span class="n">params</span> <span class="o">{</span>
         <span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;output&quot;</span>
     <span class="o">}</span>
     <span class="n">process</span> <span class="o">{</span>
         <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        // Use example.vc.gz as first input for our process</span>
-<span class="s2">        input[0] = file(&quot;tests/input/example.vcf.gz&quot;)</span>
+<span class="s2">        // Use transcriptome.fa as first input for our process</span>
+<span class="s2">        input[0] = file(&quot;test_data/transcriptome.fa&quot;)</span>
 <span class="s2">        &quot;&quot;&quot;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
-<p>Everything that is defined in the process block is later executed in the Nextflow script that is created automatically to test your process. Therefore, you can use every Nextflow specific functions and commands to define the values of the input array (e.g. Channels, files, ...).</p>
+<p>Everything that is defined in the process block is later executed in the Nextflow script that is created automatically to test your process. Therefore, you can use every Nextflow specific functions and commands to define the values of the input array (e.g. Channels, files, paths, ...).</p>
 <h3 id="the-then-block">The <code>then</code> block</h3>
 <p>The <code>then</code> block describes the expected output channels of the process when we execute it with the input parameters from the <code>when</code> block.</p>
-<p>The <code>then</code> block typically contains mainly assertions to check assumptions (e.g. the size and the content of an output channel). However, this block accepts every Groovy script so you can import also third party libraries to define very specific assertions (e.g. a VCF-File Reader can be used to check number of variants).</p>
+<p>The <code>then</code> block typically contains mainly assertions to check assumptions (e.g. the size and the content of an output channel). However, this block accepts every Groovy script so you can import also third party libraries to define very specific assertions.</p>
 <p>nf-test automatically loads all output channels of the process and all their items into a map named <code>process.out</code>. You can then use this map to formulate your assertions.</p>
-<p>For example, in the <code>imputed_to_plink2</code> process we expect to get an tuple that contains the filename, the pgen file, the psam file and the pvar file. Let us update the <code>then</code> section with some assertions that describe our expectations:</p>
+<p>For example, in the <code>salmon_index</code> process we expect to get one process executed and 16 files created. But we also want to check the md5 sum and want to look into the actual JSON file. Let us update the <code>then</code> section with some assertions that describe our expectations:</p>
 <div class="highlight"><pre><span></span><code><span class="n">then</span> <span class="o">{</span>
-
-    <span class="c1">// Checks if process runs without failures</span>
+    <span class="c1">//check if test case succeeded</span>
     <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">success</span>
-
-    <span class="c1">//Checks if a chanell imputed_pink2 was created, has 1 element</span>
-    <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span>
-    <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
-
-    <span class="c1">//Checks if first tuple contains the expected content</span>
-    <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span> <span class="o">==</span> <span class="s2">&quot;example.vcf&quot;</span>
-    <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="o">==~</span> <span class="s2">&quot;.*/example.vcf.pgen&quot;</span>  <span class="mi">1</span><span class="err">️⃣</span>
-    <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span> <span class="o">==~</span> <span class="s2">&quot;.*/example.vcf.psam&quot;</span>
-    <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span> <span class="o">==~</span> <span class="s2">&quot;.*/example.vcf.pvar&quot;</span>
-
-    <span class="c1">//Checks if psam file contains 500 samples and 1 header line</span>
-    <span class="kt">def</span> <span class="n">psam</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
-    <span class="k">assert</span> <span class="n">file</span><span class="o">(</span><span class="n">psam</span><span class="o">).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">501</span>  <span class="mi">2</span><span class="err">️⃣</span>
-
-<span class="o">}</span>
+    <span class="c1">//analyze trace file</span>
+    <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">assert</span> <span class="n">index</span>
+      <span class="c1">// check if output directory has been created</span>
+      <span class="k">assert</span> <span class="n">index</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="c1">// count amount of created files</span>
+      <span class="k">assert</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">listFiles</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">16</span>
+      <span class="c1">// parse info.json file</span>
+      <span class="kt">def</span> <span class="n">jsonSlurper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JsonSlurper</span><span class="o">()</span>
+      <span class="kt">def</span> <span class="n">info</span> <span class="o">=</span> <span class="n">jsonSlurper</span><span class="o">.</span><span class="na">parseText</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">text</span><span class="o">)</span>
+      <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">num_kmers</span> <span class="o">==</span> <span class="mi">375730</span>
+      <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">seq_length</span> <span class="o">==</span> <span class="mi">443050</span>
+      <span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">md5</span> <span class="o">==</span> <span class="s2">&quot;80831602e2ac825e3e63ba9df5d23505&quot;</span>
+    <span class="o">}</span>
 </code></pre></div>
-<p><small>
-1️⃣  we use a regular expression matching to check the filename, because the channels contains always the full path to an output file.</p>
-<p>2️⃣  since we get the full path to a file, we can open it and compare the number of lines. We can also calculate a hash of the file and compare it with an expected one. See <a href="assertions.md">Assertions</a> for some examples and inspiration.
-</small></p>
 <p>The items of a channel are always sorted by nf-test. This provides a deterministic order inside the channel and enables you to write reproducible tests.</p>
 <h2 id="your-first-test-specification">Your first test specification</h2>
 <p>You can update the name of the test method to something that gives us later a good description of our specification. When we put everything together, we get the following full working test specification:</p>
-<div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span> <span class="o">{</span>
+<div class="highlight"><pre><span></span><code><span class="nd">@Grab</span><span class="o">(</span><span class="s1">&#39;org.codehaus.groovy:groovy-json:3.0.9&#39;</span><span class="o">)</span>
+<span class="kn">import</span> <span class="nn">groovy.json.JsonSlurper</span>
 
-    <span class="n">name</span> <span class="s2">&quot;Test Process IMPUTED_TO_PLINK2&quot;</span>
-    <span class="n">script</span> <span class="s2">&quot;modules/local/imputed_to_plink2.nf&quot;</span>
-    <span class="n">process</span> <span class="s2">&quot;IMPUTED_TO_PLINK2&quot;</span>
+<span class="n">nextflow_process</span> <span class="o">{</span>
 
-    <span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should create a pgen, psam and pvar file with 500 samples&quot;</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">name</span> <span class="s2">&quot;Test Process SALMON_INDEX&quot;</span>
+    <span class="n">script</span> <span class="s2">&quot;modules/local/salmon_index.nf&quot;</span>
+    <span class="n">process</span> <span class="s2">&quot;SALMON_INDEX&quot;</span>
+
+    <span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should create channel index files&quot;</span><span class="o">)</span> <span class="o">{</span>
 
         <span class="n">when</span> <span class="o">{</span>
+            <span class="n">params</span> <span class="o">{</span>
+            <span class="o">}</span>
             <span class="n">process</span> <span class="o">{</span>
                 <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                input[0] = file(&quot;tests/input/example.vcf.gz&quot;)</span>
+<span class="s2">                input[0] = file(&quot;test_data/transcriptome.fa&quot;)</span>
 <span class="s2">                &quot;&quot;&quot;</span>
             <span class="o">}</span>
         <span class="o">}</span>
 
         <span class="n">then</span> <span class="o">{</span>
+            <span class="c1">//check if test case succeeded</span>
             <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">success</span>
-
-            <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span>
-            <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
-            <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span> <span class="o">==</span> <span class="s2">&quot;example.vcf&quot;</span>
-            <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="o">==~</span> <span class="s2">&quot;.*/example.vcf.pgen&quot;</span>
-            <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span> <span class="o">==~</span> <span class="s2">&quot;.*/example.vcf.psam&quot;</span>
-            <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span> <span class="o">==~</span> <span class="s2">&quot;.*/example.vcf.pvar&quot;</span>
-
-            <span class="kt">def</span> <span class="n">psam</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
-            <span class="k">assert</span> <span class="n">file</span><span class="o">(</span><span class="n">psam</span><span class="o">).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">501</span>
+            <span class="c1">//analyze trace file</span>
+            <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">)</span> <span class="o">{</span>
+              <span class="k">assert</span> <span class="n">index</span>
+              <span class="c1">// check if output directory has been created</span>
+              <span class="k">assert</span> <span class="n">index</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
+              <span class="c1">// count amount of created files</span>
+              <span class="k">assert</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">listFiles</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">16</span>
+              <span class="c1">// parse info.json file</span>
+              <span class="kt">def</span> <span class="n">jsonSlurper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JsonSlurper</span><span class="o">()</span>
+              <span class="kt">def</span> <span class="n">info</span> <span class="o">=</span> <span class="n">jsonSlurper</span><span class="o">.</span><span class="na">parseText</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">text</span><span class="o">)</span>
+              <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">num_kmers</span> <span class="o">==</span> <span class="mi">375730</span>
+              <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">seq_length</span> <span class="o">==</span> <span class="mi">443050</span>
+              <span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">md5</span> <span class="o">==</span> <span class="s2">&quot;80831602e2ac825e3e63ba9df5d23505&quot;</span>
+            <span class="o">}</span>
         <span class="o">}</span>
-
     <span class="o">}</span>
-
 <span class="o">}</span>
 </code></pre></div>
 <h2 id="run-your-first-test">Run your first test</h2>
 <p>Now, the <code>test</code> command can be used to run your test:</p>
-<div class="highlight"><pre><span></span><code>nf-test <span class="nb">test</span> tests/modules/local/imputed_to_plink2.nf.test --profile docker
+<div class="highlight"><pre><span></span><code>nf-test <span class="nb">test</span> tests/modules/local/salmon_index.nf.test --profile docker
 </code></pre></div>
+<h3 id="specifying-profiles">Specifying profiles</h3>
 <p>In this case, the <code>docker</code> profile defined in the Nextflow pipeline is used to execute the test. The profile is set using the <code>--profile</code> parameter, but you can also define a default profile in the <a href="../configuration/">configuration file</a>.</p>
-<p>Congratulation! You created you first nf-test specification.</p>
+<p>Congratulations! You created you first nf-test specification.</p>
 <h2 id="whats-next">What's next?</h2>
 <ul>
-<li>Learn how to write Assertions</li>
+<li>Learn how to write assertions</li>
 <li>Learn how to write workflow tests (integration test or e2e)</li>
 <li>Learn how to config nf-test</li>
 </ul>
@@ -910,7 +970,7 @@ git clone https://github.com/genepi/gwas-regenie
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.01824240.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.a87c2adc.min.js"></script>
+      <script src="../assets/javascripts/bundle.ff0eccb3.min.js"></script>
       
     
   </body>
