@@ -1,5 +1,5 @@
 # Workflow Testing
-nf-test also allows to test a specific workflow. Please checkout the [CLI](../cli/generate.md) to generate a process test.
+nf-test also allows to test a specific workflow. Please checkout the [CLI](../cli/generate.md) to generate a workflow test.
 ## Syntax
 ```Groovy
 nextflow_workflow {

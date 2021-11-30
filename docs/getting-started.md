@@ -1,9 +1,9 @@
 # Getting started
 
-This guide helps you to understand the concepts of nf-test and to learn writing your first test cases. Please check if you have [installed](installation.md) nf-test properly on your computer before you start. Also, this guide assumes that you have a basic knowledge of Groovy and unit testing. The [Groovy documentation](http://groovy-lang.org/documentation.html) is the best place to learn its syntax.
+This guide helps you to understand the concepts of nf-test and to learn writing your first test case. Before you start, please check if you have [installed](installation.md) nf-test properly on your computer. Also, this guide assumes that you have a basic knowledge of Groovy and unit testing. The [Groovy documentation](http://groovy-lang.org/documentation.html) is the best place to learn its syntax.
 
 ## Let's get started
-For this example we use the [`nf-test-examples`](https://github.com/askimed/nf-test-examples) pipeline. The included example code has been developed by the Nextflow community for a [recent paper](https://www.nature.com/articles/s41592-021-01254-9). We used the code and adapted it to the new DSL2 syntax using modules (required by nf-test). Open the terminal and clone the pipeline:
+For this example we use the [`nf-test-examples`](https://github.com/askimed/nf-test-examples) pipeline, which has been developed by the Nextflow community for a [recent paper](https://www.nature.com/articles/s41592-021-01254-9). We used the code and adapted it to the new DSL2 syntax using modules (required by nf-test). First, open the terminal and clone the pipeline:
 
 ```bash
 # clone nextflow pipeline
@@ -13,7 +13,7 @@ git clone https://github.com/askimed/nf-test-examples
 cd nf-test-examples
 ```
 
-The pipeline consists of three modules (`salmon.index.nf`, `salmon_align_quant.nf`,`fastqc.nf`). We use the [`salmon.index.nf`]() process to create a test case from scratch. This process takes a reference and creates an index for it.
+The pipeline consists of three modules (`salmon.index.nf`, `salmon_align_quant.nf`,`fastqc.nf`). We use the [`salmon.index.nf`]() process to create a test case from scratch. This process takes a reference as an input and creates an index for it using salmon.
 
 ## Init
 
@@ -23,7 +23,7 @@ Before we start creating our test cases, we use the `init` command to setup nf-t
 nf-test init
 ```
 
-The `init` command creates the following files in the root directory of the pipeline: `nf-test.config` and `tests/nextflow.config`. It also creates a folder `tests` which is the home of your test code.
+The `init` command creates the following files in the root directory of the pipeline: `nf-test.config` and `tests/nextflow.config`. It also creates a folder `tests` which is the home of your test code and includes the Nextflow working directory.
 
 In the [configuration](configuration.md) section you can learn more about this files.
 
@@ -35,7 +35,7 @@ The `generate` command helps you to create skeleton test code for a Nextflow pro
 Here we generate a test case for the process `salmon.index.nf`:
 
 ```bash
-nf-test generate process modules/local/fastqc.nf
+nf-test generate process modules/local/salmon.index.nf
 ```
 
 This command creates a new file `tests/modules/local/salmon.index.nf` with the following content:
@@ -102,11 +102,11 @@ when {
 }
 ```
 
-Everything that is defined in the process block is later executed in the Nextflow script that is created automatically to test your process. Therefore, you can use every Nextflow specific functions and commands to define the values of the input array (e.g. Channels, files, paths, ...).
+Everything that is defined in the process block is later executed in the Nextflow script that is created automatically to test your process. Therefore, you can use every Nextflow specific function or command to define the values of the input array (e.g. Channels, files, paths, etc.).
 
 ### The `then` block
 
-The `then` block describes the expected output channels of the process when we execute it with the input parameters from the `when` block.
+The `then` block describes the expected output channels of the process when we execute it with the input parameters defined in the `when` block.
 
 The `then` block typically contains mainly assertions to check assumptions (e.g. the size and the content of an output channel). However, this block accepts every Groovy script so you can import also third party libraries to define very specific assertions.
 

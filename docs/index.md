@@ -31,7 +31,7 @@ nextflow_pipeline {
 }
 ```
 
-Or you can even use nf-test to test Nextflow modules using a when/then pattern. In this example we test the [index creation using Salmon](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow).
+You can also use nf-test to test Nextflow modules using when/then closures. In the example below we add some basic checks to a [index creation](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow) module.
 
 ```Groovy
 @Grab('org.codehaus.groovy:groovy-json:3.0.9')
