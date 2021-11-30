@@ -1,5 +1,7 @@
 # Pipeline Testing
 
+nf-test also allows to test the complete pipeline end-to-end. Please checkout the [CLI](../cli/generate.md) to generate a pipeline test.
+
 ## Syntax
 ```Groovy
 nextflow_pipeline {

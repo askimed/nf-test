@@ -23,7 +23,7 @@ nf-test version
 You should see something like this:
 
 ```
-🚀 nf-test 0.2.2
+🚀 nf-test 0.4.0
 https://code.askimed.com/nf-test
 (c) 2021 Lukas Forer and Sebastian Schoenherr
 
@@ -40,10 +40,10 @@ Now you are ready to write your [first testcase](getting-started.md).
 
 ### Nextflow Binary not found
 
-If you get an error message like this, then nf-test was not able to detect your nextflow installation.
+If you get an error message like this, then nf-test was not able to detect your Nextflow installation.
 
 ```
-🚀 nf-test 0.2.2
+🚀 nf-test 0.4.0
 https://code.askimed.com/nf-test
 (c) 2021 Lukas Forer and Sebastian Schoenherr
 

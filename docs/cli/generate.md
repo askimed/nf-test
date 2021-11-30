@@ -17,25 +17,25 @@ nf-test generate <TEST_CASE_TYPE> <NEXTFLOW_FILES>
 
 ## Examples
 
-Create a testcase for a process:
+Create a test case for a process:
 
 ```
-nf-test generate process modules/local/vcf_to_plink.nf
+nf-test generate process modules/local/salmon_index.nf
 ```
 
-Create a testcases for all processes in folder `modules`:
+Create a test cases for all processes in folder `modules`:
 
 ```
 nf-test generate process modules/**/*.nf
 ```
 
-Create a testcase for a subworkflow:
+Create a test case for a sub workflow:
 
 ```
-nf-test generate workflow workflows/vcf_workflow.nf
+nf-test generate workflow workflows/some_workflow.nf
 ```
 
-Create a testcase for the whole pipeline:
+Create a test case for the whole pipeline:
 
 ```
 nf-test generate pipeline main.nf
