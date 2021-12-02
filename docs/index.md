@@ -5,7 +5,8 @@ nf-test is a simple test framework for Nextflow pipelines.
 
 [:fontawesome-solid-book: Getting Started](getting-started.md){ .md-button .md-button--primary} [:fontawesome-solid-download: Installation](installation.md){ .md-button } [:fontawesome-brands-github: Source](https://github.com/askimed/nf-test){ .md-button }
 
-Here's what a simple script to test the [Hello World Example](https://github.com/nextflow-io/hello) looks like. To run it, copy/paste the code into a text file (e.g. `hello-world.test`) and run it with `nf-test test hello-world.test`.
+
+Let's start with a simple script to test the Nextflow [Hello World](https://github.com/nextflow-io/hello) example. To run it, copy/paste the code into a text file (e.g. `hello-world.test`) and run it with `nf-test test hello-world.test`. We use the `expect` keyword, since no inputs must be defined.
 
 ```Groovy
 nextflow_pipeline {
@@ -31,7 +32,7 @@ nextflow_pipeline {
 }
 ```
 
-You can also use nf-test to test Nextflow modules using when/then closures. In the example below we add some basic checks to a [index creation](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow) module.
+In case inputs must be defined, you can also use nf-test to test Nextflow modules using when/then closures. In the nf-test script below we add some basic checks for a [recently published pipeline](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow).
 
 ```Groovy
 @Grab('org.codehaus.groovy:groovy-json:3.0.9')
@@ -75,6 +76,7 @@ nextflow_process {
             }
         }
     }
+
 }
 
 ```
