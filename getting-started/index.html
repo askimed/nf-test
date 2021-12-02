@@ -745,24 +745,24 @@
 
 
 <h1 id="getting-started">Getting started</h1>
-<p>This guide helps you to understand the concepts of nf-test and to learn writing your first test case. Before you start, please check if you have <a href="../installation/">installed</a> nf-test properly on your computer. Also, this guide assumes that you have a basic knowledge of Groovy and unit testing. The <a href="http://groovy-lang.org/documentation.html">Groovy documentation</a> is the best place to learn its syntax.</p>
+<p>This guide helps you to understand the concepts of nf-test and to write your first test cases. Before you start, please check if you have <a href="../installation/">installed</a> nf-test properly on your computer. Also, this guide assumes that you have a basic knowledge of Groovy and unit testing. The <a href="http://groovy-lang.org/documentation.html">Groovy documentation</a> is the best place to learn its syntax.</p>
 <h2 id="lets-get-started">Let's get started</h2>
-<p>For this example we use the <a href="https://github.com/askimed/nf-test-examples"><code>nf-test-examples</code></a> pipeline, which has been developed by the Nextflow community for a <a href="https://www.nature.com/articles/s41592-021-01254-9">recent paper</a>. We used the code and adapted it to the new DSL2 syntax using modules (required by nf-test). First, open the terminal and clone the pipeline:</p>
+<p>To show the power of nf-test, we adapted a recently published <a href="https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow">proof of concept Nextflow pipeline</a>. We adapted the pipeline to the new DSL2 syntax using modules (which is required by nf-test). First, open the terminal and clone our test pipeline:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># clone nextflow pipeline</span>
 git clone https://github.com/askimed/nf-test-examples
 
 <span class="c1"># enter project directory</span>
 <span class="nb">cd</span> nf-test-examples
 </code></pre></div>
-<p>The pipeline consists of three modules (<code>salmon.index.nf</code>, <code>salmon_align_quant.nf</code>,<code>fastqc.nf</code>). We use the <a href=""><code>salmon.index.nf</code></a> process to create a test case from scratch. This process takes a reference as an input and creates an index for it using salmon.</p>
+<p>The pipeline consists of three modules (<code>salmon.index.nf</code>, <code>salmon_align_quant.nf</code>,<code>fastqc.nf</code>). Here, we use the <a href=""><code>salmon.index.nf</code></a> process to create a test case from scratch. This process takes a reference as an input and creates an index using salmon.</p>
 <h2 id="init">Init</h2>
 <p>Before we start creating our test cases, we use the <code>init</code> command to setup nf-test:</p>
 <div class="highlight"><pre><span></span><code>nf-test init
 </code></pre></div>
-<p>The <code>init</code> command creates the following files in the root directory of the pipeline: <code>nf-test.config</code> and <code>tests/nextflow.config</code>. It also creates a folder <code>tests</code> which is the home of your test code and includes the Nextflow working directory.</p>
-<p>In the <a href="../configuration/">configuration</a> section you can learn more about this files.</p>
+<p>The <code>init</code> command creates the following files: <code>nf-test.config</code> and <code>tests/nextflow.config</code>. It also creates a folder <code>tests</code> which is the home of your test code and includes the Nextflow working directory for all our tests.</p>
+<p>In the <a href="../configuration/">configuration</a> section you can learn more about these files.</p>
 <h2 id="create-your-first-test">Create your first test</h2>
-<p>The <code>generate</code> command helps you to create skeleton test code for a Nextflow process or the whole workflow.</p>
+<p>The <code>generate</code> command helps you to create a skeleton test code for a Nextflow process or the whole pipeline/workflow.</p>
 <p>Here we generate a test case for the process <code>salmon.index.nf</code>:</p>
 <div class="highlight"><pre><span></span><code>nf-test generate process modules/local/salmon.index.nf
 </code></pre></div>
@@ -801,18 +801,18 @@ git clone https://github.com/askimed/nf-test-examples
 <span class="o">}</span>
 </code></pre></div>
 <p>The <code>generate</code> command filled automatically the name, script and process of our test case as well as created a skeleton for your first <code>test</code> method. Typically you create one file per process and use different <code>test</code> methods to describe the expected behaviour of the process.</p>
-<p>A <code>test</code> has a name, a <code>when</code> and a <code>then</code> closure. The <code>when</code> block describes the input parameters of the workflow or the process. nf-test executes the process with exactly this parameters and parses the content of the output channels. Then, it evaluates the assertions defined in the <code>then</code> block to check if content of the output channels matches your expectations.</p>
+<p>This <code>test</code> has a name, a <code>when</code> and a <code>then</code> closure (when/then closures are required here, since inputs need to be defined). The <code>when</code> block describes the input parameters of the workflow or the process. nf-test executes the process with exactly these parameters and parses the content of the output channels. Then, it evaluates the assertions defined in the <code>then</code> block to check if content of the output channels matches your expectations.</p>
 <h3 id="the-when-block">The <code>when</code> block</h3>
-<p>The <code>when</code> block describes the input of our process and/or the Nextflow <code>params</code>.</p>
+<p>The <code>when</code> block describes the input of the process and/or the Nextflow <code>params</code>.</p>
 <p>The <code>params</code> block is optional and is a simple map that can be used to override Nextflow's input <code>params</code>.</p>
-<p>The <code>process</code> block is a multi-line string and you can use the <code>input</code> array to set the different inputs arguments of the process. In our example, we have only one input that expects a file. Let us update the <code>process</code> block by setting the first element of the <code>input</code> array to the path of our reference file:</p>
+<p>The <code>process</code> block is a multi-line string. The <code>input</code> array can be used to set the different inputs arguments of the process. In our example, we only have one input that expects a file. Let us update the <code>process</code> block by setting the first element of the <code>input</code> array to the path of our reference file:</p>
 <div class="highlight"><pre><span></span><code><span class="n">when</span> <span class="o">{</span>
     <span class="n">params</span> <span class="o">{</span>
         <span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;output&quot;</span>
     <span class="o">}</span>
     <span class="n">process</span> <span class="o">{</span>
         <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        // Use transcriptome.fa as first input for our process</span>
+<span class="s2">        // Use transcriptome.fa as a first input paramter for our process</span>
 <span class="s2">        input[0] = file(&quot;test_data/transcriptome.fa&quot;)</span>
 <span class="s2">        &quot;&quot;&quot;</span>
     <span class="o">}</span>
@@ -821,7 +821,7 @@ git clone https://github.com/askimed/nf-test-examples
 <p>Everything that is defined in the process block is later executed in the Nextflow script that is created automatically to test your process. Therefore, you can use every Nextflow specific function or command to define the values of the input array (e.g. Channels, files, paths, etc.).</p>
 <h3 id="the-then-block">The <code>then</code> block</h3>
 <p>The <code>then</code> block describes the expected output channels of the process when we execute it with the input parameters defined in the <code>when</code> block.</p>
-<p>The <code>then</code> block typically contains mainly assertions to check assumptions (e.g. the size and the content of an output channel). However, this block accepts every Groovy script so you can import also third party libraries to define very specific assertions.</p>
+<p>The <code>then</code> block typically contains mainly assertions to check assumptions (e.g. the size and the content of an output channel). However, this block accepts every Groovy script. This means you can also import third party libraries to define very specific assertions.</p>
 <p>nf-test automatically loads all output channels of the process and all their items into a map named <code>process.out</code>. You can then use this map to formulate your assertions.</p>
 <p>For example, in the <code>salmon_index</code> process we expect to get one process executed and 16 files created. But we also want to check the md5 sum and want to look into the actual JSON file. Let us update the <code>then</code> section with some assertions that describe our expectations:</p>
 <div class="highlight"><pre><span></span><code><span class="n">then</span> <span class="o">{</span>
