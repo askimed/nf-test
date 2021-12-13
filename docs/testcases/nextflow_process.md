@@ -1,5 +1,7 @@
 # Process Testing
 
+nf-test allows to test each process defined in a module file. Please checkout the [CLI](../cli/generate.md) to generate a process test.
+
 ## Syntax
 ```Groovy
 nextflow_process {
@@ -15,6 +17,9 @@ nextflow_process {
 ```
 
 ## Assertions
+
+// trace
+assert process.trace.tasks().size() == 1
 
 ### Process
 

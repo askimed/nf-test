@@ -1,51 +1,51 @@
 # Getting started
 
-This guide helps you to understand the concepts of nf-test and to learn writing your first testcase. You have to [install](installation.md) nf-test properly on your computer before you can start. Moreover, this guide assumes that you have a basic knowledge of Groovy and unit testing. The [Groovy documentation](http://groovy-lang.org/documentation.html) is the best place to learn its syntax.
+This guide helps you to understand the concepts of nf-test and to write your first test cases. Before you start, please check if you have [installed](installation.md) nf-test properly on your computer. Also, this guide assumes that you have a basic knowledge of Groovy and unit testing. The [Groovy documentation](http://groovy-lang.org/documentation.html) is the best place to learn its syntax.
 
-
-For this example we use the [`gwas-regenie`](https://github.com/genepi/gwas-regenie) pipeline. Open the terminal and clone the pipeline:
+## Let's get started
+To show the power of nf-test, we adapted a recently published [proof of concept Nextflow pipeline](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow). We adapted the pipeline to the new DSL2 syntax using modules (which is required by nf-test). First, open the terminal and clone our test pipeline:
 
 ```bash
 # clone nextflow pipeline
-git clone https://github.com/genepi/gwas-regenie
+git clone https://github.com/askimed/nf-test-examples
 
 # enter project directory
-cd gwas-regenie
+cd nf-test-examples
 ```
 
-We use the [`imputed_to_plink2.nf`]() process to create a testcase from scratch. This process takes a vcf file as input and converts it into the Plink2 format.
+The pipeline consists of three modules (`salmon.index.nf`, `salmon_align_quant.nf`,`fastqc.nf`). Here, we use the [`salmon.index.nf`]() process to create a test case from scratch. This process takes a reference as an input and creates an index using salmon.
 
 ## Init
 
-Before we start creating our testcases, we use the `init` command to setup nf-test:
+Before we start creating our test cases, we use the `init` command to setup nf-test:
 
 ```bash
 nf-test init
 ```
 
-The `init` command creates the following files in the root directory of the pipeline: `nf-test.config` and `tests/nextflow.config`. It also creates a folder `tests` which is the home of your testcode.
+The `init` command creates the following files: `nf-test.config` and `tests/nextflow.config`. It also creates a folder `tests` which is the home of your test code and includes the Nextflow working directory for all our tests.
 
-In the [configuration](configuration.md) section you can learn more about this files.
+In the [configuration](configuration.md) section you can learn more about these files.
 
 
 ## Create your first test
 
-The `generate` command helps you to create skeleton test code for a Nextflow process or the whole workflow.
+The `generate` command helps you to create a skeleton test code for a Nextflow process or the whole pipeline/workflow.
 
-Here we generate a testcase for the process `imputed_to_plink2.nf`:
+Here we generate a test case for the process `salmon.index.nf`:
 
 ```bash
-nf-test generate process modules/local/imputed_to_plink2.nf
+nf-test generate process modules/local/salmon.index.nf
 ```
 
-This command creates a new file `tests/modules/local/imputed_to_plink2.nf.test` with the following content:
+This command creates a new file `tests/modules/local/salmon.index.nf` with the following content:
 
 ```groovy
 nextflow_process {
 
-  name "Test Process IMPUTED_TO_PLINK2"
-  script "modules/local/imputed_to_plink2.nf"
-  process "IMPUTED_TO_PLINK2"
+    name "Test Process SALMON_INDEX"
+    script "modules/local/salmon_index.nf"
+    process "SALMON_INDEX"
 
     test("Should run without failures") {
 
@@ -64,28 +64,29 @@ nextflow_process {
 
         then {
             assert process.success
-            process.out.with {
+            with(process.out) {
               // Make assertions about the content and elements of output channels here. Example:
-              // assert outdir != null
+              // assert out_channel != null
             }
         }
 
     }
 
 }
+
 ```
 
-The `generate` command filled automatically the name, script and process of our testcase as well as created a skeleton for your first `test` method. Typically you create one file per process and use different `test` methods to describe the expected behaviour of the process.
+The `generate` command filled automatically the name, script and process of our test case as well as created a skeleton for your first `test` method. Typically you create one file per process and use different `test` methods to describe the expected behaviour of the process.
 
-A `test` has a name, a `when` and a `then` closure. The `when` block describes the input parameters of the workflow or the process. nf-test executes the process with exactly this parameters and parses the content of the output channels. Then, it evaluates the assertions defined in the `then` block to check if content of the output channels matches your expectations.
+This `test` has a name, a `when` and a `then` closure (when/then closures are required here, since inputs need to be defined). The `when` block describes the input parameters of the workflow or the process. nf-test executes the process with exactly these parameters and parses the content of the output channels. Then, it evaluates the assertions defined in the `then` block to check if content of the output channels matches your expectations.
 
 ### The `when` block
 
-The `when` block describes the input of our process and/or the Nextflow `params`.
+The `when` block describes the input of the process and/or the Nextflow `params`.
 
-The `params` block is optional and is a simple map that can be used to override Nextflows input `params`.
+The `params` block is optional and is a simple map that can be used to override Nextflow's input `params`.
 
-The `process` block is a multiline string and you can use the `input` array to set the different inputs arguments of the process. In our example, we have only one input that expects a file. Let us update the `process` block by setting the first element of the `input` array to the path of a small VCF file:
+The `process` block is a multi-line string. The `input` array can be used to set the different inputs arguments of the process. In our example, we only have one input that expects a file. Let us update the `process` block by setting the first element of the `input` array to the path of our reference file:
 
 ```groovy
 when {
@@ -94,53 +95,45 @@ when {
     }
     process {
         """
-        // Use example.vc.gz as first input for our process
-        input[0] = file("tests/input/example.vcf.gz")
+        // Use transcriptome.fa as a first input paramter for our process
+        input[0] = file("test_data/transcriptome.fa")
         """
     }
 }
 ```
 
-Everything that is defined in the process block is later executed in the Nextflow script that is created automatically to test your process. Therefore, you can use every Nextflow specific functions and commands to define the values of the input array (e.g. Channels, files, ...).
+Everything that is defined in the process block is later executed in the Nextflow script that is created automatically to test your process. Therefore, you can use every Nextflow specific function or command to define the values of the input array (e.g. Channels, files, paths, etc.).
 
 ### The `then` block
 
-The `then` block describes the expected output channels of the process when we execute it with the input parameters from the `when` block.
+The `then` block describes the expected output channels of the process when we execute it with the input parameters defined in the `when` block.
 
-The `then` block typically contains mainly assertions to check assumptions (e.g. the size and the content of an output channel). However, this block accepts every Groovy script so you can import also third party libraries to define very specific assertions (e.g. a VCF-File Reader can be used to check number of variants).
+The `then` block typically contains mainly assertions to check assumptions (e.g. the size and the content of an output channel). However, this block accepts every Groovy script. This means you can also import third party libraries to define very specific assertions.
 
 nf-test automatically loads all output channels of the process and all their items into a map named `process.out`. You can then use this map to formulate your assertions.
 
-For example, in the `imputed_to_plink2` process we expect to get an tuple that contains the filename, the pgen file, the psam file and the pvar file. Let us update the `then` section with some assertions that describe our expectations:
+For example, in the `salmon_index` process we expect to get one process executed and 16 files created. But we also want to check the md5 sum and want to look into the actual JSON file. Let us update the `then` section with some assertions that describe our expectations:
 
 ```groovy
 then {
-
-    // Checks if process runs without failures
+    //check if test case succeeded
     assert process.success
-
-    //Checks if a chanell imputed_pink2 was created, has 1 element
-    assert process.out.imputed_plink2
-    assert process.out.imputed_plink2.size() == 1
-
-    //Checks if first tuple contains the expected content
-    assert process.out.imputed_plink2.get(0).get(0) == "example.vcf"
-    assert process.out.imputed_plink2.get(0).get(1) ==~ ".*/example.vcf.pgen"  1️⃣
-    assert process.out.imputed_plink2.get(0).get(2) ==~ ".*/example.vcf.psam"
-    assert process.out.imputed_plink2.get(0).get(3) ==~ ".*/example.vcf.pvar"
-
-    //Checks if psam file contains 500 samples and 1 header line
-    def psam = process.out.imputed_plink2.get(0).get(2)
-    assert file(psam).readLines().size() == 501  2️⃣
-
-}
+    //analyze trace file
+    assert process.trace.tasks().size() == 1
+    with(process.out) {
+      assert index
+      // check if output directory has been created
+      assert index.size() == 1
+      // count amount of created files
+      assert new File(index.get(0)).listFiles().size() == 16
+      // parse info.json file
+      def jsonSlurper = new JsonSlurper()
+      def info = jsonSlurper.parseText(new File(index.get(0)+'/info.json').text)
+      assert info.num_kmers == 375730
+      assert info.seq_length == 443050
+      assert path(index.get(0)+'/info.json').md5 == "80831602e2ac825e3e63ba9df5d23505"
+    }
 ```
-
-<small>
-1️⃣  we use a regular expression matching to check the filename, because the channels contains always the full path to an output file.
-
-2️⃣  since we get the full path to a file, we can open it and compare the number of lines. We can also calculate a hash of the file and compare it with an expected one. See [Assertions](assertions.md) for some examples and inspiration.
-</small>
 
 The items of a channel are always sorted by nf-test. This provides a deterministic order inside the channel and enables you to write reproducible tests.
 
@@ -149,38 +142,47 @@ The items of a channel are always sorted by nf-test. This provides a determinist
 You can update the name of the test method to something that gives us later a good description of our specification. When we put everything together, we get the following full working test specification:
 
 ```groovy
+@Grab('org.codehaus.groovy:groovy-json:3.0.9')
+import groovy.json.JsonSlurper
+
 nextflow_process {
 
-    name "Test Process IMPUTED_TO_PLINK2"
-    script "modules/local/imputed_to_plink2.nf"
-    process "IMPUTED_TO_PLINK2"
+    name "Test Process SALMON_INDEX"
+    script "modules/local/salmon_index.nf"
+    process "SALMON_INDEX"
 
-    test("Should create a pgen, psam and pvar file with 500 samples") {
+    test("Should create channel index files") {
 
         when {
+            params {
+            }
             process {
                 """
-                input[0] = file("tests/input/example.vcf.gz")
+                input[0] = file("test_data/transcriptome.fa")
                 """
             }
         }
 
         then {
+            //check if test case succeeded
             assert process.success
-
-            assert process.out.imputed_plink2
-            assert process.out.imputed_plink2.size() == 1
-            assert process.out.imputed_plink2.get(0).get(0) == "example.vcf"
-            assert process.out.imputed_plink2.get(0).get(1) ==~ ".*/example.vcf.pgen"
-            assert process.out.imputed_plink2.get(0).get(2) ==~ ".*/example.vcf.psam"
-            assert process.out.imputed_plink2.get(0).get(3) ==~ ".*/example.vcf.pvar"
-
-            def psam = process.out.imputed_plink2.get(0).get(2)
-            assert file(psam).readLines().size() == 501
+            //analyze trace file
+            assert process.trace.tasks().size() == 1
+            with(process.out) {
+              assert index
+              // check if output directory has been created
+              assert index.size() == 1
+              // count amount of created files
+              assert new File(index.get(0)).listFiles().size() == 16
+              // parse info.json file
+              def jsonSlurper = new JsonSlurper()
+              def info = jsonSlurper.parseText(new File(index.get(0)+'/info.json').text)
+              assert info.num_kmers == 375730
+              assert info.seq_length == 443050
+              assert path(index.get(0)+'/info.json').md5 == "80831602e2ac825e3e63ba9df5d23505"
+            }
         }
-
     }
-
 }
 ```
 
@@ -189,16 +191,17 @@ nextflow_process {
 Now, the `test` command can be used to run your test:
 
 ```bash
-nf-test test tests/modules/local/imputed_to_plink2.nf.test --profile docker
+nf-test test tests/modules/local/salmon_index.nf.test --profile docker
 ```
 
+### Specifying profiles
 In this case, the `docker` profile defined in the Nextflow pipeline is used to execute the test. The profile is set using the `--profile` parameter, but you can also define a default profile in the [configuration file](configuration.md).
 
-Congratulation! You created you first nf-test specification.
+Congratulations! You created you first nf-test specification.
 
 
 ## What's next?
 
-- Learn how to write Assertions
+- Learn how to write assertions
 - Learn how to write workflow tests (integration test or e2e)
 - Learn how to config nf-test
