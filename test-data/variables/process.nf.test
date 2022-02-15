@@ -1,0 +1,34 @@
+nextflow_process {
+
+  name "Test process xy"
+
+  script "test-data/variables/process.nf"
+  process "TEST_PROCESS"
+
+  test("Compare variables") {
+
+    when {
+
+	  def baseDir333 = baseDir
+	  def outputDir333 = outputDir 
+
+      params {
+        var1 = "$baseDir333"
+        var2 = "$outputDir333"
+      }
+      
+      process {
+        """
+        input[0] = "$baseDir"
+        input[1] = "$outputDir"
+        """
+      }
+    }
+
+    then {
+      assert process.success
+    }    
+	
+  }
+  
+}

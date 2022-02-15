@@ -50,5 +50,14 @@ public class ProcessTestTest {
 		assertEquals(1, exitCode);
 
 	}
+	
+	@Test
+	public void testScriptWithVariables() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/variables/process.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
 
 }
