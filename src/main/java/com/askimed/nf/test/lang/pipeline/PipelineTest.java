@@ -31,6 +31,7 @@ public class PipelineTest extends AbstractTest {
 
 	public PipelineTest(PipelineTestSuite parent) {
 		super();
+		this.parent = parent;
 		File baseDir = new File(System.getProperty("user.dir"));
 		String outputDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "output");
 		context = new TestContext(baseDir.getAbsolutePath(), outputDir);
