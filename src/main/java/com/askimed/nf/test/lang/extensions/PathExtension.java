@@ -42,6 +42,11 @@ public class PathExtension {
 		return lines;
 	}
 	
+	public static List<String> getLinesGzip(Path self) throws FileNotFoundException, IOException {
+
+		return readLinesGzip(self);
+	}
+	
 	public static String getTextGzip(Path self) throws FileNotFoundException, IOException {
 
 		List<String> lines = new Vector<String>();
