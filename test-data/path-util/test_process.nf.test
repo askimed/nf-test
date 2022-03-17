@@ -1,0 +1,32 @@
+nextflow_process {
+
+  name "Test process xy"
+
+  script "test-data/path-util/test_process.nf"
+  process "TEST_PROCESS"
+
+  test("Should compress 1 file") {
+
+    when {
+      process {
+        """
+        input[0] = file("$baseDir/test-data/path-util/input.txt")
+        """
+      }
+    }
+
+    then {
+      assert process.success
+      
+      assert process.out.output_file
+      assert process.out.output_file.size() == 1
+      def file1 = path(process.out.output_file.get(0))
+      def lines = file1.readLinesGzip()
+      assert 4, lines.size()
+      assert lines.contains("file has")
+      assert "file has" == lines.get(1)
+    }
+
+  }
+
+}

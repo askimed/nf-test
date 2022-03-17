@@ -19,7 +19,7 @@ public class AppTest {
 	public void testMultipleScripts() throws Exception {
 
 		App app = new App();
-		int exitCode  =app.run(new String[] { "test", "test-data/test2.nf.test", "test-data/test1.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/test2.nf.test", "test-data/test1.nf.test" });
 		assertEquals(1, exitCode);
 	}
 
@@ -31,5 +31,14 @@ public class AppTest {
 		assertEquals(0, exitCode);
 
 	}
-	
+
+	@Test
+	public void testPathUtil() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/path-util/test_process.nf.test", "--debug" });
+		assertEquals(0, exitCode);
+
+	}
+
 }
