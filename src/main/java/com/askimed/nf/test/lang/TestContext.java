@@ -63,7 +63,6 @@ public class TestContext {
 		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
 		closure.call();		
 		closure.getMetaClass().getProperties();
-		System.out.println("----> " + closure.getProperty("var1"));
 
 	}
 
