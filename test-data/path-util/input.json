@@ -1,0 +1,9 @@
+{
+  "name": "Lukas",
+  "age": 35,
+  "roles": ["admin","user"],
+  "address": {
+    "city": "Innsbruck",
+    "country": "Austria"
+  }
+}

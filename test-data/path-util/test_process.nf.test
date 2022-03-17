@@ -11,6 +11,7 @@ nextflow_process {
       process {
         """
         input[0] = file("$baseDir/test-data/path-util/input.txt")
+        input[1]  = file("$baseDir/test-data/path-util/input.json")
         """
       }
     }
@@ -29,6 +30,14 @@ nextflow_process {
       assert file1.linesGzip.size() == 4
       
       assert file1.textGzip.contains("file has")
+      
+      assert process.out.output_json
+      assert process.out.output_json.size() == 1
+      
+      def json = path(process.out.output_json.get(0)).json
+      assert json.name == "Lukas"
+      assert json.roles.size() == 2
+      assert json.address.city == "Innsbruck"
     }
 
   }

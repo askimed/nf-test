@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
+import groovy.json.JsonSlurper;
+
 public class PathExtension {
 
 	public static String getMd5(Path self) throws IOException, NoSuchAlgorithmException {
@@ -49,8 +51,6 @@ public class PathExtension {
 	
 	public static String getTextGzip(Path self) throws FileNotFoundException, IOException {
 
-		List<String> lines = new Vector<String>();
-
 		GZIPInputStream gzip = new GZIPInputStream(new FileInputStream(self.toFile()));
 		BufferedReader br = new BufferedReader(new InputStreamReader(gzip));
 		String line = null;
@@ -68,4 +68,16 @@ public class PathExtension {
 		return text.toString();
 	}
 
+	
+	public static Object readJSON(Path self) throws FileNotFoundException, IOException {
+
+	   JsonSlurper jsonSlurper = new JsonSlurper();
+	   return jsonSlurper.parse(self);
+	         
+	}
+	
+	public static Object getJson(Path self) throws FileNotFoundException, IOException {
+		return readJSON(self);
+	}
+	
 }
