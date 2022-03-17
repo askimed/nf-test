@@ -25,6 +25,8 @@ nextflow_process {
       assert 4, lines.size()
       assert lines.contains("file has")
       assert "file has" == lines.get(1)
+      
+      assert file1.textGzip.contains("file has")
     }
 
   }

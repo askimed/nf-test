@@ -41,5 +41,26 @@ public class PathExtension {
 
 		return lines;
 	}
+	
+	public static String getTextGzip(Path self) throws FileNotFoundException, IOException {
+
+		List<String> lines = new Vector<String>();
+
+		GZIPInputStream gzip = new GZIPInputStream(new FileInputStream(self.toFile()));
+		BufferedReader br = new BufferedReader(new InputStreamReader(gzip));
+		String line = null;
+		StringBuilder text = new StringBuilder();
+		int i = 0;
+		while ((line = br.readLine()) != null) {
+			if (i > 0) {
+				text.append("\n");
+			}
+			text.append(line);
+			i++;
+		}
+		gzip.close();
+
+		return text.toString();
+	}
 
 }
