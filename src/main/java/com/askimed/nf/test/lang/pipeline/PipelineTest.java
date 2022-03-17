@@ -6,6 +6,7 @@ import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.nextflow.NextflowCommand;
+import com.askimed.nf.test.util.FileUtil;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
@@ -30,8 +31,9 @@ public class PipelineTest extends AbstractTest {
 
 	public PipelineTest(PipelineTestSuite parent) {
 		super();
-		this.parent = parent;
-		context = new TestContext();
+		File baseDir = new File(System.getProperty("user.dir"));
+		String outputDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "output");
+		context = new TestContext(baseDir.getAbsolutePath(), outputDir);
 	}
 
 	public void name(String name) {
@@ -94,6 +96,9 @@ public class PipelineTest extends AbstractTest {
 		File errFile = new File(metaDir, "std.err");
 		File logFile = new File(metaDir, "nextflow.log");
 		File paramsFile = new File(metaDir, "params.json");
+
+		context.getParams().setBaseDir(baseDir);
+		context.getParams().setOutputDir(outputDir.getAbsolutePath());
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(parent.getScript());

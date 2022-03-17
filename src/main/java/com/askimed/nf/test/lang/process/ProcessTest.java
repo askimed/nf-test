@@ -43,7 +43,10 @@ public class ProcessTest extends AbstractTest {
 	public ProcessTest(ProcessTestSuite parent) {
 		super();
 		this.parent = parent;
-		context = new TestContext();
+		File baseDir = new File(System.getProperty("user.dir"));
+		String outputDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "output");
+
+		context = new TestContext(baseDir.getAbsolutePath(), outputDir);
 		context.setName(parent.getProcess());
 	}
 
@@ -116,6 +119,9 @@ public class ProcessTest extends AbstractTest {
 		File logFile = new File(metaDir, "nextflow.log");
 		File paramsFile = new File(metaDir, "params.json");
 
+		context.getParams().setBaseDir(baseDir);
+		context.getParams().setOutputDir(outputDir.getAbsolutePath());
+
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(workflow.getAbsolutePath());
 		nextflow.setParams(context.getParams());
@@ -136,7 +142,7 @@ public class ProcessTest extends AbstractTest {
 		context.getProcess().exitStatus = exitCode;
 		context.getProcess().success = (exitCode == 0);
 		context.getProcess().failed = (exitCode != 0);
-		
+
 		context.getWorkflow().loadFromFolder(metaDir);
 		context.getWorkflow().exitStatus = exitCode;
 		context.getWorkflow().success = (exitCode == 0);

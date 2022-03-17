@@ -12,23 +12,30 @@ import groovy.lang.Closure;
 
 public class TestContext {
 
-	private Map<String, Object> params = new HashMap<String, Object>();
+	private ParamsMap params = new ParamsMap();
 
 	private Workflow workflow = new Workflow();
 
 	private Process process = new Process();
-	
-	public String baseDir = System.getProperty("user.dir");
 
+	private String baseDir = "";
+	
+	private String outputDir = "";
+	
+	public TestContext(String baseDir, String outputDir) {
+		this.baseDir = baseDir;
+		this.outputDir = outputDir;
+	}
+	
 	public void setName(String name) {
 		process.setName(name);
 	}
 
-	public Map<String, Object> getParams() {
+	public ParamsMap getParams() {
 		return params;
 	}
 
-	public void setParams(Map<String, Object> params) {
+	public void setParams(ParamsMap params) {
 		this.params = params;
 	}
 
@@ -49,9 +56,15 @@ public class TestContext {
 	}
 
 	public void params(Closure closure) {
+		params = new ParamsMap();
+		params.setBaseDir(baseDir);
+		params.setOutputDir(outputDir);
 		closure.setDelegate(params);
 		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
-		closure.call();
+		closure.call();		
+		closure.getMetaClass().getProperties();
+		System.out.println("----> " + closure.getProperty("var1"));
+
 	}
 
 	public void process(Closure<Object> closure) {
