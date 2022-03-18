@@ -279,6 +279,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../global_variables/" class="md-nav__link">
+        Global Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -328,13 +342,6 @@
   
     <nav class="md-nav" aria-label="Assertions">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#process" class="md-nav__link">
-    Process
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#output-channels" class="md-nav__link">
@@ -505,14 +512,14 @@
       
       
         <label class="md-nav__link" for="__nav_6">
-          Command line interface (CLI)
+          Command line Interface (CLI)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Command line interface (CLI)" data-md-level="1">
+      <nav class="md-nav" aria-label="Command line Interface (CLI)" data-md-level="1">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
-          Command line interface (CLI)
+          Command line Interface (CLI)
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -588,7 +595,22 @@
   
     <li class="md-nav__item">
       <a href="../../nftest_pipelines/" class="md-nav__link">
-        nf-test Pipelines
+        Available Pipelines
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        About
       </a>
     </li>
   
@@ -634,13 +656,6 @@
   
     <nav class="md-nav" aria-label="Assertions">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#process" class="md-nav__link">
-    Process
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#output-channels" class="md-nav__link">
@@ -694,14 +709,14 @@
 <span class="o">}</span>
 </code></pre></div>
 <h2 id="assertions">Assertions</h2>
-<p>// trace
-assert process.trace.tasks().size() == 1</p>
-<h3 id="process">Process</h3>
 <p>The <code>process</code> object can be used in asserts to check its status or error messages.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// process status</span>
 <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">success</span>
 <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">failed</span>
 <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">exitStatus</span> <span class="o">==</span> <span class="mi">0</span>
+
+<span class="c1">// Analyze Nextflow trace file</span>
+<span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
 
 <span class="c1">// process error message</span>
 <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">errorReport</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;....&quot;</span><span class="o">)</span>
@@ -715,7 +730,7 @@ assert process.trace.tasks().size() == 1</p>
 <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span> <span class="o">!=</span> <span class="kc">null</span>
 
 <span class="c1">// channel contains 3 elements</span>
-<span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">4</span>
+<span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">3</span>
 
 <span class="c1">// first element is &quot;hello&quot;</span>
 <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span> <span class="o">==</span> <span class="s2">&quot;hello&quot;</span>
@@ -762,7 +777,7 @@ assert process.trace.tasks().size() == 1</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../getting-started/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started" rel="prev">
+        <a href="../global_variables/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Global Variables" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -771,7 +786,7 @@ assert process.trace.tasks().size() == 1</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Getting Started
+              Global Variables
             </div>
           </div>
         </a>

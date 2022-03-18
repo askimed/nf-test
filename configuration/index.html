@@ -279,6 +279,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../testcases/global_variables/" class="md-nav__link">
+        Global Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../testcases/nextflow_process/" class="md-nav__link">
         Process Testing
       </a>
@@ -428,14 +442,14 @@
       
       
         <label class="md-nav__link" for="__nav_6">
-          Command line interface (CLI)
+          Command line Interface (CLI)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Command line interface (CLI)" data-md-level="1">
+      <nav class="md-nav" aria-label="Command line Interface (CLI)" data-md-level="1">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
-          Command line interface (CLI)
+          Command line Interface (CLI)
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -566,7 +580,22 @@
   
     <li class="md-nav__item">
       <a href="../nftest_pipelines/" class="md-nav__link">
-        nf-test Pipelines
+        Available Pipelines
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        About
       </a>
     </li>
   
@@ -643,9 +672,11 @@
 <h2 id="nf-testconfig"><code>nf-test.config</code></h2>
 <p>This config file contains settings for nf-test.</p>
 <div class="highlight"><pre><span></span><code><span class="n">config</span> <span class="o">{</span>
-    <span class="c1">// location where nftest should save test scripts</span>
+    <span class="c1">// location for all nf-tests</span>
     <span class="n">testsDir</span> <span class="s2">&quot;tests&quot;</span>
-    <span class="c1">// location of a nextflow.config file specific for executing tests</span>
+    <span class="c1">// nf-test directory including temporary files for each test</span>
+    <span class="n">workDir</span> <span class="s2">&quot;.nf-test&quot;</span>
+    <span class="c1">// location of an optional nextflow.config file specific for executing tests</span>
     <span class="n">configFile</span> <span class="s2">&quot;tests/nextflow.config&quot;</span>
     <span class="c1">// run all test with the defined docker profile from the main nextflow.config</span>
     <span class="n">profile</span> <span class="s2">&quot;docker&quot;</span>
@@ -653,7 +684,7 @@
 <span class="o">}</span>
 </code></pre></div>
 <h2 id="testsnextflowconfig"><code>tests/nextflow.config</code></h2>
-<p>This <code>nextflow.config</code> file is used to execute tests. This is a good place to set default <code>params</code> for all your tests. Example number of threads:</p>
+<p>This optional <code>nextflow.config</code> file is used to execute tests. This is a good place to set default <code>params</code> for all your tests. Example number of threads:</p>
 <div class="highlight"><pre><span></span><code><span class="n">params</span> <span class="o">{</span>
     <span class="c1">// run all tests with 1 threads</span>
     <span class="n">threads</span> <span class="o">=</span> <span class="mi">1</span>
@@ -688,13 +719,13 @@
       
       
         
-        <a href="../nftest_pipelines/" class="md-footer__link md-footer__link--next" aria-label="Next: nf-test Pipelines" rel="next">
+        <a href="../nftest_pipelines/" class="md-footer__link md-footer__link--next" aria-label="Next: Available Pipelines" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              nf-test Pipelines
+              Available Pipelines
             </div>
           </div>
           <div class="md-footer__button md-icon">
