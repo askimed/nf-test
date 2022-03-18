@@ -39,7 +39,7 @@ public class RunTestsCommand implements Callable<Integer> {
 
 			String defaultProfile = null;
 			File defaultConfigFile = null;
-			File workDir = new File("nf-test");
+			File workDir = new File(".nf-test");
 
 			try {
 
