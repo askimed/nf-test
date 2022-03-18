@@ -1,4 +1,4 @@
-# Welcome to nf-test!
+# Welcome to nf-test 🚀
 
 nf-test is a simple test framework for Nextflow pipelines.
 
