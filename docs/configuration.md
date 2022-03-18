@@ -2,7 +2,7 @@
 
 ## Setup test profile
 
-To run your test using a specific Netxflow profile, you can use the `--profile` argument on the command line or define a default profile in `nf-test.config`
+To run your test using a specific Netxflow profile, you can use the `--profile` argument on the command line or define a default profile in `nf-test.config`.
 
 
 ##  `nf-test.config`
