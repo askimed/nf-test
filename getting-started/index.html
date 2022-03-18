@@ -757,17 +757,20 @@ git clone https://github.com/askimed/nf-test-examples
 </code></pre></div>
 <p>The pipeline consists of three modules (<code>salmon.index.nf</code>, <code>salmon_align_quant.nf</code>,<code>fastqc.nf</code>). Here, we use the <a href=""><code>salmon.index.nf</code></a> process to create a test case from scratch. This process takes a reference as an input and creates an index using salmon.</p>
 <h2 id="init">Init</h2>
-<p>Before we start creating our test cases, we use the <code>init</code> command to setup nf-test:</p>
-<div class="highlight"><pre><span></span><code>nf-test init
+<p>Before creating test cases, we use the <code>init</code> command to setup nf-test.</p>
+<div class="highlight"><pre><span></span><code>//Init <span class="nb">command</span> has already been executed <span class="k">for</span> our repository
+nf-test init
 </code></pre></div>
-<p>The <code>init</code> command creates the following files: <code>nf-test.config</code> and <code>tests/nextflow.config</code>. It also creates a folder <code>tests</code> which is the home directory of your test code.</p>
+<p>The <code>init</code> command creates the following files: <code>nf-test.config</code> and <code>tests/nextflow.config</code>.</p>
 <p>In the <a href="../configuration/">configuration</a> section you can learn more about these files and how to customize the directory layout.</p>
 <h2 id="create-your-first-test">Create your first test</h2>
-<p>The <code>generate</code> command helps you to create a skeleton test code for a Nextflow process or the whole pipeline/workflow.</p>
+<p>The <code>generate</code> command helps you to create a skeleton test code for a Nextflow process or the complete pipeline/workflow.</p>
 <p>Here we generate a test case for the process <code>salmon.index.nf</code>:</p>
-<div class="highlight"><pre><span></span><code>nf-test generate process modules/local/salmon.index.nf
+<div class="highlight"><pre><span></span><code><span class="c1"># delete already existing test case</span>
+rm tests/modules/local/salmon_index.nf.test
+nf-test generate process modules/local/salmon_index.nf
 </code></pre></div>
-<p>This command creates a new file <code>tests/modules/local/salmon.index.nf</code> with the following content:</p>
+<p>This command creates a new file <code>tests/modules/local/salmon_index.nf</code> with the following content:</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span> <span class="o">{</span>
 
     <span class="n">name</span> <span class="s2">&quot;Test Process SALMON_INDEX&quot;</span>
@@ -831,26 +834,22 @@ git clone https://github.com/askimed/nf-test-examples
     <span class="c1">//analyze trace file</span>
     <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
     <span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">)</span> <span class="o">{</span>
-      <span class="k">assert</span> <span class="n">index</span>
-      <span class="c1">// check if output directory has been created</span>
+      <span class="c1">// check if emitted output has been created</span>
       <span class="k">assert</span> <span class="n">index</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
       <span class="c1">// count amount of created files</span>
-      <span class="k">assert</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">listFiles</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">16</span>
+      <span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">list</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">16</span>
       <span class="c1">// parse info.json file</span>
-      <span class="kt">def</span> <span class="n">jsonSlurper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JsonSlurper</span><span class="o">()</span>
-      <span class="kt">def</span> <span class="n">info</span> <span class="o">=</span> <span class="n">jsonSlurper</span><span class="o">.</span><span class="na">parseText</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">text</span><span class="o">)</span>
+      <span class="kt">def</span> <span class="n">info</span> <span class="o">=</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">json</span>
       <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">num_kmers</span> <span class="o">==</span> <span class="mi">375730</span>
       <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">seq_length</span> <span class="o">==</span> <span class="mi">443050</span>
       <span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">md5</span> <span class="o">==</span> <span class="s2">&quot;80831602e2ac825e3e63ba9df5d23505&quot;</span>
     <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <p>The items of a channel are always sorted by nf-test. This provides a deterministic order inside the channel and enables you to write reproducible tests.</p>
 <h2 id="your-first-test-specification">Your first test specification</h2>
 <p>You can update the name of the test method to something that gives us later a good description of our specification. When we put everything together, we get the following full working test specification:</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@Grab</span><span class="o">(</span><span class="s1">&#39;org.codehaus.groovy:groovy-json:3.0.9&#39;</span><span class="o">)</span>
-<span class="kn">import</span> <span class="nn">groovy.json.JsonSlurper</span>
-
-<span class="n">nextflow_process</span> <span class="o">{</span>
+<div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span> <span class="o">{</span>
 
     <span class="n">name</span> <span class="s2">&quot;Test Process SALMON_INDEX&quot;</span>
     <span class="n">script</span> <span class="s2">&quot;modules/local/salmon_index.nf&quot;</span>
@@ -859,8 +858,6 @@ git clone https://github.com/askimed/nf-test-examples
     <span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should create channel index files&quot;</span><span class="o">)</span> <span class="o">{</span>
 
         <span class="n">when</span> <span class="o">{</span>
-            <span class="n">params</span> <span class="o">{</span>
-            <span class="o">}</span>
             <span class="n">process</span> <span class="o">{</span>
                 <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                input[0] = file(&quot;test_data/transcriptome.fa&quot;)</span>
@@ -874,14 +871,12 @@ git clone https://github.com/askimed/nf-test-examples
             <span class="c1">//analyze trace file</span>
             <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
             <span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">)</span> <span class="o">{</span>
-              <span class="k">assert</span> <span class="n">index</span>
-              <span class="c1">// check if output directory has been created</span>
+              <span class="c1">// check if emitted output has been created</span>
               <span class="k">assert</span> <span class="n">index</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
               <span class="c1">// count amount of created files</span>
-              <span class="k">assert</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">listFiles</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">16</span>
+              <span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">list</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">16</span>
               <span class="c1">// parse info.json file</span>
-              <span class="kt">def</span> <span class="n">jsonSlurper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JsonSlurper</span><span class="o">()</span>
-              <span class="kt">def</span> <span class="n">info</span> <span class="o">=</span> <span class="n">jsonSlurper</span><span class="o">.</span><span class="na">parseText</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">text</span><span class="o">)</span>
+              <span class="kt">def</span> <span class="n">info</span> <span class="o">=</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">json</span>
               <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">num_kmers</span> <span class="o">==</span> <span class="mi">375730</span>
               <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">seq_length</span> <span class="o">==</span> <span class="mi">443050</span>
               <span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">md5</span> <span class="o">==</span> <span class="s2">&quot;80831602e2ac825e3e63ba9df5d23505&quot;</span>
