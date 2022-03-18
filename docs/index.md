@@ -5,8 +5,8 @@ nf-test is a simple test framework for Nextflow pipelines.
 
 [:fontawesome-solid-book: Getting Started](getting-started.md){ .md-button .md-button--primary} [:fontawesome-solid-download: Installation](installation.md){ .md-button } [:fontawesome-brands-github: Source](https://github.com/askimed/nf-test){ .md-button }
 
-
-Let's start with a simple script to test the Nextflow [Hello World](https://github.com/nextflow-io/hello) example. To run it, copy/paste the code into a text file (e.g. `hello-world.test`) and run it with `nf-test test hello-world.test`. We use the `expect` keyword, since no inputs must be defined.
+## Test your pipeline
+Let's start with a simple example to test the [Hello World](https://github.com/nextflow-io/hello) Nextflow pipeline. To run it, copy/paste the code into a text file (e.g. `hello-world.test`) and run it with `nf-test test hello-world.test`.
 
 ```Groovy
 nextflow_pipeline {
@@ -19,25 +19,22 @@ nextflow_pipeline {
     expect {
       with(workflow){
         assert success
+        //analyze Nextflow trace file
         assert trace.tasks().size() == 4
+        //Verify if strings have been written to stdout object
         assert "Ciao world!" in stdout
         assert "Bonjour world!" in stdout
         assert "Hello world!" in stdout
         assert "Hola world!" in stdout
       }
     }
-
   }
-
 }
 ```
-
-In case inputs must be defined, you can also use nf-test to test Nextflow modules using when/then closures. In the nf-test script below we add some basic checks for a [recently published pipeline](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow).
+## Test your modules
+In the nf-test script below we add some basic checks to a module of a [recently published pipeline](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow).
 
 ```Groovy
-@Grab('org.codehaus.groovy:groovy-json:3.0.9')
-import groovy.json.JsonSlurper
-
 nextflow_process {
 
     name "Test Process SALMON_INDEX"
@@ -47,8 +44,6 @@ nextflow_process {
     test("Should create channel index files") {
 
         when {
-            params {
-            }
             process {
                 """
                 input[0] = file("test_data/transcriptome.fa")
@@ -62,21 +57,19 @@ nextflow_process {
             //analyze trace file
             assert process.trace.tasks().size() == 1
             with(process.out) {
-              assert index
-              // check if output directory has been created
+              // check if emitted output has been created
               assert index.size() == 1
               // count amount of created files
-              assert new File(index.get(0)).listFiles().size() == 16
+              assert path(index.get(0)).list().size() == 16
               // parse info.json file
-              def jsonSlurper = new JsonSlurper()
-              def info = jsonSlurper.parseText(new File(index.get(0)+'/info.json').text)
+              def info = path(index.get(0)+'/info.json').json
               assert info.num_kmers == 375730
               assert info.seq_length == 443050
+              //verify md5 checksum
               assert path(index.get(0)+'/info.json').md5 == "80831602e2ac825e3e63ba9df5d23505"
             }
         }
     }
-
 }
 
 ```
