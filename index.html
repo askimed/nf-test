@@ -217,9 +217,47 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         Home
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#test-your-pipeline" class="md-nav__link">
+    Test your pipeline
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-your-modules" class="md-nav__link">
+    Test your modules
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -547,6 +585,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#test-your-pipeline" class="md-nav__link">
+    Test your pipeline
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-your-modules" class="md-nav__link">
+    Test your modules
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -566,7 +626,8 @@
 <h1 id="welcome-to-nf-test">Welcome to nf-test!</h1>
 <p>nf-test is a simple test framework for Nextflow pipelines.</p>
 <p><a class="md-button md-button--primary" href="getting-started/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M448 336V48c0-26.51-21.5-48-48-48H96C42.98 0 0 42.98 0 96v320c0 53.02 42.98 96 96 96h320c17.67 0 32-14.33 32-31.1 0-11.72-6.607-21.52-16-27.1v-81.36c9.8-9.64 16-22.24 16-36.44zM143.1 128h192c9.7 0 16.9 7.2 16.9 16s-7.2 16-16 16H143.1c-7.9 0-15.1-7.2-15.1-16s7.2-16 15.1-16zm0 64h192c9.7 0 16.9 7.2 16.9 16s-7.2 16-16 16H143.1c-7.9 0-15.1-7.2-15.1-16s7.2-16 15.1-16zM384 448H96c-17.67 0-32-14.33-32-32s14.33-32 32-32h288v64z"/></svg></span> Getting Started</a> <a class="md-button" href="installation/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M480 352H346.5l-45.25 45.25C289.2 409.3 273.1 416 256 416s-33.16-6.656-45.25-18.75L165.5 352H32c-17.67 0-32 14.33-32 32v96c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32v-96c0-17.7-14.3-32-32-32zm-48 104c-13.2 0-24-10.8-24-24s10.8-24 24-24 24 10.8 24 24-10.8 24-24 24zm-198.6-81.4c6.2 6.3 14.4 9.4 22.6 9.4s16.38-3.125 22.62-9.375l128-128c12.49-12.5 12.49-32.75 0-45.25-12.5-12.5-32.76-12.5-45.25 0L288 274.8V32c0-17.67-14.33-32-32-32-17.7 0-32 14.33-32 32v242.8l-73.4-73.4c-12.49-12.5-32.75-12.5-45.25 0-12.49 12.5-12.49 32.75 0 45.25L233.4 374.6z"/></svg></span> Installation</a> <a class="md-button" href="https://github.com/askimed/nf-test"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span> Source</a></p>
-<p>Let's start with a simple script to test the Nextflow <a href="https://github.com/nextflow-io/hello">Hello World</a> example. To run it, copy/paste the code into a text file (e.g. <code>hello-world.test</code>) and run it with <code>nf-test test hello-world.test</code>. We use the <code>expect</code> keyword, since no inputs must be defined.</p>
+<h2 id="test-your-pipeline">Test your pipeline</h2>
+<p>Let's start with a simple example to test the <a href="https://github.com/nextflow-io/hello">Hello World</a> Nextflow pipeline. To run it, copy/paste the code into a text file (e.g. <code>hello-world.test</code>) and run it with <code>nf-test test hello-world.test</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_pipeline</span> <span class="o">{</span>
 
   <span class="n">name</span> <span class="s2">&quot;Test Hello World&quot;</span>
@@ -577,23 +638,21 @@
     <span class="n">expect</span> <span class="o">{</span>
       <span class="n">with</span><span class="o">(</span><span class="n">workflow</span><span class="o">){</span>
         <span class="k">assert</span> <span class="n">success</span>
+        <span class="c1">//analyze Nextflow trace file</span>
         <span class="k">assert</span> <span class="n">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">4</span>
+        <span class="c1">//Verify if strings have been written to stdout object</span>
         <span class="k">assert</span> <span class="s2">&quot;Ciao world!&quot;</span> <span class="k">in</span> <span class="n">stdout</span>
         <span class="k">assert</span> <span class="s2">&quot;Bonjour world!&quot;</span> <span class="k">in</span> <span class="n">stdout</span>
         <span class="k">assert</span> <span class="s2">&quot;Hello world!&quot;</span> <span class="k">in</span> <span class="n">stdout</span>
         <span class="k">assert</span> <span class="s2">&quot;Hola world!&quot;</span> <span class="k">in</span> <span class="n">stdout</span>
       <span class="o">}</span>
     <span class="o">}</span>
-
   <span class="o">}</span>
-
 <span class="o">}</span>
 </code></pre></div>
-<p>In case inputs must be defined, you can also use nf-test to test Nextflow modules using when/then closures. In the nf-test script below we add some basic checks for a <a href="https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow">recently published pipeline</a>.</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@Grab</span><span class="o">(</span><span class="s1">&#39;org.codehaus.groovy:groovy-json:3.0.9&#39;</span><span class="o">)</span>
-<span class="kn">import</span> <span class="nn">groovy.json.JsonSlurper</span>
-
-<span class="n">nextflow_process</span> <span class="o">{</span>
+<h2 id="test-your-modules">Test your modules</h2>
+<p>In the nf-test script below we add some basic checks to a module of a <a href="https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow">recently published pipeline</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span> <span class="o">{</span>
 
     <span class="n">name</span> <span class="s2">&quot;Test Process SALMON_INDEX&quot;</span>
     <span class="n">script</span> <span class="s2">&quot;modules/local/salmon_index.nf&quot;</span>
@@ -602,8 +661,6 @@
     <span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should create channel index files&quot;</span><span class="o">)</span> <span class="o">{</span>
 
         <span class="n">when</span> <span class="o">{</span>
-            <span class="n">params</span> <span class="o">{</span>
-            <span class="o">}</span>
             <span class="n">process</span> <span class="o">{</span>
                 <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                input[0] = file(&quot;test_data/transcriptome.fa&quot;)</span>
@@ -617,21 +674,19 @@
             <span class="c1">//analyze trace file</span>
             <span class="k">assert</span> <span class="n">process</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
             <span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">)</span> <span class="o">{</span>
-              <span class="k">assert</span> <span class="n">index</span>
-              <span class="c1">// check if output directory has been created</span>
+              <span class="c1">// check if emitted output has been created</span>
               <span class="k">assert</span> <span class="n">index</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
               <span class="c1">// count amount of created files</span>
-              <span class="k">assert</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">listFiles</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">16</span>
+              <span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">list</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">16</span>
               <span class="c1">// parse info.json file</span>
-              <span class="kt">def</span> <span class="n">jsonSlurper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JsonSlurper</span><span class="o">()</span>
-              <span class="kt">def</span> <span class="n">info</span> <span class="o">=</span> <span class="n">jsonSlurper</span><span class="o">.</span><span class="na">parseText</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">text</span><span class="o">)</span>
+              <span class="kt">def</span> <span class="n">info</span> <span class="o">=</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">json</span>
               <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">num_kmers</span> <span class="o">==</span> <span class="mi">375730</span>
               <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">seq_length</span> <span class="o">==</span> <span class="mi">443050</span>
+              <span class="c1">//verify md5 checksum</span>
               <span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">md5</span> <span class="o">==</span> <span class="s2">&quot;80831602e2ac825e3e63ba9df5d23505&quot;</span>
             <span class="o">}</span>
         <span class="o">}</span>
     <span class="o">}</span>
-
 <span class="o">}</span>
 </code></pre></div>
 
