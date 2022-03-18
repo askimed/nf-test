@@ -23,9 +23,9 @@ Before we start creating our test cases, we use the `init` command to setup nf-t
 nf-test init
 ```
 
-The `init` command creates the following files: `nf-test.config` and `tests/nextflow.config`. It also creates a folder `tests` which is the home of your test code and includes the Nextflow working directory for all our tests.
+The `init` command creates the following files: `nf-test.config` and `tests/nextflow.config`. It also creates a folder `tests` which is the home directory of your test code.
 
-In the [configuration](configuration.md) section you can learn more about these files.
+In the [configuration](configuration.md) section you can learn more about these files and how to customize the directory layout.
 
 
 ## Create your first test
