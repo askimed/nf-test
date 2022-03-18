@@ -40,10 +40,8 @@ public class WorkflowTest extends AbstractTest {
 	public WorkflowTest(WorkflowTestSuite parent) {
 		super();
 		this.parent = parent;
-		File baseDir = new File(System.getProperty("user.dir"));
-		String outputDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "output");
 
-		context = new TestContext(baseDir.getAbsolutePath(), outputDir);
+		context = new TestContext();
 		context.setName(parent.getWorkflow());
 	}
 
@@ -97,6 +95,9 @@ public class WorkflowTest extends AbstractTest {
 
 		when.execute(context);
 
+		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
+		context.evaluateProcessClosure();
+
 		// Create workflow mock
 		File workflow = new File(metaDir, "mock.nf");
 		writeWorkflowMock(workflow);
@@ -111,9 +112,6 @@ public class WorkflowTest extends AbstractTest {
 		File errFile = new File(metaDir, "std.err");
 		File logFile = new File(metaDir, "nextflow.log");
 		File paramsFile = new File(metaDir, "params.json");
-
-		context.getParams().setBaseDir(baseDir);
-		context.getParams().setOutputDir(outputDir.getAbsolutePath());
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(workflow.getAbsolutePath());

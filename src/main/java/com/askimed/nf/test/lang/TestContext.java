@@ -20,13 +20,16 @@ public class TestContext {
 
 	private Process process = new Process();
 
-	private String baseDir = "";
+	private Closure paramsClosure;
 
-	private String outputDir = "";
+	private Closure processClosure;
 
-	public TestContext(String baseDir, String outputDir) {
-		this.baseDir = baseDir;
-		this.outputDir = outputDir;
+	public String baseDir = "lukas";
+
+	public String outputDir = "foreer";
+
+	public TestContext() {
+
 	}
 
 	public void setName(String name) {
@@ -58,23 +61,35 @@ public class TestContext {
 	}
 
 	public void params(Closure closure) {
-		params = new ParamsMap();
+		this.paramsClosure = closure;
+	}
+
+	public void evaluateParamsClosure(String baseDir, String outputDir) {
 		params.setBaseDir(baseDir);
 		params.setOutputDir(outputDir);
-		closure.setDelegate(params);
-		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
-		closure.call();
-		closure.getMetaClass().getProperties();
+		this.baseDir = baseDir;
+		this.outputDir = outputDir;
 
+		if (paramsClosure != null) {
+			paramsClosure.setDelegate(params);
+			paramsClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
+			paramsClosure.call();
+			paramsClosure.getMetaClass().getProperties();
+		}
 	}
 
 	public void process(Closure<Object> closure) {
-		closure.setDelegate(this);
-		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
-		closure.call();
-		Object mapping = closure.call();
-		if (mapping != null) {
-			process.setMapping(mapping.toString());
+		processClosure = closure;
+	}
+
+	public void evaluateProcessClosure() {
+		if (processClosure != null) {
+			processClosure.setDelegate(this);
+			processClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
+			Object mapping = processClosure.call();
+			if (mapping != null) {
+				process.setMapping(mapping.toString());
+			}
 		}
 	}
 
