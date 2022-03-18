@@ -1,6 +1,7 @@
 package com.askimed.nf.test.core;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,15 +17,15 @@ public abstract class AbstractTest implements ITest {
 	public File workDir;
 
 	public String baseDir = System.getProperty("user.dir");
-	
+
 	public boolean skipped = false;
-	
+
 	public AbstractTest() {
 
 	}
 
 	@Override
-	public void setup(File baseDir) {
+	public void setup(File baseDir) throws IOException {
 		String metaDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "meta");
 		this.metaDir = new File(metaDir);
 		FileUtil.deleteDirectory(this.metaDir);
@@ -79,12 +80,12 @@ public abstract class AbstractTest implements ITest {
 			return "??";
 		}
 	}
-	
+
 	@Override
 	public void skip() {
 		skipped = true;
 	}
-	
+
 	public boolean isSkipped() {
 		return skipped;
 	}

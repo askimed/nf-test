@@ -1,6 +1,8 @@
 package com.askimed.nf.test.lang;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,14 +21,14 @@ public class TestContext {
 	private Process process = new Process();
 
 	private String baseDir = "";
-	
+
 	private String outputDir = "";
-	
+
 	public TestContext(String baseDir, String outputDir) {
 		this.baseDir = baseDir;
 		this.outputDir = outputDir;
 	}
-	
+
 	public void setName(String name) {
 		process.setName(name);
 	}
@@ -61,7 +63,7 @@ public class TestContext {
 		params.setOutputDir(outputDir);
 		closure.setDelegate(params);
 		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
-		closure.call();		
+		closure.call();
 		closure.getMetaClass().getProperties();
 
 	}
@@ -76,13 +78,13 @@ public class TestContext {
 		}
 	}
 
-	public void clean(String path) {
+	public void clean(String path) throws IOException {
 		File file = new File(path);
 		if (file.exists()) {
 			if (file.isDirectory()) {
 				FileUtil.deleteDirectory(file);
 			} else {
-				file.delete();
+				Files.delete(file.toPath());
 			}
 		}
 	}
