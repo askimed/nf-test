@@ -13,8 +13,9 @@ nextflow_process {
 	  def outputDir333 = outputDir 
 
       params {
-        var1 = "$baseDir333"
-        var2 = "$outputDir333"
+        var1 = "$baseDir"
+        var2 = "$outputDir"
+        outdir = "$outputDir"
       }
       
       process {

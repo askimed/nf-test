@@ -40,6 +40,7 @@ public class WorkflowTest extends AbstractTest {
 	public WorkflowTest(WorkflowTestSuite parent) {
 		super();
 		this.parent = parent;
+
 		context = new TestContext();
 		context.setName(parent.getWorkflow());
 	}
@@ -93,6 +94,9 @@ public class WorkflowTest extends AbstractTest {
 		}
 
 		when.execute(context);
+
+		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
+		context.evaluateProcessClosure();
 
 		// Create workflow mock
 		File workflow = new File(metaDir, "mock.nf");

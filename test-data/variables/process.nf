@@ -7,6 +7,7 @@ process TEST_PROCESS {
     val var2
   output:
     tuple val(var1), val(var2), emit: my_tuples
+    path("lf.txt")
 
   script:
   

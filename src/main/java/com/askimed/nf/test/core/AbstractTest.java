@@ -1,10 +1,13 @@
 package com.askimed.nf.test.core;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.askimed.nf.test.config.Config;
+import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.FileUtil;
 
 public abstract class AbstractTest implements ITest {
@@ -16,30 +19,57 @@ public abstract class AbstractTest implements ITest {
 	public File workDir;
 
 	public String baseDir = System.getProperty("user.dir");
-	
+
 	public boolean skipped = false;
-	
+
 	public AbstractTest() {
 
 	}
 
+	protected String getWorkDir() {
+
+		File workDir = new File("nf-test");
+
+		try {
+
+			Config config = Config.parse(new File(Config.FILENAME));
+			workDir = new File(config.getWorkDir());
+		} catch (Exception e) {
+
+		}
+		return workDir.getAbsolutePath();
+	}
+
 	@Override
-	public void setup(File baseDir) {
+	public void setup(File baseDir) throws IOException {
 		String metaDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "meta");
-		this.metaDir = new File(metaDir);
-		FileUtil.deleteDirectory(this.metaDir);
-		FileUtil.createDirectory(this.metaDir);
+
+		try {
+			this.metaDir = new File(metaDir);
+			FileUtil.deleteDirectory(this.metaDir);
+			FileUtil.createDirectory(this.metaDir);
+		} catch (Exception e) {
+			throw new IOException("Meta Directory '" + metaDir + "' could not be deleted:\n" + e);
+		}
 
 		String outputDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "output");
-		this.outputDir = new File(outputDir);
-		FileUtil.deleteDirectory(this.outputDir);
-		FileUtil.createDirectory(this.outputDir);
+
+		try {
+			this.outputDir = new File(outputDir);
+			FileUtil.deleteDirectory(this.outputDir);
+			FileUtil.createDirectory(this.outputDir);
+		} catch (Exception e) {
+			throw new IOException("Output Directory '" + outputDir + "' could not be deleted:\n" + e);
+		}
 
 		String workDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "work");
-		this.workDir = new File(workDir);
-		FileUtil.deleteDirectory(this.workDir);
-		FileUtil.createDirectory(this.workDir);
-
+		try {
+			this.workDir = new File(workDir);
+			FileUtil.deleteDirectory(this.workDir);
+			FileUtil.createDirectory(this.workDir);
+		} catch (Exception e) {
+			throw new IOException("Working Directory '" + metaDir + "' could not be deleted:\n" + e);
+		}
 	}
 
 	@Override
@@ -79,12 +109,12 @@ public abstract class AbstractTest implements ITest {
 			return "??";
 		}
 	}
-	
+
 	@Override
 	public void skip() {
 		skipped = true;
 	}
-	
+
 	public boolean isSkipped() {
 		return skipped;
 	}

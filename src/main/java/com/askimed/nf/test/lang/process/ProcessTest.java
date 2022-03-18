@@ -93,13 +93,16 @@ public class ProcessTest extends AbstractTest {
 		if (!script.exists()) {
 			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
 		}
-
+		
 		if (setup != null) {
 			setup.execute(context);
 		}
 
 		when.execute(context);
 
+		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
+		context.evaluateProcessClosure();
+		
 		// Create workflow mock
 		File workflow = new File(metaDir, "mock.nf");
 		writeWorkflowMock(workflow);
@@ -136,7 +139,7 @@ public class ProcessTest extends AbstractTest {
 		context.getProcess().exitStatus = exitCode;
 		context.getProcess().success = (exitCode == 0);
 		context.getProcess().failed = (exitCode != 0);
-		
+
 		context.getWorkflow().loadFromFolder(metaDir);
 		context.getWorkflow().exitStatus = exitCode;
 		context.getWorkflow().success = (exitCode == 0);

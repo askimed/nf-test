@@ -15,10 +15,10 @@ update() {
   fi
 }
 
-if test -f "${APP_HOME}/${APP_JAR}"; then
-  FILE_PATH_JAR=${APP_HOME}/${APP_JAR}
-else
+if test -f "${FOLDER}/${APP_JAR}"; then
   FILE_PATH_JAR=${FOLDER}/${APP_JAR}
+else
+  FILE_PATH_JAR=${APP_HOME}/${APP_JAR}
 fi
 
 export JAVA_PROGRAM_ARGS=`echo "$@"`
