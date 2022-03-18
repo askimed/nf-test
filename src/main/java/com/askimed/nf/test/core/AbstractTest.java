@@ -68,7 +68,7 @@ public abstract class AbstractTest implements ITest {
 			FileUtil.deleteDirectory(this.workDir);
 			FileUtil.createDirectory(this.workDir);
 		} catch (Exception e) {
-			throw new IOException("Working Directory '" + metaDir + "' could not be deleted:\n" + e);
+			throw new IOException("Working Directory '" + workDir + "' could not be deleted:\n" + e);
 		}
 	}
 
