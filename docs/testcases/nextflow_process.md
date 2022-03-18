@@ -18,11 +18,6 @@ nextflow_process {
 
 ## Assertions
 
-// trace
-assert process.trace.tasks().size() == 1
-
-### Process
-
 The `process` object can be used in asserts to check its status or error messages.
 
 
@@ -31,6 +26,9 @@ The `process` object can be used in asserts to check its status or error message
 assert process.success
 assert process.failed
 assert process.exitStatus == 0
+
+// Analyze Nextflow trace file
+assert process.trace.tasks().size() == 1
 
 // process error message
 assert process.errorReport.contains("....")
@@ -48,7 +46,7 @@ The `process.out` object provides access to the content of all named output Chan
 assert process.out.my_channel != null
 
 // channel contains 3 elements
-assert process.out.my_channel.size() == 4
+assert process.out.my_channel.size() == 3
 
 // first element is "hello"
 assert process.out.my_channel.get(0) == "hello"

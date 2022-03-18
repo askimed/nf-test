@@ -24,6 +24,7 @@ nav:
   - Installation: installation.md
   - Getting Started: getting-started.md
   - Writing Tests:
+    - Global Variables: testcases/global_variables.md
     - Process Testing: testcases/nextflow_process.md
     - Workflow Testing: testcases/nextflow_workflow.md
     - Pipeline Testing: testcases/nextflow_pipeline.md
@@ -32,12 +33,13 @@ nav:
     - Files: assertions/files.md
     - Regular Expressions: assertions/regular-expressions.md
     - Using Third-Party Libraries: assertions/libraries.md
-  - Command line interface (CLI):
+  - Command line Interface (CLI):
     - init: cli/init.md
     - generate: cli/generate.md
     - test: cli/test.md
   - Configuration: configuration.md
-  - nf-test Pipelines: nftest_pipelines.md
+  - Available Pipelines: nftest_pipelines.md
+  - About: about.md
 
 
 markdown_extensions:
