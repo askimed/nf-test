@@ -56,9 +56,8 @@ public class RunTestsCommand implements Callable<Integer> {
 
 			} catch (Exception e) {
 
-				System.out.println(AnsiColors.yellow("Warning: This pipeline has no valid nf-test config file."));
-
 				if (debug) {
+					System.out.println(AnsiColors.yellow("Warning: This pipeline has no valid nf-test config file."));
 					e.printStackTrace();
 				}
 
