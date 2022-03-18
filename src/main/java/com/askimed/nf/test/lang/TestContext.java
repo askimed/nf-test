@@ -1,14 +1,7 @@
 package com.askimed.nf.test.lang;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.askimed.nf.test.lang.process.Process;
 import com.askimed.nf.test.lang.workflow.Workflow;
-import com.askimed.nf.test.util.FileUtil;
 
 import groovy.lang.Closure;
 
@@ -24,9 +17,9 @@ public class TestContext {
 
 	private Closure processClosure;
 
-	public String baseDir = "lukas";
+	public String baseDir = "nf-test";
 
-	public String outputDir = "foreer";
+	public String outputDir = "nf-test";
 
 	public TestContext() {
 
@@ -89,17 +82,6 @@ public class TestContext {
 			Object mapping = processClosure.call();
 			if (mapping != null) {
 				process.setMapping(mapping.toString());
-			}
-		}
-	}
-
-	public void clean(String path) throws IOException {
-		File file = new File(path);
-		if (file.exists()) {
-			if (file.isDirectory()) {
-				FileUtil.deleteDirectory(file);
-			} else {
-				Files.delete(file.toPath());
 			}
 		}
 	}
