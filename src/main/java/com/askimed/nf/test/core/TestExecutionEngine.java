@@ -10,8 +10,6 @@ import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
 
-import groovyjarjarantlr4.v4.parse.ANTLRParser.throwsSpec_return;
-
 public class TestExecutionEngine {
 
 	private List<File> scripts;
@@ -101,8 +99,8 @@ public class TestExecutionEngine {
 		// cleanup
 
 		try {
-		FileUtil.deleteDirectory(workDir.getAbsoluteFile());
-		FileUtil.createDirectory(workDir);
+			FileUtil.deleteDirectory(workDir.getAbsoluteFile());
+			FileUtil.createDirectory(workDir);
 		} catch (Exception e) {
 			throw new IOException("Working Directory '" + workDir.getAbsolutePath() + "' could not be deleted:\n" + e);
 		}
