@@ -1,6 +1,7 @@
 package com.askimed.nf.test.lang.extensions;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,12 +44,12 @@ public class PathExtension {
 
 		return lines;
 	}
-	
+
 	public static List<String> getLinesGzip(Path self) throws FileNotFoundException, IOException {
 
 		return readLinesGzip(self);
 	}
-	
+
 	public static String getTextGzip(Path self) throws FileNotFoundException, IOException {
 
 		GZIPInputStream gzip = new GZIPInputStream(new FileInputStream(self.toFile()));
@@ -68,16 +69,24 @@ public class PathExtension {
 		return text.toString();
 	}
 
-	
 	public static Object readJSON(Path self) throws FileNotFoundException, IOException {
 
-	   JsonSlurper jsonSlurper = new JsonSlurper();
-	   return jsonSlurper.parse(self);
-	         
+		JsonSlurper jsonSlurper = new JsonSlurper();
+		return jsonSlurper.parse(self);
+
 	}
-	
+
 	public static Object getJson(Path self) throws FileNotFoundException, IOException {
 		return readJSON(self);
 	}
-	
+
+	public static Path[] list(Path self) {
+		File[] files = self.toFile().listFiles();
+		Path[] paths = new Path[files.length];
+		for (int i = 0; i < files.length; i++) {
+			paths[i] = files[i].toPath();
+		}
+		return paths;
+	}
+
 }
