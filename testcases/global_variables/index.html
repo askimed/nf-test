@@ -656,13 +656,13 @@
 
 <h1 id="global-variables">Global Variables</h1>
 <h2 id="outputdir">outputDir</h2>
-<p>This variable points to the directory within the test directory (<code>.nf-test/tests/&lt;test-dir&gt;/output/</code>). The variable can be set under params:</p>
+<p>This variable points to the directory within the temporary test directory (<code>.nf-test/tests/&lt;test-dir&gt;/output/</code>). The variable can be set under params:</p>
 <div class="highlight"><pre><span></span><code><span class="n">params</span> <span class="o">{</span>
     <span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;$outputDir&quot;</span>
 <span class="o">}</span>
 </code></pre></div>
 <h2 id="basedir">baseDir</h2>
-<p>This variable points to the directory where the main nf-test config is located. The variable can be used e.g. in the process definition:</p>
+<p>This variable points to the directory to locate the base directory of the main nf-test config. The variable can be used e.g. in the process definition:</p>
 <div class="highlight"><pre><span></span><code><span class="n">process</span> <span class="o">{</span>
     <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    f1 = file(&#39;$baseDir/tests/input/file123.gz&#39;)</span>
