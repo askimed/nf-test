@@ -822,7 +822,7 @@ nf-test generate process modules/local/salmon_index.nf
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
-<p>Everything that is defined in the process block is later executed in the Nextflow script that is created automatically to test your process. Therefore, you can use every Nextflow specific function or command to define the values of the input array (e.g. Channels, files, paths, etc.).</p>
+<p>Everything which is defined in the process block is later executed in a Nextflow script (created automatically to test your process). Therefore, you can use every Nextflow specific function or command to define the values of the input array (e.g. Channels, files, paths, etc.).</p>
 <h3 id="the-then-block">The <code>then</code> block</h3>
 <p>The <code>then</code> block describes the expected output channels of the process when we execute it with the input parameters defined in the <code>when</code> block.</p>
 <p>The <code>then</code> block typically contains mainly assertions to check assumptions (e.g. the size and the content of an output channel). However, this block accepts every Groovy script. This means you can also import third party libraries to define very specific assertions.</p>
@@ -838,7 +838,7 @@ nf-test generate process modules/local/salmon_index.nf
       <span class="k">assert</span> <span class="n">index</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span>
       <span class="c1">// count amount of created files</span>
       <span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">list</span><span class="o">().</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">16</span>
-      <span class="c1">// parse info.json file</span>
+      <span class="c1">// parse info.json file using a json parser provided by nf-test</span>
       <span class="kt">def</span> <span class="n">info</span> <span class="o">=</span> <span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">json</span>
       <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">num_kmers</span> <span class="o">==</span> <span class="mi">375730</span>
       <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="na">seq_length</span> <span class="o">==</span> <span class="mi">443050</span>
