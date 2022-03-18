@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import com.askimed.nf.test.App;
-
 public class AppTest {
 
 	static {
@@ -50,4 +48,13 @@ public class AppTest {
 
 	}
 
+	@Test
+	public void testSayHello() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "example/say-hello.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+	
 }
