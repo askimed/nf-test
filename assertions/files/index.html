@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.11">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.5">
     
     
       
@@ -17,7 +17,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.50e68009.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2d9f7617.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -32,8 +32,9 @@
     
       
         
+        
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
@@ -410,6 +411,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#json-files" class="md-nav__link">
+    JSON Files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gzip-files" class="md-nav__link">
+    GZip Files
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -592,6 +607,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#json-files" class="md-nav__link">
+    JSON Files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gzip-files" class="md-nav__link">
+    GZip Files
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -609,10 +638,20 @@
 </a>
 
 
+
 <h1 id="files">Files</h1>
 <h2 id="md5-checksum">md5 Checksum</h2>
 <p>nf-test extends <code>path</code> by a <code>md5</code> property that can be used to compare the file content with an expected checksum:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">md5</span> <span class="o">==</span> <span class="s2">&quot;64debea5017a035ddc67c0b51fa84b16&quot;</span>
+</code></pre></div>
+<h2 id="json-files">JSON Files</h2>
+<p>nf-test extends <code>path</code> by a <code>json</code> property that can be used to read json files:</p>
+<div class="highlight"><pre><span></span><code><span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">json</span><span class="o">.</span><span class="na">key</span> <span class="o">==</span> <span class="s2">&quot;value&quot;</span>
+</code></pre></div>
+<h2 id="gzip-files">GZip Files</h2>
+<p>nf-test extends <code>path</code> by a <code>linesGzip</code> property that can be used to read gzip compressed files:</p>
+<div class="highlight"><pre><span></span><code><span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">linesGzip</span><span class="o">.</span><span class="na">size</span> <span class="o">==</span> <span class="mi">5</span>
+<span class="k">assert</span> <span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">linesGzip</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Line Content&quot;</span><span class="o">)</span>
 </code></pre></div>
 
               
@@ -679,10 +718,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.5a9542cf.min.js"></script>
+      <script src="../../assets/javascripts/bundle.467223ff.min.js"></script>
       
     
   </body>
