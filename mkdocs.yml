@@ -9,7 +9,7 @@ theme:
     primary: teal
     accent: teal
   icon:
-    logo: material/sticker-check-outline
+    logo: material/rocket-launch-outline
   favicon: images/favicon.svg
   font:
     text: Roboto
