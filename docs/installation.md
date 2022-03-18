@@ -23,17 +23,18 @@ nf-test version
 You should see something like this:
 
 ```
-🚀 nf-test 0.4.0
+🚀 nf-test 0.5.0
 https://code.askimed.com/nf-test
-(c) 2021 Lukas Forer and Sebastian Schoenherr
+(c) 2021 -2022 Lukas Forer and Sebastian Schoenherr
 
 Nextflow Runtime:
 
       N E X T F L O W
-      version 21.04.3 build 5560
-      created 21-07-2021 15:09 UTC (17:09 CEST)
+      version 21.10.6 build 5660
+      created 21-12-2021 16:55 UTC (17:55 CEST)
       cite doi:10.1038/nbt.3820
       http://nextflow.io
+
 ```
 
 Now you are ready to write your [first testcase](getting-started.md).
@@ -43,9 +44,9 @@ Now you are ready to write your [first testcase](getting-started.md).
 If you get an error message like this, then nf-test was not able to detect your Nextflow installation.
 
 ```
-🚀 nf-test 0.4.0
+🚀 nf-test 0.5.0
 https://code.askimed.com/nf-test
-(c) 2021 Lukas Forer and Sebastian Schoenherr
+(c) 2021 -2022 Lukas Forer and Sebastian Schoenherr
 
 Nextflow Runtime:
 Error: Nextflow Binary not found. Please check if Nextflow is in a directory accessible by your $PATH variable or set $NEXTFLOW_HOME.
