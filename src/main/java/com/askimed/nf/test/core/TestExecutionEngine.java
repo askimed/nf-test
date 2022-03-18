@@ -1,6 +1,7 @@
 package com.askimed.nf.test.core;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
@@ -8,6 +9,8 @@ import com.askimed.nf.test.lang.TestSuiteBuilder;
 import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
+
+import groovyjarjarantlr4.v4.parse.ANTLRParser.throwsSpec_return;
 
 public class TestExecutionEngine {
 
@@ -97,8 +100,12 @@ public class TestExecutionEngine {
 
 		// cleanup
 
-		FileUtil.deleteDirectory(workDir);
+		try {
+		FileUtil.deleteDirectory(workDir.getAbsoluteFile());
 		FileUtil.createDirectory(workDir);
+		} catch (Exception e) {
+			throw new IOException("Working Directory '" + workDir.getAbsolutePath() + "' could not be deleted:\n" + e);
+		}
 
 		listener.testPlanExecutionStarted();
 
