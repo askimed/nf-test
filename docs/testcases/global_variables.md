@@ -2,7 +2,7 @@
 
 ## outputDir
 
-This variable points to the directory within the test directory (`.nf-test/tests/<test-dir>/output/`). The variable can be set under params:
+This variable points to the directory within the temporary test directory (`.nf-test/tests/<test-dir>/output/`). The variable can be set under params:
 
 ```Groovy
 params {
@@ -12,7 +12,7 @@ params {
 
 ## baseDir
 
-This variable points to the directory where the main nf-test config is located. The variable can be used e.g. in the process definition:
+This variable points to the directory to locate the base directory of the main nf-test config. The variable can be used e.g. in the process definition:
 
 ```Groovy
 process {
