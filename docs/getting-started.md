@@ -105,7 +105,7 @@ when {
 }
 ```
 
-Everything that is defined in the process block is later executed in the Nextflow script that is created automatically to test your process. Therefore, you can use every Nextflow specific function or command to define the values of the input array (e.g. Channels, files, paths, etc.).
+Everything which is defined in the process block is later executed in a Nextflow script (created automatically to test your process). Therefore, you can use every Nextflow specific function or command to define the values of the input array (e.g. Channels, files, paths, etc.).
 
 ### The `then` block
 
@@ -128,7 +128,7 @@ then {
       assert index.size() == 1
       // count amount of created files
       assert path(index.get(0)).list().size() == 16
-      // parse info.json file
+      // parse info.json file using a json parser provided by nf-test
       def info = path(index.get(0)+'/info.json').json
       assert info.num_kmers == 375730
       assert info.seq_length == 443050
