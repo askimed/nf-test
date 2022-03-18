@@ -40,5 +40,14 @@ public class AppTest {
 		assertEquals(0, exitCode);
 
 	}
+	
+	@Test
+	public void testHelloWorld() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "example/hello.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
 
 }
