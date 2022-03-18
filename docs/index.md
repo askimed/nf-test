@@ -31,8 +31,8 @@ nextflow_pipeline {
   }
 }
 ```
-## Test your modules
-In the nf-test script below we add some basic checks to a module of a [recently published pipeline](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow).
+## Test your process
+In the nf-test script below we add some basic checks to a process of a [recently published pipeline](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow).
 
 ```Groovy
 nextflow_process {
