@@ -18,6 +18,11 @@ jobs:
         with:
           java-version: 8
 
+      - name: Install Nextflow
+        run: |
+          wget -qO- get.nextflow.io | bash
+          sudo mv nextflow /usr/local/bin/
+
       - name: Build
         run: mvn install
 
