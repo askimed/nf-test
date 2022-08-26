@@ -1,0 +1,24 @@
+nextflow_workflow {
+
+    name "Test workflow"
+    script "test-data/workflow/trial.nf"
+    workflow "trial"
+
+    test("Should run without failures") {
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            workflow {
+                """
+                input[0] = ["a"]
+                """
+            }
+        }
+
+        then {
+            //check if test case succeeded
+            assert workflow.success
+        }
+    }
+}

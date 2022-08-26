@@ -96,7 +96,7 @@ public class WorkflowTest extends AbstractTest {
 		when.execute(context);
 
 		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
-		context.evaluateProcessClosure();
+		context.evaluateWorkflowClosure();
 
 		// Create workflow mock
 		File workflow = new File(metaDir, "mock.nf");

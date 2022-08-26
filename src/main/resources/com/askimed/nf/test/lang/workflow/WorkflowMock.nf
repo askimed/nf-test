@@ -15,9 +15,17 @@ ${mapping}
 // include test process
 include { ${workflow} } from '${script}'
 
+// define custom rules for JSON that will be generated.
+def jsonOutput =
+    new JsonGenerator.Options()
+        .excludeNulls()  // Do not include fields with value null..
+        .addConverter(Path) { value -> value.toString() } // Custom converter for Path. Only filename
+        .build()
+
+
 workflow {
 
-  ${process}(*input)
+  ${workflow}(*input)
 
 
 }
