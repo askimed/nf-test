@@ -12,6 +12,7 @@ import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.nextflow.NextflowCommand;
+import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
 
 import groovy.lang.Closure;
@@ -140,7 +141,14 @@ public class WorkflowTest extends AbstractTest {
 		context.getWorkflow().getOut().loadFromFolder(metaDir, autoSort);
 		context.getWorkflow().loadFromFolder(metaDir);
 		context.getWorkflow().exitStatus = exitCode;
+		context.getWorkflow().success = (exitCode == 0);
+		context.getWorkflow().failed = (exitCode != 0);
 
+		if (debug) {
+			System.out.println(AnsiText.padding("Output Channels:", 4));
+			context.getWorkflow().getOut().view();
+		}
+		
 		then.execute(context);
 
 	}
