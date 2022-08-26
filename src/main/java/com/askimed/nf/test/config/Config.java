@@ -23,6 +23,8 @@ public class Config {
 
 	private String profile = null;
 
+	private boolean withTrace = true; 
+	
 	private String configFile = DEFAULT_NEXTFLOW_CONFIG;
 
 	public void testsDir(String testsDir) {
@@ -55,6 +57,14 @@ public class Config {
 		} else {
 			return null;
 		}
+	}
+	
+	public void setWithTrace(boolean withTrace) {
+		this.withTrace = withTrace;
+	}
+	
+	public boolean isWithTrace() {
+		return withTrace;
 	}
 
 	public void configFile(String config) {

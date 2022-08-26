@@ -25,6 +25,10 @@ public class WorkflowTest extends AbstractTest {
 
 	private boolean debug = false;
 
+	private boolean autoSort = true;
+
+	private boolean withTrace = true;
+
 	private TestCode setup;
 
 	private TestCode cleanup;
@@ -80,6 +84,10 @@ public class WorkflowTest extends AbstractTest {
 		this.debug = debug;
 	}
 
+	public void autoSort(boolean autoSort) {
+		this.autoSort = autoSort;
+	}
+
 	@Override
 	public void execute() throws Throwable {
 
@@ -118,7 +126,9 @@ public class WorkflowTest extends AbstractTest {
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setConfig(parent.getConfig());
-		nextflow.setTrace(traceFile);
+		if (withTrace) {
+			nextflow.setTrace(traceFile);
+		}
 		nextflow.setOut(outFile);
 		nextflow.setErr(errFile);
 		nextflow.setSilent(!debug);
@@ -127,7 +137,6 @@ public class WorkflowTest extends AbstractTest {
 		nextflow.setParamsFile(paramsFile);
 		int exitCode = nextflow.execute();
 
-		boolean autoSort = true;
 		context.getWorkflow().getOut().loadFromFolder(metaDir, autoSort);
 		context.getWorkflow().loadFromFolder(metaDir);
 		context.getWorkflow().exitStatus = exitCode;
@@ -163,6 +172,11 @@ public class WorkflowTest extends AbstractTest {
 
 		FileUtil.write(file, template);
 
+	}
+
+	@Override
+	public void setWithTrace(boolean withTrace) {
+		this.withTrace = withTrace;
 	}
 
 }

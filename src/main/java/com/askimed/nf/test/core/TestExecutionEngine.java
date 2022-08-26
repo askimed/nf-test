@@ -26,6 +26,8 @@ public class TestExecutionEngine {
 
 	private File baseDir = new File(System.getProperty("user.dir"));
 
+	private boolean withTrace = true;
+
 	public void setScripts(List<File> scripts) {
 		this.scripts = scripts;
 	}
@@ -44,6 +46,13 @@ public class TestExecutionEngine {
 
 	public void setWorkDir(File workDir) {
 		this.workDir = workDir;
+	}
+
+	public void setWithTrace(boolean withTrace) {
+		if (withTrace == false) {
+			System.out.println("Warning: Tracing is disabled. `workflow.trace` is not supported.");
+		}
+		this.withTrace = withTrace;
 	}
 
 	protected List<ITestSuite> parse() throws Exception {
@@ -128,6 +137,7 @@ public class TestExecutionEngine {
 				listener.executionStarted(test);
 				TestExecutionResult result = new TestExecutionResult();
 				test.setup(workDir);
+				test.setWithTrace(withTrace);
 				try {
 
 					// override debug flag from CLI

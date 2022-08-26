@@ -68,6 +68,13 @@ public class WorkflowMeta {
 		}
 
 	}
+	
+	public WorkflowTrace getTrace() {
+		if (trace == null) {
+			throw new RuntimeException("Error: Tracing is disabled. `workflow.trace` is not supported.");
+		}
+		return trace;
+	}
 
 	private String getString(Map<Object, Object> map, String key) {
 		if (map.containsKey(key) && map.get(key) != null) {
