@@ -6,11 +6,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
@@ -20,13 +20,16 @@ import groovy.json.JsonSlurper;
 public class PathExtension {
 
 	public static String getMd5(Path self) throws IOException, NoSuchAlgorithmException {
-
+		Formatter fm = new Formatter();
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		md.update(Files.readAllBytes(self));
 		byte[] md5sum = md.digest();
-		BigInteger bigInt = new BigInteger(1, md5sum);
-		return bigInt.toString(16);
-
+		for (byte b : md5sum) {
+			fm.format("%02x", b);
+		}
+		String result = fm.out().toString();
+		fm.close();
+		return result;
 	}
 
 	public static List<String> readLinesGzip(Path self) throws FileNotFoundException, IOException {
