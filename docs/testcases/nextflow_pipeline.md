@@ -75,7 +75,7 @@ Create a new file and name it `pipeline.nf.test`.
 ```Groovy
 nextflow_pipeline {
 
-    name "Test Process TEST_PROCESS"
+    name "Test Pipeline with 1 process"
     script "pipeline.nf"
 
     test("Should run without failures") {

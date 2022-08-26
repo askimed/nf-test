@@ -88,7 +88,7 @@ Create a new file and name it `say_hello.nf.test`.
 ```Groovy
 nextflow_process {
 
-    name "Test Process TEST_PROCESS"
+    name "Test Workflow Trial"
     script "say_hello.nf"
     process "SAY_HELLO"
 

@@ -85,7 +85,7 @@ Create a new file and name it `trial.nf.test`.
 
 nextflow_process {
 
-    name "Test Process TEST_PROCESS"
+    name "Test Process SAY_HELLO"
     script "say_hello.nf"
     process "SAY_HELLO"
 
