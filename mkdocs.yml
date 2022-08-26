@@ -24,10 +24,10 @@ nav:
   - Installation: installation.md
   - Getting Started: getting-started.md
   - Writing Tests:
-    - Global Variables: testcases/global_variables.md
+    - Pipeline Testing: testcases/nextflow_pipeline.md
     - Process Testing: testcases/nextflow_process.md
     - Workflow Testing: testcases/nextflow_workflow.md
-    - Pipeline Testing: testcases/nextflow_pipeline.md
+    - Global Variables: testcases/global_variables.md
   - Writing Assertions:
     - Power Assertions: assertions/assertions.md
     - Files: assertions/files.md
