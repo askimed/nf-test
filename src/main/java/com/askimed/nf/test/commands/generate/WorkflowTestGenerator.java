@@ -30,7 +30,7 @@ public class WorkflowTestGenerator implements ITestGenerator {
 
 		if (script.getWorkflows().size() > 1) {
 			System.out.println(AnsiColors
-					.yellow("Skipped. More then one named workflow definition found. Please create one file per process."));
+					.yellow("Skipped. More then one named workflow definition found. Please create one file per workflow."));
 			return false;
 		}
 
