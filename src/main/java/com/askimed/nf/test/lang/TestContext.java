@@ -85,5 +85,20 @@ public class TestContext {
 			}
 		}
 	}
+	
+	public void workflow(Closure<Object> closure) {
+		processClosure = closure;
+	}
+
+	public void evaluateWorkflowClosure() {
+		if (processClosure != null) {
+			processClosure.setDelegate(this);
+			processClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
+			Object mapping = processClosure.call();
+			if (mapping != null) {
+				workflow.setMapping(mapping.toString());
+			}
+		}
+	}
 
 }

@@ -12,6 +12,7 @@ import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.nextflow.NextflowCommand;
+import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
 
 import groovy.lang.Closure;
@@ -24,6 +25,10 @@ public class WorkflowTest extends AbstractTest {
 	private String name = "Unknown test";
 
 	private boolean debug = false;
+
+	private boolean autoSort = true;
+
+	private boolean withTrace = true;
 
 	private TestCode setup;
 
@@ -80,6 +85,10 @@ public class WorkflowTest extends AbstractTest {
 		this.debug = debug;
 	}
 
+	public void autoSort(boolean autoSort) {
+		this.autoSort = autoSort;
+	}
+
 	@Override
 	public void execute() throws Throwable {
 
@@ -96,7 +105,7 @@ public class WorkflowTest extends AbstractTest {
 		when.execute(context);
 
 		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
-		context.evaluateProcessClosure();
+		context.evaluateWorkflowClosure();
 
 		// Create workflow mock
 		File workflow = new File(metaDir, "mock.nf");
@@ -118,7 +127,9 @@ public class WorkflowTest extends AbstractTest {
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setConfig(parent.getConfig());
-		nextflow.setTrace(traceFile);
+		if (withTrace) {
+			nextflow.setTrace(traceFile);
+		}
 		nextflow.setOut(outFile);
 		nextflow.setErr(errFile);
 		nextflow.setSilent(!debug);
@@ -127,9 +138,17 @@ public class WorkflowTest extends AbstractTest {
 		nextflow.setParamsFile(paramsFile);
 		int exitCode = nextflow.execute();
 
+		context.getWorkflow().getOut().loadFromFolder(metaDir, autoSort);
 		context.getWorkflow().loadFromFolder(metaDir);
 		context.getWorkflow().exitStatus = exitCode;
+		context.getWorkflow().success = (exitCode == 0);
+		context.getWorkflow().failed = (exitCode != 0);
 
+		if (debug) {
+			System.out.println(AnsiText.padding("Output Channels:", 4));
+			context.getWorkflow().getOut().view();
+		}
+		
 		then.execute(context);
 
 	}
@@ -161,6 +180,11 @@ public class WorkflowTest extends AbstractTest {
 
 		FileUtil.write(file, template);
 
+	}
+
+	@Override
+	public void setWithTrace(boolean withTrace) {
+		this.withTrace = withTrace;
 	}
 
 }
