@@ -553,6 +553,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#-without-trace" class="md-nav__link">
+    --without-trace
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -686,6 +693,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#-without-trace" class="md-nav__link">
+    --without-trace
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -729,6 +743,8 @@
 <h4 id="-profile-nextflow_profile"><code>--profile &lt;NEXTFLOW_PROFILE&gt;</code></h4>
 <h4 id="-debug"><code>--debug</code></h4>
 <p>The debug parameter prints out all available output channels which can be accessed in the <code>then</code> clause.</p>
+<h4 id="-without-trace"><code>--without-trace</code></h4>
+<p>The Linux tool <code>procps</code> is required to run Nextflow tracing. In case your container does not support this tool, you can also run nf-test without tracing. Please note that the <code>workflow.trace</code> are not available when running it with this flag.</p>
 <h2 id="examples">Examples</h2>
 <p>Run all tests:</p>
 <div class="highlight"><pre><span></span><code>nf-test test

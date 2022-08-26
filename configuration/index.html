@@ -681,6 +681,8 @@
 <span class="w">    </span><span class="n">configFile</span><span class="w"> </span><span class="s2">&quot;tests/nextflow.config&quot;</span><span class="w"></span>
 <span class="w">    </span><span class="c1">// run all test with the defined docker profile from the main nextflow.config</span><span class="w"></span>
 <span class="w">    </span><span class="n">profile</span><span class="w"> </span><span class="s2">&quot;docker&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// disable tracing options in case container does not include `procps` Linux tool.</span><span class="w"></span>
+<span class="w">    </span><span class="n">withTrace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="w"></span>
 
 <span class="o">}</span><span class="w"></span>
 </code></pre></div>
