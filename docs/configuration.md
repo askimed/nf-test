@@ -19,6 +19,8 @@ config {
     configFile "tests/nextflow.config"
     // run all test with the defined docker profile from the main nextflow.config
     profile "docker"
+    // disable tracing options in case container does not include `procps` Linux tool.
+    withTrace = false
 
 }
 ```
