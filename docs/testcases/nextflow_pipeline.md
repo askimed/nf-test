@@ -70,7 +70,7 @@ workflow {
 ```
 
 ### nf-test script
-Create a new file and name it `say_hello.nf.test`.
+Create a new file and name it `pipeline.nf.test`.
 
 ```Groovy
 nextflow_pipeline {
@@ -95,4 +95,10 @@ nextflow_pipeline {
     }
 
 }
+```
+### Execute test
+```
+curl -fsSL https://code.askimed.com/install/nf-test | bash
+./nf-test init
+./nf-test test pipeline.nf.test --debug
 ```
