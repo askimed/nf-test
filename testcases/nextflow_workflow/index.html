@@ -282,8 +282,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../global_variables/" class="md-nav__link">
-        Global Variables
+      <a href="../nextflow_pipeline/" class="md-nav__link">
+        Pipeline Testing
       </a>
     </li>
   
@@ -358,11 +358,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#copypaste-example" class="md-nav__link">
-    Copy/paste Example
+  <a href="#example" class="md-nav__link">
+    Example
   </a>
   
-    <nav class="md-nav" aria-label="Copy/paste Example">
+    <nav class="md-nav" aria-label="Example">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -406,8 +406,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../nextflow_pipeline/" class="md-nav__link">
-        Pipeline Testing
+      <a href="../global_variables/" class="md-nav__link">
+        Global Variables
       </a>
     </li>
   
@@ -672,11 +672,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#copypaste-example" class="md-nav__link">
-    Copy/paste Example
+  <a href="#example" class="md-nav__link">
+    Example
   </a>
   
-    <nav class="md-nav" aria-label="Copy/paste Example">
+    <nav class="md-nav" aria-label="Example">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -760,9 +760,9 @@
 <span class="c1">//returns a list containing all lines from stdout</span><span class="w"></span>
 <span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Hello World&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
 </code></pre></div>
-<h2 id="copypaste-example">Copy/paste Example</h2>
-<p>Create a new file and name it <code>trial.nf</code>.</p>
+<h2 id="example">Example</h2>
 <h3 id="nextflow-script">Nextflow script</h3>
+<p>Create a new file and name it <code>trial.nf</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#!/usr/bin/env nextflow</span><span class="w"></span>
 <span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span><span class="w"></span>
 
@@ -795,19 +795,17 @@
 <span class="o">}</span><span class="w"></span>
 </code></pre></div>
 <h3 id="nf-test-script">nf-test script</h3>
-<p>Create a new file and name it <code>trial.nf.test</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="n">nextflow_workflow</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<p>Create a new file and name it <code>say_hello.nf.test</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test workflow&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;trial.nf&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="n">workflow</span><span class="w"> </span><span class="s2">&quot;trial&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Process TEST_PROCESS&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;say_hello.nf&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;SAY_HELLO&quot;</span><span class="w"></span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run two tasks and create two files&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run without failures&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+
 <span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">params</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">                </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tests/results&quot;</span><span class="w"></span>
-<span class="w">            </span><span class="o">}</span><span class="w"></span>
-<span class="w">            </span><span class="n">workflow</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 <span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                input[0] = Channel.from(&#39;hello&#39;,&#39;nf-test&#39;)</span>
 <span class="s2">                &quot;&quot;&quot;</span><span class="w"></span>
@@ -815,23 +813,26 @@
 <span class="w">        </span><span class="o">}</span><span class="w"></span>
 
 <span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">            </span><span class="c1">//check if test case succeeded</span><span class="w"></span>
-<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">success</span><span class="w"></span>
-<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="w">            </span><span class="n">with</span><span class="o">(</span><span class="n">workflow</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">trial_out_ch</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">              </span><span class="k">assert</span><span class="w"> </span><span class="n">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="w">              </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">              </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">              </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;4a17df7a54b41a84df492da3f1bab1e3&quot;</span><span class="w"></span>
-<span class="w">            </span><span class="o">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">success</span><span class="w"></span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">verbiage_ch2</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">          </span><span class="k">assert</span><span class="w"> </span><span class="n">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">          </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">          </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">          </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;4a17df7a54b41a84df492da3f1bab1e3&quot;</span><span class="w"></span>
 <span class="w">        </span><span class="o">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="o">}</span><span class="w"></span>
+
 <span class="w">    </span><span class="o">}</span><span class="w"></span>
+
 <span class="o">}</span><span class="w"></span>
 </code></pre></div>
 <h3 id="execute-test">Execute test</h3>
 <div class="highlight"><pre><span></span><code>curl -fsSL https://code.askimed.com/install/nf-test | bash
 ./nf-test init
-./nf-test test trial.nf.test --debug
+./nf-test test say_hello.nf.test --debug
 </code></pre></div>
 
 
@@ -867,13 +868,13 @@
       
       
         
-        <a href="../nextflow_pipeline/" class="md-footer__link md-footer__link--next" aria-label="Next: Pipeline Testing" rel="next">
+        <a href="../global_variables/" class="md-footer__link md-footer__link--next" aria-label="Next: Global Variables" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Pipeline Testing
+              Global Variables
             </div>
           </div>
           <div class="md-footer__button md-icon">
