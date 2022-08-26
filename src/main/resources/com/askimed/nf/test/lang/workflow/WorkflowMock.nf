@@ -27,6 +27,21 @@ workflow {
 
   ${workflow}(*input)
 
+  // consumes all output channels and stores items in a json
+  def channel = Channel.empty()
+  for (def name in ${workflow}.out.getNames()) {
+      channel << tuple(name, ${workflow}.out.getProperty(name))
+  }
+
+  channel.subscribe { outputTupel ->
+    def sortedList = outputTupel[1].toList()
+    sortedList.subscribe { list ->
+      def map = new HashMap()
+      def outputName = outputTupel[0]
+      map[outputName] = list
+      new File("\${params.nf_testflight_output}/output_\${outputName}.json").text = jsonOutput.toJson(map)
+    }
+  }
 
 }
 

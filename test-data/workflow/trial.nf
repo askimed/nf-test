@@ -7,10 +7,12 @@ process sayHello {
 
     output:
         stdout emit: verbiage
+        path "*.txt", emit: output_files
 
     script:
     """
     echo -n $cheers
+    echo -n $cheers > ${cheers}.txt
     """
 }
 
@@ -18,9 +20,11 @@ workflow trial {
     take: things
     main:
         sayHello(things)
-        sayHello.out.verbiage.view()
+    emit:
+        lukas = sayHello.out.verbiage
+        sebastian = sayHello.out.output_files
 }
 
 workflow {
-    Channel.from(['a']) | trial
+    Channel.from('a','b') | trial
 }

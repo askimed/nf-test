@@ -11,7 +11,7 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = ["a"]
+                input[0] = Channel.of('a','b')
                 """
             }
         }
@@ -19,6 +19,8 @@ nextflow_workflow {
         then {
             //check if test case succeeded
             assert workflow.success
+            assert workflow.out.lukas.size() == 2
+            assert workflow.out.sebastian.size() == 2
         }
     }
 }

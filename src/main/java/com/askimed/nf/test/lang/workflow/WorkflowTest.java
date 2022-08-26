@@ -127,6 +127,8 @@ public class WorkflowTest extends AbstractTest {
 		nextflow.setParamsFile(paramsFile);
 		int exitCode = nextflow.execute();
 
+		boolean autoSort = true;
+		context.getWorkflow().getOut().loadFromFolder(metaDir, autoSort);
 		context.getWorkflow().loadFromFolder(metaDir);
 		context.getWorkflow().exitStatus = exitCode;
 
