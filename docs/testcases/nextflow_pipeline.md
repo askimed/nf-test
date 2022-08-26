@@ -41,27 +41,58 @@ assert workflow.trace.tasks().size() == 3
 
 ## Example
 
+### Nextflow script
+Create a new file and name it `pipeline.nf`.
+
+```Groovy
+#!/usr/bin/env nextflow
+nextflow.enable.dsl=2
+
+process SAY_HELLO {
+    input:
+        val cheers
+
+    output:
+        stdout emit: verbiage_ch
+        path '*.txt', emit: verbiage_ch2
+
+    script:
+    """
+    echo -n $cheers
+    echo -n $cheers > ${cheers}.txt
+    """
+}
+
+workflow {
+    input = params.input_text.trim().split(',')
+    Channel.from(input) | SAY_HELLO
+}
+```
+
+### nf-test script
+Create a new file and name it `say_hello.nf.test`.
+
 ```Groovy
 nextflow_pipeline {
 
-    name "Test Workflow test1.nf"
-    script "test-data/test1.nf"
+    name "Test Process TEST_PROCESS"
+    script "pipeline.nf"
 
     test("Should run without failures") {
 
         when {
             params {
-                outdir = "tests/results"
+              input_text = "hello,nf-test"
             }
         }
 
         then {
-            assert workflow.success
-            assert path("tests/results/output.txt").exists()
+        assert workflow.success
+        assert workflow.trace.tasks().size() == 2
+
         }
 
     }
 
 }
-
 ```

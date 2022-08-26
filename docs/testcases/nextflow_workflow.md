@@ -44,9 +44,10 @@ assert workflow.stdout.contains("Hello World") == 3
 
 
 ## Example
-Create a new file and name it `trial.nf`.
 
 ### Nextflow script
+Create a new file and name it `trial.nf`.
+
 ```Groovy
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2

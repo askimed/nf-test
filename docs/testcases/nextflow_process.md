@@ -53,7 +53,10 @@ assert process.out.my_channel.get(0) == "hello"
 ```
 
 ## Example
+
+### Nextflow script
 Create a new file and name it `say_hello.nf`.
+
 ```Groovy
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2
