@@ -32,6 +32,7 @@ public class PipelineTest extends AbstractTest {
 		super();
 		this.parent = parent;
 		context = new TestContext();
+		context.setName(parent.getName());
 	}
 
 	public void name(String name) {
@@ -84,6 +85,9 @@ public class PipelineTest extends AbstractTest {
 		if (when != null) {
 			when.execute(context);
 		}
+
+		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
+		context.evaluateProcessClosure();
 
 		if (debug) {
 			System.out.println();

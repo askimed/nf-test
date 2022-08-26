@@ -16,7 +16,7 @@ public class App {
 
 	public static final String NAME = "nf-test";
 
-	public static final String VERSION = "0.4.0";
+	public static final String VERSION = "0.5.1";
 
 	public int run(String[] args) {
 
@@ -39,7 +39,7 @@ public class App {
 		System.out.println();
 		System.out.println(Emoji.ROCKET + AnsiText.bold(" " + App.NAME + " " + App.VERSION));
 		System.out.println("https://code.askimed.com/nf-test");
-		System.out.println("(c) 2021 Lukas Forer and Sebastian Schoenherr");
+		System.out.println("(c) 2021 - 2022 Lukas Forer and Sebastian Schoenherr");
 		System.out.println();
 
 	}

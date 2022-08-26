@@ -1,0 +1,45 @@
+nextflow_process {
+
+  name "Test process xy"
+
+  script "test-data/path-util/test_process.nf"
+  process "TEST_PROCESS"
+
+  test("Should compress 1 file") {
+
+    when {
+      process {
+        """
+        input[0] = file("$baseDir/test-data/path-util/input.txt")
+        input[1]  = file("$baseDir/test-data/path-util/input.json")
+        """
+      }
+    }
+
+    then {
+      assert process.success
+      
+      assert process.out.output_file
+      assert process.out.output_file.size() == 1
+      def file1 = path(process.out.output_file.get(0))
+      def lines = file1.readLinesGzip()
+      assert lines.size() == 4
+      assert lines.contains("file has")
+      assert "file has" == lines.get(1)
+      
+      assert file1.linesGzip.size() == 4
+      
+      assert file1.textGzip.contains("file has")
+      
+      assert process.out.output_json
+      assert process.out.output_json.size() == 1
+      
+      def json = path(process.out.output_json.get(0)).json
+      assert json.name == "Lukas"
+      assert json.roles.size() == 2
+      assert json.address.city == "Innsbruck"
+    }
+
+  }
+
+}

@@ -1,11 +1,12 @@
-name: Create Release
+name: Run Tests
 
 on:
   push:
-    tags:
-    - '*'
+    branches:
+      - '*'
+
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -23,11 +24,5 @@ jobs:
           wget -qO- get.nextflow.io | bash
           sudo mv nextflow /usr/local/bin/
 
-      - name: Build
+      - name: Test
         run: mvn install
-
-      - uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          artifacts: "target/nf-test-*.tar.gz"
-          token: ${{ secrets.GITHUB_TOKEN }}

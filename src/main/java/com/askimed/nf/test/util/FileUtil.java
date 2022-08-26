@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import groovy.lang.Writable;
 
@@ -41,7 +42,7 @@ public class FileUtil {
 		return true;
 	}
 
-	static public boolean deleteDirectory(File path) {
+	static public boolean deleteDirectory(File path) throws IOException {
 		if (path.exists()) {
 			File[] files = path.listFiles();
 			if (files == null) {
@@ -49,12 +50,17 @@ public class FileUtil {
 			}
 			for (int i = 0; i < files.length; i++) {
 				if (files[i].isDirectory()) {
-					deleteDirectory(files[i]);
+					if (Files.isSymbolicLink(files[i].toPath())) {
+						Files.delete(files[i].toPath());
+					} else {
+						deleteDirectory(files[i]);
+					}
 				} else {
-					files[i].delete();
+					Files.delete(files[i].toPath());
 				}
 			}
-			return path.delete();
+			Files.delete(path.toPath());
+			return true;
 		}
 		return false;
 	}
@@ -80,8 +86,7 @@ public class FileUtil {
 		return fileData.toString();
 
 	}
-	
-	
+
 	public static String makeRelative(File baseDir, File absoluteFile) {
 		return baseDir.toURI().relativize(absoluteFile.toURI()).getPath();
 	}

@@ -2,7 +2,7 @@
 
 ## Setup test profile
 
-To run your test using a specific Netxflow profile, you can use the `--profile` argument on the command line or define a default profile in `nf-test.config`
+To run your test using a specific Netxflow profile, you can use the `--profile` argument on the command line or define a default profile in `nf-test.config`.
 
 
 ##  `nf-test.config`
@@ -11,9 +11,11 @@ This config file contains settings for nf-test.
 
 ```groovy
 config {
-    // location where nftest should save test scripts
+    // location for all nf-tests
     testsDir "tests"
-    // location of a nextflow.config file specific for executing tests
+    // nf-test directory including temporary files for each test
+    workDir ".nf-test"
+    // location of an optional nextflow.config file specific for executing tests
     configFile "tests/nextflow.config"
     // run all test with the defined docker profile from the main nextflow.config
     profile "docker"
@@ -23,7 +25,7 @@ config {
 
 ## `tests/nextflow.config`
 
-This `nextflow.config` file is used to execute tests. This is a good place to set default `params` for all your tests. Example number of threads:
+This optional `nextflow.config` file is used to execute tests. This is a good place to set default `params` for all your tests. Example number of threads:
 
 ```groovy
 params {

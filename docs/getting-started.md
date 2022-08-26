@@ -3,7 +3,7 @@
 This guide helps you to understand the concepts of nf-test and to write your first test cases. Before you start, please check if you have [installed](installation.md) nf-test properly on your computer. Also, this guide assumes that you have a basic knowledge of Groovy and unit testing. The [Groovy documentation](http://groovy-lang.org/documentation.html) is the best place to learn its syntax.
 
 ## Let's get started
-To show the power of nf-test, we adapted a recently published [proof of concept Nextflow pipeline](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow). We adapted the pipeline to the new DSL2 syntax using modules (which is required by nf-test). First, open the terminal and clone our test pipeline:
+To show the power of nf-test, we adapted a recently published [proof of concept Nextflow pipeline](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow). We adapted the pipeline to the new DSL2 syntax using modules. First, open the terminal and clone our test pipeline:
 
 ```bash
 # clone nextflow pipeline
@@ -17,28 +17,31 @@ The pipeline consists of three modules (`salmon.index.nf`, `salmon_align_quant.n
 
 ## Init
 
-Before we start creating our test cases, we use the `init` command to setup nf-test:
+Before creating test cases, we use the `init` command to setup nf-test.
 
 ```bash
+//Init command has already been executed for our repository
 nf-test init
 ```
 
-The `init` command creates the following files: `nf-test.config` and `tests/nextflow.config`. It also creates a folder `tests` which is the home of your test code and includes the Nextflow working directory for all our tests.
+The `init` command creates the following files: `nf-test.config` and the `.nf-test/tests` folder.
 
-In the [configuration](configuration.md) section you can learn more about these files.
+In the [configuration](configuration.md) section you can learn more about these files and how to customize the directory layout.
 
 
 ## Create your first test
 
-The `generate` command helps you to create a skeleton test code for a Nextflow process or the whole pipeline/workflow.
+The `generate` command helps you to create a skeleton test code for a Nextflow process or the complete pipeline/workflow.
 
 Here we generate a test case for the process `salmon.index.nf`:
 
 ```bash
-nf-test generate process modules/local/salmon.index.nf
+# delete already existing test case
+rm tests/modules/local/salmon_index.nf.test
+nf-test generate process modules/local/salmon_index.nf
 ```
 
-This command creates a new file `tests/modules/local/salmon.index.nf` with the following content:
+This command creates a new file `tests/modules/local/salmon_index.nf` with the following content:
 
 ```groovy
 nextflow_process {
@@ -102,7 +105,7 @@ when {
 }
 ```
 
-Everything that is defined in the process block is later executed in the Nextflow script that is created automatically to test your process. Therefore, you can use every Nextflow specific function or command to define the values of the input array (e.g. Channels, files, paths, etc.).
+Everything which is defined in the process block is later executed in a Nextflow script (created automatically to test your process). Therefore, you can use every Nextflow specific function or command to define the values of the input array (e.g. Channels, files, paths, etc.).
 
 ### The `then` block
 
@@ -121,18 +124,17 @@ then {
     //analyze trace file
     assert process.trace.tasks().size() == 1
     with(process.out) {
-      assert index
-      // check if output directory has been created
+      // check if emitted output has been created
       assert index.size() == 1
       // count amount of created files
-      assert new File(index.get(0)).listFiles().size() == 16
-      // parse info.json file
-      def jsonSlurper = new JsonSlurper()
-      def info = jsonSlurper.parseText(new File(index.get(0)+'/info.json').text)
+      assert path(index.get(0)).list().size() == 16
+      // parse info.json file using a json parser provided by nf-test
+      def info = path(index.get(0)+'/info.json').json
       assert info.num_kmers == 375730
       assert info.seq_length == 443050
       assert path(index.get(0)+'/info.json').md5 == "80831602e2ac825e3e63ba9df5d23505"
     }
+}
 ```
 
 The items of a channel are always sorted by nf-test. This provides a deterministic order inside the channel and enables you to write reproducible tests.
@@ -142,9 +144,6 @@ The items of a channel are always sorted by nf-test. This provides a determinist
 You can update the name of the test method to something that gives us later a good description of our specification. When we put everything together, we get the following full working test specification:
 
 ```groovy
-@Grab('org.codehaus.groovy:groovy-json:3.0.9')
-import groovy.json.JsonSlurper
-
 nextflow_process {
 
     name "Test Process SALMON_INDEX"
@@ -154,8 +153,6 @@ nextflow_process {
     test("Should create channel index files") {
 
         when {
-            params {
-            }
             process {
                 """
                 input[0] = file("test_data/transcriptome.fa")
@@ -169,14 +166,12 @@ nextflow_process {
             //analyze trace file
             assert process.trace.tasks().size() == 1
             with(process.out) {
-              assert index
-              // check if output directory has been created
+              // check if emitted output has been created
               assert index.size() == 1
               // count amount of created files
-              assert new File(index.get(0)).listFiles().size() == 16
+              assert path(index.get(0)).list().size() == 16
               // parse info.json file
-              def jsonSlurper = new JsonSlurper()
-              def info = jsonSlurper.parseText(new File(index.get(0)+'/info.json').text)
+              def info = path(index.get(0)+'/info.json').json
               assert info.num_kmers == 375730
               assert info.seq_length == 443050
               assert path(index.get(0)+'/info.json').md5 == "80831602e2ac825e3e63ba9df5d23505"
