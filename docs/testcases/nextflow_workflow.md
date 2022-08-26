@@ -43,7 +43,7 @@ assert workflow.stdout.contains("Hello World") == 3
 ```
 
 
-## Copy/paste Example
+## Example
 Create a new file and name it `trial.nf`.
 
 ### Nextflow script
@@ -82,21 +82,19 @@ workflow {
 ```
 
 ### nf-test script
-Create a new file and name it `trial.nf.test`.
+Create a new file and name it `say_hello.nf.test`.
 
 ```Groovy
-nextflow_workflow {
+nextflow_process {
 
-    name "Test workflow"
-    script "trial.nf"
-    workflow "trial"
+    name "Test Process TEST_PROCESS"
+    script "say_hello.nf"
+    process "SAY_HELLO"
 
-    test("Should run two tasks and create two files") {
+    test("Should run without failures") {
+
         when {
-            params {
-                outdir = "tests/results"
-            }
-            workflow {
+            process {
                 """
                 input[0] = Channel.from('hello','nf-test')
                 """
@@ -104,18 +102,22 @@ nextflow_workflow {
         }
 
         then {
-            //check if test case succeeded
-            assert workflow.success
-            assert workflow.trace.tasks().size() == 2
-            with(workflow.out.trial_out_ch) {
-              assert size() == 2
-              assert path(get(0)).readLines().size() == 1
-              assert path(get(1)).readLines().size() == 1
-              assert path(get(1)).md5 == "4a17df7a54b41a84df492da3f1bab1e3"
-            }
+        assert process.success
+        assert process.trace.tasks().size() == 2
+
+        with(process.out.verbiage_ch2) {
+          assert size() == 2
+          assert path(get(0)).readLines().size() == 1
+          assert path(get(1)).readLines().size() == 1
+          assert path(get(1)).md5 == "4a17df7a54b41a84df492da3f1bab1e3"
         }
+
+        }
+
     }
+
 }
+
 
 ```
 
@@ -123,5 +125,5 @@ nextflow_workflow {
 ```
 curl -fsSL https://code.askimed.com/install/nf-test | bash
 ./nf-test init
-./nf-test test trial.nf.test --debug
+./nf-test test say_hello.nf.test --debug
 ```

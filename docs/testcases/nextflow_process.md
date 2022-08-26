@@ -53,33 +53,69 @@ assert process.out.my_channel.get(0) == "hello"
 ```
 
 ## Example
+Create a new file and name it `say_hello.nf`.
+```Groovy
+#!/usr/bin/env nextflow
+nextflow.enable.dsl=2
+
+process SAY_HELLO {
+    input:
+        val cheers
+
+    output:
+        stdout emit: verbiage_ch
+        path '*.txt', emit: verbiage_ch2
+
+    script:
+    """
+    echo -n $cheers
+    echo -n $cheers > ${cheers}.txt
+    """
+}
+
+```
+
+### nf-test script
+Create a new file and name it `trial.nf.test`.
 
 ```Groovy
+
 nextflow_process {
 
     name "Test Process TEST_PROCESS"
-    script "test-data/test_process.nf"
-    process "TEST_PROCESS"
+    script "say_hello.nf"
+    process "SAY_HELLO"
 
     test("Should run without failures") {
 
         when {
-            params {
-                outdir = "tests/results"
-            }
             process {
                 """
-                input[0] = file("test-file.txt")
+                input[0] = Channel.from('hello','nf-test')
                 """
             }
         }
 
         then {
-            assert process.success
-            assert process.out.out_channel != null
+        assert process.success
+        assert process.trace.tasks().size() == 2
+
+        with(process.out.trial_out_ch) {
+          assert size() == 2
+          assert path(get(0)).readLines().size() == 1
+          assert path(get(1)).readLines().size() == 1
+          assert path(get(1)).md5 == "4a17df7a54b41a84df492da3f1bab1e3"
+        }
+
         }
 
     }
-
 }
+```
+
+### Execute test
+```
+curl -fsSL https://code.askimed.com/install/nf-test | bash
+./nf-test init
+./nf-test test trial.nf.test --debug
 ```
