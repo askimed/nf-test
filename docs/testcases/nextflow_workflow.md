@@ -43,34 +43,85 @@ assert workflow.stdout.contains("Hello World") == 3
 ```
 
 
-## Example
+## Copy/paste Example
+Create a new file and name it `trial.nf`.
+
+### Nextflow script
+```Groovy
+#!/usr/bin/env nextflow
+nextflow.enable.dsl=2
+
+process sayHello {
+    input:
+        val cheers
+
+    output:
+        stdout emit: verbiage_ch
+        path '*.txt', emit: verbiage_ch2
+
+    script:
+    """
+    echo -n $cheers
+    echo -n $cheers > ${cheers}.txt
+    """
+}
+
+workflow trial {
+    take: things
+    main:
+        sayHello(things)
+        sayHello.out.verbiage_ch.view()
+    emit:
+      trial_out_ch = sayHello.out.verbiage_ch2
+}
+
+workflow {
+    Channel.from('hello','nf-test') | trial
+}
+
+```
+
+### nf-test script
+Create a new file and name it `trial.nf.test`.
 
 ```Groovy
 nextflow_workflow {
 
-    name "Test Workflow TEST_WORKFLOW"
-    script "test-data/test_workflow.nf"
-    workflow "TEST_WORKFLOW"
+    name "Test workflow"
+    script "trial.nf"
+    workflow "trial"
 
-    test("Should run without failures") {
-
+    test("Should run two tasks and create two files") {
         when {
             params {
                 outdir = "tests/results"
             }
             workflow {
                 """
-                input[0] = file("test-file.txt")
+                input[0] = Channel.from('hello','nf-test')
                 """
             }
         }
 
         then {
+            //check if test case succeeded
             assert workflow.success
-            assert path("tests/results/output.txt").exists()
+            assert workflow.trace.tasks().size() == 2
+            with(workflow.out.trial_out_ch) {
+              assert size() == 2
+              assert path(get(0)).readLines().size() == 1
+              assert path(get(1)).readLines().size() == 1
+              assert path(get(1)).md5 == "4a17df7a54b41a84df492da3f1bab1e3"
+            }
         }
-
     }
-
 }
+
+```
+
+### Execute test
+```
+curl -fsSL https://code.askimed.com/install/nf-test | bash
+./nf-test init
+./nf-test test trial.nf.test --debug
 ```
