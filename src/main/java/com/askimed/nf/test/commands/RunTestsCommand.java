@@ -32,6 +32,9 @@ public class RunTestsCommand implements Callable<Integer> {
 			"--profile" }, description = "Profile to execute all tests", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String profile = null;
 
+	@Option(names = {"--without-trace"}, description = "Run nextflow tests without trace parameter.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean withoutTrace = false;
+	
 	@Override
 	public Integer call() throws Exception {
 
@@ -40,12 +43,13 @@ public class RunTestsCommand implements Callable<Integer> {
 			String defaultProfile = null;
 			File defaultConfigFile = null;
 			File workDir = new File(".nf-test");
-
+			boolean defaultWithTrace = true;
 			try {
 
 				Config config = Config.parse(new File(Config.FILENAME));
 				defaultProfile = config.getProfile();
 				defaultConfigFile = config.getConfigFile();
+				defaultWithTrace = config.isWithTrace();
 				workDir = new File(config.getWorkDir());
 
 				if (scripts == null) {
@@ -77,6 +81,12 @@ public class RunTestsCommand implements Callable<Integer> {
 			} else {
 				engine.setProfile(defaultProfile);
 			}
+			if (withoutTrace) {
+				engine.setWithTrace(false);
+			} else {
+				engine.setWithTrace(defaultWithTrace);
+			}
+			
 			engine.setConfigFile(defaultConfigFile);
 			return engine.execute();
 

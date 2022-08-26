@@ -28,6 +28,8 @@ public class PipelineTest extends AbstractTest {
 
 	private TestContext context;
 
+	private boolean withTrace = true;
+
 	public PipelineTest(PipelineTestSuite parent) {
 		super();
 		this.parent = parent;
@@ -104,7 +106,9 @@ public class PipelineTest extends AbstractTest {
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setConfig(parent.getConfig());
-		nextflow.setTrace(traceFile);
+		if (withTrace) {
+			nextflow.setTrace(traceFile);
+		}
 		nextflow.setOut(outFile);
 		nextflow.setErr(errFile);
 		nextflow.setSilent(!debug);
@@ -126,6 +130,11 @@ public class PipelineTest extends AbstractTest {
 		if (cleanup != null) {
 			cleanup.execute(context);
 		}
+	}
+
+	@Override
+	public void setWithTrace(boolean withTrace) {
+		this.withTrace = withTrace;
 	}
 
 }

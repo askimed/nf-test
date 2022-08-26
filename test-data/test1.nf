@@ -1,3 +1,5 @@
+nextflow.enable.dsl=1
+
 params.lukas = null
 params.forer = null
 params.outdir = null

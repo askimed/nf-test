@@ -26,6 +26,8 @@ public class ProcessTest extends AbstractTest {
 
 	private boolean debug = false;
 
+	private boolean withTrace = true;
+	
 	private boolean autoSort = true;
 
 	private TestCode setup;
@@ -124,7 +126,9 @@ public class ProcessTest extends AbstractTest {
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.setConfig(parent.getConfig());
-		nextflow.setTrace(traceFile);
+		if (withTrace) {
+			nextflow.setTrace(traceFile);
+		}
 		nextflow.setOut(outFile);
 		nextflow.setErr(errFile);
 		nextflow.setSilent(!debug);
@@ -180,6 +184,11 @@ public class ProcessTest extends AbstractTest {
 
 		FileUtil.write(file, template);
 
+	}
+	
+	@Override
+	public void setWithTrace(boolean withTrace) {
+		this.withTrace = withTrace;
 	}
 
 }

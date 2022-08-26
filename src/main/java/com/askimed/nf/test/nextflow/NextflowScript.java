@@ -61,7 +61,7 @@ public class NextflowScript {
 
 		List<String> names = new Vector<String>();
 
-		String patternProcessName = "(?i)workflow\\s(.+)(\\s\\{|\\{)";
+		String patternProcessName = "(?i)workflow\\s*(.+)(\\s*\\{|\\{)";
 
 		Pattern r = Pattern.compile(patternProcessName);
 
