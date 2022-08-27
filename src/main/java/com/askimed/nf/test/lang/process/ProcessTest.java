@@ -109,7 +109,7 @@ public class ProcessTest extends AbstractTest {
 		File workflow = new File(metaDir, "mock.nf");
 		writeWorkflowMock(workflow);
 
-		context.getParams().put("nf_testflight_output", metaDir.getAbsolutePath());
+		context.getParams().put("nf_test_output", metaDir.getAbsolutePath());
 
 		if (debug) {
 			System.out.println();

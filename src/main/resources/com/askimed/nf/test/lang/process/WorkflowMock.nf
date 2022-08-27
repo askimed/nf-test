@@ -5,7 +5,7 @@ nextflow.enable.dsl=2
 
 
 // comes from testflight to find json files
-params.nf_testflight_output  = "json"
+params.nf_test_output  = ""
 
 // process mapping
 def input = []
@@ -41,7 +41,7 @@ workflow {
         def map = new HashMap()
         def outputName = outputTupel[0]
         map[outputName] = list
-        new File("\${params.nf_testflight_output}/output_\${outputName}.json").text = jsonOutput.toJson(map)
+        new File("\${params.nf_test_output}/output_\${outputName}.json").text = jsonOutput.toJson(map)
       }
     }
   }
@@ -57,6 +57,6 @@ workflow.onComplete {
 		errorMessage: workflow.errorMessage,
 		errorReport: workflow.errorReport
 	]
-    new File("\${params.nf_testflight_output}/workflow.json").text = jsonOutput.toJson(result)
+    new File("\${params.nf_test_output}/workflow.json").text = jsonOutput.toJson(result)
     
 }
