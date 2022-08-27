@@ -830,15 +830,16 @@
 <span class="w">        </span><span class="o">}</span><span class="w"></span>
 
 <span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">success</span><span class="w"></span>
-<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
 
-<span class="w">        </span><span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">trial_out_ch</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">          </span><span class="k">assert</span><span class="w"> </span><span class="n">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="w">          </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">          </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">          </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;4a17df7a54b41a84df492da3f1bab1e3&quot;</span><span class="w"></span>
-<span class="w">        </span><span class="o">}</span><span class="w"></span>
+<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">success</span><span class="w"></span>
+<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+
+<span class="w">            </span><span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">trial_out_ch</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;4a17df7a54b41a84df492da3f1bab1e3&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="o">}</span><span class="w"></span>
 
 <span class="w">        </span><span class="o">}</span><span class="w"></span>
 
@@ -846,9 +847,8 @@
 <span class="o">}</span><span class="w"></span>
 </code></pre></div>
 <h3 id="execute-test">Execute test</h3>
-<div class="highlight"><pre><span></span><code>curl -fsSL https://code.askimed.com/install/nf-test | bash
-./nf-test init
-./nf-test test trial.nf.test --debug
+<div class="highlight"><pre><span></span><code>nf-test init
+nf-test test trial.nf.test
 </code></pre></div>
 
 
