@@ -57,16 +57,16 @@ nextflow_process {
             //analyze trace file
             assert process.trace.tasks().size() == 1
             with(process.out) {
-              // check if emitted output has been created
-              assert index.size() == 1
-              // count amount of created files
-              assert path(index.get(0)).list().size() == 16
-              // parse info.json file
-              def info = path(index.get(0)+'/info.json').json
-              assert info.num_kmers == 375730
-              assert info.seq_length == 443050
-              //verify md5 checksum
-              assert path(index.get(0)+'/info.json').md5 == "80831602e2ac825e3e63ba9df5d23505"
+                // check if emitted output has been created
+                assert index.size() == 1
+                // count amount of created files
+                assert path(index.get(0)).list().size() == 16
+                // parse info.json file
+                def info = path(index.get(0)+'/info.json').json
+                assert info.num_kmers == 375730
+                assert info.seq_length == 443050
+                //verify md5 checksum
+                assert path(index.get(0)+'/info.json').md5 == "80831602e2ac825e3e63ba9df5d23505"
             }
         }
     }

@@ -100,15 +100,16 @@ nextflow_process {
         }
 
         then {
-        assert process.success
-        assert process.trace.tasks().size() == 2
 
-        with(process.out.trial_out_ch) {
-          assert size() == 2
-          assert path(get(0)).readLines().size() == 1
-          assert path(get(1)).readLines().size() == 1
-          assert path(get(1)).md5 == "4a17df7a54b41a84df492da3f1bab1e3"
-        }
+            assert process.success
+            assert process.trace.tasks().size() == 2
+
+            with(process.out.trial_out_ch) {
+                assert size() == 2
+                assert path(get(0)).readLines().size() == 1
+                assert path(get(1)).readLines().size() == 1
+                assert path(get(1)).md5 == "4a17df7a54b41a84df492da3f1bab1e3"
+            }
 
         }
 
@@ -118,7 +119,6 @@ nextflow_process {
 
 ### Execute test
 ```
-curl -fsSL https://code.askimed.com/install/nf-test | bash
-./nf-test init
-./nf-test test trial.nf.test --debug
+nf-test init
+nf-test test trial.nf.test
 ```

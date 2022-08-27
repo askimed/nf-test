@@ -87,9 +87,8 @@ nextflow_pipeline {
         }
 
         then {
-        assert workflow.success
-        assert workflow.trace.tasks().size() == 2
-
+            assert workflow.success
+            assert workflow.trace.tasks().size() == 2
         }
 
     }
@@ -98,7 +97,6 @@ nextflow_pipeline {
 ```
 ### Execute test
 ```
-curl -fsSL https://code.askimed.com/install/nf-test | bash
-./nf-test init
-./nf-test test pipeline.nf.test --debug
+nf-test init
+nf-test test pipeline.nf.test
 ```
