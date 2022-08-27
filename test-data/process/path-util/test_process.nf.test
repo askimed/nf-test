@@ -2,16 +2,21 @@ nextflow_process {
 
   name "Test process xy"
 
-  script "test-data/path-util/test_process.nf"
+  script "test-data/process/path-util/test_process.nf"
   process "TEST_PROCESS"
 
   test("Should compress 1 file") {
 
     when {
+      
+      params {
+        outdir = "$outputDir"
+      }
+    
       process {
         """
-        input[0] = file("$baseDir/test-data/path-util/input.txt")
-        input[1]  = file("$baseDir/test-data/path-util/input.json")
+        input[0] = file("$baseDir/test-data/process/path-util/input.txt")
+        input[1]  = file("$baseDir/test-data/process/path-util/input.json")
         """
       }
     }

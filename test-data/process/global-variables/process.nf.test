@@ -2,7 +2,7 @@ nextflow_process {
 
   name "Test process xy"
 
-  script "test-data/variables/process.nf"
+  script "test-data/process/global-variables/process.nf"
   process "TEST_PROCESS"
 
   test("Compare variables") {

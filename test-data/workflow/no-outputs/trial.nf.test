@@ -1,7 +1,7 @@
 nextflow_workflow {
 
     name "Test workflow"
-    script "test-data/workflow/trial.nf"
+    script "test-data/workflow/no-outputs/trial.nf"
     workflow "trial"
 
     test("Should run without failures") {
@@ -19,8 +19,8 @@ nextflow_workflow {
         then {
             //check if test case succeeded
             assert workflow.success
-            assert workflow.out.lukas.size() == 2
-            assert workflow.out.sebastian.size() == 2
+            assert workflow.out.lukas == null
+            assert workflow.out.sebastian == null
         }
     }
 }

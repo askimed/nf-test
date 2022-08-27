@@ -2,7 +2,13 @@ package com.askimed.nf.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import com.askimed.nf.test.util.FileUtil;
 
 public class AppTest {
 
@@ -12,33 +18,14 @@ public class AppTest {
 		// AnsiText.disable();
 
 	}
-
-	@Test
-	public void testMultipleScripts() throws Exception {
-
-		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/test2.nf.test", "test-data/test1.nf.test" });
-		assertEquals(1, exitCode);
-	}
-
-	@Test
-	public void testScript() throws Exception {
-
-		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/test1.nf.test" });
-		assertEquals(0, exitCode);
-
-	}
-
-	@Test
-	public void testPathUtil() throws Exception {
-
-		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/path-util/test_process.nf.test", "--debug" });
-		assertEquals(0, exitCode);
-
-	}
 	
+	@BeforeAll
+	public static void setUp() throws IOException {	
+		FileUtil.deleteDirectory(new File(".nf-test"));
+		new File("nf-test.config").delete();
+	}
+
+
 	@Test
 	public void testHelloWorld() throws Exception {
 
@@ -56,5 +43,5 @@ public class AppTest {
 		assertEquals(0, exitCode);
 
 	}
-	
+
 }

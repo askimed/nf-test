@@ -2,7 +2,7 @@ nextflow_process {
 
   name "Test process xy"
 
-  script "test-data/test_process.nf"
+  script "test-data/process/default/test_process.nf"
   process "TEST_PROCESS"
 
   test("Should create 5 files") {

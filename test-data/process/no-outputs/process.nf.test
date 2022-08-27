@@ -2,16 +2,12 @@ nextflow_process {
 
   name "Test process xy"
 
-  script "test-data/test_process.nf"
+  script "test-data/process/no-outputs/process.nf"
   process "TEST_PROCESS"
-
-  profile "docker"
 
   test("Should create 5 files") {
 
-    debug true
-
-    whennnnnnnn {
+    when {
       params {
         outdir = "seb7"
       }
@@ -25,8 +21,6 @@ nextflow_process {
 
     then {
       assert process.success
-      assert process.out.my_output_files
-      assert process.out.my_output_files.size() == 6
     }
 
   }

@@ -91,5 +91,9 @@ public class PathExtension {
 		}
 		return paths;
 	}
+	
+	public static boolean exists(Path self) {
+		return Files.exists(self);
+	}
 
 }

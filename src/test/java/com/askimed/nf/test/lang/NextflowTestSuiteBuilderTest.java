@@ -1,17 +1,17 @@
 package com.askimed.nf.test.lang;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 
 import org.junit.jupiter.api.Test;
-
-import com.askimed.nf.test.lang.TestSuiteBuilder;
 
 public class NextflowTestSuiteBuilderTest {
 
 	@Test
 	public void testParse() throws Exception {
-		File file = new File("test-data/test1.nf.test");
-		TestSuiteBuilder.parse(file);
+		File file = new File("test-data/pipeline/dsl1/test1.nf.test");
+		assertEquals(2, TestSuiteBuilder.parse(file).getTests().size());
 	}
 	
 }
