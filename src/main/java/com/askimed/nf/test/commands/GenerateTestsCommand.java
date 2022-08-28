@@ -43,9 +43,29 @@ public class GenerateTestsCommand implements Callable<Integer> {
 
 	protected int generate(List<File> scripts, ITestGenerator generator) {
 
+		Config config = null;
+
 		try {
 
-			Config config = Config.parse(new File(Config.FILENAME));
+			File configFile = new File(Config.FILENAME);
+
+			if (configFile.exists()) {
+
+				config = Config.parse(configFile);
+
+			} else {
+				System.out.println(AnsiColors.red("Error: This pipeline has no nf-test config file."));
+				return 2;
+			}
+
+		} catch (Exception e) {
+
+			System.out.println(AnsiColors.red("Error: Syntax errors in nf-test config file: " + e));
+			return 2;
+
+		}
+
+		try {
 
 			int count = 0;
 

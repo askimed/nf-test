@@ -32,9 +32,10 @@ public class RunTestsCommand implements Callable<Integer> {
 			"--profile" }, description = "Profile to execute all tests", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String profile = null;
 
-	@Option(names = {"--without-trace"}, description = "Run nextflow tests without trace parameter.", required = false, showDefaultValue = Visibility.ALWAYS)
+	@Option(names = {
+			"--without-trace" }, description = "Run nextflow tests without trace parameter.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean withoutTrace = false;
-	
+
 	@Override
 	public Integer call() throws Exception {
 
@@ -46,30 +47,38 @@ public class RunTestsCommand implements Callable<Integer> {
 			boolean defaultWithTrace = true;
 			try {
 
-				Config config = Config.parse(new File(Config.FILENAME));
-				defaultProfile = config.getProfile();
-				defaultConfigFile = config.getConfigFile();
-				defaultWithTrace = config.isWithTrace();
-				workDir = new File(config.getWorkDir());
+				File configFile = new File(Config.FILENAME);
+				if (configFile.exists()) {
 
-				if (scripts == null) {
-					File folder = new File(config.getTestsDir());
-					scripts = findTests(folder);
-					System.out.println("Found " + scripts.size() + " files in test directory.");
+					Config config = Config.parse(configFile);
+					defaultProfile = config.getProfile();
+					defaultConfigFile = config.getConfigFile();
+					defaultWithTrace = config.isWithTrace();
+					workDir = new File(config.getWorkDir());
+
+					if (scripts == null) {
+						File folder = new File(config.getTestsDir());
+						scripts = findTests(folder);
+						System.out.println("Found " + scripts.size() + " files in test directory.");
+					}
+
+				} else {
+					System.out.println(AnsiColors.yellow("Warning: This pipeline has no nf-test config file."));
 				}
 
 			} catch (Exception e) {
 
+				System.out.println(AnsiColors.red("Error: Syntax errors in nf-test config file: " + e));
 				if (debug) {
-					System.out.println(AnsiColors.yellow("Warning: This pipeline has no valid nf-test config file."));
 					e.printStackTrace();
 				}
+				return 2;
 
-				if (scripts == null) {
-					System.out.println(AnsiColors.red("Error: No tests provided and no test directory set."));
-					return 2;
-				}
+			}
 
+			if (scripts == null) {
+				System.out.println(AnsiColors.red("Error: No tests provided and no test directory set."));
+				return 2;
 			}
 
 			TestExecutionEngine engine = new TestExecutionEngine();
@@ -86,7 +95,7 @@ public class RunTestsCommand implements Callable<Integer> {
 			} else {
 				engine.setWithTrace(defaultWithTrace);
 			}
-			
+
 			engine.setConfigFile(defaultConfigFile);
 			return engine.execute();
 
