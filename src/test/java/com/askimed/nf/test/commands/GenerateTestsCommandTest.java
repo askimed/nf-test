@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -86,7 +85,8 @@ public class GenerateTestsCommandTest {
 	@Test
 	public void testSyntaxErrorInConfig() throws Exception {
 
-		Files.copy(Path.of("test-data", "nf-test-error.config"), new FileOutputStream(new File("nf-test.config")));
+		Files.copy(new File("test-data/nf-test-error.config").toPath(),
+				new FileOutputStream(new File("nf-test.config")));
 
 		App app = new App();
 		int exitCode = app.run(new String[] { "generate", "workflow", "test-data/pipeline/dsl2/trial.nf" });
