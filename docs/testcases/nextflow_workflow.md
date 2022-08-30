@@ -46,7 +46,7 @@ assert workflow.stdout.contains("Hello World") == 3
 ## Example
 
 ### Nextflow script
-Create a new file and name it `trial.nf`.
+Create a new file and name it `say_hello.nf`.
 
 ```Groovy
 #!/usr/bin/env nextflow
@@ -73,7 +73,7 @@ workflow trial {
         sayHello(things)
         sayHello.out.verbiage_ch.view()
     emit:
-      trial_out_ch = sayHello.out.verbiage_ch2
+        trial_out_ch = sayHello.out.verbiage_ch2
 }
 
 workflow {
@@ -86,16 +86,16 @@ workflow {
 Create a new file and name it `say_hello.nf.test`.
 
 ```Groovy
-nextflow_process {
+nextflow_workflow {
 
     name "Test Workflow Trial"
     script "say_hello.nf"
-    process "SAY_HELLO"
+    workflow "trial"
 
     test("Should run without failures") {
 
         when {
-            process {
+            workflow {
                 """
                 input[0] = Channel.from('hello','nf-test')
                 """
@@ -103,15 +103,14 @@ nextflow_process {
         }
 
         then {
-        
-            assert process.success
-            assert process.trace.tasks().size() == 2
 
-	        with(process.out.verbiage_ch2) {
-	            assert size() == 2
-	            assert path(get(0)).readLines().size() == 1
-	            assert path(get(1)).readLines().size() == 1
-	            assert path(get(1)).md5 == "4a17df7a54b41a84df492da3f1bab1e3"
+            assert workflow.success
+
+                with(workflow.out.trial_out_ch) {
+                    assert size() == 2
+                    assert path(get(0)).readLines().size() == 1
+                    assert path(get(1)).readLines().size() == 1
+                    assert path(get(1)).md5 == "4a17df7a54b41a84df492da3f1bab1e3"
             }
 
         }
@@ -119,7 +118,6 @@ nextflow_process {
     }
 
 }
-
 
 ```
 
