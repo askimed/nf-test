@@ -762,7 +762,7 @@
 </code></pre></div>
 <h2 id="example">Example</h2>
 <h3 id="nextflow-script">Nextflow script</h3>
-<p>Create a new file and name it <code>say_hello.nf</code>.</p>
+<p>Create a new file and name it <code>trial.nf</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#!/usr/bin/env nextflow</span><span class="w"></span>
 <span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span><span class="w"></span>
 
@@ -795,11 +795,11 @@
 <span class="o">}</span><span class="w"></span>
 </code></pre></div>
 <h3 id="nf-test-script">nf-test script</h3>
-<p>Create a new file and name it <code>say_hello.nf.test</code>.</p>
+<p>Create a new file and name it <code>trial.nf.test</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_workflow</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Workflow Trial&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;say_hello.nf&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;trial.nf&quot;</span><span class="w"></span>
 <span class="w">    </span><span class="n">workflow</span><span class="w"> </span><span class="s2">&quot;trial&quot;</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run without failures&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
@@ -831,7 +831,7 @@
 </code></pre></div>
 <h3 id="execute-test">Execute test</h3>
 <div class="highlight"><pre><span></span><code>nf-test init
-nf-test test say_hello.nf.test
+nf-test test trial.nf.test
 </code></pre></div>
 
 
