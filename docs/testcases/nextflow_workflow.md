@@ -46,7 +46,7 @@ assert workflow.stdout.contains("Hello World") == 3
 ## Example
 
 ### Nextflow script
-Create a new file and name it `say_hello.nf`.
+Create a new file and name it `trial.nf`.
 
 ```Groovy
 #!/usr/bin/env nextflow
@@ -83,13 +83,13 @@ workflow {
 ```
 
 ### nf-test script
-Create a new file and name it `say_hello.nf.test`.
+Create a new file and name it `trial.nf.test`.
 
 ```Groovy
 nextflow_workflow {
 
     name "Test Workflow Trial"
-    script "say_hello.nf"
+    script "trial.nf"
     workflow "trial"
 
     test("Should run without failures") {
@@ -124,5 +124,5 @@ nextflow_workflow {
 ### Execute test
 ```
 nf-test init
-nf-test test say_hello.nf.test
+nf-test test trial.nf.test
 ```

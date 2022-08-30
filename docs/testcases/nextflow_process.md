@@ -79,7 +79,7 @@ process SAY_HELLO {
 ```
 
 ### nf-test script
-Create a new file and name it `trial.nf.test`.
+Create a new file and name it `say_hello.nf.test`.
 
 ```Groovy
 
@@ -120,5 +120,5 @@ nextflow_process {
 ### Execute test
 ```
 nf-test init
-nf-test test trial.nf.test
+nf-test test say_hello.nf.test
 ```
