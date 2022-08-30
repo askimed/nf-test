@@ -106,11 +106,11 @@ nextflow_workflow {
 
             assert workflow.success
 
-                with(workflow.out.trial_out_ch) {
-                    assert size() == 2
-                    assert path(get(0)).readLines().size() == 1
-                    assert path(get(1)).readLines().size() == 1
-                    assert path(get(1)).md5 == "4a17df7a54b41a84df492da3f1bab1e3"
+            with(workflow.out.trial_out_ch) {
+                assert size() == 2
+                assert path(get(0)).readLines().size() == 1
+                assert path(get(1)).readLines().size() == 1
+                assert path(get(1)).md5 == "4a17df7a54b41a84df492da3f1bab1e3"
             }
 
         }
