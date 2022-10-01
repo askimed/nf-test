@@ -1,0 +1,43 @@
+nextflow_function {
+
+  name "Test Function Say Hello"
+
+  script "test-data/function/default/functions.nf"
+  function "say_hello"
+
+  test("Passing case") {
+
+    when {
+      function {
+        """
+        input[0] = "aaron"
+        """
+      }
+    }
+
+    then {
+      assert function.success
+      assert function.result == "Hello aaron"
+      assert function.stdout.contains("Hello aaron") 
+      assert function.stderr == []
+    }
+
+  }
+
+  test("Failure Case") {
+
+    when {
+      function {
+        """
+        input[0] = null
+        """
+      }
+    }
+
+    then {
+      assert function.failed
+      //It seems to me that error(..) writes message to stdout
+      assert function.stdout.contains("Cannot greet a null person")
+    }
+  }
+}
