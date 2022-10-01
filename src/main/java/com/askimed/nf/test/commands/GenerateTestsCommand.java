@@ -84,10 +84,7 @@ public class GenerateTestsCommand implements Callable<Integer> {
 				File target = new File(targetPath);
 
 				System.out.println();
-				boolean written = generator.generate(script, target);
-				if (written) {
-					count++;
-				}
+				count += generator.generate(script, target);
 
 			}
 

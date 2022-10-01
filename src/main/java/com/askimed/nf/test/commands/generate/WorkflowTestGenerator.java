@@ -16,7 +16,7 @@ public class WorkflowTestGenerator implements ITestGenerator {
 
 	public static final String TEMPLATE = "WorkflowTestTemplate.nf.test";
 
-	public boolean generate(File source, File target) throws Exception {
+	public int generate(File source, File target) throws Exception {
 
 		System.out.println("Load source file '" + source.getAbsolutePath() + "'");
 
@@ -25,19 +25,19 @@ public class WorkflowTestGenerator implements ITestGenerator {
 
 		if (script.getWorkflows().isEmpty()) {
 			System.out.println(AnsiColors.yellow("Skipped. No workflow definition found."));
-			return false;
+			return 0;
 		}
 
 		if (script.getWorkflows().size() > 1) {
 			System.out.println(AnsiColors
 					.yellow("Skipped. More then one named workflow definition found. Please create one file per workflow."));
-			return false;
+			return 0;
 		}
 
 		if (target.exists()) {
 			System.out.println(
 					AnsiColors.yellow("Skipped. Test file '" + target.getAbsolutePath() + "' already exists."));
-			return false;
+			return 0;
 		}
 
 		Map<Object, Object> binding = new HashMap<Object, Object>();
@@ -56,7 +56,7 @@ public class WorkflowTestGenerator implements ITestGenerator {
 
 		System.out.println(AnsiColors.green("Wrote workflow test file '" + target.getAbsolutePath() + ""));
 
-		return true;
+		return 1;
 		
 	}
 
