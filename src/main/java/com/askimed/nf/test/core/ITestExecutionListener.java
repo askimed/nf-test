@@ -10,7 +10,7 @@ public interface ITestExecutionListener {
 
 	public void testSuiteExecutionFinished(ITestSuite testSuite);
 
-	public int getFailed();
+	//public int getFailed();
 
 	public void executionSkipped(ITest test, String reason);
 

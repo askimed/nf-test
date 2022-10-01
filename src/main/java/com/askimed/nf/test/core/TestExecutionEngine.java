@@ -55,6 +55,10 @@ public class TestExecutionEngine {
 		this.withTrace = withTrace;
 	}
 
+	public void setListener(ITestExecutionListener listener) {
+		this.listener = listener;
+	}
+
 	protected List<ITestSuite> parse() throws Exception {
 
 		List<ITestSuite> testSuits = new Vector<ITestSuite>();
@@ -115,7 +119,7 @@ public class TestExecutionEngine {
 		}
 
 		listener.testPlanExecutionStarted();
-
+		boolean failed = false;
 		for (ITestSuite testSuite : testSuits) {
 
 			// override profile from CLI
@@ -135,7 +139,7 @@ public class TestExecutionEngine {
 					continue;
 				}
 				listener.executionStarted(test);
-				TestExecutionResult result = new TestExecutionResult();
+				TestExecutionResult result = new TestExecutionResult(test);
 				test.setup(workDir);
 				test.setWithTrace(withTrace);
 				try {
@@ -154,6 +158,7 @@ public class TestExecutionEngine {
 					result.setStatus(TestExecutionResultStatus.FAILED);
 					result.setThrowable(e);
 					result.setErrorReport(test.getErrorReport());
+					failed = true;
 
 				}
 				test.cleanup();
@@ -168,7 +173,7 @@ public class TestExecutionEngine {
 
 		listener.testPlanExecutionFinished();
 
-		if (listener.getFailed() > 0) {
+		if (failed) {
 			return 1;
 		} else {
 			return 0;

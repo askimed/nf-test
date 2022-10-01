@@ -66,6 +66,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.tap4j</groupId>
+			<artifactId>tap4j</artifactId>
+			<version>4.4.2</version>
+		</dependency>
+
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
