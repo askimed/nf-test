@@ -45,7 +45,6 @@ public class Function extends WorkflowMeta {
 		if (file.exists()) {
 			JsonSlurper jsonSlurper = new JsonSlurper();
 			result = jsonSlurper.parse(file);
-			System.out.println("LOAD FROM " + file.getAbsolutePath());
 		}
 		
 	}

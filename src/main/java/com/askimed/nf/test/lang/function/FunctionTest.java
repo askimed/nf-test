@@ -24,10 +24,12 @@ public class FunctionTest extends AbstractTest {
 
 	private String name = "Unknown test";
 
+	private String function = null;
+
 	private boolean debug = false;
 
 	private boolean withTrace = true;
-	
+
 	private TestCode setup;
 
 	private TestCode cleanup;
@@ -55,7 +57,16 @@ public class FunctionTest extends AbstractTest {
 		return name;
 	}
 
-	public void setup(@DelegatesTo(value = FunctionTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+	public void function(String function) {
+		this.function = function;
+	}
+
+	public String getFunction() {
+		return function;
+	}
+
+	public void setup(
+			@DelegatesTo(value = FunctionTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		setup = new TestCode(closure);
 	}
 
@@ -89,7 +100,7 @@ public class FunctionTest extends AbstractTest {
 		if (!script.exists()) {
 			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
 		}
-		
+
 		if (setup != null) {
 			setup.execute(context);
 		}
@@ -98,7 +109,7 @@ public class FunctionTest extends AbstractTest {
 
 		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
 		context.evaluateFunctionClosure();
-		
+
 		// Create workflow mock
 		File workflow = new File(metaDir, "mock.nf");
 		writeWorkflowMock(workflow);
@@ -166,7 +177,7 @@ public class FunctionTest extends AbstractTest {
 		}
 
 		Map<Object, Object> binding = new HashMap<Object, Object>();
-		binding.put("process", parent.getFunction());
+		binding.put("process", function != null ? function : parent.getFunction());
 		binding.put("script", script);
 
 		// Get body of when closure
@@ -179,7 +190,7 @@ public class FunctionTest extends AbstractTest {
 		FileUtil.write(file, template);
 
 	}
-	
+
 	@Override
 	public void setWithTrace(boolean withTrace) {
 		this.withTrace = withTrace;

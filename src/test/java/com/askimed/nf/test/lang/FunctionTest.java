@@ -35,6 +35,14 @@ public class FunctionTest {
 
 	}
 
+	@Test
+	public void testScriptWihtMultipleFunctions() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/function/multi/functions.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
 
 
 }
