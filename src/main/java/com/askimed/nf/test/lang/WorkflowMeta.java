@@ -28,6 +28,8 @@ public class WorkflowMeta {
 
 	public List<String> stdout = new Vector<String>();
 
+	public List<String> stderr = new Vector<String>();
+
 	public void loadFromFolder(File folder) {
 
 		File file = new File(folder, "workflow.json");
@@ -51,6 +53,15 @@ public class WorkflowMeta {
 			}
 		}
 
+		File outFileStdErr = new File(folder, "std.err");
+		if (outFileStdErr.exists()) {
+			try {
+				stderr = Files.readAllLines(outFileStdErr.toPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
 		File traceFile = new File(folder, "trace.csv");
 		if (traceFile.exists()) {
 			try {
@@ -68,7 +79,7 @@ public class WorkflowMeta {
 		}
 
 	}
-	
+
 	public WorkflowTrace getTrace() {
 		if (trace == null) {
 			throw new RuntimeException("Error: Tracing is disabled. `workflow.trace` is not supported.");
