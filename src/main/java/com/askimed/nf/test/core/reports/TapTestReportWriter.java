@@ -2,7 +2,9 @@
 package com.askimed.nf.test.core.reports;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.tap4j.model.Plan;
 import org.tap4j.model.TestResult;
@@ -37,13 +39,18 @@ public class TapTestReportWriter extends AbstractTestReportWriter {
 
 			for (TestExecutionResult test : testSuite.getTests()) {
 				index++;
-				// TODO: what is the best way to handle testsuites?
+				// TODO: what is the best way to handle testsuites? subtests?
 				String name = testSuite.getTestSuite().getName() + ": " + test.getTest().getName();
 				StatusValues status = toStatusValue(test.getStatus());
 
 				TestResult tapResult = new TestResult(status, index);
 				tapResult.setDescription(name);
-				// TODO: add test.getErrorReport()
+				if (test.getStatus() != TestExecutionResultStatus.PASSED) {
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("failure", test.getThrowable().toString());
+					map.put("output", test.getErrorReport());
+					tapResult.setDiagnostic(map);
+				}
 				testSet.addTestResult(tapResult);
 			}
 		}
