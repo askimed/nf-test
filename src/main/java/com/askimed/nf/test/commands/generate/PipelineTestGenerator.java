@@ -15,14 +15,14 @@ public class PipelineTestGenerator implements ITestGenerator {
 
 	public static final String TEMPLATE = "PipelineTestTemplate.nf.test";
 
-	public boolean generate(File source, File target) throws Exception {
+	public int generate(File source, File target) throws Exception {
 
 		System.out.println("Load source file '" + source.getAbsolutePath() + "'");
 
 		if (target.exists()) {
 			System.out.println(
 					AnsiColors.yellow("Skipped. Test file '" + target.getAbsolutePath() + "' already exists."));
-			return false;
+			return 0;
 		}
 
 		String name = source.getName();
@@ -43,7 +43,7 @@ public class PipelineTestGenerator implements ITestGenerator {
 
 		System.out.println(AnsiColors.green("Wrote pipeline test file '" + target.getAbsolutePath() + ""));
 
-		return true;
+		return 1;
 
 	}
 

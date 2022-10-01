@@ -69,6 +69,19 @@ public class GenerateTestsCommandTest {
 		assertTrue(new File("tests/test-data/process/default/test_process.nf.test").exists());
 
 	}
+	
+	@Test
+	public void testGenerateProcessMultiTest() throws Exception {
+
+		FileUtil.deleteDirectory(new File("tests"));
+		App app = new App();
+		int exitCode = app.run(new String[] { "generate", "process", "test-data/process/multi/processes.nf" });
+		assertEquals(0, exitCode);
+
+		assertTrue(new File("tests/test-data/process/multi/processes.one.nf.test").exists());
+		assertTrue(new File("tests/test-data/process/multi/processes.two.nf.test").exists());
+
+	}
 
 	@Test
 	public void testGenerateWorkflowTest() throws Exception {

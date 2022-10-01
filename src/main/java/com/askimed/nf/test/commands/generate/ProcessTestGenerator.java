@@ -16,7 +16,7 @@ public class ProcessTestGenerator implements ITestGenerator {
 
 	public static final String TEMPLATE = "ProcessTestTemplate.nf.test";
 
-	public boolean generate(File source, File target) throws Exception {
+	public int generate(File source, File target) throws Exception {
 
 		System.out.println("Load source file '" + source.getAbsolutePath() + "'");
 
@@ -25,39 +25,48 @@ public class ProcessTestGenerator implements ITestGenerator {
 
 		if (script.getProcesses().isEmpty()) {
 			System.out.println(AnsiColors.yellow("Skipped. No process definition found."));
-			return false;
+			return 0;
 		}
 
-		if (script.getProcesses().size() > 1) {
-			System.out.println(AnsiColors
-					.yellow("Skipped. More then one process definition found. Please create one file per process."));
-			return false;
+
+		File[] targets = new File[script.getProcesses().size()];
+		if (script.getProcesses().size() == 1) {
+			targets[0] = target;
+		} else {
+			for (int i = 0; i < script.getProcesses().size(); i++) {
+				String name = script.getProcesses().get(i).toLowerCase();
+				targets[i] = new File(target.getPath().replaceAll(".nf.test", "." + name + ".nf.test"));
+			}
 		}
 
-		if (target.exists()) {
-			System.out.println(
-					AnsiColors.yellow("Skipped. Test file '" + target.getAbsolutePath() + "' already exists."));
-			return false;
+		int created = 0;
+		for (int i = 0; i < script.getProcesses().size(); i++) {
+
+			if (targets[i].exists()) {
+				System.out.println(
+						AnsiColors.yellow("Skipped. Test file '" + targets[i].getAbsolutePath() + "' already exists."));
+				break;
+			}
+
+			Map<Object, Object> binding = new HashMap<Object, Object>();
+			binding.put("name", source.getName());
+			binding.put("script", source.getPath());
+			binding.put("process", script.getProcesses().get(i));
+
+			URL templateUrl = ProcessTestGenerator.class.getResource(TEMPLATE);
+			SimpleTemplateEngine engine = new SimpleTemplateEngine();
+			Writable template = engine.createTemplate(templateUrl).make(binding);
+
+			File parent = targets[i].getParentFile();
+			FileUtil.createDirectory(parent);
+
+			FileUtil.write(targets[i], template);
+
+			System.out.println(AnsiColors.green("Wrote process test file '" + targets[i].getAbsolutePath() + ""));
+			created++;
 		}
+		return created;
 
-		Map<Object, Object> binding = new HashMap<Object, Object>();
-		binding.put("name", source.getName());
-		binding.put("script", source.getPath());
-		binding.put("process", script.getProcesses().get(0));
-
-		URL templateUrl = ProcessTestGenerator.class.getResource(TEMPLATE);
-		SimpleTemplateEngine engine = new SimpleTemplateEngine();
-		Writable template = engine.createTemplate(templateUrl).make(binding);
-
-		File parent = target.getParentFile();
-		FileUtil.createDirectory(parent);
-
-		FileUtil.write(target, template);
-
-		System.out.println(AnsiColors.green("Wrote process test file '" + target.getAbsolutePath() + ""));
-
-		return true;
-		
 	}
 
 }
