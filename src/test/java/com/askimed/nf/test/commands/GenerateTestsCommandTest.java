@@ -13,6 +13,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.askimed.nf.test.App;
+import com.askimed.nf.test.core.ITestSuite;
+import com.askimed.nf.test.lang.TestSuiteBuilder;
+import com.askimed.nf.test.lang.function.FunctionTestSuite;
+import com.askimed.nf.test.lang.pipeline.PipelineTestSuite;
+import com.askimed.nf.test.lang.process.ProcessTestSuite;
+import com.askimed.nf.test.lang.workflow.WorkflowTestSuite;
 import com.askimed.nf.test.util.FileUtil;
 
 public class GenerateTestsCommandTest {
@@ -42,8 +48,11 @@ public class GenerateTestsCommandTest {
 		int exitCode = app.run(new String[] { "generate", "pipeline", "test-data/pipeline/dsl1/test1.nf" });
 		assertEquals(0, exitCode);
 
-		assertTrue(new File("tests/test-data/pipeline/dsl1/test1.nf.test").exists());
-
+		File testFile = new File("tests/test-data/pipeline/dsl1/test1.nf.test");
+		assertTrue(testFile.exists());
+		ITestSuite testSuite = TestSuiteBuilder.parse(testFile);
+		assertEquals(1, testSuite.getTests().size());
+		assertTrue(testSuite instanceof PipelineTestSuite);
 	}
 
 	@Test
@@ -54,8 +63,11 @@ public class GenerateTestsCommandTest {
 		int exitCode = app.run(new String[] { "generate", "pipeline", "test-data/pipeline/dsl2/trial.nf" });
 		assertEquals(0, exitCode);
 
-		assertTrue(new File("tests/test-data/pipeline/dsl2/trial.nf.test").exists());
-
+		File testFile = new File("tests/test-data/pipeline/dsl2/trial.nf.test");
+		assertTrue(testFile.exists());
+		ITestSuite testSuite = TestSuiteBuilder.parse(testFile);
+		assertEquals(1, testSuite.getTests().size());
+		assertTrue(testSuite instanceof PipelineTestSuite);
 	}
 
 	@Test
@@ -66,7 +78,11 @@ public class GenerateTestsCommandTest {
 		int exitCode = app.run(new String[] { "generate", "process", "test-data/process/default/test_process.nf" });
 		assertEquals(0, exitCode);
 
-		assertTrue(new File("tests/test-data/process/default/test_process.nf.test").exists());
+		File testFile = new File("tests/test-data/process/default/test_process.nf.test");
+		assertTrue(testFile.exists());
+		ITestSuite testSuite = TestSuiteBuilder.parse(testFile);
+		assertEquals(1, testSuite.getTests().size());
+		assertTrue(testSuite instanceof ProcessTestSuite);
 
 	}
 	
@@ -79,10 +95,30 @@ public class GenerateTestsCommandTest {
 		assertEquals(0, exitCode);
 
 		assertTrue(new File("tests/test-data/process/multi/processes.one.nf.test").exists());
-		assertTrue(new File("tests/test-data/process/multi/processes.two.nf.test").exists());
+
+		File testFile = new File("tests/test-data/process/multi/processes.two.nf.test");
+		assertTrue(testFile.exists());
+		ITestSuite testSuite = TestSuiteBuilder.parse(testFile);
+		assertEquals(1, testSuite.getTests().size());
+		assertTrue(testSuite instanceof ProcessTestSuite);
+	}
+	
+	@Test
+	public void testGenerateFunctionTest() throws Exception {
+
+		FileUtil.deleteDirectory(new File("tests"));
+		App app = new App();
+		int exitCode = app.run(new String[] { "generate", "function", "test-data/function/multi/functions.nf" });
+		assertEquals(0, exitCode);
+
+		File testFile = new File("tests/test-data/function/multi/functions.nf.test");
+		assertTrue(testFile.exists());
+		ITestSuite testSuite = TestSuiteBuilder.parse(testFile);
+		assertEquals(2, testSuite.getTests().size());
+		assertTrue(testSuite instanceof FunctionTestSuite);
 
 	}
-
+	
 	@Test
 	public void testGenerateWorkflowTest() throws Exception {
 
@@ -91,8 +127,11 @@ public class GenerateTestsCommandTest {
 		int exitCode = app.run(new String[] { "generate", "workflow", "test-data/pipeline/dsl2/trial.nf" });
 		assertEquals(0, exitCode);
 
-		assertTrue(new File("tests/test-data/pipeline/dsl2/trial.nf.test").exists());
-
+		File testFile = new File("tests/test-data/pipeline/dsl2/trial.nf.test");
+		assertTrue(testFile.exists());
+		ITestSuite testSuite = TestSuiteBuilder.parse(testFile);
+		assertEquals(1, testSuite.getTests().size());
+		assertTrue(testSuite instanceof WorkflowTestSuite);
 	}
 
 	@Test
