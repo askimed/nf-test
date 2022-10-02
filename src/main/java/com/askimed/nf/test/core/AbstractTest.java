@@ -58,7 +58,7 @@ public abstract class AbstractTest implements ITest {
 
 			File bin = new File("bin");
 			if (bin.exists()) {
-				String metaDirBin = FileUtil.path(metaDir, "lib");
+				String metaDirBin = FileUtil.path(metaDir, "bin");
 				FileUtil.copyDirectory(bin.getAbsolutePath(), metaDirBin);
 			}
 

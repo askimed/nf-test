@@ -88,5 +88,14 @@ public class ProcessTest {
 		assertEquals(0, exitCode);
 
 	}
+	
+	@Test
+	public void testBinFolder() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/bin-folder/test_process_success.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
 
 }
