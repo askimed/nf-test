@@ -95,10 +95,13 @@ public class FunctionTest extends AbstractTest {
 	@Override
 	public void execute() throws Throwable {
 
-		File script = new File(parent.getScript());
+		if (parent.getScript() != null) {
 
-		if (!script.exists()) {
-			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
+			File script = new File(parent.getScript());
+
+			if (!script.exists()) {
+				throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
+			}
 		}
 
 		if (setup != null) {
@@ -140,6 +143,7 @@ public class FunctionTest extends AbstractTest {
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
 		nextflow.setParamsFile(paramsFile);
+		
 		int exitCode = nextflow.execute();
 
 		// Parse json output
@@ -172,12 +176,21 @@ public class FunctionTest extends AbstractTest {
 
 		String script = parent.getScript();
 
-		if (!script.startsWith("/") && !script.startsWith("./")) {
+		if (script != null && !script.startsWith("/") && !script.startsWith("./")) {
 			script = new File(script).getAbsolutePath();
 		}
 
+		String name = function != null ? function : parent.getFunction();
+		String include = name;
+		// if function is a static method: include class.
+		if (name.contains(".")) {
+			String[] tiles = name.split("\\.", 2);
+			include = tiles[0];
+		}
+
 		Map<Object, Object> binding = new HashMap<Object, Object>();
-		binding.put("process", function != null ? function : parent.getFunction());
+		binding.put("function", name);
+		binding.put("include", include);
 		binding.put("script", script);
 
 		// Get body of when closure

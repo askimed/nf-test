@@ -43,6 +43,15 @@ public class FunctionTest {
 		assertEquals(0, exitCode);
 
 	}
+	
+	@Test
+	public void testGroovyScript() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/function/utils/Utils.groovy.test" ,"--debug"});
+		assertEquals(0, exitCode);
+
+	}
 
 
 }

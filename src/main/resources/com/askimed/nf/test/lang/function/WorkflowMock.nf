@@ -7,14 +7,15 @@ nextflow.enable.dsl=2
 // comes from testflight to find json files
 params.nf_test_output  = ""
 
-// process mapping
+// function mapping
 def input = []
 ${mapping}
 //----
 
-// include test process
-include { ${process} } from '${script}'
-
+// include function
+<% if (script != null) { %>
+include { ${include} } from '${script}'
+<% } %>
 
 // define custom rules for JSON that will be generated.
 def jsonOutput =
@@ -26,8 +27,10 @@ def jsonOutput =
 
 workflow {
 
-  result = ${process}(*input)
-  new File("\${params.nf_test_output}/function.json").text = jsonOutput.toJson(result)
+  result = ${function}(*input)
+  if (result != null) {
+  	new File("\${params.nf_test_output}/function.json").text = jsonOutput.toJson(result)
+  }
   
 }
 

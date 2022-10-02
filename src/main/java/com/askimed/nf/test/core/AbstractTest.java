@@ -7,7 +7,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import com.askimed.nf.test.config.Config;
-import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.FileUtil;
 
 public abstract class AbstractTest implements ITest {
@@ -48,6 +47,21 @@ public abstract class AbstractTest implements ITest {
 			this.metaDir = new File(metaDir);
 			FileUtil.deleteDirectory(this.metaDir);
 			FileUtil.createDirectory(this.metaDir);
+
+			// copy bin and lib to metaDir. TODO: use symlinks and read additional "mapping"
+			// from config file
+			File lib = new File("lib");
+			if (lib.exists()) {
+				String metaDirLib = FileUtil.path(metaDir, "lib");
+				FileUtil.copyDirectory(lib.getAbsolutePath(), metaDirLib);
+			}
+
+			File bin = new File("bin");
+			if (bin.exists()) {
+				String metaDirBin = FileUtil.path(metaDir, "lib");
+				FileUtil.copyDirectory(bin.getAbsolutePath(), metaDirBin);
+			}
+
 		} catch (Exception e) {
 			throw new IOException("Meta Directory '" + metaDir + "' could not be deleted:\n" + e);
 		}
