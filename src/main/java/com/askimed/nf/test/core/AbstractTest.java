@@ -21,6 +21,8 @@ public abstract class AbstractTest implements ITest {
 
 	public boolean skipped = false;
 
+	public static String[] SHARED_DIRECTORIES = { "bin", "lib" };
+
 	public AbstractTest() {
 
 	}
@@ -50,17 +52,7 @@ public abstract class AbstractTest implements ITest {
 
 			// copy bin and lib to metaDir. TODO: use symlinks and read additional "mapping"
 			// from config file
-			File lib = new File("lib");
-			if (lib.exists()) {
-				String metaDirLib = FileUtil.path(metaDir, "lib");
-				FileUtil.copyDirectory(lib.getAbsolutePath(), metaDirLib);
-			}
-
-			File bin = new File("bin");
-			if (bin.exists()) {
-				String metaDirBin = FileUtil.path(metaDir, "bin");
-				FileUtil.copyDirectory(bin.getAbsolutePath(), metaDirBin);
-			}
+			shareDirectories(SHARED_DIRECTORIES, metaDir);
 
 		} catch (Exception e) {
 			throw new IOException("Meta Directory '" + metaDir + "' could not be deleted:\n" + e);
@@ -131,6 +123,16 @@ public abstract class AbstractTest implements ITest {
 
 	public boolean isSkipped() {
 		return skipped;
+	}
+
+	protected void shareDirectories(String[] directories, String metaDir) throws IOException {
+		for (String directory : directories) {
+			File localDirectory = new File(directory);
+			if (localDirectory.exists()) {
+				String metaDirectory = FileUtil.path(metaDir, directory);
+				FileUtil.copyDirectory(localDirectory.getAbsolutePath(), metaDirectory);
+			}
+		}
 	}
 
 }
