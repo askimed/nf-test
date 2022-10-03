@@ -30,7 +30,7 @@ public class TapTestReportWriter extends AbstractTestReportWriter {
 
 		int index = 0;
 
-		TapProducer tapProducer = TapProducerFactory.makeTap13Producer();
+		TapProducer tapProducer = TapProducerFactory.makeTap13YamlProducer();
 		TestSet testSet = new TestSet();
 		Plan plan = new Plan(getCount());
 		testSet.setPlan(plan);
