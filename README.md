@@ -27,7 +27,17 @@ nf-test test example/*.nf.test
 
 The full documentation can be found [here](https://code.askimed.com/nf-test).
 
+## Badge
+
+Show the world your Nextflow pipeline is using nf-test:
+
+![https://github.com/askimed/nf-test](https://img.shields.io/badge/tested_with-nf--test-337ab7.svg)
+
+```
+![https://github.com/askimed/nf-test](https://img.shields.io/badge/tested_with-nf--test-337ab7.svg)
+```
+
 ## Contact
 
-- Lukas Forer
-- Sebastian Schönherr
+- Lukas Forer [@lukfor](https://twitter.com/lukfor)
+- Sebastian Schönherr [@seppinho](https://twitter.com/seppinho)
