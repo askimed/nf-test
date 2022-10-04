@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import com.askimed.nf.test.lang.extensions.util.FastaUtil;
 import com.askimed.nf.test.lang.extensions.util.GzipUtil;
 import com.askimed.nf.test.util.FileUtil;
 
@@ -17,6 +18,8 @@ public class PathExtension {
 	public static String getMd5(Path self) throws IOException, NoSuchAlgorithmException {
 		return FileUtil.getMd5(self);
 	}
+
+	/* Gzip support */
 
 	public static List<String> readLinesGzip(Path self) throws FileNotFoundException, IOException {
 		return GzipUtil.readLines(self);
@@ -30,6 +33,8 @@ public class PathExtension {
 		return GzipUtil.readText(self);
 	}
 
+	/* JSON */
+
 	public static Object readJSON(Path self) throws FileNotFoundException, IOException {
 		JsonSlurper jsonSlurper = new JsonSlurper();
 		return jsonSlurper.parse(self);
@@ -39,10 +44,18 @@ public class PathExtension {
 		return readJSON(self);
 	}
 
+	/* FASTA */
+
+	public static Object getFasta(Path self) throws FileNotFoundException, IOException {
+		return FastaUtil.readAsMap(self);
+	}
+
+	/* File methods */
+
 	public static Path[] list(Path self) {
 		return FileUtil.list(self);
 	}
-	
+
 	public static boolean exists(Path self) {
 		return Files.exists(self);
 	}
