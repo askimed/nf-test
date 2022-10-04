@@ -24,15 +24,23 @@ public class FastaUtil {
 		BufferedReader br = new BufferedReader(new InputStreamReader(openTxtOrGzipStream(path)));
 		String line = null;
 		while ((line = br.readLine()) != null) {
-			if (line.trim().startsWith(">")) {
-				sample = line.substring(1).trim();
+			
+			String trimmedLine = line.trim();
+			
+			//ignore comments
+			if (trimmedLine.isEmpty() || trimmedLine.startsWith(";")) {
+				continue;
+			}
+			
+			if (trimmedLine.startsWith(">")) {
+				sample = trimmedLine.substring(1);
 				fasta.put(sample, "");
 			} else {
 				if (sample == null ) {
 					throw new IOException("Fasta file is malformed. Starts with sequence.");
 				}
 				String sequence = fasta.get(sample);
-				fasta.put(sample, sequence + line.trim());
+				fasta.put(sample, sequence + trimmedLine);
 			}
 		}
 		br.close();
