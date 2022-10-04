@@ -18,6 +18,15 @@ wget -qO- https://code.askimed.com/install/nf-test | bash
 
 It will create the `nf-test` executable file in the current directory. Optionally, move the `nf-test` file to a directory accessible by your `$PATH` variable.
 
+### Conda
+
+To install this package from Bioconda run the following command:
+
+```
+conda install -c bioconda nf-test
+```
+
+*Note: this recipe is not maintained by us.*
 
 ## Usage
 
