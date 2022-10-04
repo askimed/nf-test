@@ -7,6 +7,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Formatter;
 
 import groovy.lang.Writable;
 
@@ -89,6 +93,28 @@ public class FileUtil {
 
 	public static String makeRelative(File baseDir, File absoluteFile) {
 		return baseDir.toURI().relativize(absoluteFile.toURI()).getPath();
+	}
+
+	public static String getMd5(Path self) throws IOException, NoSuchAlgorithmException {
+		Formatter fm = new Formatter();
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(Files.readAllBytes(self));
+		byte[] md5sum = md.digest();
+		for (byte b : md5sum) {
+			fm.format("%02x", b);
+		}
+		String result = fm.out().toString();
+		fm.close();
+		return result;
+	}
+
+	public static Path[] list(Path self) {
+		File[] files = self.toFile().listFiles();
+		Path[] paths = new Path[files.length];
+		for (int i = 0; i < files.length; i++) {
+			paths[i] = files[i].toPath();
+		}
+		return paths;
 	}
 
 }

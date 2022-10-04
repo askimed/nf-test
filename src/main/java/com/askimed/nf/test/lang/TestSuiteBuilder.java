@@ -61,7 +61,7 @@ public class TestSuiteBuilder {
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_pipeline");
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_workflow");
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_process");
-		customizer.addStaticStars("com.askimed.nf.test.util.FileAndPathMethods");
+		customizer.addStaticStars("com.askimed.nf.test.lang.extensions.GlobalMethods");
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
 		compilerConfiguration.addCompilationCustomizers(customizer);

@@ -1,82 +1,38 @@
 package com.askimed.nf.test.lang.extensions;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Formatter;
 import java.util.List;
-import java.util.Vector;
-import java.util.zip.GZIPInputStream;
+
+import com.askimed.nf.test.lang.extensions.util.GzipUtil;
+import com.askimed.nf.test.util.FileUtil;
 
 import groovy.json.JsonSlurper;
 
 public class PathExtension {
 
 	public static String getMd5(Path self) throws IOException, NoSuchAlgorithmException {
-		Formatter fm = new Formatter();
-		MessageDigest md = MessageDigest.getInstance("MD5");
-		md.update(Files.readAllBytes(self));
-		byte[] md5sum = md.digest();
-		for (byte b : md5sum) {
-			fm.format("%02x", b);
-		}
-		String result = fm.out().toString();
-		fm.close();
-		return result;
+		return FileUtil.getMd5(self);
 	}
 
 	public static List<String> readLinesGzip(Path self) throws FileNotFoundException, IOException {
-
-		List<String> lines = new Vector<String>();
-
-		GZIPInputStream gzip = new GZIPInputStream(new FileInputStream(self.toFile()));
-		BufferedReader br = new BufferedReader(new InputStreamReader(gzip));
-		String line = null;
-		while ((line = br.readLine()) != null) {
-
-			lines.add(line);
-		}
-		gzip.close();
-
-		return lines;
+		return GzipUtil.readLines(self);
 	}
 
 	public static List<String> getLinesGzip(Path self) throws FileNotFoundException, IOException {
-
-		return readLinesGzip(self);
+		return GzipUtil.readLines(self);
 	}
 
 	public static String getTextGzip(Path self) throws FileNotFoundException, IOException {
-
-		GZIPInputStream gzip = new GZIPInputStream(new FileInputStream(self.toFile()));
-		BufferedReader br = new BufferedReader(new InputStreamReader(gzip));
-		String line = null;
-		StringBuilder text = new StringBuilder();
-		int i = 0;
-		while ((line = br.readLine()) != null) {
-			if (i > 0) {
-				text.append("\n");
-			}
-			text.append(line);
-			i++;
-		}
-		gzip.close();
-
-		return text.toString();
+		return GzipUtil.readText(self);
 	}
 
 	public static Object readJSON(Path self) throws FileNotFoundException, IOException {
-
 		JsonSlurper jsonSlurper = new JsonSlurper();
 		return jsonSlurper.parse(self);
-
 	}
 
 	public static Object getJson(Path self) throws FileNotFoundException, IOException {
@@ -84,12 +40,7 @@ public class PathExtension {
 	}
 
 	public static Path[] list(Path self) {
-		File[] files = self.toFile().listFiles();
-		Path[] paths = new Path[files.length];
-		for (int i = 0; i < files.length; i++) {
-			paths[i] = files[i].toPath();
-		}
-		return paths;
+		return FileUtil.list(self);
 	}
 	
 	public static boolean exists(Path self) {

@@ -1,4 +1,4 @@
-package com.askimed.nf.test.util;
+package com.askimed.nf.test.lang.extensions;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 
 import groovy.lang.Closure;
 
-public class FileAndPathMethods {
+public class GlobalMethods {
 
 	public static File file(String filename) {
 		return new File(filename);
