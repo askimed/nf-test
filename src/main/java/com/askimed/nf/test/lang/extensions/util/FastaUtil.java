@@ -33,7 +33,7 @@ public class FastaUtil {
 			}
 			
 			if (trimmedLine.startsWith(">")) {
-				sample = trimmedLine.substring(1);
+				sample = trimmedLine.substring(1).trim();
 				fasta.put(sample, "");
 			} else {
 				if (sample == null ) {

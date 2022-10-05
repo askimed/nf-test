@@ -4,6 +4,7 @@ theme:
   name: material
   features:
     - navigation.instant
+    - navigation.expand
     - tabs
   palette:
     primary: teal
@@ -31,6 +32,7 @@ nav:
   - Writing Assertions:
     - Power Assertions: assertions/assertions.md
     - Files: assertions/files.md
+    - FASTA Files: assertions/fasta.md
     - Regular Expressions: assertions/regular-expressions.md
     - Using Third-Party Libraries: assertions/libraries.md
   - Command line Interface (CLI):

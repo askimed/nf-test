@@ -67,6 +67,26 @@ nextflow_process {
       assert path(process.out.fasta.get(0)).fasta != path("test-data/extensions/fasta/fasta.3.fasta").fasta
     }
 
-  } 
+  }
+  
+  test("Sample seq1 should be in fasta.1") {
+
+    when {
+      process {
+        """
+        input[0] = file("test-data/extensions/fasta/fasta.1.fasta.gz")
+        """
+      }
+    }
+
+    then {
+      def sequences = path(process.out.fasta.get(0)).fasta
+      assert "seq1" in sequences
+      assert !("seq8" in sequences)
+      assert sequences.seq1 == "AGTACGTAGTAGCTGCTGCTACGTGCGCTAGCTAGTACGTCACGACGTAGATGCTAGCTGACTCGATGC"
+    }
+
+  }   
+   
 
 }
