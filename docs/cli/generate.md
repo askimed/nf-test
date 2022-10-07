@@ -14,6 +14,7 @@ nf-test generate <TEST_CASE_TYPE> <NEXTFLOW_FILES>
 
 #### `pipeline`
 
+#### `function`
 
 ## Examples
 
@@ -39,4 +40,11 @@ Create a test case for the whole pipeline:
 
 ```
 nf-test generate pipeline main.nf
+```
+
+
+Create a test case for each functio in file `functions.nf`:
+
+```
+nf-test generate function functions.nf
 ```

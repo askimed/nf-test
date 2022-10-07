@@ -1,6 +1,5 @@
 # Function Testing
-
-nf-test allows to test [functions](https://www.nextflow.io/docs/latest/dsl2.html#function) defined in a Nextflow file or defined in `lib`. Please checkout the [CLI](../cli/generate.md) to generate a function test.
+nf-test allows testing of functions](https://www.nextflow.io/docs/latest/dsl2.html#function) that are defined in a Nextflow file or defined in `lib`. Please checkout the [CLI](../cli/generate.md) to generate a function test.
 
 ## Syntax
 ```Groovy
@@ -150,7 +149,7 @@ nextflow_function {
       assert function.success
       assert function.result == "Hello aaron"
       assert function.stdout.contains("Hello aaron")
-      assert function.stderr == []
+      assert function.stderr.isEmpty()
     }
 
   }
