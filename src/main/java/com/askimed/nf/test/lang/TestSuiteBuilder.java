@@ -56,7 +56,7 @@ public class TestSuiteBuilder {
 
 	}
 
-	static ITestSuite nextflow_function (
+	static ITestSuite nextflow_function(
 			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 
 		final FunctionTestSuite suite = new FunctionTestSuite();
@@ -68,7 +68,7 @@ public class TestSuiteBuilder {
 		return suite;
 
 	}
-	
+
 	public static ITestSuite parse(File script) throws Exception {
 
 		ImportCustomizer customizer = new ImportCustomizer();
@@ -84,9 +84,15 @@ public class TestSuiteBuilder {
 		GroovyShell shell = new GroovyShell(compilerConfiguration);
 
 		Object object = shell.evaluate(script);
-		ITestSuite nextflowDsl = (ITestSuite) object;
+		
+		if (!(object instanceof ITestSuite)) {
+			throw new Exception("Not a vliad TestSuite object.");
+		}
+		
+		ITestSuite testSuite = (ITestSuite) object;
+		testSuite.setFilename(script.getAbsolutePath());
 
-		return nextflowDsl;
+		return testSuite;
 	}
 
 }

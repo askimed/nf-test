@@ -57,6 +57,25 @@ public class AppTest {
 
 	}
 
+	
+	@Test
+	public void testList() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "list", "example/trial1.test","example/trial2.test","example/trial3.test" });
+		assertEquals(0, exitCode);
+
+	}
+	
+	@Test
+	public void testRunWithHash() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "example/trial1.test@d7dd8ca8" });
+		assertEquals(0, exitCode);
+
+	}
+	
 	@Test
 	public void testSyntaxErrorInConfig2() throws Exception {
 

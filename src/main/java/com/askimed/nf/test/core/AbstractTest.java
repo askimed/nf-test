@@ -21,6 +21,8 @@ public abstract class AbstractTest implements ITest {
 
 	public boolean skipped = false;
 
+	private ITestSuite suite;
+
 	public static String[] SHARED_DIRECTORIES = { "bin", "lib" };
 
 	public AbstractTest() {
@@ -106,10 +108,16 @@ public abstract class AbstractTest implements ITest {
 	@Override
 	public String getHash() {
 
+		return hash(suite.getFilename() + getName());
+
+	}
+
+	private String hash(String value) {
+
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("MD5");
-			md.update(getName().getBytes());
+			md.update(value.getBytes());
 			byte[] md5sum = md.digest();
 			BigInteger bigInt = new BigInteger(1, md5sum);
 			return bigInt.toString(16);
@@ -126,6 +134,11 @@ public abstract class AbstractTest implements ITest {
 
 	public boolean isSkipped() {
 		return skipped;
+	}
+
+	@Override
+	public void setTestSuite(ITestSuite suite) {
+		this.suite = suite;
 	}
 
 	protected void shareDirectories(String[] directories, String metaDir) throws IOException {
