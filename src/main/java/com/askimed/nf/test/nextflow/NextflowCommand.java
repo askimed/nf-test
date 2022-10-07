@@ -169,6 +169,7 @@ public class NextflowCommand {
 			nextflow.saveStdErr(err.getAbsolutePath());
 		}
 		if (!silent) {
+			System.out.println();
 			System.out.println("Command: " + nextflow.getExecutedCommand());
 		}
 		return nextflow.execute();

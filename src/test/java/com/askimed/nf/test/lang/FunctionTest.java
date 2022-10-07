@@ -9,14 +9,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.askimed.nf.test.App;
+import com.askimed.nf.test.util.AnsiColors;
+import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
 
 public class FunctionTest {
 
 	static {
 
-		// AnsiColors.disable();
-		// AnsiText.disable();
+		AnsiColors.disable();
+		AnsiText.disable();
 
 	}
 

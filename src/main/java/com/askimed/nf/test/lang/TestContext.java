@@ -74,12 +74,14 @@ public class TestContext {
 		this.baseDir = baseDir;
 		this.outputDir = outputDir;
 
-		if (paramsClosure != null) {
-			paramsClosure.setDelegate(params);
-			paramsClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
-			paramsClosure.call();
-			paramsClosure.getMetaClass().getProperties();
+		if (paramsClosure == null) {
+			return;
 		}
+		paramsClosure.setDelegate(params);
+		paramsClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
+		paramsClosure.call();
+		paramsClosure.getMetaClass().getProperties();
+
 	}
 
 	public void process(Closure<Object> closure) {
@@ -87,14 +89,16 @@ public class TestContext {
 	}
 
 	public void evaluateProcessClosure() {
-		if (processClosure != null) {
-			processClosure.setDelegate(this);
-			processClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
-			Object mapping = processClosure.call();
-			if (mapping != null) {
-				process.setMapping(mapping.toString());
-			}
+		if (processClosure == null) {
+			return;
 		}
+		processClosure.setDelegate(this);
+		processClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
+		Object mapping = processClosure.call();
+		if (mapping != null) {
+			process.setMapping(mapping.toString());
+		}
+
 	}
 
 	public void workflow(Closure<Object> closure) {
@@ -102,14 +106,16 @@ public class TestContext {
 	}
 
 	public void evaluateWorkflowClosure() {
-		if (processClosure != null) {
-			processClosure.setDelegate(this);
-			processClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
-			Object mapping = processClosure.call();
-			if (mapping != null) {
-				workflow.setMapping(mapping.toString());
-			}
+		if (processClosure == null) {
+			return;
 		}
+		processClosure.setDelegate(this);
+		processClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
+		Object mapping = processClosure.call();
+		if (mapping != null) {
+			workflow.setMapping(mapping.toString());
+		}
+
 	}
 
 	public void function(Closure<Object> closure) {
@@ -117,14 +123,16 @@ public class TestContext {
 	}
 
 	public void evaluateFunctionClosure() {
-		if (processClosure != null) {
-			processClosure.setDelegate(this);
-			processClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
-			Object mapping = processClosure.call();
-			if (mapping != null) {
-				process.setMapping(mapping.toString());
-			}
+		if (processClosure == null) {
+			return;
 		}
+		processClosure.setDelegate(this);
+		processClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
+		Object mapping = processClosure.call();
+		if (mapping != null) {
+			process.setMapping(mapping.toString());
+		}
+
 	}
 
 }

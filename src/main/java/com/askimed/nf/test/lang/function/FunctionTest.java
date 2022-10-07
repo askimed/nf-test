@@ -119,10 +119,6 @@ public class FunctionTest extends AbstractTest {
 
 		context.getParams().put("nf_test_output", metaDir.getAbsolutePath());
 
-		if (debug) {
-			System.out.println();
-		}
-
 		File traceFile = new File(metaDir, "trace.csv");
 		File outFile = new File(metaDir, "std.out");
 		File errFile = new File(metaDir, "std.err");
@@ -143,7 +139,7 @@ public class FunctionTest extends AbstractTest {
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
 		nextflow.setParamsFile(paramsFile);
-		
+
 		int exitCode = nextflow.execute();
 
 		// Parse json output

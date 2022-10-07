@@ -19,7 +19,7 @@ nextflow_function {
       assert function.success
       assert function.result == "Hello aaron"
       assert function.stdout.contains("Hello aaron") 
-      assert function.stderr == []
+      assert function.stderr.isEmpty()
     }
 
   }
