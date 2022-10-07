@@ -38,6 +38,7 @@ nav:
     - init: cli/init.md
     - generate: cli/generate.md
     - test: cli/test.md
+    - clean: cli/clean.md
   - Configuration: configuration.md
   - Available Pipelines: nftest_pipelines.md
   - About: about.md

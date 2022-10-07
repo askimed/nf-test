@@ -1,7 +1,6 @@
 package com.askimed.nf.test.core;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
@@ -109,16 +108,8 @@ public class TestExecutionEngine {
 
 		listener.setDebug(debug);
 
-		// cleanup
-
-		try {
-			FileUtil.deleteDirectory(workDir.getAbsoluteFile());
-			FileUtil.createDirectory(workDir);
-		} catch (Exception e) {
-			throw new IOException("Working Directory '" + workDir.getAbsolutePath() + "' could not be deleted:\n" + e);
-		}
-
 		listener.testPlanExecutionStarted();
+
 		boolean failed = false;
 		for (ITestSuite testSuite : testSuits) {
 
