@@ -12,9 +12,9 @@ import com.askimed.nf.test.util.FileUtil;
 import groovy.lang.Writable;
 import groovy.text.SimpleTemplateEngine;
 
-public class WorkflowTestGenerator implements ITestGenerator {
+public class FunctionTestGenerator implements ITestGenerator {
 
-	public static final String TEMPLATE = "WorkflowTestTemplate.nf.test";
+	public static final String TEMPLATE = "FunctionTestTemplate.nf.test";
 
 	public int generate(File source, File target) throws Exception {
 
@@ -23,15 +23,11 @@ public class WorkflowTestGenerator implements ITestGenerator {
 		NextflowScript script = new NextflowScript(source);
 		script.load();
 
-		if (script.getWorkflows().isEmpty()) {
-			System.out.println(AnsiColors.yellow("Skipped. No workflow definition found."));
+		if (script.getFunctions().isEmpty()) {
+			System.out.println(AnsiColors.yellow("Skipped. No function definition found."));
 			return 0;
-		}
-
-		if (script.getWorkflows().size() > 1) {
-			System.out.println(AnsiColors
-					.yellow("Skipped. More then one named workflow definition found. Please create one file per workflow."));
-			return 0;
+		} else {
+			System.out.println("Found " + script.getFunctions().size() + " functions: " + script.getFunctions());
 		}
 
 		if (target.exists()) {
@@ -43,9 +39,9 @@ public class WorkflowTestGenerator implements ITestGenerator {
 		Map<Object, Object> binding = new HashMap<Object, Object>();
 		binding.put("name", source.getName());
 		binding.put("script", source.getPath());
-		binding.put("workflow", script.getWorkflows().get(0));
+		binding.put("functions", script.getFunctions());
 
-		URL templateUrl = WorkflowTestGenerator.class.getResource(TEMPLATE);
+		URL templateUrl = FunctionTestGenerator.class.getResource(TEMPLATE);
 		SimpleTemplateEngine engine = new SimpleTemplateEngine();
 		Writable template = engine.createTemplate(templateUrl).make(binding);
 
@@ -54,10 +50,10 @@ public class WorkflowTestGenerator implements ITestGenerator {
 
 		FileUtil.write(target, template);
 
-		System.out.println(AnsiColors.green("Wrote workflow test file '" + target.getAbsolutePath() + ""));
+		System.out.println(AnsiColors.green("Wrote function test file '" + target.getAbsolutePath() + ""));
 
 		return 1;
-		
+
 	}
 
 }

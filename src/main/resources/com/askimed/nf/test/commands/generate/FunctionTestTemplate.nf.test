@@ -1,0 +1,31 @@
+
+nextflow_function {
+
+    name "Test Functions"
+    script "${script}"
+
+	<% for (function in functions) { %>
+
+    test("Test Function ${function}") {
+
+        function "${function}"
+
+        when {
+            function {
+                """
+                // define inputs of the function here. Example:
+                // input[0] = 1
+                """
+            }
+        }
+
+        then {
+            assert function.success
+            assert function.result != null
+        }
+
+    }
+
+	<% } %>
+
+}

@@ -4,6 +4,6 @@ import java.io.File;
 
 public interface ITestGenerator {
 
-	public boolean generate(File source, File target) throws Exception;
+	public int generate(File source, File target) throws Exception;
 
 }

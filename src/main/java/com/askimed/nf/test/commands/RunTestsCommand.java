@@ -127,6 +127,11 @@ public class RunTestsCommand implements Callable<Integer> {
 
 	}
 
+	public static boolean isSupportedFile(Path path) {
+		return path.getFileName().toString().endsWith(".nf.test")
+				|| path.getFileName().toString().endsWith(".groovy.test");
+	}
+
 	public static List<File> findTests(File folder) throws Exception {
 
 		final List<File> scripts = new Vector<File>();
@@ -139,7 +144,7 @@ public class RunTestsCommand implements Callable<Integer> {
 
 			@Override
 			public void accept(Path path) {
-				if (Files.isRegularFile(path) && path.getFileName().toString().endsWith(".nf.test")) {
+				if (Files.isRegularFile(path) && isSupportedFile(path)) {
 					scripts.add(path.toFile());
 				}
 			}
