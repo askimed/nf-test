@@ -25,9 +25,6 @@ public class TapTestReportWriter extends AbstractTestReportWriter {
 	private String filename;
 
 	public TapTestReportWriter(String filename) throws IOException {
-		if (!Files.isWritable(Paths.get(filename))) {
-			throw new IOException("File '" + filename + "' is not writable.");
-		}
 		this.filename = filename;
 	}
 
