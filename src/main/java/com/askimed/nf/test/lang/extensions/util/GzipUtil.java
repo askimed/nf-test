@@ -13,32 +13,51 @@ import java.util.zip.GZIPInputStream;
 public class GzipUtil {
 
 	public static List<String> readLines(Path path) throws FileNotFoundException, IOException {
-		List<String> lines = new Vector<String>();
-		GZIPInputStream gzip = new GZIPInputStream(new FileInputStream(path.toFile()));
-		BufferedReader br = new BufferedReader(new InputStreamReader(gzip));
-		String line = null;
-		while ((line = br.readLine()) != null) {
-			lines.add(line);
+
+		GZIPInputStream gzip = null;
+
+		try {
+
+			gzip = new GZIPInputStream(new FileInputStream(path.toFile()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(gzip));
+
+			List<String> lines = new Vector<String>();
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				lines.add(line);
+			}
+			return lines;
+
+		} finally {
+			gzip.close();
 		}
-		gzip.close();
-		return lines;
+
 	}
 
 	public static String readText(Path path) throws FileNotFoundException, IOException {
-		GZIPInputStream gzip = new GZIPInputStream(new FileInputStream(path.toFile()));
-		BufferedReader br = new BufferedReader(new InputStreamReader(gzip));
-		String line = null;
-		StringBuilder text = new StringBuilder();
-		int i = 0;
-		while ((line = br.readLine()) != null) {
-			if (i > 0) {
-				text.append("\n");
-			}
-			text.append(line);
-			i++;
-		}
-		gzip.close();
 
-		return text.toString();
+		GZIPInputStream gzip = null;
+
+		try {
+
+			gzip = new GZIPInputStream(new FileInputStream(path.toFile()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(gzip));
+			String line = null;
+			StringBuilder text = new StringBuilder();
+			int i = 0;
+			while ((line = br.readLine()) != null) {
+				if (i > 0) {
+					text.append("\n");
+				}
+				text.append(line);
+				i++;
+			}
+			return text.toString();
+
+		} finally {
+			gzip.close();
+		}
+
 	}
+
 }
