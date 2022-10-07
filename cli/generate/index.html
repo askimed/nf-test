@@ -296,6 +296,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../testcases/nextflow_workflow/" class="md-nav__link">
+        Workflow Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../testcases/nextflow_process/" class="md-nav__link">
         Process Testing
       </a>
@@ -310,8 +324,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../testcases/nextflow_workflow/" class="md-nav__link">
-        Workflow Testing
+      <a href="../../testcases/nextflow_function/" class="md-nav__link">
+        Function Testing
       </a>
     </li>
   
@@ -548,6 +562,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#function" class="md-nav__link">
+    function
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -702,6 +723,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#function" class="md-nav__link">
+    function
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -747,6 +775,7 @@
 <h4 id="process"><code>process</code></h4>
 <h4 id="workflow"><code>workflow</code></h4>
 <h4 id="pipeline"><code>pipeline</code></h4>
+<h4 id="function"><code>function</code></h4>
 <h2 id="examples">Examples</h2>
 <p>Create a test case for a process:</p>
 <div class="highlight"><pre><span></span><code>nf-test generate process modules/local/salmon_index.nf
@@ -759,6 +788,9 @@
 </code></pre></div>
 <p>Create a test case for the whole pipeline:</p>
 <div class="highlight"><pre><span></span><code>nf-test generate pipeline main.nf
+</code></pre></div>
+<p>Create a test case for each functio in file <code>functions.nf</code>:</p>
+<div class="highlight"><pre><span></span><code>nf-test generate function functions.nf
 </code></pre></div>
 
 

@@ -13,7 +13,7 @@
     
     
       
-        <title>Process Testing - nf-test</title>
+        <title>Function Testing - nf-test</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#process-testing" class="md-skip">
+        <a href="#function-testing" class="md-skip">
           Skip to content
         </a>
       
@@ -101,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Process Testing
+              Function Testing
             
           </span>
         </div>
@@ -310,6 +310,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../nextflow_process/" class="md-nav__link">
+        Process Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -322,12 +336,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Process Testing
+          Function Testing
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Process Testing
+        Function Testing
       </a>
       
         
@@ -350,25 +364,72 @@
     Syntax
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#assertions" class="md-nav__link">
-    Assertions
-  </a>
-  
-    <nav class="md-nav" aria-label="Assertions">
+    <nav class="md-nav" aria-label="Syntax">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#output-channels" class="md-nav__link">
-    Output Channels
+  <a href="#multiple-functions" class="md-nav__link">
+    Multiple Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Multiple Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functionsnf" class="md-nav__link">
+    functions.nf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functionsnftest" class="md-nav__link">
+    functions.nf.test
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions-in-lib-folder" class="md-nav__link">
+    Functions in lib folder
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions in lib folder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#libutilsgroovy" class="md-nav__link">
+    lib\Utils.groovy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testslibutilsgroovytest" class="md-nav__link">
+    tests\lib\Utils.groovy.test
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assertions" class="md-nav__link">
+    Assertions
+  </a>
   
 </li>
       
@@ -410,20 +471,6 @@
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../nextflow_function/" class="md-nav__link">
-        Function Testing
-      </a>
     </li>
   
 
@@ -691,25 +738,72 @@
     Syntax
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#assertions" class="md-nav__link">
-    Assertions
-  </a>
-  
-    <nav class="md-nav" aria-label="Assertions">
+    <nav class="md-nav" aria-label="Syntax">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#output-channels" class="md-nav__link">
-    Output Channels
+  <a href="#multiple-functions" class="md-nav__link">
+    Multiple Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Multiple Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functionsnf" class="md-nav__link">
+    functions.nf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functionsnftest" class="md-nav__link">
+    functions.nf.test
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions-in-lib-folder" class="md-nav__link">
+    Functions in lib folder
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions in lib folder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#libutilsgroovy" class="md-nav__link">
+    lib\Utils.groovy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testslibutilsgroovytest" class="md-nav__link">
+    tests\lib\Utils.groovy.test
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assertions" class="md-nav__link">
+    Assertions
+  </a>
   
 </li>
       
@@ -761,112 +855,157 @@
                 
                   
 
-  <a href="https://github.com/askimed/nf-test/edit/master/docs/testcases/nextflow_process.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/askimed/nf-test/edit/master/docs/testcases/nextflow_function.md" title="Edit this page" class="md-content__button md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
-<h1 id="process-testing">Process Testing</h1>
-<p>nf-test allows to test each process defined in a module file. Please checkout the <a href="../../cli/generate/">CLI</a> to generate a process test.</p>
+<h1 id="function-testing">Function Testing</h1>
+<p>nf-test allows testing of functions](https://www.nextflow.io/docs/latest/dsl2.html#function) that are defined in a Nextflow file or defined in <code>lib</code>. Please checkout the <a href="../../cli/generate/">CLI</a> to generate a function test.</p>
 <h2 id="syntax">Syntax</h2>
-<div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">nextflow_function</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;&lt;NAME&gt;&quot;</span><span class="w"></span>
 <span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;&lt;PATH/TO/NEXTFLOW_SCRIPT.nf&gt;&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;&lt;PROCESS_NAME&gt;&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;&lt;FUNCTION_NAME&gt;&quot;</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;&lt;TEST_NAME&gt;&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 
 <span class="w">    </span><span class="o">}</span><span class="w"></span>
 <span class="o">}</span><span class="w"></span>
 </code></pre></div>
-<h2 id="assertions">Assertions</h2>
-<p>The <code>process</code> object can be used in asserts to check its status or error messages.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// process status</span><span class="w"></span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">success</span><span class="w"></span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">failed</span><span class="w"></span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">exitStatus</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<h3 id="multiple-functions">Multiple Functions</h3>
+<p>If a Nextflow script contains multiple functions and you want to test them all in the same testsuite, you can override the <code>function</code> property in each test. For example:</p>
+<h4 id="functionsnf"><code>functions.nf</code></h4>
+<div class="highlight"><pre><span></span><code><span class="kt">def</span><span class="w"> </span><span class="nf">function1</span><span class="o">()</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">  </span><span class="o">...</span><span class="w"></span>
+<span class="o">}</span><span class="w"></span>
 
-<span class="c1">// Analyze Nextflow trace file</span><span class="w"></span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-
-<span class="c1">// process error message</span><span class="w"></span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">errorReport</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;....&quot;</span><span class="o">)</span><span class="w"></span>
-
-<span class="c1">//returns a list containing all lines from stdout</span><span class="w"></span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Hello World&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
-</code></pre></div>
-<h3 id="output-channels">Output Channels</h3>
-<p>The <code>process.out</code> object provides access to the content of all named output Channels (see Nextflow <code>emit</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// channel exists</span><span class="w"></span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"></span>
-
-<span class="c1">// channel contains 3 elements</span><span class="w"></span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="o">.</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
-
-<span class="c1">// first element is &quot;hello&quot;</span><span class="w"></span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"></span>
-</code></pre></div>
-<h2 id="example">Example</h2>
-<h3 id="nextflow-script">Nextflow script</h3>
-<p>Create a new file and name it <code>say_hello.nf</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#!/usr/bin/env nextflow</span><span class="w"></span>
-<span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span><span class="w"></span>
-
-<span class="n">process</span><span class="w"> </span><span class="n">SAY_HELLO</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">    </span><span class="nl">input:</span><span class="w"></span>
-<span class="w">        </span><span class="n">val</span><span class="w"> </span><span class="n">cheers</span><span class="w"></span>
-
-<span class="w">    </span><span class="nl">output:</span><span class="w"></span>
-<span class="w">        </span><span class="n">stdout</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">verbiage_ch</span><span class="w"></span>
-<span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="s1">&#39;*.txt&#39;</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">verbiage_ch2</span><span class="w"></span>
-
-<span class="w">    </span><span class="nl">script:</span><span class="w"></span>
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    echo -n $cheers</span>
-<span class="s2">    echo -n $cheers &gt; ${cheers}.txt</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="w"></span>
+<span class="kt">def</span><span class="w"> </span><span class="nf">function2</span><span class="o">()</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">  </span><span class="o">...</span><span class="w"></span>
 <span class="o">}</span><span class="w"></span>
 </code></pre></div>
-<h3 id="nf-test-script">nf-test script</h3>
-<p>Create a new file and name it <code>say_hello.nf.test</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<h4 id="functionsnftest"><code>functions.nf.test</code></h4>
+<div class="highlight"><pre><span></span><code><span class="n">nextflow_function</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Process SAY_HELLO&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;say_hello.nf&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;SAY_HELLO&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test functions&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;functions.nf&quot;</span><span class="w"></span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run without failures&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Test function1&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;function1&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="o">...</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
 
-<span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                input[0] = Channel.from(&#39;hello&#39;,&#39;nf-test&#39;)</span>
-<span class="s2">                &quot;&quot;&quot;</span><span class="w"></span>
-<span class="w">            </span><span class="o">}</span><span class="w"></span>
-<span class="w">        </span><span class="o">}</span><span class="w"></span>
-
-<span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-
-<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">success</span><span class="w"></span>
-<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-
-<span class="w">            </span><span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">trial_out_ch</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;4a17df7a54b41a84df492da3f1bab1e3&quot;</span><span class="w"></span>
-<span class="w">            </span><span class="o">}</span><span class="w"></span>
-
-<span class="w">        </span><span class="o">}</span><span class="w"></span>
-
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Test function2&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;function2&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="o">...</span><span class="w"></span>
 <span class="w">    </span><span class="o">}</span><span class="w"></span>
 <span class="o">}</span><span class="w"></span>
 </code></pre></div>
+<h3 id="functions-in-lib-folder">Functions in <code>lib</code> folder</h3>
+<p>If you want to test a function that is inside a groovy file in your <code>lib</code> folder, you can ignore the <code>script</code> property, because Nextflow adds them automatically to the classpath. For example:</p>
+<h4 id="libutilsgroovy"><code>lib\Utils.groovy</code></h4>
+<div class="highlight"><pre><span></span><code>class Utils {
+
+    public static void sayHello(name) {
+        if (name == null) {
+            error(&#39;Cannot greet a null person&#39;)
+        }
+
+        def greeting = &quot;Hello ${name}&quot;
+
+        println(greeting)
+    }
+
+}
+</code></pre></div>
+<h4 id="testslibutilsgroovytest"><code>tests\lib\Utils.groovy.test</code></h4>
+<div class="highlight"><pre><span></span><code><span class="n">nextflow_function</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Utils.groovy&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Test function1&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;Utils.sayHello&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="o">...</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+<span class="o">}</span><span class="w"></span>
+</code></pre></div>
+<p>Note: the <code>generate function</code> command works only with Nextflow functions.</p>
+<h2 id="assertions">Assertions</h2>
+<p>The <code>function</code> object can be used in asserts to check its status, result value or error messages.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// function status</span><span class="w"></span>
+<span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">success</span><span class="w"></span>
+<span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">failed</span><span class="w"></span>
+
+<span class="c1">// return value</span><span class="w"></span>
+<span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">result</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">27</span><span class="w"></span>
+
+<span class="c1">//returns a list containing all lines from stdout</span><span class="w"></span>
+<span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Hello World&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+</code></pre></div>
+<h2 id="example">Example</h2>
+<h3 id="nextflow-script">Nextflow script</h3>
+<p>Create a new file and name it <code>functions.nf</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">def</span><span class="w"> </span><span class="nf">say_hello</span><span class="o">(</span><span class="n">name</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">(</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">error</span><span class="o">(</span><span class="s1">&#39;Cannot greet a null person&#39;</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="n">greeting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello ${name}&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">println</span><span class="o">(</span><span class="n">greeting</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">greeting</span><span class="w"></span>
+<span class="o">}</span><span class="w"></span>
+</code></pre></div>
+<h3 id="nf-test-script">nf-test script</h3>
+<p>Create a new file and name it <code>functions.nf.test</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">nextflow_function</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Function Say Hello&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;functions.nf&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;say_hello&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Passing case&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">when</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        input[0] = &quot;aaron&quot;</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="o">}</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">then</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">success</span><span class="w"></span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">result</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;Hello aaron&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Hello aaron&quot;</span><span class="o">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">stderr</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="o">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Failure Case&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">when</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        input[0] = null</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="o">}</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">then</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">failed</span><span class="w"></span>
+<span class="w">      </span><span class="c1">//It seems to me that error(..) writes message to stdout</span><span class="w"></span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Cannot greet a null person&quot;</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+<span class="w">  </span><span class="o">}</span><span class="w"></span>
+<span class="o">}</span><span class="w"></span>
+</code></pre></div>
 <h3 id="execute-test">Execute test</h3>
-<div class="highlight"><pre><span></span><code>nf-test init
-nf-test test say_hello.nf.test
+<div class="highlight"><pre><span></span><code>nf-test test functions.nf.test
 </code></pre></div>
 
 
@@ -888,7 +1027,7 @@ nf-test test say_hello.nf.test
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../nextflow_workflow/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Workflow Testing" rel="prev">
+        <a href="../nextflow_process/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Process Testing" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -897,20 +1036,20 @@ nf-test test say_hello.nf.test
               <span class="md-footer__direction">
                 Previous
               </span>
-              Workflow Testing
+              Process Testing
             </div>
           </div>
         </a>
       
       
         
-        <a href="../nextflow_function/" class="md-footer__link md-footer__link--next" aria-label="Next: Function Testing" rel="next">
+        <a href="../global_variables/" class="md-footer__link md-footer__link--next" aria-label="Next: Global Variables" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Function Testing
+              Global Variables
             </div>
           </div>
           <div class="md-footer__button md-icon">
