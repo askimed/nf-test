@@ -173,11 +173,7 @@ public class TestExecutionEngine {
 
 		listener.testPlanExecutionFinished();
 
-		if (failed) {
-			return 1;
-		} else {
-			return 0;
-		}
+		return (failed) ? 1 : 0;
 
 	}
 

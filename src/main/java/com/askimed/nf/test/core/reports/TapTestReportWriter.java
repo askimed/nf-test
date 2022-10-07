@@ -2,6 +2,9 @@
 package com.askimed.nf.test.core.reports;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +24,10 @@ public class TapTestReportWriter extends AbstractTestReportWriter {
 
 	private String filename;
 
-	public TapTestReportWriter(String filename) {
+	public TapTestReportWriter(String filename) throws IOException {
+		if (!Files.isWritable(Paths.get(filename))) {
+			throw new IOException("File '" + filename + "' is not writable.");
+		}
 		this.filename = filename;
 	}
 
