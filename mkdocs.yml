@@ -25,8 +25,9 @@ nav:
   - Getting Started: getting-started.md
   - Writing Tests:
     - Pipeline Testing: testcases/nextflow_pipeline.md
-    - Process Testing: testcases/nextflow_process.md
     - Workflow Testing: testcases/nextflow_workflow.md
+    - Process Testing: testcases/nextflow_process.md
+    - Function Testing: testcases/nextflow_function.md
     - Global Variables: testcases/global_variables.md
   - Writing Assertions:
     - Power Assertions: assertions/assertions.md

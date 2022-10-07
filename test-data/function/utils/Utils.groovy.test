@@ -1,0 +1,27 @@
+nextflow_function {
+
+  name "Test Function from a groovy file in lib folder"
+
+  test("Passing case") {
+
+   function "Utils.sayHello"
+
+    when {
+      function {
+        """
+        input[0] = "aaron"
+        """
+      }
+    }
+
+    then {
+      assert function.success
+      assert function.result == null
+      assert function.stdout.contains("Hello aaron") 
+      assert function.stderr == []
+    }
+
+  }
+
+ 
+}

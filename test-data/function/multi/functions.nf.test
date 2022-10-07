@@ -1,0 +1,49 @@
+nextflow_function {
+
+  name "Test Function Say Hello"
+
+  script "test-data/function/multi/functions.nf"
+
+  test("Test say hello") {
+
+    function "say_hello"
+
+    when {
+      function {
+        """
+        input[0] = "aaron"
+        """
+      }
+    }
+
+    then {
+      assert function.success
+      assert function.result == "Hello aaron"
+      assert function.stdout.contains("Hello aaron") 
+      assert function.stderr == []
+    }
+
+  }
+ 
+   test("Test say bye bye") {
+
+    function "say_bye_bye"
+
+    when {
+      function {
+        """
+        input[0] = "lukas"
+        """
+      }
+    }
+
+    then {
+      assert function.success
+      assert function.result == "Bye Bye lukas"
+      assert function.stdout.contains("Bye Bye lukas") 
+      assert function.stderr == []
+    }
+
+  }
+  
+}

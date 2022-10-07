@@ -6,6 +6,7 @@ import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
 import com.askimed.nf.test.core.ITestSuite;
+import com.askimed.nf.test.lang.function.FunctionTestSuite;
 import com.askimed.nf.test.lang.pipeline.PipelineTestSuite;
 import com.askimed.nf.test.lang.process.ProcessTestSuite;
 import com.askimed.nf.test.lang.workflow.WorkflowTestSuite;
@@ -55,12 +56,26 @@ public class TestSuiteBuilder {
 
 	}
 
+	static ITestSuite nextflow_function (
+			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+
+		final FunctionTestSuite suite = new FunctionTestSuite();
+
+		closure.setDelegate(suite);
+		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
+		closure.call();
+
+		return suite;
+
+	}
+	
 	public static ITestSuite parse(File script) throws Exception {
 
 		ImportCustomizer customizer = new ImportCustomizer();
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_pipeline");
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_workflow");
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_process");
+		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_function");
 		customizer.addStaticStars("com.askimed.nf.test.util.FileAndPathMethods");
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();

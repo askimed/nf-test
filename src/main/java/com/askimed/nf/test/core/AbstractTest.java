@@ -7,7 +7,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import com.askimed.nf.test.config.Config;
-import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.FileUtil;
 
 public abstract class AbstractTest implements ITest {
@@ -21,6 +20,8 @@ public abstract class AbstractTest implements ITest {
 	public String baseDir = System.getProperty("user.dir");
 
 	public boolean skipped = false;
+
+	public static String[] SHARED_DIRECTORIES = { "bin", "lib" };
 
 	public AbstractTest() {
 
@@ -50,6 +51,14 @@ public abstract class AbstractTest implements ITest {
 			FileUtil.createDirectory(this.metaDir);
 		} catch (Exception e) {
 			throw new IOException("Meta Directory '" + metaDir + "' could not be deleted:\n" + e);
+		}
+
+		try {
+			// copy bin and lib to metaDir. TODO: use symlinks and read additional "mapping"
+			// from config file
+			shareDirectories(SHARED_DIRECTORIES, metaDir);
+		} catch (Exception e) {
+			throw new IOException("Directories could not be shared:\n" + e);
 		}
 
 		String outputDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "output");
@@ -117,6 +126,16 @@ public abstract class AbstractTest implements ITest {
 
 	public boolean isSkipped() {
 		return skipped;
+	}
+
+	protected void shareDirectories(String[] directories, String metaDir) throws IOException {
+		for (String directory : directories) {
+			File localDirectory = new File(directory);
+			if (localDirectory.exists()) {
+				String metaDirectory = FileUtil.path(metaDir, directory);
+				FileUtil.copyDirectory(localDirectory.getAbsolutePath(), metaDirectory);
+			}
+		}
 	}
 
 }

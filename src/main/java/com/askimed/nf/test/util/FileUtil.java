@@ -7,6 +7,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import groovy.lang.Writable;
 
@@ -89,6 +93,15 @@ public class FileUtil {
 
 	public static String makeRelative(File baseDir, File absoluteFile) {
 		return baseDir.toURI().relativize(absoluteFile.toURI()).getPath();
+	}
+
+	public static void copyDirectory(String sourceDirectory, String destinationDirectory) throws IOException {
+		Path path = Paths.get(sourceDirectory);
+		List<Path> files = Files.walk(path).collect(Collectors.toList());
+		for (Path source : files) {
+			Path destination = Paths.get(destinationDirectory, source.toString().substring(sourceDirectory.length()));
+			Files.copy(source, destination);
+		}
 	}
 
 }
