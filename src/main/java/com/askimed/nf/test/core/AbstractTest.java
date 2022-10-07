@@ -49,13 +49,16 @@ public abstract class AbstractTest implements ITest {
 			this.metaDir = new File(metaDir);
 			FileUtil.deleteDirectory(this.metaDir);
 			FileUtil.createDirectory(this.metaDir);
+		} catch (Exception e) {
+			throw new IOException("Meta Directory '" + metaDir + "' could not be deleted:\n" + e);
+		}
 
+		try {
 			// copy bin and lib to metaDir. TODO: use symlinks and read additional "mapping"
 			// from config file
 			shareDirectories(SHARED_DIRECTORIES, metaDir);
-
 		} catch (Exception e) {
-			throw new IOException("Meta Directory '" + metaDir + "' could not be deleted:\n" + e);
+			throw new IOException("Directories could not be shared:\n" + e);
 		}
 
 		String outputDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "output");

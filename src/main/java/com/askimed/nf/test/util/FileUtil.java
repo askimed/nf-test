@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import groovy.lang.Writable;
 
@@ -93,17 +95,13 @@ public class FileUtil {
 		return baseDir.toURI().relativize(absoluteFile.toURI()).getPath();
 	}
 
-	public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation) throws IOException {
-		Files.walk(Paths.get(sourceDirectoryLocation))
-	      .forEach(source -> {
-	          Path destination = Paths.get(destinationDirectoryLocation, source.toString()
-	            .substring(sourceDirectoryLocation.length()));
-	          try {
-	              Files.copy(source, destination);
-	          } catch (IOException e) {
-	              e.printStackTrace();
-	          }
-	      });		
+	public static void copyDirectory(String sourceDirectory, String destinationDirectory) throws IOException {
+		Path path = Paths.get(sourceDirectory);
+		List<Path> files = Files.walk(path).collect(Collectors.toList());
+		for (Path source : files) {
+			Path destination = Paths.get(destinationDirectory, source.toString().substring(sourceDirectory.length()));
+			Files.copy(source, destination);
+		}
 	}
 
 }
