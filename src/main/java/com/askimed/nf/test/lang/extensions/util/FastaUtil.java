@@ -12,48 +12,59 @@ import java.util.Map;
 
 import com.askimed.nf.test.util.FileUtil;
 
-
 public class FastaUtil {
 
 	public static Map<String, String> readAsMap(Path path) throws IOException {
 
-		Map<String, String> fasta = new HashMap<String, String>();
-		
-		String sample = null;
+		BufferedReader br = null;
+		try {
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(openTxtOrGzipStream(path)));
+			br = new BufferedReader(new InputStreamReader(openTxtOrGzipStream(path)));
+			return parse(br);
+
+		} finally {
+			br.close();
+		}
+
+	}
+
+	private static Map<String, String> parse(BufferedReader br) throws IOException {
+
+		Map<String, String> fasta = new HashMap<String, String>();
+		String sample = null;
 		String line = null;
 		while ((line = br.readLine()) != null) {
-			
+
 			String trimmedLine = line.trim();
-			
-			//ignore comments
+
+			// ignore comments
 			if (trimmedLine.isEmpty() || trimmedLine.startsWith(";")) {
 				continue;
 			}
-			
+
 			if (trimmedLine.startsWith(">")) {
 				sample = trimmedLine.substring(1).trim();
+				if (fasta.containsKey(sample)) {
+					throw new IOException("Duplicate sample " + sample + " detected.");
+				}
 				fasta.put(sample, "");
 			} else {
-				if (sample == null ) {
+				if (sample == null) {
 					throw new IOException("Fasta file is malformed. Starts with sequence.");
 				}
 				String sequence = fasta.get(sample);
 				fasta.put(sample, sequence + trimmedLine);
 			}
 		}
-		br.close();
-		
+
 		return fasta;
+
 	}
-	
-	
+
 	private static DataInputStream openTxtOrGzipStream(Path path) throws IOException {
 		FileInputStream inputStream = new FileInputStream(path.toFile());
 		InputStream in2 = FileUtil.decompressStream(inputStream);
 		return new DataInputStream(in2);
 	}
-
 
 }
