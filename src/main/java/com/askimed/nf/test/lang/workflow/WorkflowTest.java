@@ -11,6 +11,7 @@ import org.codehaus.groovy.control.CompilationFailedException;
 import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.lang.TestContext;
+import com.askimed.nf.test.lang.pipeline.PipelineTest;
 import com.askimed.nf.test.nextflow.NextflowCommand;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
@@ -84,6 +85,11 @@ public class WorkflowTest extends AbstractTest {
 
 	public void when(@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		when = new TestCode(closure);
+	}
+	
+	public void expect(
+			@DelegatesTo(value = PipelineTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		then = new TestCode(closure);
 	}
 
 	public void debug(boolean debug) {
