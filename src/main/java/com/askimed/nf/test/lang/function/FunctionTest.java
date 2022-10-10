@@ -108,7 +108,9 @@ public class FunctionTest extends AbstractTest {
 			setup.execute(context);
 		}
 
-		when.execute(context);
+		if (when != null) {		
+			when.execute(context);
+		}
 
 		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
 		context.evaluateFunctionClosure();
