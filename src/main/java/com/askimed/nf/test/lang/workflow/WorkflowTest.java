@@ -38,6 +38,8 @@ public class WorkflowTest extends AbstractTest {
 
 	private TestCode then;
 
+	private String workflow = null;
+
 	private WorkflowTestSuite parent;
 
 	private TestContext context;
@@ -56,6 +58,14 @@ public class WorkflowTest extends AbstractTest {
 
 	public String getName() {
 		return name;
+	}
+
+	public void workflow(String workflow) {
+		this.workflow = workflow;
+	}
+
+	public String getWorkflow() {
+		return workflow;
 	}
 
 	public void setup(
@@ -150,7 +160,7 @@ public class WorkflowTest extends AbstractTest {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.getWorkflow().getOut().view();
 		}
-		
+
 		then.execute(context);
 
 	}
@@ -169,8 +179,10 @@ public class WorkflowTest extends AbstractTest {
 			script = new File(script).getAbsolutePath();
 		}
 
+		String name = workflow != null ? workflow : parent.getWorkflow();
+
 		Map<Object, Object> binding = new HashMap<Object, Object>();
-		binding.put("workflow", parent.getWorkflow());
+		binding.put("workflow", name);
 		binding.put("script", script);
 
 		// Get body of when closure
