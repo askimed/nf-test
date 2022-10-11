@@ -108,6 +108,7 @@ public class FunctionTest extends AbstractTest {
 			setup.execute(context);
 		}
 
+
 		if (when != null) {
 			when.execute(context);
 		}

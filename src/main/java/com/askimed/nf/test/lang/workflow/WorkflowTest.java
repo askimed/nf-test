@@ -11,6 +11,7 @@ import org.codehaus.groovy.control.CompilationFailedException;
 import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.lang.TestContext;
+import com.askimed.nf.test.lang.pipeline.PipelineTest;
 import com.askimed.nf.test.nextflow.NextflowCommand;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
@@ -38,6 +39,8 @@ public class WorkflowTest extends AbstractTest {
 
 	private TestCode then;
 
+	private String workflow = null;
+
 	private WorkflowTestSuite parent;
 
 	private TestContext context;
@@ -58,6 +61,14 @@ public class WorkflowTest extends AbstractTest {
 		return name;
 	}
 
+	public void workflow(String workflow) {
+		this.workflow = workflow;
+	}
+
+	public String getWorkflow() {
+		return workflow;
+	}
+
 	public void setup(
 			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		setup = new TestCode(closure);
@@ -74,6 +85,11 @@ public class WorkflowTest extends AbstractTest {
 
 	public void when(@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		when = new TestCode(closure);
+	}
+	
+	public void expect(
+			@DelegatesTo(value = PipelineTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		then = new TestCode(closure);
 	}
 
 	public void debug(boolean debug) {
@@ -102,7 +118,9 @@ public class WorkflowTest extends AbstractTest {
 			setup.execute(context);
 		}
 
-		when.execute(context);
+		if (when != null) {
+			when.execute(context);
+		}
 
 		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
 		context.evaluateWorkflowClosure();
@@ -150,7 +168,7 @@ public class WorkflowTest extends AbstractTest {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.getWorkflow().getOut().view();
 		}
-		
+
 		then.execute(context);
 
 	}
@@ -169,8 +187,10 @@ public class WorkflowTest extends AbstractTest {
 			script = new File(script).getAbsolutePath();
 		}
 
+		String name = workflow != null ? workflow : parent.getWorkflow();
+
 		Map<Object, Object> binding = new HashMap<Object, Object>();
-		binding.put("workflow", parent.getWorkflow());
+		binding.put("workflow", name);
 		binding.put("script", script);
 
 		// Get body of when closure

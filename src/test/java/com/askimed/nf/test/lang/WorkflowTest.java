@@ -19,13 +19,13 @@ public class WorkflowTest {
 		// AnsiText.disable();
 
 	}
-	
+
 	@BeforeAll
-	public static void setUp() throws IOException {	
+	public static void setUp() throws IOException {
 		FileUtil.deleteDirectory(new File(".nf-test"));
 		new File("nf-test.config").delete();
 	}
-	
+
 	@Test
 	public void testWorkflowSucces() throws Exception {
 
@@ -40,6 +40,15 @@ public class WorkflowTest {
 
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/workflow/no-outputs/trial.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+
+	@Test
+	public void testOverrideWorkflow() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/multi/trial.nf.test" });
 		assertEquals(0, exitCode);
 
 	}
