@@ -10,7 +10,9 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	private String profile = null;
 
-	private File config = null;
+	private File globalConfig = null;
+
+	private File localConfig = null;
 
 	private List<ITest> tests = new Vector<ITest>();
 
@@ -22,6 +24,10 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	public void profile(String profile) {
 		this.profile = profile;
+	}
+
+	public void config(String config) {
+		this.localConfig = new File(config);
 	}
 
 	public void setName(String name) {
@@ -41,12 +47,20 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	}
 
 	@Override
-	public void setConfigFile(File config) {
-		this.config = config;
+	public void setGlobalConfigFile(File globalConfig) {
+		this.globalConfig = globalConfig;
 	}
 
-	public File getConfig() {
-		return config;
+	public File getGlobalConfigFile() {
+		return globalConfig;
+	}
+
+	public void setLocalConfig(File localConfig) {
+		this.localConfig = localConfig;
+	}
+
+	public File getLocalConfig() {
+		return localConfig;
 	}
 
 	@Override

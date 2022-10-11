@@ -25,10 +25,20 @@ public abstract class AbstractTest implements ITest {
 
 	public static String[] SHARED_DIRECTORIES = { "bin", "lib" };
 
+	protected File config = null;
+	
 	public AbstractTest() {
 
 	}
+	
+	public void config(String config) {
+		this.config = new File(config);
+	}
 
+	public File getConfig() {
+		return config;
+	}
+	
 	protected String getWorkDir() {
 
 		File workDir = new File("nf-test");

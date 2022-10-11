@@ -119,7 +119,7 @@ public class TestExecutionEngine {
 			}
 
 			if (configFile != null) {
-				testSuite.setConfigFile(configFile);
+				testSuite.setGlobalConfigFile(configFile);
 			}
 
 			listener.testSuiteExecutionStarted(testSuite);
