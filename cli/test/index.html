@@ -576,6 +576,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#-tap-filename" class="md-nav__link">
+    --tap &lt;filename&gt;
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -597,6 +604,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clean/" class="md-nav__link">
+        clean
+      </a>
     </li>
   
 
@@ -716,6 +737,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#-tap-filename" class="md-nav__link">
+    --tap &lt;filename&gt;
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -763,6 +791,8 @@
 <p>The debug parameter prints out all available output channels which can be accessed in the <code>then</code> clause.</p>
 <h4 id="-without-trace"><code>--without-trace</code></h4>
 <p>The Linux tool <code>procps</code> is required to run Nextflow tracing. In case your container does not support this tool, you can also run nf-test without tracing. Please note that the <code>workflow.trace</code> are not available when running it with this flag.</p>
+<h4 id="-tap-filename"><code>--tap &lt;filename&gt;</code></h4>
+<p>Writes test results in <a href="https://testanything.org">TAP format</a> to file.</p>
 <h2 id="examples">Examples</h2>
 <p>Run all tests:</p>
 <div class="highlight"><pre><span></span><code>nf-test test
@@ -772,6 +802,9 @@
 </code></pre></div>
 <p>Run a specific test using its hash:</p>
 <div class="highlight"><pre><span></span><code>nf-test test tests/main.nf.test@d41119e4
+</code></pre></div>
+<p>Run all tests and write results to <code>report.tap</code>:</p>
+<div class="highlight"><pre><span></span><code>nf-test test --tap report.tap
 </code></pre></div>
 
 
@@ -809,13 +842,13 @@
       
       
         
-        <a href="../../configuration/" class="md-footer__link md-footer__link--next" aria-label="Next: Configuration" rel="next">
+        <a href="../clean/" class="md-footer__link md-footer__link--next" aria-label="Next: clean" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Configuration
+              clean
             </div>
           </div>
           <div class="md-footer__button md-icon">
