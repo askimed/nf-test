@@ -35,3 +35,35 @@ params {
     threads = 1
 }
 ```
+
+## Configuration for tests
+
+nf-test allows to set an additional configuration for a testsuite:
+
+```
+nextflow_process {
+
+    name "Test Process..."
+    script "main.nf"
+    process "my_process"
+    config "path/to/test/nextflow.config"
+
+    ...
+
+}
+```
+
+It is also possible to overwrite the `config` property for a specific test:
+
+```
+nextflow_process {
+
+   test("my test") {
+
+      config "path/to/test/nextflow.config"
+      ...
+
+    }
+
+}
+```
