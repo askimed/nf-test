@@ -49,7 +49,7 @@ public class WorkflowTest extends AbstractTest {
 		super();
 		this.parent = parent;
 
-		context = new TestContext();
+		context = new TestContext(this);
 		context.setName(parent.getWorkflow());
 	}
 

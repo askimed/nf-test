@@ -150,6 +150,11 @@ public abstract class AbstractTest implements ITest {
 	public void setTestSuite(ITestSuite suite) {
 		this.suite = suite;
 	}
+	
+	@Override
+	public ITestSuite getTestSuite() {
+		return suite;		
+	}
 
 	protected void shareDirectories(String[] directories, String metaDir) throws IOException {
 		for (String directory : directories) {

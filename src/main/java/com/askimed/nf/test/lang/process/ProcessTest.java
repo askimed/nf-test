@@ -45,7 +45,7 @@ public class ProcessTest extends AbstractTest {
 	public ProcessTest(ProcessTestSuite parent) {
 		super();
 		this.parent = parent;
-		context = new TestContext();
+		context = new TestContext(this);
 		context.setName(parent.getProcess());
 	}
 

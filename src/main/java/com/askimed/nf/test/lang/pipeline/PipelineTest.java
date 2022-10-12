@@ -33,7 +33,7 @@ public class PipelineTest extends AbstractTest {
 	public PipelineTest(PipelineTestSuite parent) {
 		super();
 		this.parent = parent;
-		context = new TestContext();
+		context = new TestContext(this);
 		context.setName(parent.getName());
 	}
 

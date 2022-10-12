@@ -20,6 +20,14 @@ nextflow_pipeline {
        assert file.exists()
        assert file.text == "lukas forer\n"
      }
+     assert snapshot([
+     	"${params.outdir}/1_27.txt",
+     	"${params.outdir}/2_27.txt",
+     	"${params.outdir}/3_27.txt",
+     	"${params.outdir}/4_27.txt",
+     	"${params.outdir}/5_27.txt",
+     ]
+     ).match("process_test_1")
    }
 
   }

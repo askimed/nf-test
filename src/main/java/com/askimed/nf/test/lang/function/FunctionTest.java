@@ -45,7 +45,7 @@ public class FunctionTest extends AbstractTest {
 	public FunctionTest(FunctionTestSuite parent) {
 		super();
 		this.parent = parent;
-		context = new TestContext();
+		context = new TestContext(this);
 		context.setName(parent.getFunction());
 	}
 
