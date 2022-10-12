@@ -21,7 +21,7 @@ public class NextflowCommand {
 
 	private String profile;
 
-	private File config;
+	private List<File> configs = new Vector<File>();
 
 	private File out;
 
@@ -57,8 +57,11 @@ public class NextflowCommand {
 		this.profile = profile;
 	}
 
-	public void setConfig(File config) {
-		this.config = config;
+	public void addConfig(File config) {
+		if (config == null) {
+			return;
+		}
+		this.configs.add(config);
 	}
 
 	public void setParams(Map<String, Object> params) {
@@ -138,7 +141,7 @@ public class NextflowCommand {
 		}
 		args.add("run");
 		args.add(script);
-		if (config != null) {
+		for (File config : configs) {
 			args.add("-c");
 			args.add(config.getAbsolutePath());
 		}

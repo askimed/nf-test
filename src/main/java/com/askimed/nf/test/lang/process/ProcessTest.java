@@ -127,7 +127,9 @@ public class ProcessTest extends AbstractTest {
 		nextflow.setScript(workflow.getAbsolutePath());
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
-		nextflow.setConfig(parent.getConfig());
+		nextflow.addConfig(parent.getGlobalConfigFile());
+		nextflow.addConfig(parent.getLocalConfig());
+		nextflow.addConfig(getConfig());
 		if (withTrace) {
 			nextflow.setTrace(traceFile);
 		}
