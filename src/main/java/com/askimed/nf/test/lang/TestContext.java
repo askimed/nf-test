@@ -27,9 +27,9 @@ public class TestContext {
 	public String outputDir = "nf-test";
 
 	public ITest test;
-	
+
 	public TestContext(ITest test) {
-this.test = test;
+		this.test = test;
 	}
 
 	public void setName(String name) {
@@ -138,9 +138,9 @@ this.test = test;
 		}
 
 	}
-	
+
 	public Snapshot snapshot(Object object) {
-		return new Snapshot(object, test.getTestSuite());
+		return new Snapshot(object, test);
 	}
 
 }

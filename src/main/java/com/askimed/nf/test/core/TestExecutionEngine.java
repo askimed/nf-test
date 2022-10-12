@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.askimed.nf.test.lang.TestSuiteBuilder;
+import com.askimed.nf.test.lang.extensions.SnapshotFile;
 import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
@@ -26,6 +27,8 @@ public class TestExecutionEngine {
 	private File baseDir = new File(System.getProperty("user.dir"));
 
 	private boolean withTrace = true;
+	
+	private boolean updateSnapshot = false;
 
 	public void setScripts(List<File> scripts) {
 		this.scripts = scripts;
@@ -54,6 +57,13 @@ public class TestExecutionEngine {
 		this.withTrace = withTrace;
 	}
 
+	public void setUpdateSnapshot(boolean updateSnapshot) {
+		if (updateSnapshot == false) {
+			System.out.println("Warning: every snapshot that fails during this test run is re-record.");
+		}
+		this.updateSnapshot = updateSnapshot;
+	}
+	
 	public void setListener(ITestExecutionListener listener) {
 		this.listener = listener;
 	}
@@ -133,6 +143,7 @@ public class TestExecutionEngine {
 				TestExecutionResult result = new TestExecutionResult(test);
 				test.setup(workDir);
 				test.setWithTrace(withTrace);
+				test.setUpdateSnapshot(updateSnapshot);
 				try {
 
 					// override debug flag from CLI

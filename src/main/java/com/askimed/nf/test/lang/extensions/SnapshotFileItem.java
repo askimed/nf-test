@@ -1,5 +1,7 @@
 package com.askimed.nf.test.lang.extensions;
 
+import java.util.Date;
+
 import org.codehaus.groovy.GroovyException;
 
 import groovy.json.JsonGenerator;
@@ -10,12 +12,19 @@ public class SnapshotFileItem {
 
 	private Object content;
 
-	public SnapshotFileItem(Object object) {
+	private Date timestamp;
+
+	public SnapshotFileItem(Date timestamp, Object object) {
 		content = object;
+		this.timestamp = timestamp;
 	}
 
 	public Object getContent() {
 		return content;
+	}
+
+	public Date getTimestamp() {
+		return timestamp;
 	}
 
 	@Override

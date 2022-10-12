@@ -27,5 +27,9 @@ public interface ITest {
 	public ITestSuite getTestSuite();
 
 	public void setWithTrace(boolean withTrace);
+	
+	public void setUpdateSnapshot(boolean updateSnapshot);
+	
+	public boolean isUpdateSnapshot();
 
 }

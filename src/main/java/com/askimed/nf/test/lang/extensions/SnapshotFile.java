@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,15 @@ public class SnapshotFile {
 		return new SnapshotFile(filename);
 	}
 
+	public static void clearByTestSuite(ITestSuite suite) {
+		String filename = createFilename(suite);
+		File file = new File(filename);
+		if (file.exists()) {
+			file.delete();
+		}
+	}
+
+	
 	public SnapshotFile(String filename) {
 		this.filename = filename;
 		File file = new File(filename);
@@ -36,7 +46,7 @@ public class SnapshotFile {
 		Map<String, Map<String, Object>> map = (Map<String, Map<String, Object>>) jsonSlurper.parse(file);
 		for (String id : map.keySet()) {
 			Map<String, Object> object = map.get(id);
-			SnapshotFileItem item = new SnapshotFileItem(object.get("content"));
+			SnapshotFileItem item = new SnapshotFileItem(new Date(), object.get("content"));
 			snapshots.put(id, item);
 		}
 
@@ -47,7 +57,7 @@ public class SnapshotFile {
 	}
 
 	public void updateSnapshot(String id, Object object) {
-		snapshots.put(id, new SnapshotFileItem(object));
+		snapshots.put(id, new SnapshotFileItem(new Date(), object));
 	}
 
 	public void save() {
@@ -71,7 +81,7 @@ public class SnapshotFile {
 		// TODO: create subfolder snapshots? read from config?
 		return suite.getFilename() + ".snap";
 	}
-	
+
 	public static JsonGenerator createJsonGenerator() {
 		JsonGenerator jsonGenerator = new JsonGenerator.Options().addConverter(new Converter() {
 

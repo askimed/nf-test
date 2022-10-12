@@ -27,6 +27,8 @@ public abstract class AbstractTest implements ITest {
 
 	protected File config = null;
 	
+	private boolean updateSnapshot = false;
+	
 	public AbstractTest() {
 
 	}
@@ -166,4 +168,14 @@ public abstract class AbstractTest implements ITest {
 		}
 	}
 
+	
+	@Override
+	public void setUpdateSnapshot(boolean updateSnapshot) {
+		this.updateSnapshot = updateSnapshot;
+	}
+	
+	public boolean isUpdateSnapshot() {
+		return updateSnapshot;
+	}
+	
 }
