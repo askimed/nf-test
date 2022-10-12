@@ -2,6 +2,8 @@ package com.askimed.nf.test.core;
 
 public class TestExecutionResult {
 
+	private ITest test;
+
 	private TestExecutionResultStatus status;
 
 	private Throwable throwable;
@@ -11,6 +13,10 @@ public class TestExecutionResult {
 	private long startTime;
 
 	private long endTime;
+
+	public TestExecutionResult(ITest test) {
+		this.test = test;
+	}
 
 	public void setStatus(TestExecutionResultStatus status) {
 		this.status = status;
@@ -54,6 +60,10 @@ public class TestExecutionResult {
 
 	public String getErrorReport() {
 		return errorReport;
+	}
+
+	public ITest getTest() {
+		return test;
 	}
 
 }

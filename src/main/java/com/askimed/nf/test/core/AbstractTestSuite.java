@@ -1,0 +1,72 @@
+package com.askimed.nf.test.core;
+
+import java.io.File;
+import java.util.List;
+import java.util.Vector;
+
+public abstract class AbstractTestSuite implements ITestSuite {
+
+	private String name;
+
+	private String profile = null;
+
+	private File config = null;
+
+	private List<ITest> tests = new Vector<ITest>();
+
+	private String filename;
+
+	public void name(String name) {
+		this.name = name;
+	}
+
+	public void profile(String profile) {
+		this.profile = profile;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	@Override
+	public void setConfigFile(File config) {
+		this.config = config;
+	}
+
+	public File getConfig() {
+		return config;
+	}
+
+	@Override
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	@Override
+	public String getFilename() {
+		return filename;
+	}
+
+	@Override
+	public List<ITest> getTests() {
+		return tests;
+	}
+
+	protected void addTest(ITest test) {
+		tests.add(test);
+		test.setTestSuite(this);
+	}
+
+}

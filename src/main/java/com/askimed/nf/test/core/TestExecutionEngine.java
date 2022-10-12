@@ -1,7 +1,6 @@
 package com.askimed.nf.test.core;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
@@ -55,6 +54,10 @@ public class TestExecutionEngine {
 		this.withTrace = withTrace;
 	}
 
+	public void setListener(ITestExecutionListener listener) {
+		this.listener = listener;
+	}
+
 	protected List<ITestSuite> parse() throws Exception {
 
 		List<ITestSuite> testSuits = new Vector<ITestSuite>();
@@ -105,17 +108,9 @@ public class TestExecutionEngine {
 
 		listener.setDebug(debug);
 
-		// cleanup
-
-		try {
-			FileUtil.deleteDirectory(workDir.getAbsoluteFile());
-			FileUtil.createDirectory(workDir);
-		} catch (Exception e) {
-			throw new IOException("Working Directory '" + workDir.getAbsolutePath() + "' could not be deleted:\n" + e);
-		}
-
 		listener.testPlanExecutionStarted();
 
+		boolean failed = false;
 		for (ITestSuite testSuite : testSuits) {
 
 			// override profile from CLI
@@ -135,7 +130,7 @@ public class TestExecutionEngine {
 					continue;
 				}
 				listener.executionStarted(test);
-				TestExecutionResult result = new TestExecutionResult();
+				TestExecutionResult result = new TestExecutionResult(test);
 				test.setup(workDir);
 				test.setWithTrace(withTrace);
 				try {
@@ -154,6 +149,7 @@ public class TestExecutionEngine {
 					result.setStatus(TestExecutionResultStatus.FAILED);
 					result.setThrowable(e);
 					result.setErrorReport(test.getErrorReport());
+					failed = true;
 
 				}
 				test.cleanup();
@@ -168,11 +164,7 @@ public class TestExecutionEngine {
 
 		listener.testPlanExecutionFinished();
 
-		if (listener.getFailed() > 0) {
-			return 1;
-		} else {
-			return 0;
-		}
+		return (failed) ? 1 : 0;
 
 	}
 

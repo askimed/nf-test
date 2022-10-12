@@ -10,7 +10,10 @@ import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
 import com.askimed.nf.test.config.Config;
+import com.askimed.nf.test.core.AnsiTestExecutionListener;
+import com.askimed.nf.test.core.GroupTestExecutionListener;
 import com.askimed.nf.test.core.TestExecutionEngine;
+import com.askimed.nf.test.core.reports.TapTestReportWriter;
 import com.askimed.nf.test.util.AnsiColors;
 
 import picocli.CommandLine.Command;
@@ -35,6 +38,10 @@ public class RunTestsCommand implements Callable<Integer> {
 	@Option(names = {
 			"--without-trace" }, description = "Run nextflow tests without trace parameter.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean withoutTrace = false;
+
+	@Option(names = {
+			"--tap" }, description = "Write test results to tap file", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String tap = null;
 
 	@Override
 	public Integer call() throws Exception {
@@ -81,7 +88,14 @@ public class RunTestsCommand implements Callable<Integer> {
 				return 2;
 			}
 
+			GroupTestExecutionListener listener = new GroupTestExecutionListener();
+			listener.addListener(new AnsiTestExecutionListener());
+			if (tap != null) {
+				listener.addListener(new TapTestReportWriter(tap));
+			}
+
 			TestExecutionEngine engine = new TestExecutionEngine();
+			engine.setListener(listener);
 			engine.setScripts(scripts);
 			engine.setDebug(debug);
 			engine.setWorkDir(workDir);

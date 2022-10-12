@@ -10,8 +10,6 @@ public interface ITestExecutionListener {
 
 	public void testSuiteExecutionFinished(ITestSuite testSuite);
 
-	public int getFailed();
-
 	public void executionSkipped(ITest test, String reason);
 
 	public void executionStarted(ITest test);
@@ -19,5 +17,5 @@ public interface ITestExecutionListener {
 	public void executionFinished(ITest test, TestExecutionResult testExecutionResult);
 
 	public void setDebug(boolean debug);
-	
+
 }

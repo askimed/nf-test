@@ -21,6 +21,8 @@ public interface ITest {
 	public void setDebug(boolean debug);
 
 	public String getHash();
+	
+	public void setTestSuite(ITestSuite suite);
 
 	public void setWithTrace(boolean withTrace);
 

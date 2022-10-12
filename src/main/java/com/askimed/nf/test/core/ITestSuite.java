@@ -13,4 +13,8 @@ public interface ITestSuite {
 	
 	public void setConfigFile(File config);
 
+	public void setFilename(String filename);
+	
+	public String getFilename();
+	
 }
