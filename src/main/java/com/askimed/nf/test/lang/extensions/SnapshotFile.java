@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +34,6 @@ public class SnapshotFile {
 		}
 	}
 
-	
 	public SnapshotFile(String filename) {
 		this.filename = filename;
 		File file = new File(filename);
@@ -83,30 +81,39 @@ public class SnapshotFile {
 	}
 
 	public static JsonGenerator createJsonGenerator() {
-		JsonGenerator jsonGenerator = new JsonGenerator.Options().addConverter(new Converter() {
+		JsonGenerator jsonGenerator = new JsonGenerator.Options().excludeFieldsByName("mapping")
+				.addConverter(new Converter() {
 
-			@Override
-			public boolean handles(Class<?> type) {
-				return true;
-			}
-
-			@Override
-			public Object convert(Object value, String key) {
-				Path path = new File(value.toString()).toPath();
-				if (path.toFile().exists()) {
-					try {
-						return path.getFileName() + ":" + PathExtension.getMd5(path);
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					@Override
+					public boolean handles(Class<?> type) {
+						return true;
 					}
-				}
-				return value;
-			}
-		}).build();
+
+					@Override
+					public Object convert(Object value, String key) {
+						Path path = null;
+						if (value instanceof Path) {
+							path = (Path) value;
+							if (!path.toFile().exists()) {
+								throw new RuntimeException("Path " + path.toString() + " not found.");
+							}
+						} else {
+							path = new File(value.toString()).toPath();
+
+						}
+
+						if (path.toFile().exists()) {
+							try {
+								return path.getFileName() + ":md5," + PathExtension.getMd5(path);
+								//return path.getFileName() + ":base64," + FileUtil.encodeBase64(path);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						return value;
+					}
+				}).build();
 		return jsonGenerator;
 	}
 

@@ -45,5 +45,9 @@ public class Snapshot {
 		}
 
 	}
+	
+	public void view() {
+		
+	}
 
 }

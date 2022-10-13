@@ -139,7 +139,7 @@ public class TestContext {
 
 	}
 
-	public Snapshot snapshot(Object object) {
+	public Snapshot snapshot(Object ... object ) {
 		return new Snapshot(object, test);
 	}
 

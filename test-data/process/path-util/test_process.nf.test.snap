@@ -1,12 +1,15 @@
 {
     "process_test_1": {
-        "content": {
-            "output_file": [
-                "input.txt.gz:3651578b65f758cb7128d0f356a2c04b"
-            ],
-            "output_json": [
-                "output.json:a49d148b49ae6ddae967636d940c1654"
-            ]
-        }
+        "content": [
+            {
+                "output_file": [
+                    "input.txt.gz:md5,3651578b65f758cb7128d0f356a2c04b"
+                ],
+                "output_json": [
+                    "output.json:md5,a49d148b49ae6ddae967636d940c1654"
+                ]
+            }
+        ],
+        "timestamp": "2022-10-13T10:37:58+0000"
     }
 }

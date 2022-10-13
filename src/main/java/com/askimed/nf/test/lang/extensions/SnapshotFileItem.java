@@ -2,11 +2,8 @@ package com.askimed.nf.test.lang.extensions;
 
 import java.util.Date;
 
-import org.codehaus.groovy.GroovyException;
-
 import groovy.json.JsonGenerator;
 import groovy.json.JsonOutput;
-import groovyjarjarantlr4.v4.parse.ANTLRParser.throwsSpec_return;
 
 public class SnapshotFileItem {
 
@@ -39,19 +36,21 @@ public class SnapshotFileItem {
 		// At the moment it is easier to compare json output (since md5 hash and
 		// filenames)
 
-		JsonGenerator jsonGenerator = SnapshotFile.createJsonGenerator();
-		String json = jsonGenerator.toJson(getContent());
-		String prettyJson = JsonOutput.prettyPrint(json);
-
-		String jsonOther = jsonGenerator.toJson(snapshotItem.getContent());
-		String prettyJsonOther = JsonOutput.prettyPrint(jsonOther);
-
-		if (prettyJson.equals(prettyJsonOther)) {
+		if (toString().equals(snapshotItem.toString())) {
 			return true;
 		}
 
-		throw new RuntimeException("Different Snapshot: \nFound: " + prettyJson + "\n\nExpected:\n" + prettyJsonOther);
+		throw new RuntimeException(
+				"Different Snapshot: \nFound:\n" + toString() + "\n\nExpected:\n" + snapshotItem.toString());
 
+	}
+
+	@Override
+	public String toString() {
+		JsonGenerator jsonGenerator = SnapshotFile.createJsonGenerator();
+		String json = jsonGenerator.toJson(getContent());
+		String prettyJson = JsonOutput.prettyPrint(json);
+		return prettyJson;
 	}
 
 }
