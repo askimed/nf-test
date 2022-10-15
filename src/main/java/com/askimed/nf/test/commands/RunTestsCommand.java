@@ -43,6 +43,10 @@ public class RunTestsCommand implements Callable<Integer> {
 			"--tap" }, description = "Write test results to tap file", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String tap = null;
 
+	@Option(names = {
+			"--lib" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String lib = "";
+
 	@Override
 	public Integer call() throws Exception {
 
@@ -51,6 +55,7 @@ public class RunTestsCommand implements Callable<Integer> {
 			String defaultProfile = null;
 			File defaultConfigFile = null;
 			File workDir = new File(".nf-test");
+			String libDir = lib;
 			boolean defaultWithTrace = true;
 			try {
 
@@ -62,6 +67,10 @@ public class RunTestsCommand implements Callable<Integer> {
 					defaultConfigFile = config.getConfigFile();
 					defaultWithTrace = config.isWithTrace();
 					workDir = new File(config.getWorkDir());
+					if (!libDir.isEmpty()) {
+						libDir += ":";
+					}
+					libDir += config.getLibDir();
 
 					if (scripts == null) {
 						File folder = new File(config.getTestsDir());
@@ -99,6 +108,7 @@ public class RunTestsCommand implements Callable<Integer> {
 			engine.setScripts(scripts);
 			engine.setDebug(debug);
 			engine.setWorkDir(workDir);
+			engine.setLibDir(libDir);
 			if (profile != null) {
 				engine.setProfile(profile);
 			} else {

@@ -20,6 +20,8 @@ public class Config {
 	private String workDir = ".nf-test";
 
 	private String testsDir = "tests";
+	
+	private String libDir = "tests/lib";
 
 	private String profile = null;
 
@@ -65,6 +67,14 @@ public class Config {
 	
 	public boolean isWithTrace() {
 		return withTrace;
+	}
+	
+	public void libDir(String libDir) {
+		this.libDir = libDir;
+	}
+	
+	public String getLibDir() {
+		return libDir;
 	}
 
 	public void configFile(String config) {
