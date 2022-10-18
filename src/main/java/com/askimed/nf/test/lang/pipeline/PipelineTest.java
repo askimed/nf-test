@@ -80,6 +80,8 @@ public class PipelineTest extends AbstractTest {
 	@Override
 	public void execute() throws Throwable {
 
+		context.init(baseDir, outputDir.getAbsolutePath());
+		
 		if (setup != null) {
 			setup.execute(context);
 		}

@@ -143,4 +143,9 @@ public class TestContext {
 		return new Snapshot(object, test);
 	}
 
+	public void init(String baseDir, String outputDir) {
+		this.baseDir = baseDir;
+		this.outputDir = outputDir;
+	}
+
 }

@@ -104,6 +104,8 @@ public class FunctionTest extends AbstractTest {
 			}
 		}
 
+		context.init(baseDir, outputDir.getAbsolutePath());
+		
 		if (setup != null) {
 			setup.execute(context);
 		}

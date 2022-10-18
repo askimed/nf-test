@@ -9,7 +9,7 @@ nextflow_pipeline {
    when {
      params.lukas = 28
      params.forer = "22"
-     params.outdir = "output"
+     params.outdir = "${outputDir}"
    }
 
    then {
