@@ -83,7 +83,7 @@ public class TestSuiteBuilder {
 		customizer.addStaticStars("com.askimed.nf.test.util.FileAndPathMethods");
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
-		String classpath = script.getParentFile().getAbsolutePath() + "/lib:" + libDir;
+		String classpath = script.getAbsoluteFile().getParentFile().getAbsolutePath() + "/lib:" + libDir;
 		compilerConfiguration.setClasspath(classpath);
 
 		compilerConfiguration.addCompilationCustomizers(customizer);
