@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.4.0, mkdocs-material-8.5.6">
+      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.6">
     
     
       
@@ -259,7 +259,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
       
       
@@ -464,9 +464,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#using-local-files" class="md-nav__link">
+    Using Local Files
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Local Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-maven-artifcats-with-grab" class="md-nav__link">
+    Using Maven Artifcats with @Grab
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Maven Artifcats with @Grab">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     Example
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -496,7 +529,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
       
       
       
@@ -647,9 +680,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#using-local-files" class="md-nav__link">
+    Using Local Files
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Local Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-maven-artifcats-with-grab" class="md-nav__link">
+    Using Maven Artifcats with @Grab
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Maven Artifcats with @Grab">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     Example
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -674,33 +740,96 @@
 
 
 <h1 id="using-third-party-libraries">Using Third-Party Libraries</h1>
-<p>nf-test supports the <code>@Grab</code> annotation to include third-party libraries (available as maven artifacts) in test scripts.</p>
-<h2 id="example">Example</h2>
-<div class="highlight"><pre><span></span><code><span class="nd">@Grab</span><span class="o">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;commons-lang&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">module</span><span class="o">=</span><span class="s1">&#39;commons-lang&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;2.4&#39;</span><span class="o">)</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.lang.WordUtils</span><span class="w"></span>
+<p>nf-test supports including third party libraries (e.g. jar files ) or functions from groovy files to either extend it functionality or to avoid duplicate code and to keep the logic in test cases simple.</p>
+<h2 id="using-local-files">Using Local Files</h2>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 6.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5z"/><path fill-rule="evenodd" d="M2.5 1A1.5 1.5 0 0 0 1 2.5v8.44c0 .397.158.779.44 1.06l10.25 10.25a1.5 1.5 0 0 0 2.12 0l8.44-8.44a1.5 1.5 0 0 0 0-2.12L12 1.44A1.5 1.5 0 0 0 10.94 1H2.5zm0 1.5h8.44l10.25 10.25-8.44 8.44L2.5 10.94V2.5z"/></svg></span> 0.6.3 ·
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8 8.807V3.5h-.563a.75.75 0 0 1 0-1.5h9.125a.75.75 0 0 1 0 1.5H16v5.307l5.125 9.301c.964 1.75-.302 3.892-2.299 3.892H5.174c-1.998 0-3.263-2.142-2.3-3.892L8 8.807zM14.5 3.5h-5V9a.75.75 0 0 1-.093.362L7.127 13.5h9.746l-2.28-4.138A.75.75 0 0 1 14.5 9V3.5zM4.189 18.832 6.3 15h11.4l2.111 3.832a1.125 1.125 0 0 1-.985 1.668H5.174a1.125 1.125 0 0 1-.985-1.668z"/></svg></span> Experimental</p>
+<p>If nf-test detects a <code>lib</code> folder in in directory of a tescase, then it adds it automatically to the classpath.</p>
+<h3 id="examples">Examples</h3>
+<p>We have a Groovy script <code>MyWordUtils.groovy</code> that contains the following class:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">MyWordUtils</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 
-<span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="nf">capitalize</span><span class="o">(</span><span class="n">String</span><span class="w"> </span><span class="n">word</span><span class="o">){</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">word</span><span class="o">.</span><span class="na">toUpperCase</span><span class="o">();</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Process TEST_PROCESS&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;test-data/test_process.nf&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;TEST_PROCESS&quot;</span><span class="w"></span>
+<span class="o">}</span><span class="w"></span>
+</code></pre></div>
+<p>We can put this file in a subfolder called <code>lib</code>:</p>
+<div class="highlight"><pre><span></span><code>testcase_1
+├── hello_1.nf
+├── hello_1.nf.test
+└── lib
+    └── MyWordUtils.groovy
+</code></pre></div>
+<p>Next, we can use this class in the <code>hello_1.nf.test</code> like every other class that is provided by nf-test or Groovy itself:</p>
+<div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Process CAPITALIZER&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;test-data/capitalizer.nf&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;CAPITALIZER&quot;</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run without failures&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 
 <span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">params</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">                </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tests/results&quot;</span><span class="w"></span>
-<span class="w">            </span><span class="o">}</span><span class="w"></span>
 <span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 <span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                input[0] = file(&quot;test-file.txt&quot;)</span>
+<span class="s2">                input[0] = &quot;world&quot;</span>
 <span class="s2">                &quot;&quot;&quot;</span><span class="w"></span>
 <span class="w">            </span><span class="o">}</span><span class="w"></span>
 <span class="w">        </span><span class="o">}</span><span class="w"></span>
 
 <span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 <span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">success</span><span class="w"></span>
-<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_channel</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">WordUtils</span><span class="o">.</span><span class="na">capitalize</span><span class="o">(</span><span class="s1">&#39;world&#39;</span><span class="o">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">MyWordUtils</span><span class="o">.</span><span class="na">capitalize</span><span class="o">(</span><span class="s1">&#39;world&#39;</span><span class="o">))</span><span class="w"></span>
+<span class="w">        </span><span class="o">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+
+<span class="o">}</span><span class="w"></span>
+</code></pre></div>
+<p>If we have a project and we want to reuse libraries in multiple test cases, then we can store the class in the shared lib folder. Both test cases are now able to use <code>MyWordUtils</code>:</p>
+<div class="highlight"><pre><span></span><code>tests
+├── testcase_1
+    ├── hello_1.nf
+    ├── hello_1.nf.test
+├── testcase_2
+    ├── hello_2.nf
+    ├── hello_2.nf.test
+└── lib
+    └── MyWordUtils.groovy        
+</code></pre></div>
+<p>The default location is <code>tests\lib</code>. This folder location can be changed in nf-test config file.</p>
+<p>It is also possible to use the <code>--lib</code> parameter to add an additional folder to the classpath:</p>
+<div class="highlight"><pre><span></span><code>nf-test test tests/testcase_1/hello_1.nf --lib tests/mylibs
+</code></pre></div>
+<p>If multiple folders are used, the they need to be separate with a colon (like in Java or Groovy).</p>
+<h2 id="using-maven-artifcats-with-grab">Using Maven Artifcats with <code>@Grab</code></h2>
+<p>nf-test supports the <code>@Grab</code> annotation to include third-party libraries that are available in a maven repository. As the dependency is defined as a maven artifact, there is no local copy of the jar file needed and maven enables to include an exact version as well as provides an easy update process.</p>
+<h3 id="example">Example</h3>
+<p>The following example uses the <code>WordUtil</code> class from <code>commons-lang</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Grab</span><span class="o">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;commons-lang&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">module</span><span class="o">=</span><span class="s1">&#39;commons-lang&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;2.4&#39;</span><span class="o">)</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.lang.WordUtils</span><span class="w"></span>
+
+<span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Process CAPITALIZER&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;test-data/capitalizer.nf&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;CAPITALIZER&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run without failures&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                input[0] = &quot;world&quot;</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="o">}</span><span class="w"></span>
+<span class="w">        </span><span class="o">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">success</span><span class="w"></span>
+<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">WordUtils</span><span class="o">.</span><span class="na">capitalize</span><span class="o">(</span><span class="s1">&#39;world&#39;</span><span class="o">))</span><span class="w"></span>
 <span class="w">        </span><span class="o">}</span><span class="w"></span>
 
 <span class="w">    </span><span class="o">}</span><span class="w"></span>
@@ -780,7 +909,7 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "tabs"], "search": "../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.expand", "tabs"], "search": "../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.078830c0.min.js"></script>
