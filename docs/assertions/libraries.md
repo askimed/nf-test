@@ -4,6 +4,9 @@ nf-test supports including third party libraries (e.g. jar files ) or functions 
 
 ## Using Local Files
 
+:octicons-tag-24: 0.6.3 ·
+:octicons-beaker-24: Experimental
+
 If nf-test detects a `lib` folder in in directory of a tescase, then it adds it automatically to the classpath.
 
 ### Examples
