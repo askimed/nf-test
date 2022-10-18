@@ -5,7 +5,6 @@ import java.io.File;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
-import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.core.ITestSuite;
 import com.askimed.nf.test.lang.function.FunctionTestSuite;
 import com.askimed.nf.test.lang.pipeline.PipelineTestSuite;
@@ -84,7 +83,7 @@ public class TestSuiteBuilder {
 		customizer.addStaticStars("com.askimed.nf.test.util.FileAndPathMethods");
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
-		String classpath = script.getParentFile() + "/lib:" + libDir;
+		String classpath = script.getParentFile().getAbsolutePath() + "/lib:" + libDir;
 		compilerConfiguration.setClasspath(classpath);
 
 		compilerConfiguration.addCompilationCustomizers(customizer);
