@@ -1,5 +1,6 @@
 # Snapshots
-
+:octicons-tag-24: 0.6.3 ·
+:octicons-beaker-24: Experimental
 
 Snapshots are a very useful tool whenever you want to make sure your output channels or output files not change unexpectedly. This feature is highly inspired by [Jest](https://jestjs.io/).
 
@@ -14,7 +15,7 @@ The `snapshot` keyword creates a snapshot of the object and its `match` method c
 assert snapshot(workflow.out.channel1).match()
 ```
 
-The first time this test is run, nf-test creates a snapshot file. This is a json file that contains a serialized version of your object.
+The first time this test is run, nf-test creates a snapshot file. This is a json file that contains a serialized version of the provided object.
 
 The snapshot file should be committed alongside code changes, and reviewed as part of your code review process. nf-test uses pretty-format to make snapshots human-readable during code review. On subsequent test runs, nf-test will compare the rendered output with the previous snapshot. If they match, the test will pass. If they don't match, either the test runner found a bug in your code that should be fixed, or the implementation has changed and the snapshot needs to be updated.
 
