@@ -17,6 +17,8 @@ config {
     workDir ".nf-test"
     // location of an optional nextflow.config file specific for executing tests
     configFile "tests/nextflow.config"
+    // location of library folder that is added automatically to the classpath
+    libDir "tests/lib"    
     // run all test with the defined docker profile from the main nextflow.config
     profile "docker"
     // disable tracing options in case container does not include `procps` Linux tool.

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Vector;
 
 import com.askimed.nf.test.lang.TestSuiteBuilder;
-import com.askimed.nf.test.lang.extensions.SnapshotFile;
 import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
@@ -29,6 +28,8 @@ public class TestExecutionEngine {
 	private boolean withTrace = true;
 	
 	private boolean updateSnapshot = false;
+
+	private String libDir = "";
 
 	public void setScripts(List<File> scripts) {
 		this.scripts = scripts;
@@ -64,6 +65,10 @@ public class TestExecutionEngine {
 		this.updateSnapshot = updateSnapshot;
 	}
 	
+	public void setLibDir(String libDir) {
+		this.libDir = libDir;
+	}
+
 	public void setListener(ITestExecutionListener listener) {
 		this.listener = listener;
 	}
@@ -82,7 +87,7 @@ public class TestExecutionEngine {
 			if (!script.exists()) {
 				throw new Exception("Test file '" + script.getAbsolutePath() + "' not found.");
 			}
-			ITestSuite testSuite = TestSuiteBuilder.parse(script);
+			ITestSuite testSuite = TestSuiteBuilder.parse(script, libDir);
 			if (testId != null) {
 				for (ITest test : testSuite.getTests()) {
 					if (!test.getHash().startsWith(testId)) {

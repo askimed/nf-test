@@ -46,6 +46,9 @@ public class RunTestsCommand implements Callable<Integer> {
 	@Option(names = { "--update-snapshot",
 			"--updateSnapshot" }, description = "Use this flag to re-record every snapshot that fails during this test run.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean updateSnapshot = false;
+	@Option(names = {
+			"--lib" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String lib = "";
 
 	@Override
 	public Integer call() throws Exception {
@@ -55,6 +58,7 @@ public class RunTestsCommand implements Callable<Integer> {
 			String defaultProfile = null;
 			File defaultConfigFile = null;
 			File workDir = new File(".nf-test");
+			String libDir = lib;
 			boolean defaultWithTrace = true;
 			try {
 
@@ -66,6 +70,10 @@ public class RunTestsCommand implements Callable<Integer> {
 					defaultConfigFile = config.getConfigFile();
 					defaultWithTrace = config.isWithTrace();
 					workDir = new File(config.getWorkDir());
+					if (!libDir.isEmpty()) {
+						libDir += ":";
+					}
+					libDir += config.getLibDir();
 
 					if (scripts == null) {
 						File folder = new File(config.getTestsDir());
@@ -104,6 +112,7 @@ public class RunTestsCommand implements Callable<Integer> {
 			engine.setDebug(debug);
 			engine.setWorkDir(workDir);
 			engine.setUpdateSnapshot(updateSnapshot);
+			engine.setLibDir(libDir);
 			if (profile != null) {
 				engine.setProfile(profile);
 			} else {

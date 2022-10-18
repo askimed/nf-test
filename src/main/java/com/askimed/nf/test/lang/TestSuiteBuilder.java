@@ -70,6 +70,10 @@ public class TestSuiteBuilder {
 	}
 
 	public static ITestSuite parse(File script) throws Exception {
+		return parse(script, "");
+	}
+
+	public static ITestSuite parse(File script, String libDir) throws Exception {
 
 		ImportCustomizer customizer = new ImportCustomizer();
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_pipeline");
@@ -79,16 +83,19 @@ public class TestSuiteBuilder {
 		customizer.addStaticStars("com.askimed.nf.test.util.FileAndPathMethods");
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
+		String classpath = script.getAbsoluteFile().getParentFile().getAbsolutePath() + "/lib:" + libDir;
+		compilerConfiguration.setClasspath(classpath);
+
 		compilerConfiguration.addCompilationCustomizers(customizer);
 
 		GroovyShell shell = new GroovyShell(compilerConfiguration);
 
 		Object object = shell.evaluate(script);
-		
+
 		if (!(object instanceof ITestSuite)) {
-			throw new Exception("Not a vliad TestSuite object.");
+			throw new Exception("Not a valid TestSuite object.");
 		}
-		
+
 		ITestSuite testSuite = (ITestSuite) object;
 		testSuite.setFilename(script.getAbsolutePath());
 
