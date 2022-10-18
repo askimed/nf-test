@@ -1,0 +1,62 @@
+nextflow_workflow {
+
+    name "Test workflow"
+    script "test-data/workflow/libs/hello.nf"
+    workflow "hello"
+
+    test("Test say sakul") {
+
+        when {
+           params {
+              def generator = new NameGenerator()
+              name = generator.reverseName("lukas")
+           }
+        }
+
+        then {
+            assert workflow.success
+            assert "Hello sakul" in workflow.stdout
+        }
+    }
+
+    test("Test say notna") {
+
+        when {
+           def generator = new NameGenerator();
+           params.name = generator.reverseName("anton")
+        }
+
+        then {
+            assert workflow.success
+            assert "Hello notna" in workflow.stdout
+        }
+    }
+
+    test("Test say LUKAS") {
+
+        when {
+           params {
+              name = Utils.uppercase("lukas")
+           }
+        }
+
+        then {
+            assert workflow.success
+            assert "Hello LUKAS" in workflow.stdout
+        }
+    }
+
+    test("Test say ANTONIO") {
+
+        when {
+            //Utils is loaded from --lib path
+            params.name = Utils.uppercase("antonio")
+        }
+
+        then {
+            def expected = "Hello " + Utils.uppercase("antonio")
+            assert workflow.success
+            assert expected in workflow.stdout
+        }
+    }
+}

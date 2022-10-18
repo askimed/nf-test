@@ -4,6 +4,7 @@ theme:
   name: material
   features:
     - navigation.instant
+    - navigation.expand
     - tabs
   palette:
     primary: teal
