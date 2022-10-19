@@ -14,6 +14,7 @@ import com.askimed.nf.test.core.AnsiTestExecutionListener;
 import com.askimed.nf.test.core.GroupTestExecutionListener;
 import com.askimed.nf.test.core.TestExecutionEngine;
 import com.askimed.nf.test.core.reports.TapTestReportWriter;
+import com.askimed.nf.test.lang.extensions.PluginManager;
 import com.askimed.nf.test.util.AnsiColors;
 
 import picocli.CommandLine.Command;
@@ -47,8 +48,17 @@ public class RunTestsCommand implements Callable<Integer> {
 			"--lib" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String lib = "";
 
+	@Option(names = {
+			"--plugins" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String plugins = "";
+
 	@Override
 	public Integer call() throws Exception {
+
+		PluginManager manager = PluginManager.getInstance();
+		for (String plugin : plugins.split("\\:")) {
+			manager.loadPluginFromFile(new File(plugin));
+		}
 
 		try {
 

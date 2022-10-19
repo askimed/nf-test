@@ -6,6 +6,7 @@ import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
 import com.askimed.nf.test.core.ITestSuite;
+import com.askimed.nf.test.lang.extensions.PluginManager;
 import com.askimed.nf.test.lang.function.FunctionTestSuite;
 import com.askimed.nf.test.lang.pipeline.PipelineTestSuite;
 import com.askimed.nf.test.lang.process.ProcessTestSuite;
@@ -80,8 +81,12 @@ public class TestSuiteBuilder {
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_workflow");
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_process");
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_function");
-		customizer.addStaticStars("com.askimed.nf.test.lang.extensions.GlobalMethods");;
+		customizer.addStaticStars("com.askimed.nf.test.lang.extensions.GlobalMethods");
 
+		PluginManager manager = PluginManager.getInstance();
+		for (String staticImport : manager.getStaticImports()) {
+			customizer.addStaticStars(staticImport);
+		}
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
 		String classpath = script.getAbsoluteFile().getParentFile().getAbsolutePath() + "/lib:" + libDir;
@@ -89,7 +94,7 @@ public class TestSuiteBuilder {
 
 		compilerConfiguration.addCompilationCustomizers(customizer);
 
-		GroovyShell shell = new GroovyShell(compilerConfiguration);
+		GroovyShell shell = new GroovyShell(manager.getClassLoader(), compilerConfiguration);
 
 		Object object = shell.evaluate(script);
 
