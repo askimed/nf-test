@@ -61,5 +61,23 @@ public class WorkflowTest {
 		assertEquals(0, exitCode);
 
 	}
+	
+	@Test
+	public void testParamsIssue34() throws Exception {
+
+	  App app = new App();
+	  int exitCode = app.run(new String[] { "test", "test-data/workflow/issue34/trial.nf.test"});
+	  assertEquals(0, exitCode);
+
+	}
+	
+	@Test
+	public void testParamsIssue34Setup() throws Exception {
+
+	  App app = new App();
+	  int exitCode = app.run(new String[] { "test", "test-data/workflow/issue34/trial.setup.nf.test"});
+	  assertEquals(0, exitCode);
+
+	}
 
 }
