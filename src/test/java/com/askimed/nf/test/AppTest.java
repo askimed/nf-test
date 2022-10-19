@@ -56,7 +56,7 @@ public class AppTest {
 		assertEquals(2, exitCode);
 
 	}
-
+	
 	@Test
 	public void testSyntaxErrorInConfig2() throws Exception {
 

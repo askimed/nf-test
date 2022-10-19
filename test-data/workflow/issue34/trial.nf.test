@@ -1,0 +1,32 @@
+nextflow_workflow {
+
+    name "test_passing_file"
+    script "test-data/workflow/issue34/trial.nf"
+    workflow "hello"
+
+    test("test_passing_file_1") {
+        when {
+            params {
+                someFile = "${baseDir}/r9_file.txt"
+            }
+            workflow {
+                """
+                def r1Writer = (new File(params.someFile)).newWriter()
+                r1Writer.writeLine("r1 test file content")
+                r1Writer.flush()
+                r1Writer.close()
+                input[0] = file(params.someFile)
+                """
+            }
+        }
+        then {
+            assert workflow.success
+            assert "r1 test file content" in workflow.stdout
+        }
+        cleanup {
+        	println "Clean up..." 
+            file(params.someFile).delete()
+        }
+    }
+    
+}

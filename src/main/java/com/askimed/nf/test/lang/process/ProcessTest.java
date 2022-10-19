@@ -27,7 +27,7 @@ public class ProcessTest extends AbstractTest {
 	private boolean debug = false;
 
 	private boolean withTrace = true;
-	
+
 	private boolean autoSort = true;
 
 	private TestCode setup;
@@ -95,16 +95,18 @@ public class ProcessTest extends AbstractTest {
 		if (!script.exists()) {
 			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
 		}
-		
+
 		if (setup != null) {
 			setup.execute(context);
 		}
 
-		when.execute(context);
+		if (when != null) {
+			when.execute(context);
+		}
 
 		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
 		context.evaluateProcessClosure();
-		
+
 		// Create workflow mock
 		File workflow = new File(metaDir, "mock.nf");
 		writeWorkflowMock(workflow);
@@ -125,7 +127,9 @@ public class ProcessTest extends AbstractTest {
 		nextflow.setScript(workflow.getAbsolutePath());
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
-		nextflow.setConfig(parent.getConfig());
+		nextflow.addConfig(parent.getGlobalConfigFile());
+		nextflow.addConfig(parent.getLocalConfig());
+		nextflow.addConfig(getConfig());
 		if (withTrace) {
 			nextflow.setTrace(traceFile);
 		}
@@ -185,7 +189,7 @@ public class ProcessTest extends AbstractTest {
 		FileUtil.write(file, template);
 
 	}
-	
+
 	@Override
 	public void setWithTrace(boolean withTrace) {
 		this.withTrace = withTrace;

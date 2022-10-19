@@ -1,5 +1,6 @@
 package com.askimed.nf.test;
 
+import com.askimed.nf.test.commands.CleanCommand;
 import com.askimed.nf.test.commands.GenerateTestsCommand;
 import com.askimed.nf.test.commands.InitCommand;
 import com.askimed.nf.test.commands.ListTestsCommand;
@@ -16,13 +17,14 @@ public class App {
 
 	public static final String NAME = "nf-test";
 
-	public static final String VERSION = "0.6.0";
+	public static final String VERSION = "0.6.2";
 
 	public int run(String[] args) {
 
 		printHeader();
 
 		CommandLine commandLine = new CommandLine(new App());
+		commandLine.addSubcommand("clean", new CleanCommand());
 		commandLine.addSubcommand("init", new InitCommand());
 		commandLine.addSubcommand("test", new RunTestsCommand());
 		commandLine.addSubcommand("list", new ListTestsCommand());

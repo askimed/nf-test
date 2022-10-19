@@ -74,6 +74,77 @@ public class NextflowScriptTest {
 	}
 
 	@Test
+	public void testFunctionNames() {
+		List<String> names = NextflowScript.getFunctionNames("def function1() { some content }");
+		assertEquals(1, names.size());
+		assertEquals("function1", names.get(0));
+	}
+
+	@Test
+	public void testFunctionNames1() {
+		List<String> names = NextflowScript.getFunctionNames("def function1\t()\t{ some content }");
+		assertEquals(1, names.size());
+		assertEquals("function1", names.get(0));
+	}
+
+	@Test
+	public void testFunctionNames2() {
+		List<String> names = NextflowScript.getFunctionNames("\n   def function1()\n{some content }");
+		assertEquals(1, names.size());
+		assertEquals("function1", names.get(0));
+	}
+
+	@Test
+	public void testFunctionNames3() {
+		List<String> names = NextflowScript.getFunctionNames("def function1(){ some content }");
+		assertEquals(1, names.size());
+		assertEquals("function1", names.get(0));
+	}
+
+	@Test
+	public void testFunctionNames4() {
+		List<String> names = NextflowScript
+				.getFunctionNames("\n   def function1()\n{some content }\\n   def function2(arg1, arg2){some content }\"");
+		assertEquals(2, names.size());
+		assertEquals("function1", names.get(0));
+		assertEquals("function2", names.get(1));
+	}
+
+	@Test
+	public void testFunctionNames5() {
+		List<String> names = NextflowScript.getFunctionNames("DEF function1(arg1,\targ2){ some content }");
+		assertEquals(1, names.size());
+		assertEquals("function1", names.get(0));
+	}
+
+	@Test
+	public void testFunctionNames6() {
+		List<String> names = NextflowScript.getFunctionNames("def FUNCTION_ONE(){ some content }");
+		assertEquals(1, names.size());
+		assertEquals("FUNCTION_ONE", names.get(0));
+	}
+
+	@Test
+	public void testFunctionNames7() {
+		List<String> names = NextflowScript.getFunctionNames("\n   def function1(a\n,b\n)   \n    {some content }");
+		assertEquals(1, names.size());
+		assertEquals("function1", names.get(0));
+	}
+
+	@Test
+	public void testFunctionNames8() {
+		List<String> names = NextflowScript.getFunctionNames("def   \n   FUNCTION1(arg1,arg2){ some content }");
+		assertEquals(1, names.size());
+		assertEquals("FUNCTION1", names.get(0));
+	}
+
+	@Test
+	public void testFunctionNames9() {
+		List<String> names = NextflowScript.getFunctionNames("def      { some content }");
+		assertEquals(0, names.size());
+	}
+
+	@Test
 	public void testGetWorkflowNames() {
 		List<String> names = NextflowScript.getWorkflowNames("workflow process1 { some content }");
 		assertEquals(1, names.size());
@@ -144,4 +215,5 @@ public class NextflowScriptTest {
 		assertEquals(0, names.size());
 	}
 
+	
 }

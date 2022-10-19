@@ -16,6 +16,9 @@ The debug parameter prints out all available output channels which can be access
 #### `--without-trace`
 The Linux tool `procps` is required to run Nextflow tracing. In case your container does not support this tool, you can also run nf-test without tracing. Please note that the `workflow.trace` are not available when running it with this flag.
 
+#### `--tap <filename>`
+Writes test results in [TAP format](https://testanything.org) to file.
+
 ## Examples
 
 Run all tests:
@@ -36,4 +39,10 @@ Run a specific test using its hash:
 
 ```
 nf-test test tests/main.nf.test@d41119e4
+```
+
+Run all tests and write results to `report.tap`:
+
+```
+nf-test test --tap report.tap
 ```

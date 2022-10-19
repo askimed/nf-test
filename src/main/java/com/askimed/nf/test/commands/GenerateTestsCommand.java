@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import com.askimed.nf.test.commands.generate.FunctionTestGenerator;
 import com.askimed.nf.test.commands.generate.ITestGenerator;
 import com.askimed.nf.test.commands.generate.PipelineTestGenerator;
 import com.askimed.nf.test.commands.generate.ProcessTestGenerator;
@@ -38,6 +39,13 @@ public class GenerateTestsCommand implements Callable<Integer> {
 	public Integer pipeline(@Parameters(description = "source files") List<File> scripts) {
 
 		return generate(scripts, new PipelineTestGenerator());
+
+	}
+
+	@Command(name = "function")
+	public Integer function(@Parameters(description = "source files") List<File> scripts) {
+
+		return generate(scripts, new FunctionTestGenerator());
 
 	}
 

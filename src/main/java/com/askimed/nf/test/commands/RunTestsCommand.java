@@ -10,7 +10,10 @@ import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
 import com.askimed.nf.test.config.Config;
+import com.askimed.nf.test.core.AnsiTestExecutionListener;
+import com.askimed.nf.test.core.GroupTestExecutionListener;
 import com.askimed.nf.test.core.TestExecutionEngine;
+import com.askimed.nf.test.core.reports.TapTestReportWriter;
 import com.askimed.nf.test.util.AnsiColors;
 
 import picocli.CommandLine.Command;
@@ -36,6 +39,14 @@ public class RunTestsCommand implements Callable<Integer> {
 			"--without-trace" }, description = "Run nextflow tests without trace parameter.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean withoutTrace = false;
 
+	@Option(names = {
+			"--tap" }, description = "Write test results to tap file", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String tap = null;
+
+	@Option(names = {
+			"--lib" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String lib = "";
+
 	@Override
 	public Integer call() throws Exception {
 
@@ -44,6 +55,7 @@ public class RunTestsCommand implements Callable<Integer> {
 			String defaultProfile = null;
 			File defaultConfigFile = null;
 			File workDir = new File(".nf-test");
+			String libDir = lib;
 			boolean defaultWithTrace = true;
 			try {
 
@@ -55,6 +67,10 @@ public class RunTestsCommand implements Callable<Integer> {
 					defaultConfigFile = config.getConfigFile();
 					defaultWithTrace = config.isWithTrace();
 					workDir = new File(config.getWorkDir());
+					if (!libDir.isEmpty()) {
+						libDir += ":";
+					}
+					libDir += config.getLibDir();
 
 					if (scripts == null) {
 						File folder = new File(config.getTestsDir());
@@ -81,10 +97,18 @@ public class RunTestsCommand implements Callable<Integer> {
 				return 2;
 			}
 
+			GroupTestExecutionListener listener = new GroupTestExecutionListener();
+			listener.addListener(new AnsiTestExecutionListener());
+			if (tap != null) {
+				listener.addListener(new TapTestReportWriter(tap));
+			}
+
 			TestExecutionEngine engine = new TestExecutionEngine();
+			engine.setListener(listener);
 			engine.setScripts(scripts);
 			engine.setDebug(debug);
 			engine.setWorkDir(workDir);
+			engine.setLibDir(libDir);
 			if (profile != null) {
 				engine.setProfile(profile);
 			} else {
@@ -113,6 +137,11 @@ public class RunTestsCommand implements Callable<Integer> {
 
 	}
 
+	public static boolean isSupportedFile(Path path) {
+		return path.getFileName().toString().endsWith(".nf.test")
+				|| path.getFileName().toString().endsWith(".groovy.test");
+	}
+
 	public static List<File> findTests(File folder) throws Exception {
 
 		final List<File> scripts = new Vector<File>();
@@ -125,7 +154,7 @@ public class RunTestsCommand implements Callable<Integer> {
 
 			@Override
 			public void accept(Path path) {
-				if (Files.isRegularFile(path) && path.getFileName().toString().endsWith(".nf.test")) {
+				if (Files.isRegularFile(path) && isSupportedFile(path)) {
 					scripts.add(path.toFile());
 				}
 			}

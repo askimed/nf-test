@@ -1,0 +1,24 @@
+nextflow_workflow {
+
+    name "Test workflow"
+    script "test-data/workflow/multi/trial.nf"
+    workflow "hello"
+
+    test("Test say hello") {
+
+        then {
+            assert workflow.success
+            assert "Hello lukas" in workflow.stdout
+        }
+    }
+    
+    test("Test say bye") {
+        
+        workflow "bye"        
+
+        then {
+            assert workflow.success
+            assert "Bye lukas" in workflow.stdout
+        }
+    }
+}

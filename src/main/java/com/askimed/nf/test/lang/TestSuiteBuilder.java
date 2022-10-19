@@ -6,6 +6,7 @@ import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
 import com.askimed.nf.test.core.ITestSuite;
+import com.askimed.nf.test.lang.function.FunctionTestSuite;
 import com.askimed.nf.test.lang.pipeline.PipelineTestSuite;
 import com.askimed.nf.test.lang.process.ProcessTestSuite;
 import com.askimed.nf.test.lang.workflow.WorkflowTestSuite;
@@ -55,23 +56,51 @@ public class TestSuiteBuilder {
 
 	}
 
+	static ITestSuite nextflow_function(
+			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+
+		final FunctionTestSuite suite = new FunctionTestSuite();
+
+		closure.setDelegate(suite);
+		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
+		closure.call();
+
+		return suite;
+
+	}
+
 	public static ITestSuite parse(File script) throws Exception {
+		return parse(script, "");
+	}
+
+	public static ITestSuite parse(File script, String libDir) throws Exception {
 
 		ImportCustomizer customizer = new ImportCustomizer();
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_pipeline");
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_workflow");
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_process");
-		customizer.addStaticStars("com.askimed.nf.test.lang.extensions.GlobalMethods");
+		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_function");
+		customizer.addStaticStars("com.askimed.nf.test.lang.extensions.GlobalMethods");;
+
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
+		String classpath = script.getAbsoluteFile().getParentFile().getAbsolutePath() + "/lib:" + libDir;
+		compilerConfiguration.setClasspath(classpath);
+
 		compilerConfiguration.addCompilationCustomizers(customizer);
 
 		GroovyShell shell = new GroovyShell(compilerConfiguration);
 
 		Object object = shell.evaluate(script);
-		ITestSuite nextflowDsl = (ITestSuite) object;
 
-		return nextflowDsl;
+		if (!(object instanceof ITestSuite)) {
+			throw new Exception("Not a valid TestSuite object.");
+		}
+
+		ITestSuite testSuite = (ITestSuite) object;
+		testSuite.setFilename(script.getAbsolutePath());
+
+		return testSuite;
 	}
 
 }

@@ -1,0 +1,49 @@
+nextflow_process {
+
+  name "Test process xy"
+
+  script "test-data/process/config/test_process.nf"
+  process "TEST_PROCESS"
+  
+  config "test-data/process/config/nextflow.config"
+
+
+  test("Test config from testsuite") {
+
+    when {
+      process {
+        """
+        input[0] = Channel.from(params.input)
+        """
+      }
+    }
+
+    then {
+      assert process.success
+      assert process.out.my_output_numbers == [1,2,3,4,5]      
+      
+    }
+
+  }
+  
+  test("Test config from test") {
+
+    config "test-data/process/config/nextflow2.config"
+
+    when {
+      process {
+        """
+        input[0] = Channel.from(params.input)
+        """
+      }
+    }
+
+    then {
+      assert process.success
+      assert process.out.my_output_numbers == [1,2,3]      
+      
+    }
+
+  }
+
+}

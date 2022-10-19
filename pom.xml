@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.askimed</groupId>
 	<artifactId>nf-test</artifactId>
-	<version>0.6.0</version>
+	<version>0.6.2</version>
 	<name>nf-test</name>
 	<description>Simple test framework for Nextflow pipelines</description>
 	<url>https://github.com/askimed/nf-test</url>
@@ -63,6 +63,12 @@
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
 			<version>5.5.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.tap4j</groupId>
+			<artifactId>tap4j</artifactId>
+			<version>4.4.2</version>
 		</dependency>
 
 		<dependency>

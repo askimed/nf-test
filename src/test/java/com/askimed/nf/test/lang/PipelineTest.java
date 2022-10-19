@@ -1,5 +1,7 @@
 package com.askimed.nf.test.lang;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
@@ -35,6 +37,24 @@ public class PipelineTest {
 		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl1/test2.nf.test",
 				"test-data/pipeline/dsl1/test1.nf.test" });
 		assertEquals(1, exitCode);
+	}
+
+	@Test
+	public void testMultipleDsl1ScriptsAndWriteTapOutput() throws Exception {
+
+		String tapOutput = "output.tap";
+
+		File output = new File(tapOutput);
+		if (output.exists()) {
+			output.delete();
+		}
+		assertFalse(output.exists());
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl1/test2.nf.test",
+				"test-data/pipeline/dsl1/test1.nf.test", "--tap", tapOutput });
+		assertEquals(1, exitCode);
+		assertTrue(output.exists());
 	}
 
 	@Test
