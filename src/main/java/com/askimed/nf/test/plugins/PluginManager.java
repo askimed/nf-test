@@ -30,12 +30,15 @@ public class PluginManager {
 
 	private List<String> repositories = new Vector<String>();
 
-	public PluginManager() {
+	private boolean forceUpdate;
+	
+	public PluginManager(boolean forceUpdate) {
 		repositories.add(DEFAULT_REPOSITORY);
+		this.forceUpdate = forceUpdate;
 	}
 
 	public void load(String id) throws IOException {
-		PluginRepository repository = new PluginRepository(repositories, true);
+		PluginRepository repository = new PluginRepository(repositories, forceUpdate);
 		PluginRelease pluginRelease = repository.findById(id);
 		InstalledPlugin plugin = repository.resolveRelease(pluginRelease);
 		loadFromFile(plugin.getPath());

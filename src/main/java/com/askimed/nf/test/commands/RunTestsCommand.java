@@ -56,7 +56,7 @@ public class RunTestsCommand implements Callable<Integer> {
 	@Override
 	public Integer call() throws Exception {
 
-		PluginManager manager = new PluginManager();
+		PluginManager manager = new PluginManager(false);
 
 		try {
 
