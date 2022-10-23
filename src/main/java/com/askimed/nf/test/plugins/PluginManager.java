@@ -1,4 +1,4 @@
-package com.askimed.nf.test.lang.extensions;
+package com.askimed.nf.test.plugins;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,26 +20,33 @@ import groovy.lang.MetaMethod;
 
 public class PluginManager {
 
+	public static final String DEFAULT_REPOSITORY = "https://raw.githubusercontent.com/lukfor/nf-test-plugins/main/plugins.json";
+
 	public static final String MODULE_META_INF_FILE = "META-INF/nf-test-plugin";
 
 	private List<String> staticImports = new Vector<String>();
 
-	private static PluginManager instance;
-
 	private ClassLoader classLoader = this.getClass().getClassLoader();
 
-	private PluginManager() {
+	private List<String> repositories = new Vector<String>();
+
+	public PluginManager() {
+		repositories.add(DEFAULT_REPOSITORY);
+	}
+
+	public void load(String id) throws IOException {
+		PluginRepository repository = new PluginRepository(repositories, true);
+		PluginRelease pluginRelease = repository.findById(id);
+		InstalledPlugin plugin = repository.resolveRelease(pluginRelease);
+		loadFromFile(plugin.getPath());
 
 	}
 
-	public static PluginManager getInstance() {
-		if (instance == null) {
-			instance = new PluginManager();
-		}
-		return instance;
+	public void loadFromFile(String filename) throws IOException {
+		loadFromFile(new File(filename));
 	}
 
-	public void loadPluginFromFile(File file) throws IOException {
+	public void loadFromFile(File file) throws IOException {
 
 		if (!file.exists()) {
 			System.out.println("Plugin '" + file + "' not found.");
@@ -53,12 +60,15 @@ public class PluginManager {
 		if (entry != null) {
 			Properties props = new Properties();
 			props.load(jar.getInputStream(entry));
-			System.out.println(
-					"Register plugin " + props.getProperty("moduleName") + " " + props.getProperty("moduleVersion"));
+			// System.out.println(
+			// "Register plugin " + props.getProperty("moduleName") + " " +
+			// props.getProperty("moduleVersion"));
 
 			/*
 			 * This code was extracted from GRAP. They have the same situation, that
-			 * extensions are not loaded after adding jar at runtime.
+			 * extensions are not loaded after adding jar at runtime. See also:
+			 * https://stackoverflow.com/a/36770273 (we removed subclasses support -
+			 * GROOVY-5543)
 			 */
 
 			Map<CachedClass, List<MetaMethod>> metaMethods = new HashMap<CachedClass, List<MetaMethod>>();
@@ -66,7 +76,7 @@ public class PluginManager {
 			mcRegistry.registerExtensionModuleFromProperties(props, classLoader, metaMethods);
 			for (CachedClass c : metaMethods.keySet()) {
 				List<MetaMethod> methods = metaMethods.get(c);
-				System.out.println("Update " + c + " with " + methods);
+				// System.out.println("Update " + c + " with " + methods);
 				c.addNewMopMethods(methods);
 			}
 
@@ -81,6 +91,10 @@ public class PluginManager {
 		}
 		jar.close();
 
+	}
+
+	public void repository(String reposistory) {
+		this.repositories.add(reposistory);
 	}
 
 	public List<String> getStaticImports() {

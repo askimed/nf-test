@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.askimed.nf.test.lang.TestSuiteBuilder;
+import com.askimed.nf.test.plugins.PluginManager;
 import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
@@ -28,6 +29,8 @@ public class TestExecutionEngine {
 	private boolean withTrace = true;
 
 	private String libDir = "";
+	
+	private PluginManager pluginManager = null;
 
 	public void setScripts(List<File> scripts) {
 		this.scripts = scripts;
@@ -63,6 +66,10 @@ public class TestExecutionEngine {
 	public void setListener(ITestExecutionListener listener) {
 		this.listener = listener;
 	}
+	
+	public void setPluginManager(PluginManager pluginManager) {
+		this.pluginManager = pluginManager;
+	}
 
 	protected List<ITestSuite> parse() throws Exception {
 
@@ -78,7 +85,7 @@ public class TestExecutionEngine {
 			if (!script.exists()) {
 				throw new Exception("Test file '" + script.getAbsolutePath() + "' not found.");
 			}
-			ITestSuite testSuite = TestSuiteBuilder.parse(script, libDir);
+			ITestSuite testSuite = TestSuiteBuilder.parse(script, libDir, pluginManager);
 			if (testId != null) {
 				for (ITest test : testSuite.getTests()) {
 					if (!test.getHash().startsWith(testId)) {

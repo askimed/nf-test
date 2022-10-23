@@ -1,6 +1,7 @@
 package com.askimed.nf.test.commands;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,7 +15,7 @@ import com.askimed.nf.test.core.AnsiTestExecutionListener;
 import com.askimed.nf.test.core.GroupTestExecutionListener;
 import com.askimed.nf.test.core.TestExecutionEngine;
 import com.askimed.nf.test.core.reports.TapTestReportWriter;
-import com.askimed.nf.test.lang.extensions.PluginManager;
+import com.askimed.nf.test.plugins.PluginManager;
 import com.askimed.nf.test.util.AnsiColors;
 
 import picocli.CommandLine.Command;
@@ -50,15 +51,12 @@ public class RunTestsCommand implements Callable<Integer> {
 
 	@Option(names = {
 			"--plugins" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
-	private String plugins = "";
+	private String plugins = null;
 
 	@Override
 	public Integer call() throws Exception {
 
-		PluginManager manager = PluginManager.getInstance();
-		for (String plugin : plugins.split("\\:")) {
-			manager.loadPluginFromFile(new File(plugin));
-		}
+		PluginManager manager = new PluginManager();
 
 		try {
 
@@ -81,6 +79,7 @@ public class RunTestsCommand implements Callable<Integer> {
 						libDir += ":";
 					}
 					libDir += config.getLibDir();
+					manager = config.getPluginManager();
 
 					if (scripts == null) {
 						File folder = new File(config.getTestsDir());
@@ -107,6 +106,8 @@ public class RunTestsCommand implements Callable<Integer> {
 				return 2;
 			}
 
+			loadPlugins(manager, plugins);
+
 			GroupTestExecutionListener listener = new GroupTestExecutionListener();
 			listener.addListener(new AnsiTestExecutionListener());
 			if (tap != null) {
@@ -119,6 +120,8 @@ public class RunTestsCommand implements Callable<Integer> {
 			engine.setDebug(debug);
 			engine.setWorkDir(workDir);
 			engine.setLibDir(libDir);
+			engine.setPluginManager(manager);
+
 			if (profile != null) {
 				engine.setProfile(profile);
 			} else {
@@ -145,6 +148,22 @@ public class RunTestsCommand implements Callable<Integer> {
 
 		}
 
+	}
+
+	private void loadPlugins(PluginManager manager, String plugins) throws IOException {
+
+		if (plugins == null) {
+			return;
+		}
+
+		for (String plugin : plugins.split("\\:")) {
+			if (plugin.endsWith(".jar")) {
+				manager.loadFromFile(plugin);
+			} else {
+				manager.load(plugin);
+			}
+
+		}
 	}
 
 	public static boolean isSupportedFile(Path path) {

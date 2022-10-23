@@ -16,6 +16,7 @@ nextflow_process {
     }
 
     then {
+      helloFasta()
       assert path(process.out.fasta.get(0)).fasta == path("test-data/extensions/fasta/fasta.2.fasta").fasta
     }
 

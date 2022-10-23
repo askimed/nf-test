@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-import com.askimed.nf.test.lang.extensions.util.FastaUtil;
 import com.askimed.nf.test.lang.extensions.util.GzipUtil;
 import com.askimed.nf.test.util.FileUtil;
 
@@ -42,12 +41,6 @@ public class PathExtension {
 
 	public static Object getJson(Path self) throws FileNotFoundException, IOException {
 		return readJSON(self);
-	}
-
-	/* FASTA */
-
-	public static Object getFasta(Path self) throws FileNotFoundException, IOException {
-		return FastaUtil.readAsMap(self);
 	}
 
 	/* File methods */
