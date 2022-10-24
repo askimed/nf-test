@@ -108,4 +108,13 @@ public class ProcessTest {
 
 	}
 
+	@Test
+	public void testChannelFolder() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/channel-folder/test_process.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+	
 }

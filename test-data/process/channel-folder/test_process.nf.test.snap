@@ -1,0 +1,16 @@
+{
+    "Should create 5 files": {
+        "content": [
+            {
+                "my_output_folder": [
+                    [
+                        "1_a.txt:md5,086e29e2872195015ce2d3104909b20f",
+                        "1_b.txt:md5,086e29e2872195015ce2d3104909b20f",
+                        "1_c.txt:md5,086e29e2872195015ce2d3104909b20f"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2022-10-24T11:17:51+0000"
+    }
+}

@@ -1,0 +1,27 @@
+nextflow_process {
+
+  name "Test process xy"
+
+  script "test-data/process/channel-folder/test_process.nf"
+  process "TEST_PROCESS"
+
+  test("Should create 5 files") {
+
+    when {
+      params {
+        outdir = "$outputDir"
+      }
+      process {
+        """
+        input[0] = Channel.of(1)
+        """
+      }
+    }
+
+    then {
+      assert snapshot(process.out).match()
+    }
+
+  }
+
+}
