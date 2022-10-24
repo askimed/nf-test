@@ -41,6 +41,8 @@ public class PluginRepository {
 		String version = LATEST_VERSION;
 		if (tiles.length > 1) {
 			version = tiles[1];
+		} else {
+			throw new RuntimeException("Please specify a version. Latest is not yet supported.");
 		}
 		return findByNameAndVersion(name, version);
 	}
