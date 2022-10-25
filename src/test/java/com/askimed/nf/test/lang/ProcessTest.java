@@ -84,7 +84,8 @@ public class ProcessTest {
 	public void testPathUtilExtension() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/process/path-util/test_process.nf.test" });
+		int exitCode = app
+				.run(new String[] { "test", "test-data/process/path-util/test_process.nf.test", "--update-snapshot" });
 		assertEquals(0, exitCode);
 
 	}
@@ -107,4 +108,13 @@ public class ProcessTest {
 
 	}
 
+	@Test
+	public void testChannelFolder() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/channel-folder/test_process.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+	
 }

@@ -45,7 +45,7 @@ public class ProcessTest extends AbstractTest {
 	public ProcessTest(ProcessTestSuite parent) {
 		super();
 		this.parent = parent;
-		context = new TestContext();
+		context = new TestContext(this);
 		context.setName(parent.getProcess());
 	}
 
@@ -96,6 +96,8 @@ public class ProcessTest extends AbstractTest {
 			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
 		}
 
+		context.init(baseDir, outputDir.getAbsolutePath());
+		
 		if (setup != null) {
 			setup.execute(context);
 		}

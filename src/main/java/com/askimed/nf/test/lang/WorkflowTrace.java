@@ -58,4 +58,18 @@ public class WorkflowTrace {
 		return filtered;
 	}
 
+	public int getTasksCount(){
+		return tasks.size();
+	}
+
+	public int getTasksSucceeded(){
+		return succeeded().size();
+	}
+
+	
+	public int getTasksFailed(){
+		return failed().size();
+	}
+
+	
 }

@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Vector;
@@ -85,6 +86,7 @@ public class PathExtension {
 
 	public static Path[] list(Path self) {
 		File[] files = self.toFile().listFiles();
+		Arrays.sort(files);
 		Path[] paths = new Path[files.length];
 		for (int i = 0; i < files.length; i++) {
 			paths[i] = files[i].toPath();

@@ -43,6 +43,9 @@ public class RunTestsCommand implements Callable<Integer> {
 			"--tap" }, description = "Write test results to tap file", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String tap = null;
 
+	@Option(names = { "--update-snapshot",
+			"--updateSnapshot" }, description = "Use this flag to re-record every snapshot that fails during this test run.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean updateSnapshot = false;
 	@Option(names = {
 			"--lib" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String lib = "";
@@ -108,6 +111,7 @@ public class RunTestsCommand implements Callable<Integer> {
 			engine.setScripts(scripts);
 			engine.setDebug(debug);
 			engine.setWorkDir(workDir);
+			engine.setUpdateSnapshot(updateSnapshot);
 			engine.setLibDir(libDir);
 			if (profile != null) {
 				engine.setProfile(profile);

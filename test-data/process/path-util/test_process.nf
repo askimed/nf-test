@@ -11,7 +11,7 @@ process TEST_PROCESS {
      path "output.json", emit: output_json
 
   """
-  gzip -c ${input} > ${input}.gz
+  gzip -n -c ${input} > ${input}.gz
   cp ${input_json} output.json
   """
 

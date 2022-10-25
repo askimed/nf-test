@@ -7,19 +7,22 @@ nextflow_pipeline {
   test("Should create 5 output files") {
 
    when {
-     params.lukas = 27
+     params.lukas = 28
      params.forer = "22"
-     params.outdir = "output"
+     params.outdir = "${outputDir}"
    }
 
    then {
      assert workflow.success
-     assert params.lukas == 27
+     assert params.lukas == 28
      for (def i in 1..5){
-       def file = new File("${params.outdir}/${i}_27.txt");
+       def file = new File("${params.outdir}/${i}_28.txt");
        assert file.exists()
-       assert file.text == "lukas forer\n"
+       assert file.text == "lukas forer ${i}\n"
      }
+     assert snapshot(
+        workflow, path("${params.outdir}").list()
+     ).match("process_test_1")
    }
 
   }
