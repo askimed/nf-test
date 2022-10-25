@@ -6,8 +6,8 @@ config {
 	
 		repository "test-data/plugins.json"		
 		
-		load "nf-test-genomics@1.0.0"		
-		load "nf-test-genomics-2@2.0.0"
+		load "nft-genomics@1.0.0"		
+		load "nft-genomics-2@2.0.0"
 	
 	}
 
