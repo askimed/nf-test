@@ -8,17 +8,27 @@ A typical snapshot test case takes a snapshot of the output channels or any othe
 
 ## Using Snapshots
 
-The `snapshot` keyword creates a snapshot of the object and its `match` method can then be used to check if its contains the expected data from the snap file. The following example shows how to create a snaphot of a workflow channel, process or function:
+The `snapshot` keyword creates a snapshot of the object and its `match` method can then be used to check if its contains the expected data from the snap file. The following example shows how to create a snapshot of a workflow channel:
 
 ```
 assert snapshot(workflow.out.channel1).match()
+```
+
+You can also create a snapshot of all output channels of a process:
+
+```
 assert snapshot(process.out).match()
+```
+
+Even the result of a function can be used:
+
+```
 assert snapshot(function.result).match()
 ```
 
 The first time this test runs, nf-test creates a snapshot file. This is a json file that contains a serialized version of the provided object.
 
-The snapshot file should be committed alongside code changes, and reviewed as part of your code review process. nf-test uses pretty-format to make snapshots human-readable during code review. On subsequent test runs, nf-test will compare the rendered output with the previous snapshot. If they match, the test will pass. If they don't match, either the test runner found a bug in your code that should be fixed, or the implementation has changed and the snapshot needs to be updated.
+The snapshot file should be committed alongside code changes, and reviewed as part of your code review process. nf-test uses pretty-format to make snapshots human-readable during code review. On subsequent test runs, nf-test will compare the data with the previous snapshot. If they match, the test will pass. If they don't match, either the test runner found a bug in your code that should be fixed, or the implementation has changed and the snapshot needs to be updated.
 
 ## Updating Snapshots
 
@@ -68,16 +78,4 @@ You can also use helper methods to add objects to snapshots. For example, you ca
 
 ## File Paths
 
-If nf-test detects a path in the snapshot it automatically replace it by a unique *fingerprint* of the file that ensures the file content is the same. The fingerprint is default the md5 sum, but it can be changed to encode the file content as base64 and use this string.
-
-```
-nextflow_pipeline {
-
-    snapshot {
-      strategy = 'md5' //or 'base64'
-    }
-
-}
-```
-
-Base64 is perfect for small files, because with this information nf-test can then decode the file content and gives you more details when a test fails. Be careful with this feature, because huge binary files will make your snapshot huge and unreadable!
+If nf-test detects a path in the snapshot it automatically replace it by a unique *fingerprint* of the file that ensures the file content is the same. The fingerprint is default the md5 sum.
