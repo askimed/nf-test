@@ -2,7 +2,7 @@
 
 :octicons-tag-24: 0.7.0
 
-Most assertions are usecase specific. Fo example bioinformatics (#20,#19), tables (#22) or image processing (#33). Therefore, separating this functionality and helper classes from the nf-test codebase has several advantages:
+Most assertions are usecase specific. Therefore, separating this functionality and helper classes from the nf-test codebase has several advantages:
 
 1. nf-test releases are independent from plugin releases
 2. it is easier for third-parties to develop and maintain plugins
@@ -25,7 +25,7 @@ config {
     load "nft-fasta@1.0.0"
 
   }
-  
+
 }
 ```
 
