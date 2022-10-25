@@ -27,6 +27,8 @@ public abstract class AbstractTest implements ITest {
 
 	protected File config = null;
 	
+	private boolean updateSnapshot = false;
+	
 	public AbstractTest() {
 
 	}
@@ -150,6 +152,11 @@ public abstract class AbstractTest implements ITest {
 	public void setTestSuite(ITestSuite suite) {
 		this.suite = suite;
 	}
+	
+	@Override
+	public ITestSuite getTestSuite() {
+		return suite;		
+	}
 
 	protected void shareDirectories(String[] directories, String metaDir) throws IOException {
 		for (String directory : directories) {
@@ -161,4 +168,14 @@ public abstract class AbstractTest implements ITest {
 		}
 	}
 
+	
+	@Override
+	public void setUpdateSnapshot(boolean updateSnapshot) {
+		this.updateSnapshot = updateSnapshot;
+	}
+	
+	public boolean isUpdateSnapshot() {
+		return updateSnapshot;
+	}
+	
 }

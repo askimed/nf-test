@@ -23,7 +23,13 @@ public interface ITest {
 	public String getHash();
 	
 	public void setTestSuite(ITestSuite suite);
+	
+	public ITestSuite getTestSuite();
 
 	public void setWithTrace(boolean withTrace);
+	
+	public void setUpdateSnapshot(boolean updateSnapshot);
+	
+	public boolean isUpdateSnapshot();
 
 }

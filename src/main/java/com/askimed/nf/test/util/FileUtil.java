@@ -3,6 +3,7 @@ package com.askimed.nf.test.util;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -143,6 +144,33 @@ public class FileUtil {
 			Path destination = Paths.get(destinationDirectory, source.toString().substring(sourceDirectory.length()));
 			Files.copy(source, destination);
 		}
+	}
+	
+	public static String encodeBase64(Path path) throws IOException {
+		byte[] bytes =   readBytesFromFile(path.toFile().getAbsolutePath());
+		return encodeBase64(bytes);
+	}
+	
+	public static byte[] readBytesFromFile(String filename) throws IOException {
+		FileInputStream in = new FileInputStream(filename);
+		byte[] bytes = readBytes(in);
+		in.close();
+		return bytes;
+	}
+	
+	public static byte[] readBytes(InputStream in) throws IOException {
+		byte[] targetArray = new byte[in.available()];
+		in.read(targetArray);
+		return targetArray;
+	}
+
+	public static String encodeBase64(String content) {
+		return encodeBase64(content.getBytes());
+	}
+	
+	public static String encodeBase64(byte[] bytes) {
+		String encodedContent = java.util.Base64.getEncoder().encodeToString(bytes);
+		return encodedContent;
 	}
 
 }

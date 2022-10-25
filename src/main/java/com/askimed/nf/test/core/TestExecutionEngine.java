@@ -27,6 +27,8 @@ public class TestExecutionEngine {
 	private File baseDir = new File(System.getProperty("user.dir"));
 
 	private boolean withTrace = true;
+	
+	private boolean updateSnapshot = false;
 
 	private String libDir = "";
 	
@@ -59,6 +61,13 @@ public class TestExecutionEngine {
 		this.withTrace = withTrace;
 	}
 
+	public void setUpdateSnapshot(boolean updateSnapshot) {
+		if (updateSnapshot) {
+			System.out.println("Warning: every snapshot that fails during this test run is re-record.");
+		}
+		this.updateSnapshot = updateSnapshot;
+	}
+	
 	public void setLibDir(String libDir) {
 		this.libDir = libDir;
 	}
@@ -146,6 +155,7 @@ public class TestExecutionEngine {
 				TestExecutionResult result = new TestExecutionResult(test);
 				test.setup(workDir);
 				test.setWithTrace(withTrace);
+				test.setUpdateSnapshot(updateSnapshot);
 				try {
 
 					// override debug flag from CLI

@@ -1,5 +1,7 @@
 package com.askimed.nf.test.lang;
 
+import com.askimed.nf.test.core.ITest;
+import com.askimed.nf.test.lang.extensions.Snapshot;
 import com.askimed.nf.test.lang.function.Function;
 import com.askimed.nf.test.lang.process.Process;
 import com.askimed.nf.test.lang.workflow.Workflow;
@@ -24,8 +26,10 @@ public class TestContext {
 
 	public String outputDir = "nf-test";
 
-	public TestContext() {
+	public ITest test;
 
+	public TestContext(ITest test) {
+		this.test = test;
 	}
 
 	public void setName(String name) {
@@ -133,6 +137,15 @@ public class TestContext {
 			process.setMapping(mapping.toString());
 		}
 
+	}
+
+	public Snapshot snapshot(Object ... object ) {
+		return new Snapshot(object, test);
+	}
+
+	public void init(String baseDir, String outputDir) {
+		this.baseDir = baseDir;
+		this.outputDir = outputDir;
 	}
 
 }

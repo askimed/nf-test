@@ -21,7 +21,7 @@ process test {
      file "*.txt"
 
   """
-  echo "lukas forer" > "${number}_${params.lukas}.txt"
+  echo "lukas forer ${number}" > "${number}_${params.lukas}.txt"
   """
 
 }

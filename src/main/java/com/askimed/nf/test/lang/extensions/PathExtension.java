@@ -1,10 +1,12 @@
 package com.askimed.nf.test.lang.extensions;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 
 import com.askimed.nf.test.lang.extensions.util.GzipUtil;
@@ -46,7 +48,15 @@ public class PathExtension {
 	/* File methods */
 
 	public static Path[] list(Path self) {
-		return FileUtil.list(self);
+
+		File[] files = self.toFile().listFiles();
+		Arrays.sort(files);
+		Path[] paths = new Path[files.length];
+		for (int i = 0; i < files.length; i++) {
+			paths[i] = files[i].toPath();
+		}
+		return paths;
+
 	}
 
 	public static boolean exists(Path self) {

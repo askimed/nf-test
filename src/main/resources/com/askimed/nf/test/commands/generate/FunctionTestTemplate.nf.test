@@ -21,7 +21,7 @@ nextflow_function {
 
         then {
             assert function.success
-            assert function.result != null
+            assert snapshot(function.result).match()
         }
 
     }

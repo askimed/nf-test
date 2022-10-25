@@ -1,0 +1,36 @@
+{
+    "process_test_1": {
+        "content": [
+            {
+                "stderr": [
+                    
+                ],
+                "errorReport": "",
+                "exitStatus": 0,
+                "out": {
+                    
+                },
+                "failed": false,
+                "stdout": [
+                    "WARN: Input `set` must define at least two component -- Check process `test`"
+                ],
+                "errorMessage": "",
+                "trace": {
+                    "tasksFailed": 0,
+                    "tasksCount": 5,
+                    "tasksSucceeded": 5
+                },
+                "name": "workflow",
+                "success": true
+            },
+            [
+                "1_28.txt:md5,cb6d376c512ae5d94a5b4031a6d84441",
+                "2_28.txt:md5,14a244f8e6f13b3429711200c7e89bf4",
+                "3_28.txt:md5,b2f4edba5545c31d5b8e246136a12c63",
+                "4_28.txt:md5,74136f1ebff66a01335c4f7bb0e11582",
+                "5_28.txt:md5,b6713b59c66f67fd6a28e8b09ff4f582"
+            ]
+        ],
+        "timestamp": "2022-10-13T10:39:36+0000"
+    }
+}
