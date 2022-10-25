@@ -11,9 +11,10 @@ A plugin has the possibility:
 1. Adding a new method to an existing class (e.g. the property `fasta` to class `Path`). It uses Groovy's ExtensionModule concept. Important: the method has to be static. One class can provide multiple methods.
 
 ```java
+// com.askimed.nf.test.fasta.PathExtension
 public class PathExtension {
   //can be used as: path(filename).fasta
-    public static Object getFasta(Path self) throws FileNotFoundException, IOException {
+    public static Object getFasta(Path self) {
     return FastaUtil.readAsMap(self);
   }
 
@@ -23,6 +24,7 @@ public class PathExtension {
 2. Providing new methods
 
 ```java
+// com.askimed.nf.test.fasta.Methods
 public class Methods {
 
   //can be used as: helloFasta()
@@ -35,13 +37,14 @@ public class Methods {
 
 ### Manifest file
 
-You need to create a file **`META-INF/nf-test-plugin`** (in your resources). Fill it with the metadata about the plugin and register both classes using the `extensionClasses` and `extensionMethods` properties.
+You need to create a file **`META-INF/nf-test-plugin`** (in your resources). This file contains metadata about the plugin and both classes can now be registered by using the `extensionClasses` and `extensionMethods` properties.
+
 ```
 moduleName=nft-my-plugin
 moduleVersion=1.0.0
 moduleAuthors=Lukas Forer
-extensionClasses=com.askimed.nf.test.genomics.PathExtension
-extensionMethods=com.askimed.nf.test.genomics.Methods
+extensionClasses=com.askimed.nf.test.fasta.PathExtension
+extensionMethods=com.askimed.nf.test.fasta.Methods
 ```
 
 ### Building a jar file
@@ -57,7 +60,7 @@ Add your plugin or a new release to the `plugin.json` file and create a pull req
 
 ```
 [{
-  "id": "nft-genomics",
+  "id": "nft-fasta",
   "releases": [{
     "version": "1.0.0",
     "url": "https://github.com/askimed/nft-fasta/releases/download/v1.0.0/nft-fasta-1.0.0.jar",

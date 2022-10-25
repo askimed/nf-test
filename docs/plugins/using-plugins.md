@@ -10,6 +10,7 @@ Most assertions are usecase specific. Fo example bioinformatics (#20,#19), table
 
 For this purpose, we integrated the following plugin system that provides (a) the possibility to extend existing classes with custom methods (e.g. `path(filename).fasta`) and (2) to extends nf-test with new methods.
 
+
 ## Using Plugins
 
 Available plugins are listed [here](https://code.askimed.com/nf-test-plugins).
@@ -18,11 +19,13 @@ A plugin can be activated via the `nf-test.config` by adding the `plugin` sectio
 
 ```
 config {
+
   plugins {
 
     load "nft-fasta@1.0.0"
 
   }
+  
 }
 ```
 
@@ -30,6 +33,7 @@ It is also possible to add one ore more additional repositories. (Example: repos
 
 ```
 config {
+
   plugins {
 
     repository "https://github.com/askimed/nf-test-plugins/blob/main/plugins-snapshots.json"
@@ -37,15 +41,18 @@ config {
 
     load "nft-fasta@1.1.0-snapshot"
     load "nft-plugin2@1.1.0"
+
     // you can also load jar files directly without any repository
-    //loadFromFile "path/to/my/nft-plugin.jar"
+    // loadFromFile "path/to/my/nft-plugin.jar"
   }
+
 }
 ```
 
-All plugins are downloaded and cached in `.nf-test\plugins`. **This installation mechanism is yet not safe for parallel execution when multiple nf-test instances are resolving the same plugin.**
+All plugins are downloaded and cached in `.nf-test\plugins`. This installation mechanism is yet not safe for parallel execution when multiple nf-test instances are resolving the same plugin. However, you can use `nf-test update-plugins` to download all plugins before you run your tests in parallel.
 
 To clear the cache and to force redownloading plugins and repositories you can execute the `nf-test clean` command.
+
 One or multiple plugins can be activated also via the `--plugins` parameter:
 
 ```

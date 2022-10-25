@@ -44,6 +44,7 @@ nav:
     - clean: cli/clean.md
   - Configuration: configuration.md
   - Plugins:
+    - Available Plugins: https://code.askimed.com/nf-test-plugins
     - Using Plugins: plugins/using-plugins.md
     - Developing Plugins: plugins/developing-plugins.md
   - Available Pipelines: nftest_pipelines.md

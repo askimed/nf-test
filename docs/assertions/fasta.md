@@ -2,7 +2,7 @@
 
 :octicons-tag-24: 0.7.0
 
-nf-test extends `path` by a `fasta` property that can be used to read FASTA files into maps. nf-test supports also gzipped FASTA files.
+The nft-fasta plugin extends `path` by a `fasta` property that can be used to read FASTA files into maps. nft-fasta supports also gzipped FASTA files.
 
 
 ## Setup
@@ -17,6 +17,7 @@ config {
 }
 ```
 
+More about plugins can be fond [here](/plugins/using-plugins).
 
 ## Comparing files
 
