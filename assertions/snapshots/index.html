@@ -506,6 +506,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../fasta/" class="md-nav__link">
+        FASTA Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../libraries/" class="md-nav__link">
         Using Third-Party Libraries
       </a>
@@ -632,6 +646,68 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Plugins
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Plugins" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Plugins
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/using-plugins/" class="md-nav__link">
+        Using Plugins
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/developing-plugins/" class="md-nav__link">
+        Developing Plugins
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../nftest_pipelines/" class="md-nav__link">
         Available Pipelines
@@ -730,8 +806,7 @@
 
 
 <h1 id="snapshots">Snapshots</h1>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 6.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5z"/><path fill-rule="evenodd" d="M2.5 1A1.5 1.5 0 0 0 1 2.5v8.44c0 .397.158.779.44 1.06l10.25 10.25a1.5 1.5 0 0 0 2.12 0l8.44-8.44a1.5 1.5 0 0 0 0-2.12L12 1.44A1.5 1.5 0 0 0 10.94 1H2.5zm0 1.5h8.44l10.25 10.25-8.44 8.44L2.5 10.94V2.5z"/></svg></span> 0.6.3 ·
-<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8 8.807V3.5h-.563a.75.75 0 0 1 0-1.5h9.125a.75.75 0 0 1 0 1.5H16v5.307l5.125 9.301c.964 1.75-.302 3.892-2.299 3.892H5.174c-1.998 0-3.263-2.142-2.3-3.892L8 8.807zM14.5 3.5h-5V9a.75.75 0 0 1-.093.362L7.127 13.5h9.746l-2.28-4.138A.75.75 0 0 1 14.5 9V3.5zM4.189 18.832 6.3 15h11.4l2.111 3.832a1.125 1.125 0 0 1-.985 1.668H5.174a1.125 1.125 0 0 1-.985-1.668z"/></svg></span> Experimental</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 6.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5z"/><path fill-rule="evenodd" d="M2.5 1A1.5 1.5 0 0 0 1 2.5v8.44c0 .397.158.779.44 1.06l10.25 10.25a1.5 1.5 0 0 0 2.12 0l8.44-8.44a1.5 1.5 0 0 0 0-2.12L12 1.44A1.5 1.5 0 0 0 10.94 1H2.5zm0 1.5h8.44l10.25 10.25-8.44 8.44L2.5 10.94V2.5z"/></svg></span> 0.7.0 ·</p>
 <p>Snapshots are a very useful tool whenever you want to make sure your output channels or output files not change unexpectedly. This feature is highly inspired by <a href="https://jestjs.io/">Jest</a>.</p>
 <p>A typical snapshot test case takes a snapshot of the output channels or any other object, then compares it to a reference snapshot file stored alongside the test (<code>*.nf.test.snap</code>). The test will fail, if the two snapshots do not match: either the change is unexpected, or the reference snapshot needs to be updated to the new output of a process, workflow, pipeline or function.</p>
 <h2 id="using-snapshots">Using Snapshots</h2>
@@ -761,7 +836,7 @@ assert snapshot(function.result).match()
     path(&quot;${params.outdir}/file3.txt&quot;)
 ).match()
 </code></pre></div>
-<p>By default the snapshot has the same name as the test. You can also store a snapshot under a user defined name. This enables you to use multiple snapshots in one single test and to separate them in a logical way. In the following example a workflow snapshot is created, stored under the name "workflow". The second example, creates a snaphot of two files and saves it under "files". </p>
+<p>By default the snapshot has the same name as the test. You can also store a snapshot under a user defined name. This enables you to use multiple snapshots in one single test and to separate them in a logical way. In the following example a workflow snapshot is created, stored under the name "workflow". The second example, creates a snaphot of two files and saves it under "files".</p>
 <div class="highlight"><pre><span></span><code>assert snapshot(workflow).match(&quot;workflow&quot;)
 assert snapshot(path(&quot;${params.outdir}/file1.txt&quot;), path(&quot;${params.outdir}/file2.txt&quot;)).match(&quot;files&quot;)
 </code></pre></div>
