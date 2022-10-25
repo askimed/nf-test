@@ -32,6 +32,8 @@ public class PluginManager {
 
 	private boolean forceUpdate;
 	
+	public static boolean FORCE_UPDATE = false; 
+	
 	public PluginManager(boolean forceUpdate) {
 		repositories.add(DEFAULT_REPOSITORY);
 		this.forceUpdate = forceUpdate;

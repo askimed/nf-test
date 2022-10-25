@@ -5,6 +5,7 @@ import com.askimed.nf.test.commands.GenerateTestsCommand;
 import com.askimed.nf.test.commands.InitCommand;
 import com.askimed.nf.test.commands.ListTestsCommand;
 import com.askimed.nf.test.commands.RunTestsCommand;
+import com.askimed.nf.test.commands.UpdatePluginsCommand;
 import com.askimed.nf.test.commands.VersionCommand;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.Emoji;
@@ -30,6 +31,7 @@ public class App {
 		commandLine.addSubcommand("list", new ListTestsCommand());
 		commandLine.addSubcommand("ls", new ListTestsCommand());
 		commandLine.addSubcommand("generate", new GenerateTestsCommand());
+		commandLine.addSubcommand("update-plugins", new UpdatePluginsCommand());
 		commandLine.addSubcommand("version", new VersionCommand());
 		commandLine.setExecutionStrategy(new CommandLine.RunLast());
 		return commandLine.execute(args);

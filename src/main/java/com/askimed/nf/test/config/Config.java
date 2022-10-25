@@ -26,7 +26,7 @@ public class Config {
 
 	private boolean withTrace = true;
 
-	private PluginManager pluginManager = new PluginManager(false);
+	private PluginManager pluginManager = new PluginManager(PluginManager.FORCE_UPDATE);
 
 	private String configFile = DEFAULT_NEXTFLOW_CONFIG;
 
