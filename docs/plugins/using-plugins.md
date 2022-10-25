@@ -6,9 +6,9 @@ Most assertions are usecase specific. Fo example bioinformatics (#20,#19), table
 
 1. nf-test releases are independent from plugin releases
 2. it is easier for third-parties to develop and maintain plugins
-3. it is possible to use private repositories to ingerate private/protected code in plugins without sharing them
+3. it is possible to use private repositories to integrate private/protected code in plugins without sharing them
 
-For this purpose, we integrated the following plugin system that provides (a) the posiibility to extend exisiting classes with custom methods (e.g. `path(filename).fasta`) and (2) to etends nf-test with new methods.
+For this purpose, we integrated the following plugin system that provides (a) the possibility to extend existing classes with custom methods (e.g. `path(filename).fasta`) and (2) to extends nf-test with new methods.
 
 ## Using Plugins
 
