@@ -1,8 +1,21 @@
 # FASTA Files
 
-Requires: nf-test > 0.7.0
+:octicons-tag-24: 0.7.0
 
 nf-test extends `path` by a `fasta` property that can be used to read FASTA files into maps. nf-test supports also gzipped FASTA files.
+
+
+## Setup
+
+To use the `fasta` property you need to activate the `nf-test-genomics` plugin in your `nf-test.config` file:
+
+```
+config {
+  plugins {
+    load "nf-test-genomics@1.0.0"
+  }
+}
+```
 
 
 ## Comparing files

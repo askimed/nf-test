@@ -42,6 +42,9 @@ nav:
     - test: cli/test.md
     - clean: cli/clean.md
   - Configuration: configuration.md
+  - Plugins:
+    - Using Plugins: plugins/using-plugins.md
+    - Developing Plugins: plugins/developing-plugins.md
   - Available Pipelines: nftest_pipelines.md
   - About: about.md
 

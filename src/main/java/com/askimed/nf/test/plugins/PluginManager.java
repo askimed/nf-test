@@ -20,7 +20,7 @@ import groovy.lang.MetaMethod;
 
 public class PluginManager {
 
-	public static final String DEFAULT_REPOSITORY = "https://raw.githubusercontent.com/lukfor/nf-test-plugins/main/plugins.json";
+	public static final String DEFAULT_REPOSITORY = "https://raw.githubusercontent.com/askimed/nf-test-plugins/main/plugins.json";
 
 	public static final String MODULE_META_INF_FILE = "META-INF/nf-test-plugin";
 
