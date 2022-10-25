@@ -7,12 +7,12 @@ nf-test extends `path` by a `fasta` property that can be used to read FASTA file
 
 ## Setup
 
-To use the `fasta` property you need to activate the `nf-test-genomics` plugin in your `nf-test.config` file:
+To use the `fasta` property you need to activate the `nft-fasta` plugin in your `nf-test.config` file:
 
 ```
 config {
   plugins {
-    load "nft-genomics@1.0.0"
+    load "nft-fasta@1.0.0"
   }
 }
 ```

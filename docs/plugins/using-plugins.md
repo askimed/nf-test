@@ -12,7 +12,7 @@ For this purpose, we integrated the following plugin system that provides (a) th
 
 ## Using Plugins
 
-Available plugins are listed [here](https://github.com/askimed/nf-test-plugins/blob/main/plugins.json).
+Available plugins are listed [here](https://code.askimed.com/nf-test-plugins).
 
 A plugin can be activated via the `nf-test.config` by adding the `plugin` section and by using `load` method to specify the plugin and its version:
 
@@ -20,7 +20,7 @@ A plugin can be activated via the `nf-test.config` by adding the `plugin` sectio
 config {
   plugins {
 
-    load "nft-genomics@1.0.0"
+    load "nft-fasta@1.0.0"
 
   }
 }
@@ -35,7 +35,7 @@ config {
     repository "https://github.com/askimed/nf-test-plugins/blob/main/plugins-snapshots.json"
     repository "https://github.com/seppinho/nf-test-plugin2/blob/main/plugins.json"
 
-    load "nft-genomics@1.1.0-snapshot"
+    load "nft-fasta@1.1.0-snapshot"
     load "nft-plugin2@1.1.0"
     // you can also load jar files directly without any repository
     //loadFromFile "path/to/my/nft-plugin.jar"
@@ -49,7 +49,7 @@ To clear the cache and to force redownloading plugins and repositories you can e
 One or multiple plugins can be activated also via the `--plugins` parameter:
 
 ```
-nf-test test my-test.nf.test --plugins nft-genomics@1.0.0,plugin2@1.0.0
+nf-test test my-test.nf.test --plugins nft-fasta@1.0.0,plugin2@1.0.0
 ```
 
 or

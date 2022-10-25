@@ -2,7 +2,7 @@
 
 :octicons-tag-24: 0.7.0
 
-The following plugin can be used as a boilerplate: [https://github.com/askimed/nf-test-genomics](https://github.com/askimed/nf-test-genomics)
+The following plugin can be used as a boilerplate: [https://github.com/askimed/nft-fasta](https://github.com/askimed/nft-fasta)
 
 ## Developing Plugins
 
@@ -51,7 +51,7 @@ The plugin itself is a jar file that contains all classes and the `META-INF/nf-t
 
 ### Publishing Plugins
 
-Available plugins are managed in this default repository: [https://github.com/askimed/nf-test-plugins/blob/main/plugins.json](ttps://github.com/askimed/nf-test-plugins/blob/main/plugins.json)
+Available plugins are managed in this default repository: [https://github.com/askimed/nf-test-plugins/blob/main/plugins.json](https://github.com/askimed/nf-test-plugins/blob/main/plugins.json)
 
 Add your plugin or a new release to the `plugin.json` file and create a pull request to publish your plugin in the default repository. Or host you own repository:
 
@@ -60,10 +60,10 @@ Add your plugin or a new release to the `plugin.json` file and create a pull req
   "id": "nft-genomics",
   "releases": [{
     "version": "1.0.0",
-    "url": "https://github.com/askimed/nft-genomics/releases/download/v1.0.0/nft-genomics-1.0.0.jar",
+    "url": "https://github.com/askimed/nft-fasta/releases/download/v1.0.0/nft-fasta-1.0.0.jar",
   },{
     "version": "2.0.0",
-    "url": "https://github.com/askimed/nft-genomics/releases/download/v2.0.0/nft-genomics-2.0.0.jar",
+    "url": "https://github.com/askimed/nft-fasta/releases/download/v2.0.0/nft-fasta-2.0.0.jar",
   }]
 },{
   "id": "nft-my-plugin",
