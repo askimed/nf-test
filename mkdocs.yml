@@ -35,6 +35,7 @@ nav:
     - Files: assertions/files.md
     - Snapshots: assertions/snapshots.md
     - Regular Expressions: assertions/regular-expressions.md
+    - FASTA Files: assertions/fasta.md
     - Using Third-Party Libraries: assertions/libraries.md
   - Command line Interface (CLI):
     - init: cli/init.md
@@ -42,6 +43,9 @@ nav:
     - test: cli/test.md
     - clean: cli/clean.md
   - Configuration: configuration.md
+  - Plugins:
+    - Using Plugins: plugins/using-plugins.md
+    - Developing Plugins: plugins/developing-plugins.md
   - Available Pipelines: nftest_pipelines.md
   - About: about.md
 

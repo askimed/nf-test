@@ -1,6 +1,5 @@
 # Snapshots
-:octicons-tag-24: 0.6.3 ·
-:octicons-beaker-24: Experimental
+:octicons-tag-24: 0.7.0 ·
 
 Snapshots are a very useful tool whenever you want to make sure your output channels or output files not change unexpectedly. This feature is highly inspired by [Jest](https://jestjs.io/).
 
@@ -54,7 +53,7 @@ assert snapshot(
 ).match()
 ```
 
-By default the snapshot has the same name as the test. You can also store a snapshot under a user defined name. This enables you to use multiple snapshots in one single test and to separate them in a logical way. In the following example a workflow snapshot is created, stored under the name "workflow". The second example, creates a snaphot of two files and saves it under "files". 
+By default the snapshot has the same name as the test. You can also store a snapshot under a user defined name. This enables you to use multiple snapshots in one single test and to separate them in a logical way. In the following example a workflow snapshot is created, stored under the name "workflow". The second example, creates a snaphot of two files and saves it under "files".
 
 ```
 assert snapshot(workflow).match("workflow")

@@ -8,11 +8,16 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PushbackInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Formatter;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.zip.GZIPInputStream;
 
 import groovy.lang.Writable;
 
@@ -95,6 +100,41 @@ public class FileUtil {
 
 	public static String makeRelative(File baseDir, File absoluteFile) {
 		return baseDir.toURI().relativize(absoluteFile.toURI()).getPath();
+	}
+
+	public static String getMd5(Path self) throws IOException, NoSuchAlgorithmException {
+		Formatter fm = new Formatter();
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(Files.readAllBytes(self));
+		byte[] md5sum = md.digest();
+		for (byte b : md5sum) {
+			fm.format("%02x", b);
+		}
+		String result = fm.out().toString();
+		fm.close();
+		return result;
+	}
+
+	public static Path[] list(Path self) {
+		File[] files = self.toFile().listFiles();
+		Path[] paths = new Path[files.length];
+		for (int i = 0; i < files.length; i++) {
+			paths[i] = files[i].toPath();
+		}
+		return paths;
+	}
+
+	public static InputStream decompressStream(InputStream input) throws IOException {
+		// we need a pushbackstream to look ahead
+		PushbackInputStream pb = new PushbackInputStream(input, 2);
+		byte[] signature = new byte[2];
+		pb.read(signature); // read the signature
+		pb.unread(signature); // push back the signature to the stream
+		// check if matches standard gzip magic number
+		if (signature[0] == (byte) 0x1f && signature[1] == (byte) 0x8b)
+			return new GZIPInputStream(pb);
+		else
+			return pb;
 	}
 
 	public static void copyDirectory(String sourceDirectory, String destinationDirectory) throws IOException {

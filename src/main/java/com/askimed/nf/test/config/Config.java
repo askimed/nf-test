@@ -5,10 +5,9 @@ import java.io.File;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
-import com.askimed.nf.test.lang.pipeline.PipelineTestSuite;
+import com.askimed.nf.test.plugins.PluginManager;
 
 import groovy.lang.Closure;
-import groovy.lang.DelegatesTo;
 import groovy.lang.GroovyShell;
 
 public class Config {
@@ -20,13 +19,15 @@ public class Config {
 	private String workDir = ".nf-test";
 
 	private String testsDir = "tests";
-	
+
 	private String libDir = "tests/lib";
 
 	private String profile = null;
 
-	private boolean withTrace = true; 
-	
+	private boolean withTrace = true;
+
+	private PluginManager pluginManager = new PluginManager(false);
+
 	private String configFile = DEFAULT_NEXTFLOW_CONFIG;
 
 	public void testsDir(String testsDir) {
@@ -60,19 +61,19 @@ public class Config {
 			return null;
 		}
 	}
-	
+
 	public void setWithTrace(boolean withTrace) {
 		this.withTrace = withTrace;
 	}
-	
+
 	public boolean isWithTrace() {
 		return withTrace;
 	}
-	
+
 	public void libDir(String libDir) {
 		this.libDir = libDir;
 	}
-	
+
 	public String getLibDir() {
 		return libDir;
 	}
@@ -82,11 +83,26 @@ public class Config {
 	}
 
 	public File getConfigFile() {
-		return new File(configFile);
+		if (configFile != null && !configFile.isEmpty()) {
+			return new File(configFile);
+		} else {
+			return null;
+		}
 	}
 
-	static Config config(
-			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+	public void plugins(final Closure closure) {
+
+		closure.setDelegate(pluginManager);
+		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
+		closure.call();
+
+	}
+
+	public PluginManager getPluginManager() {
+		return pluginManager;
+	}
+
+	static Config config(final Closure closure) {
 
 		final Config config = new Config();
 

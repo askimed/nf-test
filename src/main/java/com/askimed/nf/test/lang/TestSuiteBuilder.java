@@ -10,6 +10,7 @@ import com.askimed.nf.test.lang.function.FunctionTestSuite;
 import com.askimed.nf.test.lang.pipeline.PipelineTestSuite;
 import com.askimed.nf.test.lang.process.ProcessTestSuite;
 import com.askimed.nf.test.lang.workflow.WorkflowTestSuite;
+import com.askimed.nf.test.plugins.PluginManager;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
@@ -70,17 +71,29 @@ public class TestSuiteBuilder {
 	}
 
 	public static ITestSuite parse(File script) throws Exception {
-		return parse(script, "");
+		return parse(script, "", null);
 	}
 
-	public static ITestSuite parse(File script, String libDir) throws Exception {
+	public static ITestSuite parse(File script, PluginManager pluginManager) throws Exception {
+		return parse(script, "", pluginManager);
+	}
+
+	public static ITestSuite parse(File script, String libDir, PluginManager pluginManager) throws Exception {
 
 		ImportCustomizer customizer = new ImportCustomizer();
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_pipeline");
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_workflow");
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_process");
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_function");
-		customizer.addStaticStars("com.askimed.nf.test.util.FileAndPathMethods");
+		customizer.addStaticStars("com.askimed.nf.test.lang.extensions.GlobalMethods");
+
+		ClassLoader classLoader = TestSuiteBuilder.class.getClassLoader();
+		if (pluginManager != null) {
+			for (String staticImport : pluginManager.getStaticImports()) {
+				customizer.addStaticStars(staticImport);
+			}
+			classLoader = pluginManager.getClassLoader();
+		}
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
 		String classpath = script.getAbsoluteFile().getParentFile().getAbsolutePath() + "/lib:" + libDir;
@@ -88,7 +101,7 @@ public class TestSuiteBuilder {
 
 		compilerConfiguration.addCompilationCustomizers(customizer);
 
-		GroovyShell shell = new GroovyShell(compilerConfiguration);
+		GroovyShell shell = new GroovyShell(classLoader, compilerConfiguration);
 
 		Object object = shell.evaluate(script);
 
