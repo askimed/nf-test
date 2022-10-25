@@ -12,7 +12,7 @@ To use the `fasta` property you need to activate the `nf-test-genomics` plugin i
 ```
 config {
   plugins {
-    load "nf-test-genomics@1.0.0"
+    load "nft-genomics@1.0.0"
   }
 }
 ```

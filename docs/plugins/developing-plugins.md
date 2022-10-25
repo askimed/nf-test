@@ -37,7 +37,7 @@ public class Methods {
 
 You need to create a file **`META-INF/nf-test-plugin`** (in your resources). Fill it with the metadata about the plugin and register both classes using the `extensionClasses` and `extensionMethods` properties.
 ```
-moduleName=nf-test-genomics
+moduleName=nft-my-plugin
 moduleVersion=1.0.0
 moduleAuthors=Lukas Forer
 extensionClasses=com.askimed.nf.test.genomics.PathExtension
@@ -51,23 +51,25 @@ The plugin itself is a jar file that contains all classes and the `META-INF/nf-t
 
 ### Publishing Plugins
 
-Available plugins are managed in this default repository: https://github.com/askimed/nf-test-plugins/blob/main/plugins.json
-Add your plugin or a new release to the `plugin.json` file and create a pull request to publish your plugin in the default repository. Or host you own repository.
+Available plugins are managed in this default repository: [https://github.com/askimed/nf-test-plugins/blob/main/plugins.json](ttps://github.com/askimed/nf-test-plugins/blob/main/plugins.json)
+
+Add your plugin or a new release to the `plugin.json` file and create a pull request to publish your plugin in the default repository. Or host you own repository:
+
 ```
 [{
-  "id": "nf-test-genomics",
+  "id": "nft-genomics",
   "releases": [{
     "version": "1.0.0",
-    "url": "https://github.com/askimed/nf-test-genomics/releases/download/v1.0.0/nf-test-genomics-1.0.0.jar",
+    "url": "https://github.com/askimed/nft-genomics/releases/download/v1.0.0/nft-genomics-1.0.0.jar",
   },{
     "version": "2.0.0",
-    "url": "https://github.com/askimed/nf-test-genomics/releases/download/v2.0.0/nf-test-genomics-2.0.0.jar",
+    "url": "https://github.com/askimed/nft-genomics/releases/download/v2.0.0/nft-genomics-2.0.0.jar",
   }]
 },{
-  "id": "nf-test-plugin2",
+  "id": "nft-my-plugin",
   "releases": [{
     "version": "1.0.0",
-    "url": "https://github.com/seppinho/plugin2/releases/download/v1.0.0/nf-test-plugin2-1.0.0.jar",
+    "url": "https://github.com/lukfor/nft-my-plugin2/releases/download/v1.0.0/nft-my-plugin-1.0.0.jar",
   }]
 }]
 ```
