@@ -810,13 +810,17 @@
 <p>Snapshots are a very useful tool whenever you want to make sure your output channels or output files not change unexpectedly. This feature is highly inspired by <a href="https://jestjs.io/">Jest</a>.</p>
 <p>A typical snapshot test case takes a snapshot of the output channels or any other object, then compares it to a reference snapshot file stored alongside the test (<code>*.nf.test.snap</code>). The test will fail, if the two snapshots do not match: either the change is unexpected, or the reference snapshot needs to be updated to the new output of a process, workflow, pipeline or function.</p>
 <h2 id="using-snapshots">Using Snapshots</h2>
-<p>The <code>snapshot</code> keyword creates a snapshot of the object and its <code>match</code> method can then be used to check if its contains the expected data from the snap file. The following example shows how to create a snaphot of a workflow channel, process or function:</p>
+<p>The <code>snapshot</code> keyword creates a snapshot of the object and its <code>match</code> method can then be used to check if its contains the expected data from the snap file. The following example shows how to create a snapshot of a workflow channel:</p>
 <div class="highlight"><pre><span></span><code>assert snapshot(workflow.out.channel1).match()
-assert snapshot(process.out).match()
-assert snapshot(function.result).match()
+</code></pre></div>
+<p>You can also create a snapshot of all output channels of a process:</p>
+<div class="highlight"><pre><span></span><code>assert snapshot(process.out).match()
+</code></pre></div>
+<p>Even the result of a function can be used:</p>
+<div class="highlight"><pre><span></span><code>assert snapshot(function.result).match()
 </code></pre></div>
 <p>The first time this test runs, nf-test creates a snapshot file. This is a json file that contains a serialized version of the provided object.</p>
-<p>The snapshot file should be committed alongside code changes, and reviewed as part of your code review process. nf-test uses pretty-format to make snapshots human-readable during code review. On subsequent test runs, nf-test will compare the rendered output with the previous snapshot. If they match, the test will pass. If they don't match, either the test runner found a bug in your code that should be fixed, or the implementation has changed and the snapshot needs to be updated.</p>
+<p>The snapshot file should be committed alongside code changes, and reviewed as part of your code review process. nf-test uses pretty-format to make snapshots human-readable during code review. On subsequent test runs, nf-test will compare the data with the previous snapshot. If they match, the test will pass. If they don't match, either the test runner found a bug in your code that should be fixed, or the implementation has changed and the snapshot needs to be updated.</p>
 <h2 id="updating-snapshots">Updating Snapshots</h2>
 <p>When a snapshot test is failing due to an intentional implementation change, you can use the <code>--update-snapshot</code> flag to re-generate snapshots for all failed tests.</p>
 <div class="highlight"><pre><span></span><code>nf-test test tests/main.nf.test --update-snapshot
@@ -844,16 +848,7 @@ assert snapshot(path(&quot;${params.outdir}/file1.txt&quot;), path(&quot;${param
 <div class="highlight"><pre><span></span><code> assert snapshot(workflow, path(params.outdir).list()).match()
 </code></pre></div>
 <h2 id="file-paths">File Paths</h2>
-<p>If nf-test detects a path in the snapshot it automatically replace it by a unique <em>fingerprint</em> of the file that ensures the file content is the same. The fingerprint is default the md5 sum, but it can be changed to encode the file content as base64 and use this string.</p>
-<div class="highlight"><pre><span></span><code>nextflow_pipeline {
-
-    snapshot {
-      strategy = &#39;md5&#39; //or &#39;base64&#39;
-    }
-
-}
-</code></pre></div>
-<p>Base64 is perfect for small files, because with this information nf-test can then decode the file content and gives you more details when a test fails. Be careful with this feature, because huge binary files will make your snapshot huge and unreadable!</p>
+<p>If nf-test detects a path in the snapshot it automatically replace it by a unique <em>fingerprint</em> of the file that ensures the file content is the same. The fingerprint is default the md5 sum.</p>
 
 
 
