@@ -666,6 +666,20 @@
   
   
     <li class="md-nav__item">
+      <a href="https://code.askimed.com/nf-test-plugins" class="md-nav__link">
+        Available Plugins
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../plugins/using-plugins/" class="md-nav__link">
         Using Plugins
       </a>
@@ -793,7 +807,7 @@
 
 <h1 id="fasta-files">FASTA Files</h1>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 6.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5z"/><path fill-rule="evenodd" d="M2.5 1A1.5 1.5 0 0 0 1 2.5v8.44c0 .397.158.779.44 1.06l10.25 10.25a1.5 1.5 0 0 0 2.12 0l8.44-8.44a1.5 1.5 0 0 0 0-2.12L12 1.44A1.5 1.5 0 0 0 10.94 1H2.5zm0 1.5h8.44l10.25 10.25-8.44 8.44L2.5 10.94V2.5z"/></svg></span> 0.7.0</p>
-<p>nf-test extends <code>path</code> by a <code>fasta</code> property that can be used to read FASTA files into maps. nf-test supports also gzipped FASTA files.</p>
+<p>The nft-fasta plugin extends <code>path</code> by a <code>fasta</code> property that can be used to read FASTA files into maps. nft-fasta supports also gzipped FASTA files.</p>
 <h2 id="setup">Setup</h2>
 <p>To use the <code>fasta</code> property you need to activate the <code>nft-fasta</code> plugin in your <code>nf-test.config</code> file:</p>
 <div class="highlight"><pre><span></span><code>config {
@@ -802,6 +816,7 @@
   }
 }
 </code></pre></div>
+<p>More about plugins can be fond <a href="/plugins/using-plugins">here</a>.</p>
 <h2 id="comparing-files">Comparing files</h2>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;path/to/fasta1.fasta&#39;</span><span class="o">).</span><span class="na">fasta</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;path/to/fasta2.fasta&#39;&quot;</span><span class="o">).</span><span class="na">fasta</span><span class="w"></span>
 </code></pre></div>

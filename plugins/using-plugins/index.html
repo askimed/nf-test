@@ -609,6 +609,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="https://code.askimed.com/nf-test-plugins" class="md-nav__link">
+        Available Plugins
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -776,15 +790,18 @@
 <p>Available plugins are listed <a href="https://code.askimed.com/nf-test-plugins">here</a>.</p>
 <p>A plugin can be activated via the <code>nf-test.config</code> by adding the <code>plugin</code> section and by using <code>load</code> method to specify the plugin and its version:</p>
 <div class="highlight"><pre><span></span><code>config {
+
   plugins {
 
     load &quot;nft-fasta@1.0.0&quot;
 
   }
+
 }
 </code></pre></div>
 <p>It is also possible to add one ore more additional repositories. (Example: repository with development/snapshot versions, in-house repository, ...)</p>
 <div class="highlight"><pre><span></span><code>config {
+
   plugins {
 
     repository &quot;https://github.com/askimed/nf-test-plugins/blob/main/plugins-snapshots.json&quot;
@@ -792,14 +809,16 @@
 
     load &quot;nft-fasta@1.1.0-snapshot&quot;
     load &quot;nft-plugin2@1.1.0&quot;
+
     // you can also load jar files directly without any repository
-    //loadFromFile &quot;path/to/my/nft-plugin.jar&quot;
+    // loadFromFile &quot;path/to/my/nft-plugin.jar&quot;
   }
+
 }
 </code></pre></div>
-<p>All plugins are downloaded and cached in <code>.nf-test\plugins</code>. <strong>This installation mechanism is yet not safe for parallel execution when multiple nf-test instances are resolving the same plugin.</strong></p>
-<p>To clear the cache and to force redownloading plugins and repositories you can execute the <code>nf-test clean</code> command.
-One or multiple plugins can be activated also via the <code>--plugins</code> parameter:</p>
+<p>All plugins are downloaded and cached in <code>.nf-test\plugins</code>. This installation mechanism is yet not safe for parallel execution when multiple nf-test instances are resolving the same plugin. However, you can use <code>nf-test update-plugins</code> to download all plugins before you run your tests in parallel.</p>
+<p>To clear the cache and to force redownloading plugins and repositories you can execute the <code>nf-test clean</code> command.</p>
+<p>One or multiple plugins can be activated also via the <code>--plugins</code> parameter:</p>
 <div class="highlight"><pre><span></span><code>nf-test test my-test.nf.test --plugins nft-fasta@1.0.0,plugin2@1.0.0
 </code></pre></div>
 <p>or</p>

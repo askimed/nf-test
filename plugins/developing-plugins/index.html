@@ -611,6 +611,20 @@
   
   
     <li class="md-nav__item">
+      <a href="https://code.askimed.com/nf-test-plugins" class="md-nav__link">
+        Available Plugins
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../using-plugins/" class="md-nav__link">
         Using Plugins
       </a>
@@ -825,9 +839,10 @@
 <ol>
 <li>Adding a new method to an existing class (e.g. the property <code>fasta</code> to class <code>Path</code>). It uses Groovy's ExtensionModule concept. Important: the method has to be static. One class can provide multiple methods.</li>
 </ol>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PathExtension</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// com.askimed.nf.test.fasta.PathExtension</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PathExtension</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="c1">//can be used as: path(filename).fasta</span><span class="w"></span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">getFasta</span><span class="p">(</span><span class="n">Path</span><span class="w"> </span><span class="n">self</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">FileNotFoundException</span><span class="p">,</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">getFasta</span><span class="p">(</span><span class="n">Path</span><span class="w"> </span><span class="n">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">FastaUtil</span><span class="p">.</span><span class="na">readAsMap</span><span class="p">(</span><span class="n">self</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="p">}</span><span class="w"></span>
 
@@ -836,7 +851,8 @@
 <ol>
 <li>Providing new methods</li>
 </ol>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Methods</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// com.askimed.nf.test.fasta.Methods</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Methods</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
 <span class="w">  </span><span class="c1">//can be used as: helloFasta()</span><span class="w"></span>
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">helloFasta</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -846,20 +862,20 @@
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h3 id="manifest-file">Manifest file</h3>
-<p>You need to create a file <strong><code>META-INF/nf-test-plugin</code></strong> (in your resources). Fill it with the metadata about the plugin and register both classes using the <code>extensionClasses</code> and <code>extensionMethods</code> properties.
+<p>You need to create a file <strong><code>META-INF/nf-test-plugin</code></strong> (in your resources). This file contains metadata about the plugin and both classes can now be registered by using the <code>extensionClasses</code> and <code>extensionMethods</code> properties.</p>
 <div class="highlight"><pre><span></span><code>moduleName=nft-my-plugin
 moduleVersion=1.0.0
 moduleAuthors=Lukas Forer
-extensionClasses=com.askimed.nf.test.genomics.PathExtension
-extensionMethods=com.askimed.nf.test.genomics.Methods
-</code></pre></div></p>
+extensionClasses=com.askimed.nf.test.fasta.PathExtension
+extensionMethods=com.askimed.nf.test.fasta.Methods
+</code></pre></div>
 <h3 id="building-a-jar-file">Building a jar file</h3>
 <p>The plugin itself is a jar file that contains all classes and the <code>META-INF/nf-test-plugin</code> file. If you have dependencies then you have to create a uber-jar that includes all libraries, because nf-test doesn't support the classpath set in <code>META-INF\MANIFEST</code>.</p>
 <h3 id="publishing-plugins">Publishing Plugins</h3>
 <p>Available plugins are managed in this default repository: <a href="https://github.com/askimed/nf-test-plugins/blob/main/plugins.json">https://github.com/askimed/nf-test-plugins/blob/main/plugins.json</a></p>
 <p>Add your plugin or a new release to the <code>plugin.json</code> file and create a pull request to publish your plugin in the default repository. Or host you own repository:</p>
 <div class="highlight"><pre><span></span><code>[{
-  &quot;id&quot;: &quot;nft-genomics&quot;,
+  &quot;id&quot;: &quot;nft-fasta&quot;,
   &quot;releases&quot;: [{
     &quot;version&quot;: &quot;1.0.0&quot;,
     &quot;url&quot;: &quot;https://github.com/askimed/nft-fasta/releases/download/v1.0.0/nft-fasta-1.0.0.jar&quot;,
