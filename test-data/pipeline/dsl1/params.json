@@ -1,0 +1,8 @@
+{
+  "lukas": 28,
+  "forer": "22",
+  "outdir": "${outputDir}",
+  "test": {
+    "lukas": 22
+  }
+}

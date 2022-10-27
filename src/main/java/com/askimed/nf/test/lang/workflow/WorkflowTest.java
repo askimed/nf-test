@@ -124,7 +124,7 @@ public class WorkflowTest extends AbstractTest {
 			when.execute(context);
 		}
 
-		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
+		context.evaluateParamsClosure();
 		context.evaluateWorkflowClosure();
 
 		// Create workflow mock

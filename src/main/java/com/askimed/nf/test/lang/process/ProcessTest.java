@@ -106,7 +106,7 @@ public class ProcessTest extends AbstractTest {
 			when.execute(context);
 		}
 
-		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
+		context.evaluateParamsClosure();
 		context.evaluateProcessClosure();
 
 		// Create workflow mock
