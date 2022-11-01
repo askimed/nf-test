@@ -49,11 +49,11 @@ public class App {
 	}
 
 	public static void main(String[] args) throws Exception {
+		System.out.println("Get Shit Done!!!");
 
 		App app = new App();
 		int exitCode = app.run(args);
 		System.exit(exitCode);
-
 	}
 
 }
