@@ -48,6 +48,10 @@ public class RunTestsCommand implements Callable<Integer> {
 			"--tap" }, description = "Write test results to tap file", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String tap = null;
 
+	@Option(names = {
+		"--junitxml" }, description = "Write test results in Junit Xml Format", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String junitXml = null;
+
 	@Option(names = { "--update-snapshot",
 			"--updateSnapshot" }, description = "Use this flag to re-record every snapshot that fails during this test run.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean updateSnapshot = false;
@@ -120,8 +124,9 @@ public class RunTestsCommand implements Callable<Integer> {
 				listener.addListener(new TapTestReportWriter(tap));
 			}
 
-			XmlReportWriter xmlReportWriter = new XmlReportWriter("./test-report.xml");
-			xmlReportWriter.print_message();
+			if (junitXml != null) {
+				listener.addListener(new XmlReportWriter(junitXml));
+			}
 
 			TestExecutionEngine engine = new TestExecutionEngine();
 			engine.setListener(listener);

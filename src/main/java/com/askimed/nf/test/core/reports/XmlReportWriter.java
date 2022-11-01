@@ -35,11 +35,13 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 
 	public void print_message() {
 		System.out.println("I am a XmlReportWriter in print_message");
+		System.out.println(this.filename);
 	}
 
 	@Override
 	public void writeToFile(List<TestSuiteExecutionResult> testSuites) {
-		System.out.println("TODO: Write xml to file...");
+		System.out.println("TODO: Write xml to file..." + this.filename);
+		// System.out.println("TODO: Write xml to file...");
 		return;
 
 		// int index = 0;
