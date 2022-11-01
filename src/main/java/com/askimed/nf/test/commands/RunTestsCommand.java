@@ -15,6 +15,9 @@ import com.askimed.nf.test.core.AnsiTestExecutionListener;
 import com.askimed.nf.test.core.GroupTestExecutionListener;
 import com.askimed.nf.test.core.TestExecutionEngine;
 import com.askimed.nf.test.core.reports.TapTestReportWriter;
+
+import com.askimed.nf.test.core.reports.XmlReportWriter;
+
 import com.askimed.nf.test.plugins.PluginManager;
 import com.askimed.nf.test.util.AnsiColors;
 
@@ -116,6 +119,9 @@ public class RunTestsCommand implements Callable<Integer> {
 			if (tap != null) {
 				listener.addListener(new TapTestReportWriter(tap));
 			}
+
+			XmlReportWriter xmlReportWriter = new XmlReportWriter("./test-report.xml");
+			xmlReportWriter.print_message();
 
 			TestExecutionEngine engine = new TestExecutionEngine();
 			engine.setListener(listener);
