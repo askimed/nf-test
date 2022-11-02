@@ -13,6 +13,8 @@ import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
 import org.codehaus.groovy.reflection.CachedClass;
+import org.codehaus.groovy.reflection.ClassInfo;
+import org.codehaus.groovy.reflection.ClassInfo.ClassInfoAction;
 import org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl;
 
 import groovy.lang.GroovySystem;
@@ -72,8 +74,7 @@ public class PluginManager {
 			/*
 			 * This code was extracted from GRAP. They have the same situation, that
 			 * extensions are not loaded after adding jar at runtime. See also:
-			 * https://stackoverflow.com/a/36770273 (we removed subclasses support -
-			 * GROOVY-5543)
+			 * https://stackoverflow.com/a/36770273 See also #GROOVY-5543
 			 */
 
 			Map<CachedClass, List<MetaMethod>> metaMethods = new HashMap<CachedClass, List<MetaMethod>>();
@@ -82,6 +83,16 @@ public class PluginManager {
 			for (CachedClass c : metaMethods.keySet()) {
 				List<MetaMethod> methods = metaMethods.get(c);
 				// System.out.println("Update " + c + " with " + methods);
+				ClassInfo.onAllClassInfo(new ClassInfoAction() {
+					@Override
+					public void onClassInfo(ClassInfo classInfo) {
+						if (c.getTheClass().isAssignableFrom(classInfo.getCachedClass().getTheClass())) {
+							// System.out.println("Update " + classInfo.getCachedClass() + " with " + methods);
+							classInfo.getCachedClass().addNewMopMethods(methods);
+						}
+					}
+				});
+				
 				c.addNewMopMethods(methods);
 			}
 
