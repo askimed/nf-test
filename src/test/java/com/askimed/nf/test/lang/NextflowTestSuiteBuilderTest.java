@@ -11,7 +11,7 @@ public class NextflowTestSuiteBuilderTest {
 	@Test
 	public void testParse() throws Exception {
 		File file = new File("test-data/pipeline/dsl1/test1.nf.test");
-		assertEquals(2, TestSuiteBuilder.parse(file).getTests().size());
+		assertEquals(5, TestSuiteBuilder.parse(file).getTests().size());
 	}
 	
 }

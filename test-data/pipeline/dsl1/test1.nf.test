@@ -79,7 +79,7 @@ nextflow_pipeline {
      assert workflow.success
      assert params.lukas == 28
      for (def i in 1..5){
-       def file = new File("${params.outdir}/${i}_44.txt");
+       def file = new File("${params.outdir}/${i}_28.txt");
        assert file.exists()
        assert file.text == "lukas forer ${i}\n"
      }
