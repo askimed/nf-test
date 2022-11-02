@@ -3,17 +3,11 @@ package com.askimed.nf.test.core.reports;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Date;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import java.io.FileWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 import javax.xml.stream.XMLOutputFactory;
@@ -29,13 +23,10 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 	private String filename;
 
 	public XmlReportWriter(String filename) throws IOException {
-		if (! new File(filename).canWrite()) {
-			throw new IOException("XmlReport file is not writable: " + filename);
-		}
 		this.filename = filename;
 	}
 
-	public String convertTime(long time){
+	public static String convertTime(long time){
 		Date date = new Date(time);
 		Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
 		return format.format(date);

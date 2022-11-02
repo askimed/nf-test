@@ -1,7 +1,6 @@
 package com.askimed.nf.test.core;
 
 import java.io.IOException;
-
 import javax.xml.stream.XMLStreamException;
 
 public interface ITestExecutionListener {
