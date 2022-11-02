@@ -611,6 +611,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#-junitxml-filename" class="md-nav__link">
+    --junitxml &lt;filename&gt;
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -848,6 +855,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#-junitxml-filename" class="md-nav__link">
+    --junitxml &lt;filename&gt;
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -897,6 +911,8 @@
 <p>The Linux tool <code>procps</code> is required to run Nextflow tracing. In case your container does not support this tool, you can also run nf-test without tracing. Please note that the <code>workflow.trace</code> are not available when running it with this flag.</p>
 <h4 id="-tap-filename"><code>--tap &lt;filename&gt;</code></h4>
 <p>Writes test results in <a href="https://testanything.org">TAP format</a> to file.</p>
+<h4 id="-junitxml-filename"><code>--junitxml &lt;filename&gt;</code></h4>
+<p>Writes test results in <a href="https://junit.org/">JUnit XML format</a> to file, which conforms to <a href="https://github.com/junit-team/junit5/blob/242f3b3ef84cfd96c9de26992588812a68cdef8b/platform-tests/src/test/resources/jenkins-junit.xsd">the standard schema</a>.</p>
 <h2 id="examples">Examples</h2>
 <p>Run all tests:</p>
 <div class="highlight"><pre><span></span><code>nf-test test
