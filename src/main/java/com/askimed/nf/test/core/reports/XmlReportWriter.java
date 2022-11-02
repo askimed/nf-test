@@ -44,7 +44,7 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 	}
 
 	@Override
-	public void writeToFile(List<TestSuiteExecutionResult> testSuites){
+	public void writeToFile(List<TestSuiteExecutionResult> testSuites) throws IOException, XMLStreamException{
 		XMLStreamWriter writer = null;
 		try {
 			String filePath = this.filename;
@@ -83,10 +83,11 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 			writer.writeEndDocument();
 
 			writer.flush();
-			writer.close();
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		finally {
+			if (writer != null) {
+				writer.close();
+			}
 		}
 	}
 }
