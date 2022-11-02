@@ -29,12 +29,10 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 	private String filename;
 
 	public XmlReportWriter(String filename) throws IOException {
+		if (! new File(filename).canWrite()) {
+			throw new IOException("XmlReport file is not writable: " + filename);
+		}
 		this.filename = filename;
-	}
-
-	public void print_message() {
-		System.out.println("I am a XmlReportWriter in print_message");
-		System.out.println(this.filename);
 	}
 
 	public String convertTime(long time){
