@@ -1,11 +1,8 @@
 
 package com.askimed.nf.test.core.reports;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
 
 import com.askimed.nf.test.core.ITest;
 import com.askimed.nf.test.core.ITestExecutionListener;
@@ -35,7 +32,7 @@ public abstract class AbstractTestReportWriter implements ITestExecutionListener
 	}
 
 	@Override
-	public void testPlanExecutionFinished() throws IOException, XMLStreamException {
+	public void testPlanExecutionFinished() throws Exception {
 		endTime = System.currentTimeMillis();
 		writeToFile(testSuites);
 	}
@@ -99,6 +96,6 @@ public abstract class AbstractTestReportWriter implements ITestExecutionListener
 
 	}
 
-	abstract public void writeToFile(List<TestSuiteExecutionResult> testSuites) throws IOException, XMLStreamException;
+	abstract public void writeToFile(List<TestSuiteExecutionResult> testSuites) throws Exception;
 
 }

@@ -1,7 +1,6 @@
 
 package com.askimed.nf.test.core.reports;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.Format;
@@ -11,7 +10,6 @@ import java.io.FileWriter;
 import java.io.Writer;
 
 import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import com.askimed.nf.test.core.TestExecutionResult;
@@ -33,7 +31,7 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 	}
 
 	@Override
-	public void writeToFile(List<TestSuiteExecutionResult> testSuites) throws IOException, XMLStreamException{
+	public void writeToFile(List<TestSuiteExecutionResult> testSuites) throws Exception {
 		XMLStreamWriter writer = null;
 		try {
 			String filePath = this.filename;

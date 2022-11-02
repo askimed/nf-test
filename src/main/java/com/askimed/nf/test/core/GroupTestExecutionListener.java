@@ -1,10 +1,7 @@
 package com.askimed.nf.test.core;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
 
 public class GroupTestExecutionListener implements ITestExecutionListener {
 
@@ -18,7 +15,7 @@ public class GroupTestExecutionListener implements ITestExecutionListener {
 	}
 
 	@Override
-	public void testPlanExecutionFinished() throws IOException, XMLStreamException {
+	public void testPlanExecutionFinished() throws Exception {
 		for (ITestExecutionListener listener : listeners) {
 			listener.testPlanExecutionFinished();
 		}
