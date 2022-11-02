@@ -63,33 +63,31 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 			for (TestSuiteExecutionResult testSuite : testSuites) {
 				xmlStreamWriter.writeStartElement("testsuite");
 				xmlStreamWriter.writeAttribute("name", testSuite.getTestSuite().getName());
-				
-				// for (TestExecutionResult test : testSuite.getTests()) {
-				// 	index++;
-				// 	String name = testSuite.getTestSuite().getName() + ": " + test.getTest().getName();
-	
-				// 	test.getStatus();
-				// 	TestResult tapResult = new TestResult(status, index);
-				// 	tapResult.setDescription(name);
-				// 	if (test.getStatus() != TestExecutionResultStatus.PASSED) {
-				// 		Map<String, Object> map = new HashMap<String, Object>();
-				// 		map.put("failure", test.getThrowable().toString());
-				// 		map.put("output", test.getErrorReport());
-				// 		tapResult.setDiagnostic(map);
-				// 	}
-				// 	testSet.addTestResult(tapResult);
-				// }
+				xmlStreamWriter.writeAttribute("tests", Integer.toString(testSuite.getTests().size()));
+				for (TestExecutionResult test : testSuite.getTests()) {
+					// index++;
+					xmlStreamWriter.writeStartElement("testcase");
+					xmlStreamWriter.writeAttribute("name", test.getTest().getName());
+					xmlStreamWriter.writeAttribute("status", test.getStatus().toString());
+					
+					
+					// if (test.getStatus() != TestExecutionResultStatus.PASSED) {
+					// 	Map<String, Object> map = new HashMap<String, Object>();
+					// 	map.put("failure", test.getThrowable().toString());
+					// 	map.put("output", test.getErrorReport());
+					// 	tapResult.setDiagnostic(map);
+					// }
+					// testSet.addTestResult(tapResult);
+					xmlStreamWriter.writeEndElement();
+				}
 				xmlStreamWriter.writeEndElement();
 			}
             xmlStreamWriter.writeEndElement();
-
 
 			// xmlStreamWriter.writeAttribute("id", "10");
             // xmlStreamWriter.writeCharacters("hello world!");
             // xmlStreamWriter.writeCData("more text data");
             // xmlStreamWriter.writeEndElement();
-            xmlStreamWriter.writeEmptyElement("used & new");
-            xmlStreamWriter.writeComment("Thank you!");
             xmlStreamWriter.writeEndDocument();
   
             // Writing the content on XML file and
