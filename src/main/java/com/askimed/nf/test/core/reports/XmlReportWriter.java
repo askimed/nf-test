@@ -9,17 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.io.FileWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-
-
-import org.tap4j.model.Plan;
-import org.tap4j.model.TestResult;
-import org.tap4j.model.TestSet;
-import org.tap4j.producer.TapProducer;
-import org.tap4j.producer.TapProducerFactory;
-import org.tap4j.util.StatusValues;
 
 import com.askimed.nf.test.core.TestExecutionResult;
 import com.askimed.nf.test.core.TestExecutionResultStatus;
@@ -39,46 +35,77 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 	}
 
 	@Override
-	public void writeToFile(List<TestSuiteExecutionResult> testSuites) {
+	public void writeToFile(List<TestSuiteExecutionResult> testSuites){
 		System.out.println("TODO: Write xml to file..." + this.filename);
-		// System.out.println("TODO: Write xml to file...");
-		return;
+        // Try block to check for exceptions
+		XMLStreamWriter xmlStreamWriter = null;
 
-		// int index = 0;
+		try {
+  
+            // File Path
+            String filePath = this.filename;
+  
+            // Creating FileWriter object
+            Writer fileWriter = new FileWriter(filePath);
+  
+            // Getting the XMLOutputFactory instance
+            XMLOutputFactory xmlOutputFactory
+                = XMLOutputFactory.newInstance();
+  
+            // Creating XMLStreamWriter object from
+            // xmlOutputFactory.
+            xmlStreamWriter = xmlOutputFactory.createXMLStreamWriter(fileWriter);
+  
+            // Addoing elements to xmlStreamWriter
+            // Custom input element addition
+			xmlStreamWriter.writeStartElement("testsuites");
+			// int index = 0;
+			for (TestSuiteExecutionResult testSuite : testSuites) {
+				xmlStreamWriter.writeStartElement("testsuite");
+				xmlStreamWriter.writeAttribute("name", testSuite.getTestSuite().getName());
+				
+				// for (TestExecutionResult test : testSuite.getTests()) {
+				// 	index++;
+				// 	String name = testSuite.getTestSuite().getName() + ": " + test.getTest().getName();
+	
+				// 	test.getStatus();
+				// 	TestResult tapResult = new TestResult(status, index);
+				// 	tapResult.setDescription(name);
+				// 	if (test.getStatus() != TestExecutionResultStatus.PASSED) {
+				// 		Map<String, Object> map = new HashMap<String, Object>();
+				// 		map.put("failure", test.getThrowable().toString());
+				// 		map.put("output", test.getErrorReport());
+				// 		tapResult.setDiagnostic(map);
+				// 	}
+				// 	testSet.addTestResult(tapResult);
+				// }
+				xmlStreamWriter.writeEndElement();
+			}
+            xmlStreamWriter.writeEndElement();
 
-		// TapProducer tapProducer = TapProducerFactory.makeTap13YamlProducer();
-		// TestSet testSet = new TestSet();
-		// Plan plan = new Plan(getCount());
-		// testSet.setPlan(plan);
 
-		// for (TestSuiteExecutionResult testSuite : testSuites) {
-
-		// 	for (TestExecutionResult test : testSuite.getTests()) {
-		// 		index++;
-		// 		// TODO: what is the best way to handle testsuites? subtests?
-		// 		String name = testSuite.getTestSuite().getName() + ": " + test.getTest().getName();
-		// 		StatusValues status = toStatusValue(test.getStatus());
-
-		// 		TestResult tapResult = new TestResult(status, index);
-		// 		tapResult.setDescription(name);
-		// 		if (test.getStatus() != TestExecutionResultStatus.PASSED) {
-		// 			Map<String, Object> map = new HashMap<String, Object>();
-		// 			map.put("failure", test.getThrowable().toString());
-		// 			map.put("output", test.getErrorReport());
-		// 			tapResult.setDiagnostic(map);
-		// 		}
-		// 		testSet.addTestResult(tapResult);
-		// 	}
-		// }
-
-		// tapProducer.dump(testSet, new File(filename));
-
-		// System.out.println("Wrote TAP report to file " + filename + "\n");
-
+			// xmlStreamWriter.writeAttribute("id", "10");
+            // xmlStreamWriter.writeCharacters("hello world!");
+            // xmlStreamWriter.writeCData("more text data");
+            // xmlStreamWriter.writeEndElement();
+            xmlStreamWriter.writeEmptyElement("used & new");
+            xmlStreamWriter.writeComment("Thank you!");
+            xmlStreamWriter.writeEndDocument();
+  
+            // Writing the content on XML file and
+            // close xmlStreamWriter using close() method
+            xmlStreamWriter.flush();
+			xmlStreamWriter.close();
+  
+            // Display message for successful execution of
+            // program
+            System.out.println(
+                "XML file created successfully.");
+        }
+		catch (Exception e) {
+  
+            // Print the line number where exception occurs
+            e.printStackTrace();
+        }
 	}
-
-	protected StatusValues toStatusValue(TestExecutionResultStatus status) {
-		return (status == TestExecutionResultStatus.PASSED) ? StatusValues.OK : StatusValues.NOT_OK;
-	}
-
 }

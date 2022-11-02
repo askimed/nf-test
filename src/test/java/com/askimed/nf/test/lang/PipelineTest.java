@@ -58,6 +58,24 @@ public class PipelineTest {
 	}
 
 	@Test
+	public void testMultipleDsl1ScriptsAndWriteXmlOutput() throws Exception {
+
+		String xmlOutput = "output.junit.xml";
+
+		File output = new File(xmlOutput);
+		if (output.exists()) {
+			output.delete();
+		}
+		assertFalse(output.exists());
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl1/test2.nf.test",
+				"test-data/pipeline/dsl1/test1.nf.test", "--junitxml", xmlOutput });
+		assertEquals(1, exitCode);
+		// assertTrue(output.exists());
+	}
+
+	@Test
 	public void testDsl2() throws Exception {
 
 		App app = new App();
