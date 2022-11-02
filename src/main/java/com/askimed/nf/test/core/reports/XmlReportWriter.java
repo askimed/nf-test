@@ -52,7 +52,7 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 			XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
 
 			writer = xmlOutputFactory.createXMLStreamWriter(fileWriter);
-
+			writer.writeStartDocument("utf-8", "1.0");
 			writer.writeStartElement("testsuites");
 			for (TestSuiteExecutionResult testSuite : testSuites) {
 				writer.writeStartElement("testsuite");
