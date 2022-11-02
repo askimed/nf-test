@@ -15,6 +15,7 @@ import com.askimed.nf.test.core.AnsiTestExecutionListener;
 import com.askimed.nf.test.core.GroupTestExecutionListener;
 import com.askimed.nf.test.core.TestExecutionEngine;
 import com.askimed.nf.test.core.reports.TapTestReportWriter;
+import com.askimed.nf.test.core.reports.XmlReportWriter;
 import com.askimed.nf.test.plugins.PluginManager;
 import com.askimed.nf.test.util.AnsiColors;
 
@@ -44,6 +45,10 @@ public class RunTestsCommand implements Callable<Integer> {
 	@Option(names = {
 			"--tap" }, description = "Write test results to tap file", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String tap = null;
+
+	@Option(names = {
+		"--junitxml" }, description = "Write test results in Junit Xml Format", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String junitXml = null;
 
 	@Option(names = { "--update-snapshot",
 			"--updateSnapshot" }, description = "Use this flag to re-record every snapshot that fails during this test run.", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -115,6 +120,10 @@ public class RunTestsCommand implements Callable<Integer> {
 			listener.addListener(new AnsiTestExecutionListener());
 			if (tap != null) {
 				listener.addListener(new TapTestReportWriter(tap));
+			}
+
+			if (junitXml != null) {
+				listener.addListener(new XmlReportWriter(junitXml));
 			}
 
 			TestExecutionEngine engine = new TestExecutionEngine();

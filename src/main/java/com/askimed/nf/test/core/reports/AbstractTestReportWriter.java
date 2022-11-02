@@ -32,7 +32,7 @@ public abstract class AbstractTestReportWriter implements ITestExecutionListener
 	}
 
 	@Override
-	public void testPlanExecutionFinished() {
+	public void testPlanExecutionFinished() throws Exception {
 		endTime = System.currentTimeMillis();
 		writeToFile(testSuites);
 	}
@@ -96,6 +96,6 @@ public abstract class AbstractTestReportWriter implements ITestExecutionListener
 
 	}
 
-	abstract public void writeToFile(List<TestSuiteExecutionResult> testSuites);
+	abstract public void writeToFile(List<TestSuiteExecutionResult> testSuites) throws Exception;
 
 }

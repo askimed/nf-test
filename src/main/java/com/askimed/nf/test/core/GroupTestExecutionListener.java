@@ -15,7 +15,7 @@ public class GroupTestExecutionListener implements ITestExecutionListener {
 	}
 
 	@Override
-	public void testPlanExecutionFinished() {
+	public void testPlanExecutionFinished() throws Exception {
 		for (ITestExecutionListener listener : listeners) {
 			listener.testPlanExecutionFinished();
 		}

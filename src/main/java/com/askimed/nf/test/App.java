@@ -53,7 +53,6 @@ public class App {
 		App app = new App();
 		int exitCode = app.run(args);
 		System.exit(exitCode);
-
 	}
 
 }

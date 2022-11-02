@@ -4,7 +4,7 @@ public interface ITestExecutionListener {
 
 	public void testPlanExecutionStarted();
 
-	public void testPlanExecutionFinished();
+	public void testPlanExecutionFinished() throws Exception;
 
 	public void testSuiteExecutionStarted(ITestSuite testSuite);
 
