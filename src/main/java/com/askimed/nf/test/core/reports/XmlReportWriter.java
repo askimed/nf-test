@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Date;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,76 +37,56 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 		System.out.println(this.filename);
 	}
 
+	public String convertTime(long time){
+		Date date = new Date(time);
+		Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+		return format.format(date);
+	}
+
 	@Override
 	public void writeToFile(List<TestSuiteExecutionResult> testSuites){
-		System.out.println("TODO: Write xml to file..." + this.filename);
-        // Try block to check for exceptions
-		XMLStreamWriter xmlStreamWriter = null;
-
+		XMLStreamWriter writer = null;
 		try {
-  
-            // File Path
-            String filePath = this.filename;
-  
-            // Creating FileWriter object
-            Writer fileWriter = new FileWriter(filePath);
-  
-            // Getting the XMLOutputFactory instance
-            XMLOutputFactory xmlOutputFactory
-                = XMLOutputFactory.newInstance();
-  
-            // Creating XMLStreamWriter object from
-            // xmlOutputFactory.
-            xmlStreamWriter = xmlOutputFactory.createXMLStreamWriter(fileWriter);
-  
-            // Addoing elements to xmlStreamWriter
-            // Custom input element addition
-			xmlStreamWriter.writeStartElement("testsuites");
-			// int index = 0;
-			for (TestSuiteExecutionResult testSuite : testSuites) {
-				xmlStreamWriter.writeStartElement("testsuite");
-				xmlStreamWriter.writeAttribute("name", testSuite.getTestSuite().getName());
-				xmlStreamWriter.writeAttribute("tests", Integer.toString(testSuite.getTests().size()));
-				for (TestExecutionResult test : testSuite.getTests()) {
-					// index++;
-					xmlStreamWriter.writeStartElement("testcase");
-					xmlStreamWriter.writeAttribute("name", test.getTest().getName());
-					xmlStreamWriter.writeAttribute("status", test.getStatus().toString());
-					
-					
-					// if (test.getStatus() != TestExecutionResultStatus.PASSED) {
-					// 	Map<String, Object> map = new HashMap<String, Object>();
-					// 	map.put("failure", test.getThrowable().toString());
-					// 	map.put("output", test.getErrorReport());
-					// 	tapResult.setDiagnostic(map);
-					// }
-					// testSet.addTestResult(tapResult);
-					xmlStreamWriter.writeEndElement();
-				}
-				xmlStreamWriter.writeEndElement();
-			}
-            xmlStreamWriter.writeEndElement();
+			String filePath = this.filename;
+			Writer fileWriter = new FileWriter(filePath);
+			XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
 
-			// xmlStreamWriter.writeAttribute("id", "10");
-            // xmlStreamWriter.writeCharacters("hello world!");
-            // xmlStreamWriter.writeCData("more text data");
-            // xmlStreamWriter.writeEndElement();
-            xmlStreamWriter.writeEndDocument();
-  
-            // Writing the content on XML file and
-            // close xmlStreamWriter using close() method
-            xmlStreamWriter.flush();
-			xmlStreamWriter.close();
-  
-            // Display message for successful execution of
-            // program
-            System.out.println(
-                "XML file created successfully.");
-        }
+			writer = xmlOutputFactory.createXMLStreamWriter(fileWriter);
+
+			writer.writeStartElement("testsuites");
+			for (TestSuiteExecutionResult testSuite : testSuites) {
+				writer.writeStartElement("testsuite");
+				writer.writeAttribute("name", testSuite.getTestSuite().getName());
+				writer.writeAttribute("time", Double.toString(testSuite.getExecutionTimeInSecs()));
+				writer.writeAttribute("tests", Integer.toString(testSuite.getTests().size()));
+				writer.writeAttribute("skipped", Integer.toString(testSuite.getSkipped()));
+				writer.writeAttribute("failures", Integer.toString(testSuite.getFailed()));
+				writer.writeAttribute("timestamp", convertTime(testSuite.getStartTime()));
+
+				for (TestExecutionResult test : testSuite.getTests()) {
+					writer.writeStartElement("testcase");
+					writer.writeAttribute("name", test.getTest().getName());
+					writer.writeAttribute("time", Double.toString(test.getExecutionTimeInSecs()));
+					writer.writeAttribute("status", test.getStatus().toString());
+
+					if (test.getStatus() != TestExecutionResultStatus.PASSED) {
+						writer.writeStartElement("failure");
+						writer.writeAttribute("message", test.getThrowable().toString());
+						writer.writeCharacters(test.getErrorReport());
+						writer.writeEndElement();
+					}
+					writer.writeEndElement();
+				}
+				writer.writeEndElement();
+			}
+			writer.writeEndElement();
+			writer.writeEndDocument();
+
+			writer.flush();
+			writer.close();
+		}
 		catch (Exception e) {
-  
-            // Print the line number where exception occurs
-            e.printStackTrace();
-        }
+			e.printStackTrace();
+		}
 	}
 }
