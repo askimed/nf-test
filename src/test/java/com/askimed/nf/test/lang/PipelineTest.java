@@ -91,9 +91,9 @@ public class PipelineTest {
 
 	}
 
+	// Thanks: https://www.digitalocean.com/community/tutorials/how-to-validate-xml-against-xsd-in-java
 	public static void assertXmlSchemaValidation(String xsdPath, String xmlPath) throws Exception{
-		SchemaFactory factory = 
-				SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 		Schema schema = factory.newSchema(new File(xsdPath));
 		Validator validator = schema.newValidator();
 		validator.validate(new StreamSource(new File(xmlPath)));
