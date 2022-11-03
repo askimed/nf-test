@@ -847,12 +847,12 @@
 <p>nf-test supports including third party libraries (e.g. jar files ) or functions from groovy files to either extend it functionality or to avoid duplicate code and to keep the logic in test cases simple.</p>
 <h2 id="using-local-files">Using Local Files</h2>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 6.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5z"/><path fill-rule="evenodd" d="M2.5 1A1.5 1.5 0 0 0 1 2.5v8.44c0 .397.158.779.44 1.06l10.25 10.25a1.5 1.5 0 0 0 2.12 0l8.44-8.44a1.5 1.5 0 0 0 0-2.12L12 1.44A1.5 1.5 0 0 0 10.94 1H2.5zm0 1.5h8.44l10.25 10.25-8.44 8.44L2.5 10.94V2.5z"/></svg></span> 0.7.0 ·</p>
-<p>If nf-test detects a <code>lib</code> folder in in directory of a tescase, then it adds it automatically to the classpath.</p>
+<p>If nf-test detects a <code>lib</code> folder in the directory of a tescase, then it adds it automatically to the classpath.</p>
 <h3 id="examples">Examples</h3>
 <p>We have a Groovy script <code>MyWordUtils.groovy</code> that contains the following class:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">MyWordUtils</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 
-<span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="nf">capitalize</span><span class="o">(</span><span class="n">String</span><span class="w"> </span><span class="n">word</span><span class="o">){</span><span class="w"></span>
+<span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="nf">capitalize</span><span class="o">(</span><span class="n">String</span><span class="w"> </span><span class="n">word</span><span class="o">){</span><span class="w"></span>
 <span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">word</span><span class="o">.</span><span class="na">toUpperCase</span><span class="o">();</span><span class="w"></span>
 <span class="w">    </span><span class="o">}</span><span class="w"></span>
 
