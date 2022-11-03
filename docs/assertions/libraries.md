@@ -6,7 +6,7 @@ nf-test supports including third party libraries (e.g. jar files ) or functions 
 
 :octicons-tag-24: 0.7.0 ·
 
-If nf-test detects a `lib` folder in in directory of a tescase, then it adds it automatically to the classpath.
+If nf-test detects a `lib` folder in the directory of a tescase, then it adds it automatically to the classpath.
 
 ### Examples
 We have a Groovy script `MyWordUtils.groovy` that contains the following class:
@@ -14,14 +14,14 @@ We have a Groovy script `MyWordUtils.groovy` that contains the following class:
 ```Groovy
 class MyWordUtils {
 
-    def capitalize(String word){
+    def static capitalize(String word){
       return word.toUpperCase();
     }
 
 }
 ```
 
-We can put this file in a subfolder called `lib `:
+We can put this file in a subfolder called `lib`:
 
 ```
 testcase_1
