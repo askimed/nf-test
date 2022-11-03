@@ -860,12 +860,28 @@
 </code></pre></div>
 <p>We can put this file in a subfolder called <code>lib</code>:</p>
 <div class="highlight"><pre><span></span><code>testcase_1
-├── hello_1.nf
-├── hello_1.nf.test
+├── capitalizer.nf
+├── capitalizer.test
 └── lib
     └── MyWordUtils.groovy
 </code></pre></div>
-<p>Next, we can use this class in the <code>hello_1.nf.test</code> like every other class that is provided by nf-test or Groovy itself:</p>
+<p>The file <code>capitalizer.nf</code> contains the <code>CAPITALIZER</code> process:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#!/usr/bin/env nextflow</span><span class="w"></span>
+<span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span><span class="w"></span>
+
+<span class="n">process</span><span class="w"> </span><span class="n">CAPITALIZER</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">    </span><span class="nl">input:</span><span class="w"></span>
+<span class="w">        </span><span class="n">val</span><span class="w"> </span><span class="n">cheers</span><span class="w"></span>
+<span class="w">    </span><span class="nl">output:</span><span class="w"></span>
+<span class="w">        </span><span class="n">stdout</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">output</span><span class="w"></span>
+<span class="w">    </span><span class="nl">script:</span><span class="w"></span>
+<span class="w">       </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;$cheers&quot;</span><span class="o">.</span><span class="na">toUpperCase</span><span class="o">()</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="w"></span>
+
+<span class="o">}</span><span class="w"></span>
+</code></pre></div>
+<p>Next, we can use this class in the <code>capitalizer.nf.test</code> like every other class that is provided by nf-test or Groovy itself:</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Process CAPITALIZER&quot;</span><span class="w"></span>
