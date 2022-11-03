@@ -19,6 +19,9 @@ The Linux tool `procps` is required to run Nextflow tracing. In case your contai
 #### `--tap <filename>`
 Writes test results in [TAP format](https://testanything.org) to file.
 
+#### `--junitxml <filename>`
+Writes test results in [JUnit XML format](https://junit.org/) to file, which conforms to [the standard schema](https://github.com/junit-team/junit5/blob/242f3b3ef84cfd96c9de26992588812a68cdef8b/platform-tests/src/test/resources/jenkins-junit.xsd).
+
 ## Examples
 
 Run all tests:

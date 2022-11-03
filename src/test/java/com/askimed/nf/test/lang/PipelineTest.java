@@ -7,6 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.File;
 import java.io.IOException;
 
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -58,11 +64,38 @@ public class PipelineTest {
 	}
 
 	@Test
+	public void testMultipleDsl1ScriptsAndWriteXmlOutput() throws Exception {
+
+		String xmlOutput = "output.junit.xml";
+
+		File output = new File(xmlOutput);
+		if (output.exists()) {
+			output.delete();
+		}
+		assertFalse(output.exists());
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl1/test2.nf.test",
+				"test-data/pipeline/dsl1/test1.nf.test", "--junitxml", xmlOutput });
+		assertEquals(1, exitCode);
+		assertTrue(output.exists());
+		assertXmlSchemaValidation("test-data/pipeline/junit_schema.xsd", xmlOutput);
+	}
+
+	@Test
 	public void testDsl2() throws Exception {
 
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl2/trial.nf.test" });
 		assertEquals(0, exitCode);
 
+	}
+
+	// Thanks: https://www.digitalocean.com/community/tutorials/how-to-validate-xml-against-xsd-in-java
+	public static void assertXmlSchemaValidation(String xsdPath, String xmlPath) throws Exception{
+		SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		Schema schema = factory.newSchema(new File(xsdPath));
+		Validator validator = schema.newValidator();
+		validator.validate(new StreamSource(new File(xmlPath)));
 	}
 }
