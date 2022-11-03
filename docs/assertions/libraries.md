@@ -56,7 +56,7 @@ Next, we can use this class in the `capitalizer.nf.test` like every other class 
 nextflow_process {
 
     name "Test Process CAPITALIZER"
-    script "test-data/capitalizer.nf"
+    script "capitalizer.nf"
     process "CAPITALIZER"
 
     test("Should run without failures") {
@@ -118,7 +118,7 @@ import org.apache.commons.lang.WordUtils
 nextflow_process {
 
     name "Test Process CAPITALIZER"
-    script "test-data/capitalizer.nf"
+    script "capitalizer.nf"
     process "CAPITALIZER"
 
     test("Should run without failures") {
