@@ -25,13 +25,32 @@ We can put this file in a subfolder called `lib`:
 
 ```
 testcase_1
-├── hello_1.nf
-├── hello_1.nf.test
+├── capitalizer.nf
+├── capitalizer.test
 └── lib
     └── MyWordUtils.groovy
 ```
 
-Next, we can use this class in the `hello_1.nf.test` like every other class that is provided by nf-test or Groovy itself:
+The file `capitalizer.nf` contains the `CAPITALIZER` process:
+
+```Groovy
+#!/usr/bin/env nextflow
+nextflow.enable.dsl=2
+
+process CAPITALIZER {
+    input:
+        val cheers
+    output:
+        stdout emit: output
+    script:
+       println "$cheers".toUpperCase()
+    """
+    """
+
+}
+```
+
+Next, we can use this class in the `capitalizer.nf.test` like every other class that is provided by nf-test or Groovy itself:
 
 ```Groovy
 nextflow_process {
