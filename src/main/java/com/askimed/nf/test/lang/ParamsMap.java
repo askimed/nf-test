@@ -10,6 +10,7 @@ import org.codehaus.groovy.control.CompilationFailedException;
 import org.yaml.snakeyaml.Yaml;
 
 import groovy.json.JsonSlurper;
+import groovy.lang.Closure;
 import groovy.lang.Writable;
 import groovy.text.SimpleTemplateEngine;
 
@@ -17,7 +18,7 @@ public class ParamsMap extends HashMap<String, Object> {
 
 	private static final long serialVersionUID = 1L;
 
-	public String baseDir = "lukas";
+	public String baseDir = "";
 
 	public String outputDir = "";
 
@@ -82,21 +83,74 @@ public class ParamsMap extends HashMap<String, Object> {
 	public synchronized void loadFromMap(Map<String, Object> map)
 			throws CompilationFailedException, ClassNotFoundException, IOException {
 
+		evaluteTempaltesInMap(map);
+		putAll(map);
+
+	}
+
+	protected synchronized void evaluteTempaltesInMap(Map<String, Object> map)
+			throws CompilationFailedException, ClassNotFoundException, IOException {
+
 		Map<String, Object> binding = new HashMap<String, Object>(map);
 
 		SimpleTemplateEngine engine = new SimpleTemplateEngine();
+
 		for (String key : map.keySet()) {
+
 			Object value = map.get(key);
+
 			if (value instanceof String) {
 				String template = value.toString();
 				Writable evaluatedTemplate = engine.createTemplate(template).make(binding);
 				map.put(key, evaluatedTemplate.toString());
+			} else if (value instanceof Map) {
+				Map<String, Object> nestedMap = createNestedMap((Map<String, Object>) value);
+				evaluteTempaltesInMap(nestedMap);
+				map.put(key, nestedMap);
 			} else {
 				map.put(key, value);
 			}
+
 		}
 
-		putAll(map);
+	}
+
+	public void evaluateNestedClosures() {
+
+		evaluateNestedClosures(this);
+
+	}
+
+	protected void evaluateNestedClosures(Map<String, Object> map) {
+
+		for (String key : map.keySet()) {
+			Object value = map.get(key);
+			if (value instanceof Closure) {
+				Map<String, Object> nestedMap = createNestedMap();
+				Closure closure = (Closure) value;
+				closure.setDelegate(nestedMap);
+				closure.setResolveStrategy(Closure.DELEGATE_FIRST);
+				closure.call();
+				map.put(key, nestedMap);
+				evaluateNestedClosures(nestedMap);
+			}
+
+		}
+
+	}
+
+	protected Map<String, Object> createNestedMap() {
+		return createNestedMap(null);
+	}
+
+	protected Map<String, Object> createNestedMap(Map<String, Object> map) {
+		Map<String, Object> nestedMap = new HashMap<String, Object>();
+		nestedMap.put("baseDir", baseDir);
+		nestedMap.put("outputDir", outputDir);
+		if (map != null) {
+			nestedMap.putAll(map);
+		}
+		return nestedMap;
 	}
 
 }

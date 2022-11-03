@@ -84,6 +84,7 @@ public class TestContext {
 		paramsClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
 		paramsClosure.call();
 		paramsClosure.getMetaClass().getProperties();
+		params.evaluateNestedClosures();
 
 	}
 

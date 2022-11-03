@@ -117,4 +117,14 @@ public class ProcessTest {
 
 	}
 	
+	
+	@Test
+	public void testNestedParams() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/nested-params/process.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+	
 }

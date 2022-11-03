@@ -1,0 +1,167 @@
+nextflow_process {
+
+  name "Test process xy"
+
+  script "test-data/process/nested-params/process.nf"
+  process "TEST_PROCESS"
+
+  test("Test nested params with closure 1") {
+
+    when {
+
+      params {
+        var1 = "var1"
+        nested = {
+        	var2 = "var2"
+        	nested = {
+        		var3 = "$baseDir"
+        	}
+        }
+      }
+      
+      process {
+        """
+        input[0] = "var1"
+        input[1] = "var2"
+        input[2] = "$baseDir"
+        """
+      }
+    }
+
+    then {
+      assert process.success
+    }    
+	
+  }
+
+
+  test("Test nested params with closure 2") {
+
+    when {
+
+      params {
+        var1 = "var1"
+        nested = {
+        	var2 = "var2"
+        	nested = {
+        		var3 = baseDir
+        	}
+        }
+      }
+      
+      process {
+        """
+        input[0] = "var1"
+        input[1] = "var2"
+        input[2] = "$baseDir"
+        """
+      }
+    }
+
+    then {
+      assert process.success
+    }    
+	
+  }
+  
+  test("Test nested params with groovy syntax 1") {
+
+    when {
+
+      params {
+        var1 = "var1"
+        nested = {
+        	var2 = "var2"
+        	nested = [ var3: "$baseDir" ]
+        }
+      }
+      
+      process {
+        """
+        input[0] = "var1"
+        input[1] = "var2"
+        input[2] = "$baseDir"
+        """
+      }
+    }
+
+    then {
+      assert process.success
+    }    
+	
+  } 
+
+  test("Test nested params with groovy syntax 2") {
+
+    when {
+
+      params {
+        var1 = "var1"
+        nested = {
+        	var2 = "var2"
+        	nested = [ var3: baseDir ]
+        }
+      }
+      
+      process {
+        """
+        input[0] = "var1"
+        input[1] = "var2"
+        input[2] = "$baseDir"
+        """
+      }
+    }
+
+    then {
+      assert process.success
+    }    
+	
+  }
+
+  test("Test nested params from json file") {
+
+    when {
+
+      params {
+       load("$baseDir/test-data/process/nested-params/params.json");
+      }
+      
+      process {
+        """
+        input[0] = "var1"
+        input[1] = "var2"
+        input[2] = "$baseDir"
+        """
+      }
+    }
+
+    then {
+      assert process.success
+    }    
+	
+  }
+
+  test("Test nested params from yaml file") {
+
+    when {
+
+      params {
+       load("$baseDir/test-data/process/nested-params/params.yaml");
+      }
+      
+      process {
+        """
+        input[0] = "var1"
+        input[1] = "var2"
+        input[2] = "$baseDir"
+        """
+      }
+    }
+
+    then {
+      assert process.success
+    }    
+	
+  }
+
+}

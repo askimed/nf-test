@@ -1,0 +1,5 @@
+var1: "var1"
+nested:
+  var2: "var2"
+  nested:
+    var3: "$baseDir"
