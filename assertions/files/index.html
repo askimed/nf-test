@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.7">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.8">
     
     
       
@@ -20,7 +20,7 @@
       <link rel="stylesheet" href="../../assets/stylesheets/main.20d9efc8.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.815d1a91.min.css">
         
           
           
@@ -450,6 +450,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#yaml-files" class="md-nav__link">
+    YAML Files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#gzip-files" class="md-nav__link">
     GZip Files
   </a>
@@ -779,6 +786,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#yaml-files" class="md-nav__link">
+    YAML Files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#gzip-files" class="md-nav__link">
     GZip Files
   </a>
@@ -811,8 +825,20 @@
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;64debea5017a035ddc67c0b51fa84b16&quot;</span><span class="w"></span>
 </code></pre></div>
 <h2 id="json-files">JSON Files</h2>
-<p>nf-test extends <code>path</code> by a <code>json</code> property that can be used to read json files:</p>
+<p>nf-test supports comparison of JSON files and keys within JSON files.
+To assert that two JSON files contain the same keys and values:
+<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">json</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./some.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="w"></span>
+</code></pre></div>
+Individual keys can also be asserted:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">json</span><span class="o">.</span><span class="na">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;value&quot;</span><span class="w"></span>
+</code></pre></div>
+<h2 id="yaml-files">YAML Files</h2>
+<p>nf-test supports comparison of YAML files and keys within YAML files.
+To assert that two YAML files contain the same keys and values:
+<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">yaml</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./some.yaml&#39;</span><span class="o">).</span><span class="na">yaml</span><span class="w"></span>
+</code></pre></div>
+Individual keys can also be asserted:</p>
+<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">yaml</span><span class="o">.</span><span class="na">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;value&quot;</span><span class="w"></span>
 </code></pre></div>
 <h2 id="gzip-files">GZip Files</h2>
 <p>nf-test extends <code>path</code> by a <code>linesGzip</code> property that can be used to read gzip compressed files:</p>
@@ -895,7 +921,7 @@
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.expand", "tabs"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d6c3db9e.min.js"></script>
       
     
   </body>
