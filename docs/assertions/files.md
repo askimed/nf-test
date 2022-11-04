@@ -9,12 +9,27 @@ assert path(process.out.out_ch.get(0)).md5 == "64debea5017a035ddc67c0b51fa84b16"
 ```
 
 ## JSON Files
-
-nf-test extends `path` by a `json` property that can be used to read json files:
-
+nf-test supports comparison of JSON files and keys within JSON files.
+To assert that two JSON files contain the same keys and values:
+```Groovy
+assert path(process.out.out_ch.get(0)).json == path('./some.json').json
+```
+Individual keys can also be asserted:
 
 ```Groovy
 assert path(process.out.out_ch.get(0)).json.key == "value"
+```
+
+## YAML Files
+nf-test supports comparison of YAML files and keys within YAML files.
+To assert that two YAML files contain the same keys and values:
+```Groovy
+assert path(process.out.out_ch.get(0)).yaml == path('./some.yaml').yaml
+```
+Individual keys can also be asserted:
+
+```Groovy
+assert path(process.out.out_ch.get(0)).yaml.key == "value"
 ```
 
 ## GZip Files
