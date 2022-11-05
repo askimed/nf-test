@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 import org.codehaus.groovy.control.CompilationFailedException;
 import org.yaml.snakeyaml.Yaml;
@@ -83,32 +85,45 @@ public class ParamsMap extends HashMap<String, Object> {
 	public synchronized void loadFromMap(Map<String, Object> map)
 			throws CompilationFailedException, ClassNotFoundException, IOException {
 
-		evaluteTempaltesInMap(map);
+		evaluteTemplates(map);
 		putAll(map);
 
 	}
 
-	protected synchronized void evaluteTempaltesInMap(Map<String, Object> map)
+	protected synchronized void evaluteTemplates(Map<String, Object> map)
 			throws CompilationFailedException, ClassNotFoundException, IOException {
-
-		Map<String, Object> binding = new HashMap<String, Object>(map);
 
 		SimpleTemplateEngine engine = new SimpleTemplateEngine();
 
-		for (String key : map.keySet()) {
+		Queue<Map<String, Object>> queue = new LinkedList<Map<String, Object>>();
+		queue.add(map);
 
-			Object value = map.get(key);
+		while (queue.size() > 0) {
 
-			if (value instanceof String) {
-				String template = value.toString();
-				Writable evaluatedTemplate = engine.createTemplate(template).make(binding);
-				map.put(key, evaluatedTemplate.toString());
-			} else if (value instanceof Map) {
-				Map<String, Object> nestedMap = createNestedMap((Map<String, Object>) value);
-				evaluteTempaltesInMap(nestedMap);
-				map.put(key, nestedMap);
-			} else {
-				map.put(key, value);
+			Map<String, Object> item = queue.remove(); // Pop Item
+
+			for (String key : item.keySet()) {
+
+				Object value = item.get(key);
+
+				if (value instanceof String) {
+
+					String template = value.toString();
+					Map<String, Object> binding = new HashMap<String, Object>(map);
+					Writable evaluatedTemplate = engine.createTemplate(template).make(binding);
+					item.put(key, evaluatedTemplate.toString());
+
+				} else if (value instanceof Map) {
+
+					Map<String, Object> nestedMap = createNestedMap((Map<String, Object>) value);
+					queue.add(nestedMap); // Add to queue instead of recurse
+					item.put(key, nestedMap);
+
+				} else {
+
+					item.put(key, value);
+
+				}
 			}
 
 		}
@@ -123,16 +138,28 @@ public class ParamsMap extends HashMap<String, Object> {
 
 	protected void evaluateNestedClosures(Map<String, Object> map) {
 
-		for (String key : map.keySet()) {
-			Object value = map.get(key);
-			if (value instanceof Closure) {
+		Queue<Map<String, Object>> queue = new LinkedList<Map<String, Object>>();
+		queue.add(map);
+
+		while (queue.size() > 0) {
+			
+			Map<String, Object> item = queue.remove();
+
+			for (String key : item.keySet()) {
+				Object value = item.get(key);
+
+				if (!(value instanceof Closure))
+					continue;
+
 				Map<String, Object> nestedMap = createNestedMap();
 				Closure closure = (Closure) value;
 				closure.setDelegate(nestedMap);
 				closure.setResolveStrategy(Closure.DELEGATE_FIRST);
 				closure.call();
-				map.put(key, nestedMap);
-				evaluateNestedClosures(nestedMap);
+				item.put(key, nestedMap);
+
+				queue.add(nestedMap); // Instead of recursion
+
 			}
 
 		}
