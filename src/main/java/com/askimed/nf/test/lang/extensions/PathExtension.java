@@ -50,8 +50,8 @@ public class PathExtension {
 	/* YAML */
 
 	public static Object getYaml(Path self) throws FileNotFoundException, IOException {
-		YamlSlurper YamlSlurper = new YamlSlurper();
-		return YamlSlurper.parse(self);
+		YamlSlurper yamlSlurper = new YamlSlurper();
+		return yamlSlurper.parse(self);
 	}
 
 	/* File methods */
