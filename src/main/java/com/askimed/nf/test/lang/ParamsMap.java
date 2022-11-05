@@ -9,12 +9,12 @@ import java.util.Map;
 import java.util.Queue;
 
 import org.codehaus.groovy.control.CompilationFailedException;
-import org.yaml.snakeyaml.Yaml;
 
 import groovy.json.JsonSlurper;
 import groovy.lang.Closure;
 import groovy.lang.Writable;
 import groovy.text.SimpleTemplateEngine;
+import groovy.yaml.YamlSlurper;
 
 public class ParamsMap extends HashMap<String, Object> {
 
@@ -71,15 +71,17 @@ public class ParamsMap extends HashMap<String, Object> {
 		map.putAll(this);
 
 		loadFromMap(map);
+
 	}
 
 	public void loadFromYamlFile(File file) throws CompilationFailedException, ClassNotFoundException, IOException {
 
-		Yaml parser = new Yaml();
-		Map<String, Object> map = (Map<String, Object>) parser.load(new FileReader(file));
+		YamlSlurper yamlSlurper = new YamlSlurper();
+		Map<String, Object> map = (Map<String, Object>) yamlSlurper.parse(new FileReader(file));
 		map.putAll(this);
 
 		loadFromMap(map);
+
 	}
 
 	public synchronized void loadFromMap(Map<String, Object> map)
@@ -142,7 +144,7 @@ public class ParamsMap extends HashMap<String, Object> {
 		queue.add(map);
 
 		while (queue.size() > 0) {
-			
+
 			Map<String, Object> item = queue.remove();
 
 			for (String key : item.keySet()) {
