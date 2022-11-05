@@ -13,6 +13,8 @@ import com.askimed.nf.test.lang.extensions.util.GzipUtil;
 import com.askimed.nf.test.util.FileUtil;
 
 import groovy.json.JsonSlurper;
+import groovy.yaml.YamlSlurper;
+
 
 public class PathExtension {
 
@@ -43,6 +45,13 @@ public class PathExtension {
 
 	public static Object getJson(Path self) throws FileNotFoundException, IOException {
 		return readJSON(self);
+	}
+
+	/* YAML */
+
+	public static Object getYaml(Path self) throws FileNotFoundException, IOException {
+		YamlSlurper YamlSlurper = new YamlSlurper();
+		return YamlSlurper.parse(self);
 	}
 
 	/* File methods */

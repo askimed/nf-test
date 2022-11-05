@@ -26,13 +26,13 @@ public abstract class AbstractTest implements ITest {
 	public static String[] SHARED_DIRECTORIES = { "bin", "lib" };
 
 	protected File config = null;
-	
+
 	private boolean updateSnapshot = false;
-	
+
 	public AbstractTest() {
 
 	}
-	
+
 	public void config(String config) {
 		this.config = new File(config);
 	}
