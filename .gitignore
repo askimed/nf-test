@@ -7,7 +7,6 @@ output
 .nextflow
 .nextflow.*
 .settings
-params.json
 test_mock.nf
 /.nf-test/
 site

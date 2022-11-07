@@ -1,5 +1,9 @@
 package com.askimed.nf.test.lang;
 
+import java.io.IOException;
+
+import org.codehaus.groovy.control.CompilationFailedException;
+
 import com.askimed.nf.test.core.ITest;
 import com.askimed.nf.test.lang.extensions.Snapshot;
 import com.askimed.nf.test.lang.function.Function;
@@ -72,12 +76,7 @@ public class TestContext {
 		this.paramsClosure = closure;
 	}
 
-	public void evaluateParamsClosure(String baseDir, String outputDir) {
-		params.setBaseDir(baseDir);
-		params.setOutputDir(outputDir);
-		this.baseDir = baseDir;
-		this.outputDir = outputDir;
-
+	public void evaluateParamsClosure() {
 		if (paramsClosure == null) {
 			return;
 		}
@@ -85,6 +84,7 @@ public class TestContext {
 		paramsClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
 		paramsClosure.call();
 		paramsClosure.getMetaClass().getProperties();
+		params.evaluateNestedClosures();
 
 	}
 
@@ -144,8 +144,14 @@ public class TestContext {
 	}
 
 	public void init(String baseDir, String outputDir) {
+		params.setBaseDir(baseDir);
+		params.setOutputDir(outputDir);
 		this.baseDir = baseDir;
 		this.outputDir = outputDir;
 	}
 
+	public void loadParams(String filename) throws CompilationFailedException, ClassNotFoundException, IOException {
+		params.load(filename);
+	}
+	
 }

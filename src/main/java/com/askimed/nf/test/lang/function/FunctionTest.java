@@ -115,7 +115,7 @@ public class FunctionTest extends AbstractTest {
 			when.execute(context);
 		}
 
-		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
+		context.evaluateParamsClosure();
 		context.evaluateFunctionClosure();
 
 		// Create workflow mock

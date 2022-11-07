@@ -90,7 +90,7 @@ public class PipelineTest extends AbstractTest {
 			when.execute(context);
 		}
 
-		context.evaluateParamsClosure(baseDir, outputDir.getAbsolutePath());
+		context.evaluateParamsClosure();
 		context.evaluateProcessClosure();
 
 		if (debug) {

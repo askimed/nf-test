@@ -28,6 +28,65 @@ nextflow_pipeline {
   }
 
 
+  test("Should create 5 output files from params file") {
+
+   when {
+     loadParams("$baseDir/test-data/pipeline/dsl1/params.json")
+   }
+
+   then {
+     assert workflow.success
+     assert params.lukas == 28
+     for (def i in 1..5){
+       def file = new File("${params.outdir}/${i}_28.txt");
+       assert file.exists()
+       assert file.text == "lukas forer ${i}\n"
+     }
+   }
+
+  }
+  
+  test("Should create 5 output files from params file 2") {
+
+   when {
+     params {
+       load("$baseDir/test-data/pipeline/dsl1/params.json")
+       lukas = 44
+     }
+   }
+
+   then {
+     assert workflow.success
+     assert params.lukas == 44
+     for (def i in 1..5){
+       def file = new File("${params.outdir}/${i}_44.txt");
+       assert file.exists()
+       assert file.text == "lukas forer ${i}\n"
+     }
+   }
+
+  }
+
+  test("Should create 5 output files from yaml file") {
+
+   when {
+     params {
+       load("$baseDir/test-data/pipeline/dsl1/params.yml")
+     }
+   }
+
+   then {
+     assert workflow.success
+     assert params.lukas == 28
+     for (def i in 1..5){
+       def file = new File("${params.outdir}/${i}_28.txt");
+       assert file.exists()
+       assert file.text == "lukas forer ${i}\n"
+     }
+   }
+
+  }
+
   test("Should fail if outdir is missing") {
 
     //debug true
