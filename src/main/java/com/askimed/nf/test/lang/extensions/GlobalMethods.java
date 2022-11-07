@@ -21,4 +21,24 @@ public class GlobalMethods {
 		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
 		closure.call();
 	}
+
+	public static void assertAll(Closure... closures) throws Exception {
+		// Asserts that all supplied closures do not throw exceptions.
+		// The number of failed closures is reported in the Exception message
+		int failed = 0;
+
+		for (Closure closure : closures) {
+			try {
+				closure.call();
+			}
+			catch (Throwable e) {
+				failed++;
+				System.err.println(e);
+			}
+		}
+
+		if (failed > 0) {
+			throw new Exception(Integer.toString(failed) + " of " + Integer.toString(closures.length) + " assertions failed");
+		}
+	}
 }

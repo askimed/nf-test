@@ -2,6 +2,8 @@
 
 > Simple test framework for Nextflow pipelines
 
+The full documentation can be found [here](https://code.askimed.com/nf-test).
+
 ## Installation
 
 nf-test has the same requirements as Nextflow and can be used on POSIX compatible systems like Linux or OS X. You can install nf-test using the following command:

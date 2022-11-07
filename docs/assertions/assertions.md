@@ -29,3 +29,38 @@ with(process.out.imputed_plink2) {
     }
 }
 ```
+
+## Using `assertAll`
+`assertAll(Closure... closures)` ensures that all supplied closures do no throw exceptions. The number of failed closures is reported in the Exception message. This useful for efficient debugging
+a set of test assertions in one go.
+
+```groovy
+def a = 2
+
+assertAll(
+	{ assert a==1 },
+	{ a = 1/0 },
+	{ assert a==2 },
+	{ assert a==3 }
+)
+```
+The output will look like this:
+```groovy
+
+assert a==1
+       ||
+       |false
+       2
+
+java.lang.ArithmeticException: Division by zero
+Assertion failed:
+
+assert a==3
+       ||
+       |false
+       2
+
+FAILED (7.106s)
+
+  java.lang.Exception: 3 of 4 assertions failed
+```
