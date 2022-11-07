@@ -13,7 +13,7 @@
     
     
       
-        <title>Global Variables - nf-test</title>
+        <title>Params and Global Variables - nf-test</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#global-variables" class="md-skip">
+        <a href="#params-and-global-variables" class="md-skip">
           Skip to content
         </a>
       
@@ -101,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Global Variables
+              Params and Global Variables
             
           </span>
         </div>
@@ -350,12 +350,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Global Variables
+          Params and Global Variables
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Global Variables
+        Params and Global Variables
       </a>
       
         
@@ -374,16 +374,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#outputdir" class="md-nav__link">
-    outputDir
+  <a href="#params" class="md-nav__link">
+    Params
   </a>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#global-variables" class="md-nav__link">
+    Global Variables
+  </a>
+  
+    <nav class="md-nav" aria-label="Global Variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#outputdir" class="md-nav__link">
+    outputDir
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#basedir" class="md-nav__link">
     baseDir
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -758,16 +778,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#outputdir" class="md-nav__link">
-    outputDir
+  <a href="#params" class="md-nav__link">
+    Params
   </a>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#global-variables" class="md-nav__link">
+    Global Variables
+  </a>
+  
+    <nav class="md-nav" aria-label="Global Variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#outputdir" class="md-nav__link">
+    outputDir
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#basedir" class="md-nav__link">
     baseDir
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -791,18 +831,58 @@
   </a>
 
 
-<h1 id="global-variables">Global Variables</h1>
-<h2 id="outputdir">outputDir</h2>
+<h1 id="params-and-global-variables">Params and Global Variables</h1>
+<h2 id="params">Params</h2>
+<p>The <code>params</code> block is optional and is a simple map that can be used to overwrite Nextflow's input <code>params</code>. The <code>params</code> block is located in the <code>when</code> block of a testcase. You can set params manually:</p>
+<div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;output&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+<span class="o">}</span><span class="w"></span>
+</code></pre></div>
+<p>It is also possible to set nested params using the same syntax as in your Nextflow script:</p>
+<div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">output</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">          </span><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;output&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="o">}</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+<span class="o">}</span><span class="w"></span>
+</code></pre></div>
+<p>In addition, you can load the <code>params</code> from a JSON file:</p>
+<div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">&quot;$baseDir/tests/params.json&quot;</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+<span class="o">}</span><span class="w"></span>
+</code></pre></div>
+<p>or from a YAML file:</p>
+<div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">&quot;$baseDir/tests/params.yaml&quot;</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+<span class="o">}</span><span class="w"></span>
+</code></pre></div>
+<p>nf-test allows to combine both techniques and therefor it is possible to overwrite one or more <code>params</code> from the json file:</p>
+<div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">&quot;$baseDir/tests/params.json&quot;</span><span class="o">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">outputDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;new/output/path&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="o">}</span><span class="w"></span>
+<span class="o">}</span><span class="w"></span>
+</code></pre></div>
+<h2 id="global-variables">Global Variables</h2>
+<h3 id="outputdir"><code>outputDir</code></h3>
 <p>This variable points to the directory within the temporary test directory (<code>.nf-test/tests/&lt;test-dir&gt;/output/</code>). The variable can be set under params:</p>
 <div class="highlight"><pre><span></span><code><span class="n">params</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 <span class="w">    </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;$outputDir&quot;</span><span class="w"></span>
 <span class="o">}</span><span class="w"></span>
 </code></pre></div>
-<h2 id="basedir">baseDir</h2>
-<p>This variable points to the directory to locate the base directory of the main nf-test config. The variable can be used e.g. in the process definition:</p>
+<h3 id="basedir"><code>baseDir</code></h3>
+<p>This variable points to the directory to locate the base directory of the main nf-test config. The variable can be used e.g. in the process definition to build absolute paths for input files:</p>
 <div class="highlight"><pre><span></span><code><span class="n">process</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
 <span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    f1 = file(&#39;$baseDir/tests/input/file123.gz&#39;)</span>
+<span class="s2">    file1 = file(&quot;$baseDir/tests/input/file123.gz&quot;)</span>
 <span class="s2">    &quot;&quot;&quot;</span><span class="w"></span>
 <span class="o">}</span><span class="w"></span>
 </code></pre></div>
