@@ -33,7 +33,7 @@ public class GlobalMethods {
 			}
 			catch (Throwable e) {
 				failed++;
-				System.out.println(e);
+				System.err.println(e);
 			}
 		}
 
