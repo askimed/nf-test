@@ -18,7 +18,7 @@ public class App {
 
 	public static final String NAME = "nf-test";
 
-	public static final String VERSION = "0.7.0";
+	public static final String VERSION = "0.7.1";
 
 	public int run(String[] args) {
 
