@@ -1,5 +1,5 @@
 // Example for the GlobalMethodsTest
-a = 2
+def a = 2
 
 assertAll(
 	{ assert a==1 },

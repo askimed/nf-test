@@ -1,6 +1,7 @@
 # :rocket: nf-test
 
 > Simple test framework for Nextflow pipelines
+The full documentation can be found [here](https://code.askimed.com/nf-test).
 
 ## Installation
 
