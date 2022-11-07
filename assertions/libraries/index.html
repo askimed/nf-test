@@ -916,11 +916,11 @@
     ├── hello_2.nf
     ├── hello_2.nf.test
 └── lib
-    └── MyWordUtils.groovy        
+    └── MyWordUtils.groovy
 </code></pre></div>
-<p>The default location is <code>tests\lib</code>. This folder location can be changed in nf-test config file.</p>
+<p>The default location is <code>tests/lib</code>. This folder location can be changed in nf-test config file.</p>
 <p>It is also possible to use the <code>--lib</code> parameter to add an additional folder to the classpath:</p>
-<div class="highlight"><pre><span></span><code>nf-test test tests/testcase_1/hello_1.nf --lib tests/mylibs
+<div class="highlight"><pre><span></span><code>nf-test test tests/testcase_1/hello_1.nf.test --lib tests/mylibs
 </code></pre></div>
 <p>If multiple folders are used, the they need to be separate with a colon (like in Java or Groovy).</p>
 <h2 id="using-maven-artifcats-with-grab">Using Maven Artifcats with <code>@Grab</code></h2>

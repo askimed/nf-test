@@ -280,6 +280,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#compiling-from-source" class="md-nav__link">
+    Compiling from source
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -783,6 +790,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#compiling-from-source" class="md-nav__link">
+    Compiling from source
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -848,6 +862,20 @@ Error: Nextflow Binary not found. Please check if Nextflow is in a directory acc
 </code></pre></div>
 <h2 id="manual-installation">Manual installation</h2>
 <p>All releases are also available on <a href="https://github.com/askimed/nf-test/releases">Github</a>.</p>
+<h2 id="compiling-from-source">Compiling from source</h2>
+<p>To compile nf-test from source you shall have maven installed. This will produce a <code>nf-test/target/nf-test.jar</code> file.
+<div class="highlight"><pre><span></span><code>git clone git@github.com:askimed/nf-test.git
+cd nf-test
+mvn install
+</code></pre></div>
+To use the newly compiled <code>nf-test.jar</code>, update the <code>nf-test</code> bash script that is on your PATH to point to the new <code>.jar</code> file.
+First locate it with <code>which nf-test</code>, and then modify <code>APP_HOME</code> and <code>APP_JAR</code> vars at the top:
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+APP_HOME=&quot;/PATH/TO/nf-test/target/&quot;
+APP_JAR=&quot;nf-test.jar&quot;
+APP_UPDATE_URL=&quot;https://code.askimed.com/install/nf-test&quot;
+...
+</code></pre></div></p>
 
 
 
