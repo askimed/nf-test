@@ -1,22 +1,15 @@
 package com.askimed.nf.test.lang.extensions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
+
 import org.junit.jupiter.api.Test;
-
-import com.askimed.nf.test.lang.extensions.GlobalMethods;
-import org.codehaus.groovy.control.customizers.ImportCustomizer;
-import org.codehaus.groovy.control.CompilerConfiguration;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import static org.junit.matchers.JUnitMatchers.*;
 import static org.junit.Assert.*;
 
-import groovy.lang.GroovyObjectSupport;
+import org.codehaus.groovy.control.customizers.ImportCustomizer;
+import org.codehaus.groovy.control.CompilerConfiguration;
+
 import groovy.lang.GroovyShell;
-import groovy.lang.GroovyClassLoader;
-import groovy.lang.GroovyObject;
-import groovy.lang.Binding;
 
 public class GlobalMethodsTest {
 
@@ -37,6 +30,6 @@ public class GlobalMethodsTest {
         });
 
         // Assert the message
-        assertThat(exception.toString(), containsString("3 of 4 assertions failed"));
+        assertTrue(exception.toString().contains("3 of 4 assertions failed"));
 	}
 }
