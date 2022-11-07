@@ -90,15 +90,15 @@ tests
     ├── hello_2.nf
     ├── hello_2.nf.test
 └── lib
-    └── MyWordUtils.groovy        
+    └── MyWordUtils.groovy
 ```
 
-The default location is `tests\lib`. This folder location can be changed in nf-test config file.
+The default location is `tests/lib`. This folder location can be changed in nf-test config file.
 
 It is also possible to use the `--lib` parameter to add an additional folder to the classpath:
 
 ```
-nf-test test tests/testcase_1/hello_1.nf --lib tests/mylibs
+nf-test test tests/testcase_1/hello_1.nf.test --lib tests/mylibs
 ```
 
 If multiple folders are used, the they need to be separate with a colon (like in Java or Groovy).
