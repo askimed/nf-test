@@ -29,8 +29,6 @@ public class ListTestsCommand implements Callable<Integer> {
 
 		try {
 
-			// List<File> scripts = new ArrayList<File>();
-
 			try {
 
 				File configFile = new File(Config.FILENAME);
