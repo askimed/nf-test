@@ -100,14 +100,7 @@ public class RunTestsCommand implements Callable<Integer> {
 					System.out.println(AnsiColors.yellow("Warning: This pipeline has no nf-test config file."));
 				}
 
-				for (File testPath : testPaths) {
-					if (testPath.isDirectory()) {
-						scripts.addAll(findTests(testPath));
-					}
-					else {
-						scripts.add(testPath);
-					};
-				};
+				scripts = pathsToScripts(testPaths);
 
 			} catch (Exception e) {
 
@@ -215,4 +208,16 @@ public class RunTestsCommand implements Callable<Integer> {
 		return scripts;
 	}
 
+	public static List<File> pathsToScripts(List<File> paths) throws Exception {
+		List<File> scripts = new ArrayList<File>();
+		for (File path : paths) {
+			if (path.isDirectory()) {
+				scripts.addAll(findTests(path));
+			}
+			else {
+				scripts.add(path);
+			};
+		};
+		return scripts;
+	}
 }
