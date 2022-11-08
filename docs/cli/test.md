@@ -3,10 +3,10 @@
 ## Usage
 
 ```
-nf-test test [<NEXTFLOW_FILES>]
+nf-test test [<NEXTFLOW_FILES>|<SCRIPT_FOLDERS>]
 ```
 
-### Optional Arguements
+### Optional Arguments
 
 #### `--profile <NEXTFLOW_PROFILE>`
 
@@ -24,28 +24,28 @@ Writes test results in [JUnit XML format](https://junit.org/) to file, which con
 
 ## Examples
 
-Run all tests:
+* Run all test scripts that can be found in the `testDir` defined in the `nf-test.config` file in the current working directory:
 
-```
-nf-test test
-```
+    ```
+    nf-test test
+    ```
 
-Run all test from a \*.test file:
+* Run all specified test scripts and search specified directories for additional test scripts:
 
-```
-nf-test test tests/modules/local/salmon_index.nf.test
-```
+    ```
+    nf-test test tests/modules/local/salmon_index.nf.test tests/modules/bwa_index.nf.test
 
+    nf-test test tests/modules tests/modules/bwa_index.nf.test
+    ```
 
+* Run a specific test using its hash:
 
-Run a specific test using its hash:
+    ```
+    nf-test test tests/main.nf.test@d41119e4
+    ```
 
-```
-nf-test test tests/main.nf.test@d41119e4
-```
+* Run all tests and write results to `report.tap`:
 
-Run all tests and write results to `report.tap`:
-
-```
-nf-test test --tap report.tap
-```
+    ```
+    nf-test test --tap report.tap
+    ```
