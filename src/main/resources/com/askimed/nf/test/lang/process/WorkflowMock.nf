@@ -34,6 +34,11 @@ workflow {
     for (def name in ${process}.out.getNames()) {
         channel << tuple(name, ${process}.out.getProperty(name))
     }
+    
+    def array = ${process}.out as Object[]
+    for (def i = 0; i < array.length ; i++) {
+        channel << tuple(i, array[i])
+    }    
 
     channel.subscribe { outputTupel ->
       def sortedList = outputTupel[1].toList()
