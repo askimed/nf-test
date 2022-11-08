@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.Callable;
@@ -28,7 +29,7 @@ import picocli.CommandLine.Parameters;
 public class RunTestsCommand implements Callable<Integer> {
 
 	@Parameters(description = "test files")
-	private List<File> scripts;
+	private List<File> testPaths = new ArrayList<File>();
 
 	@Option(names = {
 			"--debug" }, description = "Show Nextflow output", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -63,7 +64,8 @@ public class RunTestsCommand implements Callable<Integer> {
 
 	@Override
 	public Integer call() throws Exception {
-
+		List<File> scripts = new ArrayList<File>();
+		System.out.println(testPaths);
 		PluginManager manager = new PluginManager(false);
 
 		try {
@@ -89,15 +91,24 @@ public class RunTestsCommand implements Callable<Integer> {
 					libDir += config.getLibDir();
 					manager = config.getPluginManager();
 
-					if (scripts == null) {
+					if (testPaths.size() == 0) {
 						File folder = new File(config.getTestsDir());
-						scripts = findTests(folder);
-						System.out.println("Found " + scripts.size() + " files in test directory.");
+						testPaths.add(folder);
+						System.out.println("Found " + testPaths.size() + " files in test directory.");
 					}
 
 				} else {
 					System.out.println(AnsiColors.yellow("Warning: This pipeline has no nf-test config file."));
 				}
+
+				for (File testPath : testPaths) {
+					if (testPath.isDirectory()) {
+						scripts.addAll(findTests(testPath));
+					}
+					else {
+						scripts.add(testPath);
+					};
+				};
 
 			} catch (Exception e) {
 
@@ -109,8 +120,8 @@ public class RunTestsCommand implements Callable<Integer> {
 
 			}
 
-			if (scripts == null) {
-				System.out.println(AnsiColors.red("Error: No tests provided and no test directory set."));
+			if (scripts.size() == 0) {
+				System.out.println(AnsiColors.red("Error: No tests or test directories containing scripts that end with *.test provided."));
 				return 2;
 			}
 
