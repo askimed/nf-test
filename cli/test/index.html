@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.8">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
     
     
       
@@ -20,7 +20,7 @@
       <link rel="stylesheet" href="../../assets/stylesheets/main.20d9efc8.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.815d1a91.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.08040f6c.min.css">
         
           
           
@@ -58,7 +58,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="teal">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
   
     
     
@@ -576,11 +576,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#optional-arguements" class="md-nav__link">
-    Optional Arguements
+  <a href="#optional-arguments" class="md-nav__link">
+    Optional Arguments
   </a>
   
-    <nav class="md-nav" aria-label="Optional Arguements">
+    <nav class="md-nav" aria-label="Optional Arguments">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -820,11 +820,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#optional-arguements" class="md-nav__link">
-    Optional Arguements
+  <a href="#optional-arguments" class="md-nav__link">
+    Optional Arguments
   </a>
   
-    <nav class="md-nav" aria-label="Optional Arguements">
+    <nav class="md-nav" aria-label="Optional Arguments">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -901,9 +901,9 @@
 
 <h1 id="test-command"><code>test</code> command</h1>
 <h2 id="usage">Usage</h2>
-<div class="highlight"><pre><span></span><code>nf-test test [&lt;NEXTFLOW_FILES&gt;]
+<div class="highlight"><pre><span></span><code>nf-test test [&lt;NEXTFLOW_FILES&gt;|&lt;SCRIPT_FOLDERS&gt;]
 </code></pre></div>
-<h3 id="optional-arguements">Optional Arguements</h3>
+<h3 id="optional-arguments">Optional Arguments</h3>
 <h4 id="-profile-nextflow_profile"><code>--profile &lt;NEXTFLOW_PROFILE&gt;</code></h4>
 <h4 id="-debug"><code>--debug</code></h4>
 <p>The debug parameter prints out all available output channels which can be accessed in the <code>then</code> clause.</p>
@@ -914,18 +914,30 @@
 <h4 id="-junitxml-filename"><code>--junitxml &lt;filename&gt;</code></h4>
 <p>Writes test results in <a href="https://junit.org/">JUnit XML format</a> to file, which conforms to <a href="https://github.com/junit-team/junit5/blob/242f3b3ef84cfd96c9de26992588812a68cdef8b/platform-tests/src/test/resources/jenkins-junit.xsd">the standard schema</a>.</p>
 <h2 id="examples">Examples</h2>
-<p>Run all tests:</p>
+<ul>
+<li>
+<p>Run all test scripts that can be found in the <code>testDir</code> defined in the <code>nf-test.config</code> file in the current working directory:</p>
 <div class="highlight"><pre><span></span><code>nf-test test
 </code></pre></div>
-<p>Run all test from a *.test file:</p>
-<div class="highlight"><pre><span></span><code>nf-test test tests/modules/local/salmon_index.nf.test
+</li>
+<li>
+<p>Run all specified test scripts and search specified directories for additional test scripts:</p>
+<div class="highlight"><pre><span></span><code>nf-test test tests/modules/local/salmon_index.nf.test tests/modules/bwa_index.nf.test
+
+nf-test test tests/modules tests/modules/bwa_index.nf.test
 </code></pre></div>
+</li>
+<li>
 <p>Run a specific test using its hash:</p>
 <div class="highlight"><pre><span></span><code>nf-test test tests/main.nf.test@d41119e4
 </code></pre></div>
+</li>
+<li>
 <p>Run all tests and write results to <code>report.tap</code>:</p>
 <div class="highlight"><pre><span></span><code>nf-test test --tap report.tap
 </code></pre></div>
+</li>
+</ul>
 
 
 

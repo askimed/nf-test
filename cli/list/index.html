@@ -13,7 +13,7 @@
     
     
       
-        <title>Regular Expressions - nf-test</title>
+        <title>`list` command - nf-test</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#regular-expressions" class="md-skip">
+        <a href="#list-command" class="md-skip">
           Skip to content
         </a>
       
@@ -101,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Regular Expressions
+              `list` command
             
           </span>
         </div>
@@ -358,14 +358,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
       
       
       
@@ -388,7 +386,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../assertions/" class="md-nav__link">
+      <a href="../../assertions/assertions/" class="md-nav__link">
         Power Assertions
       </a>
     </li>
@@ -402,7 +400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../files/" class="md-nav__link">
+      <a href="../../assertions/files/" class="md-nav__link">
         Files
       </a>
     </li>
@@ -416,7 +414,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snapshots/" class="md-nav__link">
+      <a href="../../assertions/snapshots/" class="md-nav__link">
         Snapshots
       </a>
     </li>
@@ -428,52 +426,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Regular Expressions
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../assertions/regular-expressions/" class="md-nav__link">
         Regular Expressions
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#using-operator" class="md-nav__link">
-    Using ==~ operator
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -485,7 +442,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../fasta/" class="md-nav__link">
+      <a href="../../assertions/fasta/" class="md-nav__link">
         FASTA Files
       </a>
     </li>
@@ -499,7 +456,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../libraries/" class="md-nav__link">
+      <a href="../../assertions/libraries/" class="md-nav__link">
         Using Third-Party Libraries
       </a>
     </li>
@@ -547,7 +504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli/init/" class="md-nav__link">
+      <a href="../init/" class="md-nav__link">
         init
       </a>
     </li>
@@ -561,7 +518,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli/generate/" class="md-nav__link">
+      <a href="../generate/" class="md-nav__link">
         generate
       </a>
     </li>
@@ -575,7 +532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli/test/" class="md-nav__link">
+      <a href="../test/" class="md-nav__link">
         test
       </a>
     </li>
@@ -589,7 +546,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli/clean/" class="md-nav__link">
+      <a href="../clean/" class="md-nav__link">
         clean
       </a>
     </li>
@@ -751,8 +708,41 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#using-operator" class="md-nav__link">
-    Using ==~ operator
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional-arguments" class="md-nav__link">
+    Optional Arguments
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional Arguments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-debug" class="md-nav__link">
+    --debug
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
   </a>
   
 </li>
@@ -771,17 +761,35 @@
                 
                   
 
-  <a href="https://github.com/askimed/nf-test/edit/master/docs/assertions/regular-expressions.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/askimed/nf-test/edit/master/docs/cli/list.md" title="Edit this page" class="md-content__button md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
-<h1 id="regular-expressions">Regular Expressions</h1>
-<h2 id="using-operator">Using <code>==~</code> operator</h2>
-<p>The operator <code>==~</code> can be used to check if a string matches a regular expression:</p>
-<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="s2">&quot;/my/full/path/to/process/dir/example.vcf.pgen&quot;</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.pgen&quot;</span><span class="w"></span>
+<h1 id="list-command"><code>list</code> command</h1>
+<h2 id="usage">Usage</h2>
+<p><code>list</code> command provides a convenient way to list all available test cases.</p>
+<div class="highlight"><pre><span></span><code>nf-test list [&lt;NEXTFLOW_FILES&gt;|&lt;SCRIPT_FOLDERS&gt;]
 </code></pre></div>
+<h3 id="optional-arguments">Optional Arguments</h3>
+<h4 id="-debug"><code>--debug</code></h4>
+<p>Show debugging infos.</p>
+<h2 id="examples">Examples</h2>
+<ul>
+<li>
+<p>List test cases that can be found in the <code>testDir</code> defined in the <code>nf-test.config</code> file in the current working directory:</p>
+<div class="highlight"><pre><span></span><code>nf-test list
+</code></pre></div>
+</li>
+<li>
+<p>List test cases in specified test scripts and search specified directories for additional test scripts:</p>
+<div class="highlight"><pre><span></span><code>nf-test list tests/modules/local/salmon_index.nf.test tests/modules/bwa_index.nf.test
+
+nf-test list tests/modules tests/modules/bwa_index.nf.test
+</code></pre></div>
+</li>
+</ul>
 
 
 
@@ -797,42 +805,6 @@
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="../snapshots/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Snapshots" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Snapshots
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../fasta/" class="md-footer__link md-footer__link--next" aria-label="Next: FASTA Files" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              FASTA Files
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
