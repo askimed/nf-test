@@ -65,7 +65,6 @@ public class RunTestsCommand implements Callable<Integer> {
 	@Override
 	public Integer call() throws Exception {
 		List<File> scripts = new ArrayList<File>();
-		System.out.println(testPaths);
 		PluginManager manager = new PluginManager(false);
 
 		try {

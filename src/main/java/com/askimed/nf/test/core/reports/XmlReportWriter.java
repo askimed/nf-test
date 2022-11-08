@@ -58,8 +58,7 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 
 					if (test.getStatus() != TestExecutionResultStatus.PASSED) {
 						writer.writeStartElement("failure");
-						String newline = "&#xA;";
-						writer.writeAttribute("message", test.getThrowable().toString().replaceAll("\n", newline));
+						writer.writeAttribute("message", test.getThrowable().toString());
 						writer.writeCharacters(test.getErrorReport());
 						writer.writeEndElement();
 					}
