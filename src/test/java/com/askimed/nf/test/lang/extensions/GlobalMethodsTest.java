@@ -13,8 +13,8 @@ import groovy.lang.GroovyShell;
 
 public class GlobalMethodsTest {
 
-	@Test
-	public void testAssertAll() throws Exception {
+    @Test
+    public void testAssertAll() throws Exception {
         // Prepare groovy shell with GlobalMethods class
         ImportCustomizer customizer = new ImportCustomizer();
         customizer.addStaticStars("com.askimed.nf.test.lang.extensions.GlobalMethods");
@@ -31,5 +31,5 @@ public class GlobalMethodsTest {
 
         // Assert the message
         assertTrue(exception.toString().contains("3 of 4 assertions failed"));
-	}
+    }
 }
