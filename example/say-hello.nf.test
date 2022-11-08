@@ -39,6 +39,7 @@ nextflow_process {
     then {
       assert process.failed
       assert process.errorReport.contains("Negative numbers not allowed")
+      assert 1 == 2
     }
 
   }
