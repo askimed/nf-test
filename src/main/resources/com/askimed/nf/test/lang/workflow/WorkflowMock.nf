@@ -35,7 +35,7 @@ workflow {
 	  }
 
     
-	  def array = ${process}.out as Object[]
+	  def array = ${workflow}.out as Object[]
 	  for (def i = 0; i < array.length ; i++) {
           channel << tuple(i, array[i])
       }    	
