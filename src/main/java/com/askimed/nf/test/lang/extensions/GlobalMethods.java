@@ -4,7 +4,11 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+
+import com.google.common.collect.Multiset;
+import com.google.common.collect.HashMultiset;
 
 import groovy.lang.Closure;
 
@@ -44,10 +48,41 @@ public class GlobalMethods {
 		}
 	}
 
-	public static void assertListUnsorted(List<Object> list1, List<Object> list2) throws Exception {
-		if (! new HashSet<>(list1).equals(new HashSet<>(list2))){
-			throw new Exception("Lists not equal");
+	public static void printMultiSet(Multiset<Object> multiset) {
+		//display the distinct elements of the multiset with their occurrence count
+		System.out.println("MultiSet [");
+
+		for (Multiset.Entry<Object> entry : multiset.entrySet()) {
+			System.out.println("Element: " + entry.getElement() + ", Occurrence(s): " + entry.getCount());
 		}
+		System.out.println("]");
+
+	}
+
+	public static void assertListUnsorted(List<Object> list1, List<Object> list2) throws Exception {
+		Multiset<Object> multiSet1 = HashMultiset.create();
+		Multiset<Object> multiSet2 = HashMultiset.create();
+
+		for (Object obj : list1){
+			multiSet1.add(obj);
+		}
+
+		for (Object obj : list2){
+			multiSet2.add(obj);
+		}
+
+		printMultiSet(multiSet1);
+		printMultiSet(multiSet2);
+
+		if (! multiSet1.equals(multiSet2)){
+			throw new Exception("Lists not equal: " );
+		}
+
+		// return multiSet1;
+		
+		// if (! new HashSet<>(list1).equals(new HashSet<>(list2))){
+		// 	throw new Exception("Lists not equal");
+		// }
 	}
 
 }
