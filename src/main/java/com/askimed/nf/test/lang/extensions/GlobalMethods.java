@@ -3,6 +3,8 @@ package com.askimed.nf.test.lang.extensions;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.List;
 
 import groovy.lang.Closure;
 
@@ -41,4 +43,11 @@ public class GlobalMethods {
 			throw new Exception(Integer.toString(failed) + " of " + Integer.toString(closures.length) + " assertions failed");
 		}
 	}
+
+	public static void assertListUnsorted(List<Object> list1, List<Object> list2) throws Exception {
+		if (! new HashSet<>(list1).equals(new HashSet<>(list2))){
+			throw new Exception("Lists not equal");
+		}
+	}
+
 }
