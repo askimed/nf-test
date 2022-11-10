@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.askimed.nf.test.util.AnsiText;
+import com.askimed.nf.test.util.AnsiColors;
 
 import groovy.json.JsonSlurper;
 
@@ -80,7 +81,10 @@ public class ChannelsOutput extends HashMap<Object, Object> {
 		// TODO: check classA == classB
 
 		if (a.getClass() != b.getClass()) {
-			System.out.println("Warning: Items with different classes: " + a.getClass() + " vs. " + b.getClass());
+			System.err.println(AnsiColors.yellow(
+				"\nWarning: Cannot sort channel, order not deterministic. Objects are different types: " 
+				+ a.getClass() + " vs. " + b.getClass()
+			));
 			return 1;
 		}
 
@@ -93,7 +97,10 @@ public class ChannelsOutput extends HashMap<Object, Object> {
 		} else if (a instanceof Integer || a instanceof Double || a instanceof Float) {
 			return compareNumbers((Comparable) a, (Comparable) b);
 		} else {
-			System.out.println("Warning: Unsupported classes: " + a.getClass() + " vs. " + b.getClass());
+			System.err.println(AnsiColors.yellow(
+				"\nWarning: Cannot sort channel, order not deterministic. Unsupported objects types: " 
+				+ a.getClass() + " vs. " + b.getClass()
+			));
 			return 1;
 		}
 
