@@ -35,6 +35,7 @@ with(process.out.imputed_plink2) {
 Nextflow channels can emit (in any order) a single value or a tuple of values.
 
 Channels that emit a single item appear as a list of objects, eg: `process.out.outputCh = [a3, a1, a2, ...]`
+
 Channels that emit tuples appear as a list of lists which contain objects, eg: `process.out.outputCh = [[a2,b2], [a1,b1], ...]`
 
 To perform agnostic assertions on channels, `nf-test` provides: `assertInAnyOrder(List<object> list1, List<object> list2)`
@@ -43,7 +44,7 @@ Some example use-cases are provided below.
 
 ### Channel that emits strings
 ```groovy
-def process.out.outputCh = ['Hola', 'Hello', 'Bonjour']
+// process.out.outputCh = ['Hola', 'Hello', 'Bonjour']
 
 def expected = ['Bonjour', 'Hello', 'Hola']
 assertInAnyOrder(process.out.outputCh, expected)
@@ -52,7 +53,8 @@ assertInAnyOrder(process.out.outputCh, expected)
 
 ### Channel that emits a single maps, e.g. val(myMap)
 ```groovy
-def process.out.outputCh = [
+/*
+process.out.outputCh = [
   [
     'A': [1,2,3],
     'B': [4,5,6]
@@ -62,6 +64,7 @@ def process.out.outputCh = [
     'D': [10,11,12]
   ],
 ]
+*/
 
 def expected = [
   [
@@ -79,15 +82,23 @@ assertInAnyOrder(process.out.outputCh, expected)
 
 ### Channel that emits json files
 
-See: PathExtensions for more information on parsing and asserting various file types.
+See [the files page](./files.md) for more information on parsing and asserting various file types.
 
 Since the outputCh filepaths are different between consecutive runs, the files need to be read/parsed prior to comparison
 
 ```groovy
-def process.out.outputCh = ['/path/to/some/file1.json', '/path/to/another/file2.json']
+/*
+process.out.outputCh = [
+  '/path/to/some/file1.json', 
+  '/path/to/another/file2.json'
+]
+*/
 
 def actual = process.out.outputCh.collect { filepath -> path(filepath).json }
-def expected = [path('./myTestData/file2.json').json, path('./myTestData/file1.json').json]
+def expected = [
+  path('./myTestData/file2.json').json, 
+  path('./myTestData/file1.json').json
+]
 
 assertInAnyOrder(actual, expected)
 
@@ -95,12 +106,17 @@ assertInAnyOrder(actual, expected)
 
 ### Channel that emits a tuple of strings and json files
 
-See: PathExtensions for more information on parsing and asserting various file types
+See [the files page](./files.md) for more information on parsing and asserting various file types
 
-Since ordering of the items within the tuples are consistent, we can assert this case:
+Since the ordering of items within the tuples are consistent, we can assert this case:
 
 ```groovy
-def process.out.outputCh = [['Hello', '/path/to/some/file1.json'], ['Hola', '/path/to/another/file2.json']]
+/*
+process.out.outputCh = [
+  ['Hello', '/path/to/some/file1.json'], 
+  ['Hola', '/path/to/another/file2.json']
+]
+*/
 
 def actual = process.out.outputCh.collect { greeting, filepath -> [greeting, path(filepath).json] }
 def expected = [
@@ -111,9 +127,14 @@ def expected = [
 assertInAnyOrder(actual, expected)
 ```
 
-If you only wanted to assert the json, and ignore the string:
+To assert the json only and ignore the strings:
 ```groovy
-def process.out.outputCh = [['Hello', '/path/to/some/file1.json'], ['Hola', '/path/to/another/file2.json']]
+/*
+process.out.outputCh = [
+  ['Hello', '/path/to/some/file1.json'], 
+  ['Hola', '/path/to/another/file2.json']
+]
+*/
 
 def actual = process.out.outputCh.collect { greeting, filepath -> path(filepath).json }
 def expected = [
@@ -124,9 +145,14 @@ def expected = [
 assertInAnyOrder(actual, expected)
 ```
 
-If you only wanted to assert the strings and not the json files:
+To assert the strings only and not the json files:
 ```groovy
-def process.out.outputCh = [['Hello', '/path/to/some/file1.json'], ['Hola', '/path/to/another/file2.json']]
+/*
+process.out.outputCh = [
+  ['Hello', '/path/to/some/file1.json'], 
+  ['Hola', '/path/to/another/file2.json']
+]
+*/
 
 def actual = process.out.outputCh.collect { greeting, filepath -> greeting }
 def expected = ['Hola', 'Hello']
@@ -134,9 +160,14 @@ def expected = ['Hola', 'Hello']
 assertInAnyOrder(actual, expected)
 ```
 
-If you only wanted to assert a single json file that occurs in one of the tuples:
+To assert that one of json files occurs in one of the tuples:
 ```groovy
-def process.out.outputCh = [['Hello', '/path/to/some/file1.json'], ['Hola', '/path/to/another/file2.json']]
+/*
+def process.out.outputCh = [
+  ['Hello', '/path/to/some/file1.json'], 
+  ['Hola', '/path/to/another/file2.json']
+]
+*/
 
 def actual = process.out.outputCh.collect { greeting, filepath -> path(filepath).json }
 
