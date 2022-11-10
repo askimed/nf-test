@@ -30,6 +30,118 @@ with(process.out.imputed_plink2) {
 }
 ```
 
+## Comparing Channels with Using `assertInAnyOrder`
+
+A channel can emit (in any order) a single value or a tuple of values.
+
+Channels that emit a single item appear as a list of objects, eg: `process.out.outputCh = [a3, a1, a2, ...]`
+Channels that emit tuples appear as a list of lists which contain objects, eg: `process.out.outputCh = [[a2,b2], [a1,b1], ...]`
+
+Order agnostic assertions can be made using the method: `assertInAnyOrder(List<object> list1, List<object> list2)`
+
+### Channel that emits strings
+```groovy
+def process.out.outputCh = ['Hola', 'Hello', 'Bonjour']
+
+def expected = ['Bonjour', 'Hello', 'Hola']
+assertInAnyOrder(process.out.outputCh, expected)
+
+```
+
+### Channel that emits a single maps, e.g. val(myMap)
+```groovy
+def process.out.outputCh = [
+  [
+    'A': [1,2,3],
+    'B': [4,5,6]
+  ],
+  [
+    'C': [7,8,9],
+    'D': [10,11,12]
+  ],
+]
+
+def expected = [
+  [
+    'D': [10,11,12],
+    'C': [7,8,9]
+  ],
+  [
+    'B': [4,5,6],
+    'A': [1,2,3]
+  ]
+]
+assertInAnyOrder(process.out.outputCh, expected)
+
+```
+
+### Channel that emits json files
+
+See: PathExtensions for more information on parsing and asserting various file types.
+
+Since the outputCh filepaths are different between consecutive runs, the files need to be read/parsed prior to comparison
+
+```groovy
+def process.out.outputCh = ['/path/to/some/file1.json', '/path/to/another/file2.json']
+
+def actual = process.out.outputCh.collect { filepath -> path(filepath).json }
+def expected = [path('./myTestData/file2.json').json, path('./myTestData/file1.json').json]
+
+assertInAnyOrder(actual, expected)
+
+```
+
+### Channel that emits a tuple of strings and json files
+
+See: PathExtensions for more information on parsing and asserting various file types
+
+Since ordering of the items within the tuples are consistent, we can assert this case:
+
+```groovy
+def process.out.outputCh = [['Hello', '/path/to/some/file1.json'], ['Hola', '/path/to/another/file2.json']]
+
+def actual = process.out.outputCh.collect { greeting, filepath -> [greeting, path(filepath).json] }
+def expected = [
+  ['Hola', path('./myTestData/file2.json').json], 
+  ['Hello', path('./myTestData/file1.json').json]
+]
+
+assertInAnyOrder(actual, expected)
+```
+
+If you only wanted to assert the json, and ignore the string:
+```groovy
+def process.out.outputCh = [['Hello', '/path/to/some/file1.json'], ['Hola', '/path/to/another/file2.json']]
+
+def actual = process.out.outputCh.collect { greeting, filepath -> path(filepath).json }
+def expected = [
+  path('./myTestData/file2.json').json, 
+  path('./myTestData/file1.json').json
+]
+
+assertInAnyOrder(actual, expected)
+```
+
+If you only wanted to assert the strings and not the json files:
+```groovy
+def process.out.outputCh = [['Hello', '/path/to/some/file1.json'], ['Hola', '/path/to/another/file2.json']]
+
+def actual = process.out.outputCh.collect { greeting, filepath -> greeting }
+def expected = ['Hola', 'Hello']
+
+assertInAnyOrder(actual, expected)
+```
+
+If you only wanted to assert a single json file that occurs in one of the tuples:
+```groovy
+def process.out.outputCh = [['Hello', '/path/to/some/file1.json'], ['Hola', '/path/to/another/file2.json']]
+
+def actual = process.out.outputCh.collect { greeting, filepath -> path(filepath).json }
+
+assert actual.contains(path('./myTestData/file2.json').json)
+```
+
+
 ## Using `assertAll`
 `assertAll(Closure... closures)` ensures that all supplied closures do no throw exceptions. The number of failed closures is reported in the Exception message. This useful for efficient debugging
 a set of test assertions in one go.
