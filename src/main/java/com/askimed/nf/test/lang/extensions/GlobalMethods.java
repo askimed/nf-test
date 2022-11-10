@@ -29,7 +29,7 @@ public class GlobalMethods {
 		closure.call();
 	}
 
-	public static void assertAll(Closure... closures) throws AssertionFailedError {
+	public static void assertAll(Closure... closures) throws PowerAssertionError {
 		// Asserts that all supplied closures do not throw exceptions.
 		// The number of failed closures is reported in the Exception message
 		int failed = 0;
