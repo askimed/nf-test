@@ -1,16 +1,32 @@
 package com.askimed.nf.test.lang.extensions;
 
+// import static org.junit.Assert.assertThat;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+// import org.junit.jupiter.api.Assertions.*;
+
 import com.google.common.collect.Multiset;
 import com.google.common.collect.HashMultiset;
 
+import groovy.json.JsonSlurper;
 import groovy.lang.Closure;
+import junit.framework.AssertionFailedError;
+
+// import groovy.test.GroovyAssert;
+
+import org.codehaus.groovy.runtime.powerassert.PowerAssertionError;
+// import org.hamcrest.Matchers;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers;
+
 
 public class GlobalMethods {
 
@@ -28,7 +44,7 @@ public class GlobalMethods {
 		closure.call();
 	}
 
-	public static void assertAll(Closure... closures) throws Exception {
+	public static void assertAll(Closure... closures) throws AssertionFailedError {
 		// Asserts that all supplied closures do not throw exceptions.
 		// The number of failed closures is reported in the Exception message
 		int failed = 0;
@@ -44,45 +60,123 @@ public class GlobalMethods {
 		}
 
 		if (failed > 0) {
-			throw new Exception(Integer.toString(failed) + " of " + Integer.toString(closures.length) + " assertions failed");
+			throw new PowerAssertionError(Integer.toString(failed) + " of " + Integer.toString(closures.length) + " assertions failed");
 		}
 	}
 
-	public static void printMultiSet(Multiset<Object> multiset) {
-		//display the distinct elements of the multiset with their occurrence count
-		System.out.println("MultiSet [");
-
-		for (Multiset.Entry<Object> entry : multiset.entrySet()) {
-			System.out.println("Element: " + entry.getElement() + ", Occurrence(s): " + entry.getCount());
-		}
-		System.out.println("]");
-
-	}
-
-	public static void assertListUnsorted(List<Object> list1, List<Object> list2) throws Exception {
+	public static void assertListUnsorted(List<Object> list1, List<Object> list2) throws AssertionFailedError {
+		// Asserts that the two lists
+		// The number of failed closures is reported in the Exception message
+		
 		Multiset<Object> multiSet1 = HashMultiset.create();
 		Multiset<Object> multiSet2 = HashMultiset.create();
 
-		for (Object obj : list1){
+		for (Object obj : list1) {
 			multiSet1.add(obj);
 		}
 
-		for (Object obj : list2){
+		for (Object obj : list2) {
 			multiSet2.add(obj);
 		}
 
-		printMultiSet(multiSet1);
-		printMultiSet(multiSet2);
-
-		if (! multiSet1.equals(multiSet2)){
-			throw new Exception("Lists not equal: " );
+		if (!(multiSet1.equals(multiSet2))) {
+			throw new PowerAssertionError("Lists not equal.\n List 1: " + multiSet1.toString() + "\n List 2: " + multiSet2.toString());
 		}
-
-		// return multiSet1;
-		
-		// if (! new HashSet<>(list1).equals(new HashSet<>(list2))){
-		// 	throw new Exception("Lists not equal");
-		// }
 	}
 
+	public static void assertChannelOutput(List<Object> list1, List<Object> list2) throws AssertionFailedError {
+		// Assert that a channel contains the elements provided in the list.
+		// Filepaths in the channel are converted to their basename prior to comparison
+		List<Object> listWithBasename1 = replaceAbsolutePathsWithBasename(list1);
+		List<Object> listWithBasename2 = replaceAbsolutePathsWithBasename(list2);
+		
+		assertListUnsorted(listWithBasename1, listWithBasename2);
+	}
+
+	public static List<Object> replaceAbsolutePathsWithBasename(List<Object> list){
+		List<Object> newList = new ArrayList<Object>();
+
+		for (Object item : list) {
+			if (item instanceof String & item.toString().startsWith("/")) {
+				newList.add(new File((String) item).getName());
+			}
+			else if (item instanceof List<?>){
+				List<Object> listItem = (List<Object>) item;
+				List<Object> newListItem = new ArrayList<>();
+
+				for (Object subItem : listItem) {
+					if (subItem instanceof String & subItem.toString().startsWith("/")) {
+						newListItem.add(new File((String) subItem).getName());
+					}
+					else{
+						newListItem.add(subItem);
+					}				
+				}
+
+				newList.add(newListItem);
+			}
+			else{
+				newList.add(item);
+			}
+		}
+
+		return newList;
+	}
+
+	public static Object parseIfKnownPathExtension(Object obj) throws Exception {
+		//
+		Object parsed = obj;
+
+		if (obj instanceof String) {
+			String string = (String) obj;
+
+			//  TODO: generalise to all PathExtensions...
+			if (string.endsWith(".json")) {
+				parsed = PathExtension.getJson(Paths.get(string));
+			}
+			else if (string.startsWith("/")){
+				parsed = Paths.get(string).getFileName().toString();
+			}
+		}
+
+		return parsed;
+	}
+
+	public static List<Object> ParseChannel(List<Object> objects) throws Exception {
+		List<Object> parsedChannel = new ArrayList<Object>();
+
+		for (Object obj : objects) {
+			// Parse single-valued channels
+			Object parsedObj = parseIfKnownPathExtension(obj);
+
+			// Parse tuples
+			if (obj instanceof List<?>) {
+				System.out.println("Parsing List" + obj);
+
+				List<Object> list = (List<Object>) obj;
+				List<Object> parsedList = new ArrayList<Object>();
+
+				for (Object item : list){
+					parsedList.add(parseIfKnownPathExtension(item));
+				}
+
+				System.out.println("Converted List" + parsedList);
+				System.out.println("=======");
+
+				parsedObj = parsedList;
+			}
+
+			parsedChannel.add(parsedObj);
+		}
+
+		return parsedChannel;
+	}
+
+	public static void assertChannel(List<Object> channel, List<Object> expected) throws Exception {
+		assertThat(ParseChannel(channel), Matchers.containsInAnyOrder(expected.toArray()));
+	}
+
+	// public static void assertChannel(List<Object> channel, List<Object> expected) throws Exception {
+	// 	assertThat(ParseChannel(channel), Matchers.containsInAnyOrder(expected.toArray()));
+	// } 
 }
