@@ -141,42 +141,20 @@ public class GlobalMethods {
 
 		return parsed;
 	}
-
-	public static List<Object> ParseChannel(List<Object> objects) throws Exception {
-		List<Object> parsedChannel = new ArrayList<Object>();
-
-		for (Object obj : objects) {
-			// Parse single-valued channels
-			Object parsedObj = parseIfKnownPathExtension(obj);
-
-			// Parse tuples
-			if (obj instanceof List<?>) {
-				System.out.println("Parsing List" + obj);
-
-				List<Object> list = (List<Object>) obj;
-				List<Object> parsedList = new ArrayList<Object>();
-
-				for (Object item : list){
-					parsedList.add(parseIfKnownPathExtension(item));
-				}
-
-				System.out.println("Converted List" + parsedList);
-				System.out.println("=======");
-
-				parsedObj = parsedList;
-			}
-
-			parsedChannel.add(parsedObj);
+	
+	public static void assertContainsInAnyOrder(List<Object> list, List<Object> expected) throws Exception {
+		try {
+			assertThat(list, Matchers.containsInAnyOrder(expected.toArray()));
 		}
-
-		return parsedChannel;
+		catch (Throwable thrown) {
+			throw new PowerAssertionError(thrown.getMessage());
+		}
+		// assertThat(list, Matchers.contains(expected));
+		
+		
 	}
 
-	public static void assertChannel(List<Object> channel, List<Object> expected) throws Exception {
-		assertThat(ParseChannel(channel), Matchers.containsInAnyOrder(expected.toArray()));
-	}
+	public static void assertContains(List<Object> list, Object expected) throws Exception {
 
-	// public static void assertChannel(List<Object> channel, List<Object> expected) throws Exception {
-	// 	assertThat(ParseChannel(channel), Matchers.containsInAnyOrder(expected.toArray()));
-	// } 
+	} 
 }
