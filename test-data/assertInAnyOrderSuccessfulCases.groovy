@@ -1,27 +1,34 @@
-import static groovy.test.GroovyAssert.*
+/* Test cases for the assertInAnyOrder function in GlobalMethods.java
 
+    Each case mimics the list data structure produced by an nextflow output channel.
 
-// assert workflow.out.trial_out_ch == ["hello", "nf-test", "HYPE"]
-// assert workflow.out.trial_out_ch[3] == "hello"
+    A channel can emit (in any order) a single value or a tuple of values.
 
-// println "workflow.out.trial_out_ch"
-// println workflow.out.trial_out_ch
+    Channels that emit a single item are a list of objects: [a3, a1, a2, ...]
+    Channels that emit tuples are list of lists of objects: [[a2,b2], [a1,b1], ...]
 
-// assertListUnsorted(workflow.out.trial_out_ch, ["hello", "nf-test", "HYPE"])
+    The test cases here ensure json files, maps and sublists can be compared in an order-agnostic manner
 
-def myMap = [:]
-def anotherMap = [:]
-def channel = []
-def expected = []
-def jsonPath = '/home/a.fishman/repos/nf-test/test-data/process/path-util/input.json'
+    This groovy should run and not throw anything
+*/ 
 
-myMap = [
+def myMap = [
     'A': [1,2,3],
     'B': [4,5,6]
 ]
 
+def anotherMap = [
+    'C': [6,6,6],
+    'D': [9,9,9]
+]
+
+def outputCh = null
+def expected = null
+def jsonPath = './test-data/example.json'
+def channelTestData = null
+
 /* A channel that emits a single Map */
-channel = [myMap]
+outputCh = [myMap]
 
 expected = [
     [
@@ -30,57 +37,54 @@ expected = [
     ]
 ]
 
-assertContainsInAnyOrder(channel, expected)
+assertContainsInAnyOrder(outputCh, expected)
 
 /* Channel emits two maps out of order  */
-anotherMap = [
-    'C': [6,6,6],
-    'D': [9,9,9]
-]
+outputCh = [myMap, anotherMap]
 
-channel = [myMap, anotherMap]
 expected = [anotherMap, myMap]
 
-assertContainsInAnyOrder(channel, expected)
+assertContainsInAnyOrder(outputCh, expected)
 
 /* Channel emits a single Json file */
-channel = [jsonPath]
+outputCh = [jsonPath]
 
 expected = [path(jsonPath).json]
+channelTestData = outputCh.collect { file -> path(file).json }
 
-println "--------JSON-------"
-println path(jsonPath).json
-
-channel = channel.collect { file -> path(file).json }
-assertContainsInAnyOrder(channel, expected)
+assertContainsInAnyOrder(channelTestData, expected)
 
 /* Channel emits a single Map/Json Tuple */
-channel = [[myMap, jsonPath]]
-expected = [[myMap, path(jsonPath).json]]
+outputCh = [[myMap, jsonPath]]
 
-channel = channel.collect { map, file -> [map, path(file).json] }
-assertContainsInAnyOrder(channel, expected)
+expected = [[myMap, path(jsonPath).json]]
+channelTestData = outputCh.collect { map, file -> [map, path(file).json] }
+
+assertContainsInAnyOrder(channelTestData, expected)
 
 /* Channel emits two Map/Json Tuples out of order */
-channel = [[myMap, jsonPath], [anotherMap, jsonPath]]
+outputCh = [[myMap, jsonPath], [anotherMap, jsonPath]]
 
 // Assert whole channel
-channel = channel.collect { map, file -> [map, path(file).json] }
+channelTestData = outputCh.collect { map, file -> [map, path(file).json] }
 expected = [[anotherMap, path(jsonPath).json], [myMap, path(jsonPath).json]]
-assertContainsInAnyOrder(channel, expected)
+
+assertContainsInAnyOrder(channelTestData, expected)
 
 // Assert the Json only
-channel = [[myMap, jsonPath], [anotherMap, jsonPath]]
+outputCh = [[myMap, jsonPath], [anotherMap, jsonPath]]
 
-def channelJson = channel.collect { map, file -> path(jsonPath).json }
+channelTestData = outputCh.collect { map, file -> path(jsonPath).json }
 expected = [path(jsonPath).json, path(jsonPath).json]
-assertContainsInAnyOrder(channelJson, expected)
 
-// Assert just one of the maps
-channel = [[myMap, jsonPath], [anotherMap, jsonPath]]
+assertContainsInAnyOrder(channelTestData, expected)
 
-def channelMaps = channel.collect { map, file -> map }
+// Assert the channel contains one of the maps in one of the emitted elements
+// TODO: Put in the docs
+outputCh = [[myMap, jsonPath], [anotherMap, jsonPath]]
+
+channelTestData = outputCh.collect { map, file -> map }
 expected = anotherMap
 
-assert channelMaps.contains(expected)
+assert channelTestData.contains(expected)
 

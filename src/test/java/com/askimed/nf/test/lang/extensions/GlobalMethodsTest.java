@@ -48,4 +48,13 @@ public class GlobalMethodsTest {
         // Run groovy script
         shell.evaluate(new File("./test-data/assertInAnyOrderSuccessfulCases.groovy"));
     }
+
+    @Test
+    public void testAssertInAnyOrderFailureCases() throws Exception {
+        // Run groovy script
+        Throwable thrown = assertThrows(PowerAssertionError.class, () -> {
+            Object object = shell.evaluate(new File("./test-data/assertInAnyOrderFailureCases.groovy"));
+        });
+    }
+
 }
