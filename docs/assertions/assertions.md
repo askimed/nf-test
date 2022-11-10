@@ -32,12 +32,14 @@ with(process.out.imputed_plink2) {
 
 ## Comparing Channels with Using `assertInAnyOrder`
 
-A channel can emit (in any order) a single value or a tuple of values.
+Nextflow channels can emit (in any order) a single value or a tuple of values.
 
 Channels that emit a single item appear as a list of objects, eg: `process.out.outputCh = [a3, a1, a2, ...]`
 Channels that emit tuples appear as a list of lists which contain objects, eg: `process.out.outputCh = [[a2,b2], [a1,b1], ...]`
 
-Order agnostic assertions can be made using the method: `assertInAnyOrder(List<object> list1, List<object> list2)`
+To perform agnostic assertions on channels, `nf-test` provides: `assertInAnyOrder(List<object> list1, List<object> list2)`
+
+Some example use-cases are provided below.
 
 ### Channel that emits strings
 ```groovy
