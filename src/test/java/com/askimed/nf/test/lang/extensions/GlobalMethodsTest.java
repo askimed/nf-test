@@ -43,4 +43,9 @@ public class GlobalMethodsTest {
     }
 
     // Add test for assertContainsInAnyOrder
+    @Test
+    public void testAssertInAnyOrderSuccessfulCases() throws Exception {
+        // Run groovy script
+        shell.evaluate(new File("./test-data/assertInAnyOrderSuccessfulCases.groovy"));
+    }
 }
