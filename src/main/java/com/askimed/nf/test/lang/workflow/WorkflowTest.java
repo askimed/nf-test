@@ -48,7 +48,7 @@ public class WorkflowTest extends AbstractTest {
 	public WorkflowTest(WorkflowTestSuite parent) {
 		super();
 		this.parent = parent;
-
+		this.autoSort = parent.isAutoSort();
 		context = new TestContext(this);
 		context.setName(parent.getWorkflow());
 	}
@@ -86,7 +86,7 @@ public class WorkflowTest extends AbstractTest {
 	public void when(@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		when = new TestCode(closure);
 	}
-	
+
 	public void expect(
 			@DelegatesTo(value = PipelineTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 		then = new TestCode(closure);
@@ -115,11 +115,11 @@ public class WorkflowTest extends AbstractTest {
 		}
 
 		context.init(baseDir, outputDir.getAbsolutePath());
-		
+
 		if (setup != null) {
 			setup.execute(context);
 		}
-		
+
 		if (when != null) {
 			when.execute(context);
 		}

@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Vector;
 
+import com.askimed.nf.test.config.Config;
+
 public abstract class AbstractTestSuite implements ITestSuite {
 
 	private String name;
@@ -17,6 +19,13 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	private List<ITest> tests = new Vector<ITest>();
 
 	private String filename;
+
+	private boolean autoSort = true;
+
+	@Override
+	public void configure(Config config) {
+		autoSort = config.isAutoSort();
+	}
 
 	public void name(String name) {
 		this.name = name;
@@ -45,6 +54,15 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	public String getProfile() {
 		return profile;
 	}
+
+	public void autoSort(boolean autoSort) {
+		this.autoSort = autoSort;
+	}
+	
+	public boolean isAutoSort() {
+		return autoSort;
+	}
+	
 
 	@Override
 	public void setGlobalConfigFile(File globalConfig) {

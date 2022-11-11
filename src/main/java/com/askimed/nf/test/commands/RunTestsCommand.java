@@ -16,6 +16,7 @@ import com.askimed.nf.test.core.GroupTestExecutionListener;
 import com.askimed.nf.test.core.TestExecutionEngine;
 import com.askimed.nf.test.core.reports.TapTestReportWriter;
 import com.askimed.nf.test.core.reports.XmlReportWriter;
+import com.askimed.nf.test.lang.TestSuiteBuilder;
 import com.askimed.nf.test.plugins.PluginManager;
 import com.askimed.nf.test.util.AnsiColors;
 
@@ -47,7 +48,7 @@ public class RunTestsCommand implements Callable<Integer> {
 	private String tap = null;
 
 	@Option(names = {
-		"--junitxml" }, description = "Write test results in Junit Xml Format", required = false, showDefaultValue = Visibility.ALWAYS)
+			"--junitxml" }, description = "Write test results in Junit Xml Format", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String junitXml = null;
 
 	@Option(names = { "--update-snapshot",
@@ -95,7 +96,10 @@ public class RunTestsCommand implements Callable<Integer> {
 						System.out.println("Found " + scripts.size() + " files in test directory.");
 					}
 
+					TestSuiteBuilder.setConfig(config);
+
 				} else {
+					TestSuiteBuilder.setConfig(null);
 					System.out.println(AnsiColors.yellow("Warning: This pipeline has no nf-test config file."));
 				}
 

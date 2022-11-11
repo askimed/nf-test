@@ -45,6 +45,7 @@ public class ProcessTest extends AbstractTest {
 	public ProcessTest(ProcessTestSuite parent) {
 		super();
 		this.parent = parent;
+		this.autoSort = parent.isAutoSort();
 		context = new TestContext(this);
 		context.setName(parent.getProcess());
 	}
