@@ -27,6 +27,7 @@ public class ProcessTest {
 	@BeforeEach
 	public void setUp() throws IOException {
 		FileUtil.deleteDirectory(new File(".nf-test"));
+		new File("nf-test.config").delete();
 	}
 
 	@Test
