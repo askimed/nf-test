@@ -64,16 +64,20 @@ public class Config {
 		}
 	}
 
-	public void wthTrace(boolean withTrace) {
+	public void withTrace(boolean withTrace) {
 		this.withTrace = withTrace;
 	}
-	
+
 	public void setWithTrace(boolean withTrace) {
 		this.withTrace = withTrace;
 	}
 
 	public boolean isWithTrace() {
 		return withTrace;
+	}
+
+	public void setAutoSort(boolean autoSort) {
+		this.autoSort = autoSort;
 	}
 
 	public void autoSort(boolean autoSort) {
