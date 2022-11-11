@@ -32,15 +32,31 @@ with(process.out.imputed_plink2) {
 
 ## Comparing Channels with Using `assertInAnyOrder`
 
-Nextflow channels can emit (in any order) a single value or a tuple of values.
+Nextflow channels can emit (in any order) a single value or a tuple of values. 
 
-Channels that emit a single item appear as a list of objects, eg: `process.out.outputCh = [a3, a1, a2, ...]`
+Channels that emit a single item produce as an unordered list of objects, 
+`List<Object>`, for example:
+```groovy
+process.out.outputCh = ['Bonjour', 'Hello', 'Hola']
+```
 
-Channels that emit tuples appear as a list of lists which contain objects, eg: `process.out.outputCh = [[a2,b2], [a1,b1], ...]`
+Channels that contain Nextflow `file` values have a unique path each run. For Example
+```groovy
+process.out.outputCh = ['Bonjour', 'Hello', 'Hola']
+```
+ 
+Channels that emit tuples produce an unordered list of ordered object lists, `List<List<Object>>`
+```groovy
+process.out.outputCh = [[a2,b2], [a1,b1], ...]
+```
 
-To perform agnostic assertions on channels, `nf-test` provides: `assertInAnyOrder(List<object> list1, List<object> list2)`
+
+`assertInAnyOrder(List<object> list1, List<object> list2)` performs an order agnostic assertion on channels and lists contents. The method is automatically imported into every `nf-test` closure. It is a binding for Hamcrest's [assertInAnyOrder](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matchers.html#containsInAnyOrder(org.hamcrest.Matcher))
 
 Some example use-cases are provided below.
+
+Note: `nf-test` attempts to pre-sort the Channel through integer, string and path comparisons. This makes repeatability comparisons by index possible, but can fail to produce repeatable orderings when the data contains other class types. A warning message appears if the channel contains other classes objects. An alternative is to handle assertions using the method outlined here.
+
 
 ### Channel that emits strings
 ```groovy
