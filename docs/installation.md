@@ -39,6 +39,14 @@ Nextflow Runtime:
 
 Now you are ready to write your [first testcase](getting-started.md).
 
+### Install a specific version
+
+If you want to install a specific version pass it to the install script as so
+
+```sh
+curl -fsSL https://code.askimed.com/install/nf-test | bash -s 0.7.0
+```
+
 ### Nextflow Binary not found
 
 If you get an error message like this, then nf-test was not able to detect your Nextflow installation.
