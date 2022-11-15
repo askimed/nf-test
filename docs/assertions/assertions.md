@@ -1,6 +1,47 @@
 # Assertions
 
-Writing test cases means formulating assumptions by using assertions. Groovy’s power assert provides a detailed output when the boolean expression validates to false. nf-test provides several extensions and commands to simplify the work with Nextflow channels.
+Writing test cases means formulating assumptions by using assertions. Groovy’s power assert provides a detailed output when the boolean expression validates to false. nf-test provides several extensions and commands to simplify the work with Nextflow channels. Here we summarise how nextflow and nf-test handles channels and provide examples for the tools that `nf-test` provides: 
+
+- `with`: assert the contents of an item in a channel by index
+- `contains`: assert the contents of an item in the channel is present anywhere in the channel
+- `assertContainsInAnyOrder`: order-agnostic assertion of the contents of a channel
+
+## Nextflow channels and nf-test channel sorting
+
+Nextflow channels emit (in a random order) a single value or a tuple of values. 
+
+Channels that emit a single item produce an unordered list of objects, `List<Object>`, for example:
+```groovy
+process.out.outputCh = ['Hola', 'Hello', 'Bonjour']
+```
+
+Channels that contain Nextflow `file` values have a unique path each run. For Example:
+```groovy
+process.out.outputCh = ['/.nf-test/tests/c563c/work/65/85d0/Hola.json', '/.nf-test/tests/c563c/work/65/fa20/Hello.json', '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json']
+```
+ 
+Channels that emit tuples produce an unordered list of ordered objects, `List<List<Object>>`:
+```groovy
+process.out.outputCh = [
+  ['Hola', '/.nf-test/tests/c563c/work/65/85d0/Hola.json'], 
+  ['Hello', '/.nf-test/tests/c563c/work/65/fa20/Hello.json'], 
+  ['Bonjour', '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json']
+]
+```
+
+Assertions by channel index are made possible through sorting of the nextflow channel. The sorting is performed automatically by `nf-test` prior to launch of the `then` closure via integer, string and path comparisons. For example, the above would be sorted by `nf-test`:
+```groovy
+process.out.outputCh = [
+  ['Bonjour', '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'],
+  ['Hello', '/.nf-test/tests/c563c/work/65/fa20/Hello.json'],
+  ['Hola', '/.nf-test/tests/c563c/work/65/85d0/Hola.json']
+]
+``` 
+
+`nf-test` cannot guarantee the order of nextflow channels that contain alternative object types, such as maps. A warning message appears in the console in such cases to highlight the potential issue. To test these channels, the `contains` and `assertContainsInAnyOrder` methods described below can be used
+```
+Warning: Cannot sort channel, order not deterministic. Unsupported objects types:
+```
 
 ## Using `with`
 
@@ -30,40 +71,48 @@ with(process.out.imputed_plink2) {
 }
 ```
 
-## Comparing Channels with Using `assertInAnyOrder`
+## Using `contains` to assert an item in the channel is present
 
-Nextflow channels can emit (in any order) a single value or a tuple of values. 
+Groovy's [contains](https://docs.groovy-lang.org/latest/html/groovy-jdk/java/lang/Iterable.html#contains(java.lang.Object)) and [collect](https://docs.groovy-lang.org/latest/html/groovy-jdk/java/lang/Iterable.html#collect()) methods can be used to flexibly assert an item exists in the channel output. 
 
-Channels that emit a single item produce as an unordered list of objects, 
-`List<Object>`, for example:
+For example, the below represents a channel that emits a two-element tuple, a string and a json file: 
 ```groovy
-process.out.outputCh = ['Bonjour', 'Hello', 'Hola']
+/*
+def process.out.outputCh = [
+  ['Bonjour', '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'],
+  ['Hello', '/.nf-test/tests/c563c/work/65/fa20/Hello.json'],
+  ['Hola', '/.nf-test/tests/c563c/work/65/85d0/Hola.json']
+]
+*/
 ```
 
-Channels that contain Nextflow `file` values have a unique path each run. For Example
+To assert the channel contains one of the tuples, parse the json and assert:
 ```groovy
-process.out.outputCh = ['Bonjour', 'Hello', 'Hola']
-```
- 
-Channels that emit tuples produce an unordered list of ordered object lists, `List<List<Object>>`
+testData = process.out.outputCh.collect { greeting, jsonPath -> [greeting, path(jsonPath).json] } 
+assert testData.contains(['Hello', path('./myTestData/Hello.json').json])
+``` 
+
+To assert a subset of the tuple data, filter the channel using collect. For example, to assert the greeting only:
 ```groovy
-process.out.outputCh = [[a2,b2], [a1,b1], ...]
+testData = process.out.outputCh.collect { greeting, jsonPath -> greeting } 
+assert testData.contains('Hello')
 ```
 
+See [the files page](./files.md) for more information on parsing and asserting various file types.
 
-`assertInAnyOrder(List<object> list1, List<object> list2)` performs an order agnostic assertion on channels and lists contents. The method is automatically imported into every `nf-test` closure. It is a binding for Hamcrest's [assertInAnyOrder](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matchers.html#containsInAnyOrder(org.hamcrest.Matcher))
+
+## Using `assertContainsInAnyOrder` for order-agnostic assertion of the contents of a channel
+
+`assertContainsInAnyOrder(List<object> list1, List<object> list2)` performs an order agnostic assertion on channels contents and is available in every `nf-test` closure. It is a binding for Hamcrest's [assertContainsInAnyOrder](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matchers.html#containsInAnyOrder(org.hamcrest.Matcher)).
 
 Some example use-cases are provided below.
 
-Note: `nf-test` attempts to pre-sort the Channel through integer, string and path comparisons. This makes repeatability comparisons by index possible, but can fail to produce repeatable orderings when the data contains other class types. A warning message appears if the channel contains other classes objects. An alternative is to handle assertions using the method outlined here.
-
-
 ### Channel that emits strings
 ```groovy
-// process.out.outputCh = ['Hola', 'Hello', 'Bonjour']
+// process.out.outputCh = ['Bonjour', 'Hello', 'Hola'] 
 
-def expected = ['Bonjour', 'Hello', 'Hola']
-assertInAnyOrder(process.out.outputCh, expected)
+def expected = ['Hola', 'Hello', 'Bonjour']
+assertContainsInAnyOrder(process.out.outputCh, expected)
 
 ```
 
@@ -71,18 +120,6 @@ assertInAnyOrder(process.out.outputCh, expected)
 ```groovy
 /*
 process.out.outputCh = [
-  [
-    'A': [1,2,3],
-    'B': [4,5,6]
-  ],
-  [
-    'C': [7,8,9],
-    'D': [10,11,12]
-  ],
-]
-*/
-
-def expected = [
   [
     'D': [10,11,12],
     'C': [7,8,9]
@@ -92,9 +129,23 @@ def expected = [
     'A': [1,2,3]
   ]
 ]
-assertInAnyOrder(process.out.outputCh, expected)
+*/
+
+def expected = [
+  [
+    'A': [1,2,3],
+    'B': [4,5,6]
+  ],
+  [
+    'C': [7,8,9],
+    'D': [10,11,12]
+  ]
+]
+
+assertContainsInAnyOrder(process.out.outputCh, expected)
 
 ```
+
 
 ### Channel that emits json files
 
@@ -105,95 +156,88 @@ Since the outputCh filepaths are different between consecutive runs, the files n
 ```groovy
 /*
 process.out.outputCh = [
-  '/path/to/some/file1.json', 
-  '/path/to/another/file2.json'
+  '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json',
+  '/.nf-test/tests/c563c/work/65/fa20/Hello.json',
+  '/.nf-test/tests/c563c/work/65/85d0/Hola.json'
 ]
 */
 
 def actual = process.out.outputCh.collect { filepath -> path(filepath).json }
 def expected = [
-  path('./myTestData/file2.json').json, 
-  path('./myTestData/file1.json').json
+  path('./myTestData/Hello.json').json,
+  path('./myTestData/Hola.json').json,
+  path('./myTestData/Bonjour.json').json,
 ]
 
-assertInAnyOrder(actual, expected)
+assertContainsInAnyOrder(actual, expected)
 
 ```
 
 ### Channel that emits a tuple of strings and json files
 
-See [the files page](./files.md) for more information on parsing and asserting various file types
+See [the files page](./files.md) for more information on parsing and asserting various file types.
 
 Since the ordering of items within the tuples are consistent, we can assert this case:
 
 ```groovy
 /*
 process.out.outputCh = [
-  ['Hello', '/path/to/some/file1.json'], 
-  ['Hola', '/path/to/another/file2.json']
+  ['Bonjour', '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'],
+  ['Hello', '/.nf-test/tests/c563c/work/65/fa20/Hello.json'],
+  ['Hola', '/.nf-test/tests/c563c/work/65/85d0/Hola.json']
 ]
 */
 
 def actual = process.out.outputCh.collect { greeting, filepath -> [greeting, path(filepath).json] }
 def expected = [
-  ['Hola', path('./myTestData/file2.json').json], 
-  ['Hello', path('./myTestData/file1.json').json]
+  ['Hola', path('./myTestData/Hola.json').json], 
+  ['Hello', path('./myTestData/Hello.json').json],
+  ['Bonjour', path('./myTestData/Bonjour.json').json],
 ]
 
-assertInAnyOrder(actual, expected)
+assertContainsInAnyOrder(actual, expected)
 ```
 
 To assert the json only and ignore the strings:
 ```groovy
 /*
 process.out.outputCh = [
-  ['Hello', '/path/to/some/file1.json'], 
-  ['Hola', '/path/to/another/file2.json']
+  ['Bonjour', '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'],
+  ['Hello', '/.nf-test/tests/c563c/work/65/fa20/Hello.json'],
+  ['Hola', '/.nf-test/tests/c563c/work/65/85d0/Hola.json']
 ]
 */
 
 def actual = process.out.outputCh.collect { greeting, filepath -> path(filepath).json }
 def expected = [
-  path('./myTestData/file2.json').json, 
-  path('./myTestData/file1.json').json
+  path('./myTestData/Hello.json').json, 
+  path('./myTestData/Hola.json').json,
+  path('./myTestData/Bonjour.json').json
 ]
 
-assertInAnyOrder(actual, expected)
+assertContainsInAnyOrder(actual, expected)
 ```
 
 To assert the strings only and not the json files:
 ```groovy
 /*
 process.out.outputCh = [
-  ['Hello', '/path/to/some/file1.json'], 
-  ['Hola', '/path/to/another/file2.json']
+  ['Bonjour', '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'],
+  ['Hello', '/.nf-test/tests/c563c/work/65/fa20/Hello.json'],
+  ['Hola', '/.nf-test/tests/c563c/work/65/85d0/Hola.json']
 ]
 */
 
 def actual = process.out.outputCh.collect { greeting, filepath -> greeting }
-def expected = ['Hola', 'Hello']
+def expected = ['Hello', 'Hola', 'Bonjour]
 
-assertInAnyOrder(actual, expected)
-```
-
-To assert that one of json files occurs in one of the tuples:
-```groovy
-/*
-def process.out.outputCh = [
-  ['Hello', '/path/to/some/file1.json'], 
-  ['Hola', '/path/to/another/file2.json']
-]
-*/
-
-def actual = process.out.outputCh.collect { greeting, filepath -> path(filepath).json }
-
-assert actual.contains(path('./myTestData/file2.json').json)
+assertContainsInAnyOrder(actual, expected)
 ```
 
 
 ## Using `assertAll`
 `assertAll(Closure... closures)` ensures that all supplied closures do no throw exceptions. The number of failed closures is reported in the Exception message. This useful for efficient debugging
-a set of test assertions in one go.
+of a set of test assertions from a single test run.
 
 ```groovy
 def a = 2
