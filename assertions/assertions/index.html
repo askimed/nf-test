@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
     
     
       
@@ -17,7 +17,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.20d9efc8.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.472b142f.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.08040f6c.min.css">
@@ -422,9 +422,64 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#nextflow-channels-and-nf-test-channel-sorting" class="md-nav__link">
+    Nextflow channels and nf-test channel sorting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#using-with" class="md-nav__link">
     Using with
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-contains-to-assert-an-item-in-the-channel-is-present" class="md-nav__link">
+    Using contains to assert an item in the channel is present
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-assertcontainsinanyorder-for-order-agnostic-assertion-of-the-contents-of-a-channel" class="md-nav__link">
+    Using assertContainsInAnyOrder for order-agnostic assertion of the contents of a channel
+  </a>
+  
+    <nav class="md-nav" aria-label="Using assertContainsInAnyOrder for order-agnostic assertion of the contents of a channel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-strings" class="md-nav__link">
+    Channel that emits strings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-a-single-maps-eg-valmymap" class="md-nav__link">
+    Channel that emits a single maps, e.g. val(myMap)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-json-files" class="md-nav__link">
+    Channel that emits json files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-a-tuple-of-strings-and-json-files" class="md-nav__link">
+    Channel that emits a tuple of strings and json files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -758,9 +813,64 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#nextflow-channels-and-nf-test-channel-sorting" class="md-nav__link">
+    Nextflow channels and nf-test channel sorting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#using-with" class="md-nav__link">
     Using with
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-contains-to-assert-an-item-in-the-channel-is-present" class="md-nav__link">
+    Using contains to assert an item in the channel is present
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-assertcontainsinanyorder-for-order-agnostic-assertion-of-the-contents-of-a-channel" class="md-nav__link">
+    Using assertContainsInAnyOrder for order-agnostic assertion of the contents of a channel
+  </a>
+  
+    <nav class="md-nav" aria-label="Using assertContainsInAnyOrder for order-agnostic assertion of the contents of a channel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-strings" class="md-nav__link">
+    Channel that emits strings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-a-single-maps-eg-valmymap" class="md-nav__link">
+    Channel that emits a single maps, e.g. val(myMap)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-json-files" class="md-nav__link">
+    Channel that emits json files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-a-tuple-of-strings-and-json-files" class="md-nav__link">
+    Channel that emits a tuple of strings and json files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -792,7 +902,37 @@
 
 
 <h1 id="assertions">Assertions</h1>
-<p>Writing test cases means formulating assumptions by using assertions. Groovy’s power assert provides a detailed output when the boolean expression validates to false. nf-test provides several extensions and commands to simplify the work with Nextflow channels.</p>
+<p>Writing test cases means formulating assumptions by using assertions. Groovy’s power assert provides a detailed output when the boolean expression validates to false. nf-test provides several extensions and commands to simplify the work with Nextflow channels. Here we summarise how nextflow and nf-test handles channels and provide examples for the tools that <code>nf-test</code> provides: </p>
+<ul>
+<li><code>with</code>: assert the contents of an item in a channel by index</li>
+<li><code>contains</code>: assert the contents of an item in the channel is present anywhere in the channel</li>
+<li><code>assertContainsInAnyOrder</code>: order-agnostic assertion of the contents of a channel</li>
+</ul>
+<h2 id="nextflow-channels-and-nf-test-channel-sorting">Nextflow channels and nf-test channel sorting</h2>
+<p>Nextflow channels emit (in a random order) a single value or a tuple of values. </p>
+<p>Channels that emit a single item produce an unordered list of objects, <code>List&lt;Object&gt;</code>, for example:
+<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Bonjour&#39;</span><span class="o">]</span><span class="w"></span>
+</code></pre></div></p>
+<p>Channels that contain Nextflow <code>file</code> values have a unique path each run. For Example:
+<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;</span><span class="o">]</span><span class="w"></span>
+</code></pre></div></p>
+<p>Channels that emit tuples produce an unordered list of ordered objects, <code>List&lt;List&lt;Object&gt;&gt;</code>:
+<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="w"></span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span><span class="o">],</span><span class="w"> </span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;</span><span class="o">],</span><span class="w"> </span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Bonjour&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;</span><span class="o">]</span><span class="w"></span>
+<span class="o">]</span><span class="w"></span>
+</code></pre></div></p>
+<p>Assertions by channel index are made possible through sorting of the nextflow channel. The sorting is performed automatically by <code>nf-test</code> prior to launch of the <code>then</code> closure via integer, string and path comparisons. For example, the above would be sorted by <code>nf-test</code>:
+<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="w"></span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Bonjour&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;</span><span class="o">],</span><span class="w"></span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;</span><span class="o">],</span><span class="w"></span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span><span class="o">]</span><span class="w"></span>
+<span class="o">]</span><span class="w"></span>
+</code></pre></div></p>
+<p><code>nf-test</code> cannot guarantee the order of nextflow channels that contain alternative object types, such as maps. A warning message appears in the console in such cases to highlight the potential issue. To test these channels, the <code>contains</code> and <code>assertContainsInAnyOrder</code> methods described below can be used
+<div class="highlight"><pre><span></span><code>Warning: Cannot sort channel, order not deterministic. Unsupported objects types:
+</code></pre></div></p>
 <h2 id="using-with">Using <code>with</code></h2>
 <p>This assertions...</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="w"></span>
@@ -814,9 +954,137 @@
 <span class="w">    </span><span class="o">}</span><span class="w"></span>
 <span class="o">}</span><span class="w"></span>
 </code></pre></div>
+<h2 id="using-contains-to-assert-an-item-in-the-channel-is-present">Using <code>contains</code> to assert an item in the channel is present</h2>
+<p>Groovy's <a href="https://docs.groovy-lang.org/latest/html/groovy-jdk/java/lang/Iterable.html#contains(java.lang.Object)">contains</a> and <a href="https://docs.groovy-lang.org/latest/html/groovy-jdk/java/lang/Iterable.html#collect()">collect</a> methods can be used to flexibly assert an item exists in the channel output. </p>
+<p>For example, the below represents a channel that emits a two-element tuple, a string and a json file: 
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">def process.out.outputCh = [</span>
+<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
+<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
+<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">]</span>
+<span class="cm">*/</span><span class="w"></span>
+</code></pre></div></p>
+<p>To assert the channel contains one of the tuples, parse the json and assert:
+<div class="highlight"><pre><span></span><code><span class="n">testData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">jsonPath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">jsonPath</span><span class="o">).</span><span class="na">json</span><span class="o">]</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>
+<span class="k">assert</span><span class="w"> </span><span class="n">testData</span><span class="o">.</span><span class="na">contains</span><span class="o">([</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">])</span><span class="w"></span>
+</code></pre></div></p>
+<p>To assert a subset of the tuple data, filter the channel using collect. For example, to assert the greeting only:
+<div class="highlight"><pre><span></span><code><span class="n">testData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">jsonPath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">greeting</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>
+<span class="k">assert</span><span class="w"> </span><span class="n">testData</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s1">&#39;Hello&#39;</span><span class="o">)</span><span class="w"></span>
+</code></pre></div></p>
+<p>See <a href="../files/">the files page</a> for more information on parsing and asserting various file types.</p>
+<h2 id="using-assertcontainsinanyorder-for-order-agnostic-assertion-of-the-contents-of-a-channel">Using <code>assertContainsInAnyOrder</code> for order-agnostic assertion of the contents of a channel</h2>
+<p><code>assertContainsInAnyOrder(List&lt;object&gt; list1, List&lt;object&gt; list2)</code> performs an order agnostic assertion on channels contents and is available in every <code>nf-test</code> closure. It is a binding for Hamcrest's <a href="http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matchers.html#containsInAnyOrder(org.hamcrest.Matcher)">assertContainsInAnyOrder</a>.</p>
+<p>Some example use-cases are provided below.</p>
+<h3 id="channel-that-emits-strings">Channel that emits strings</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// process.out.outputCh = [&#39;Bonjour&#39;, &#39;Hello&#39;, &#39;Hola&#39;] </span><span class="w"></span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Bonjour&#39;</span><span class="o">]</span><span class="w"></span>
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span><span class="w"></span>
+</code></pre></div>
+<h3 id="channel-that-emits-a-single-maps-eg-valmymap">Channel that emits a single maps, e.g. val(myMap)</h3>
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">process.out.outputCh = [</span>
+<span class="cm">  [</span>
+<span class="cm">    &#39;D&#39;: [10,11,12],</span>
+<span class="cm">    &#39;C&#39;: [7,8,9]</span>
+<span class="cm">  ],</span>
+<span class="cm">  [</span>
+<span class="cm">    &#39;B&#39;: [4,5,6],</span>
+<span class="cm">    &#39;A&#39;: [1,2,3]</span>
+<span class="cm">  ]</span>
+<span class="cm">]</span>
+<span class="cm">*/</span><span class="w"></span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="w"></span>
+<span class="w">  </span><span class="o">[</span><span class="w"></span>
+<span class="w">    </span><span class="s1">&#39;A&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">],</span><span class="w"></span>
+<span class="w">    </span><span class="s1">&#39;B&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">]</span><span class="w"></span>
+<span class="w">  </span><span class="o">],</span><span class="w"></span>
+<span class="w">  </span><span class="o">[</span><span class="w"></span>
+<span class="w">    </span><span class="s1">&#39;C&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">7</span><span class="o">,</span><span class="mi">8</span><span class="o">,</span><span class="mi">9</span><span class="o">],</span><span class="w"></span>
+<span class="w">    </span><span class="s1">&#39;D&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">10</span><span class="o">,</span><span class="mi">11</span><span class="o">,</span><span class="mi">12</span><span class="o">]</span><span class="w"></span>
+<span class="w">  </span><span class="o">]</span><span class="w"></span>
+<span class="o">]</span><span class="w"></span>
+
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span><span class="w"></span>
+</code></pre></div>
+<h3 id="channel-that-emits-json-files">Channel that emits json files</h3>
+<p>See <a href="../files/">the files page</a> for more information on parsing and asserting various file types.</p>
+<p>Since the outputCh filepaths are different between consecutive runs, the files need to be read/parsed prior to comparison</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">process.out.outputCh = [</span>
+<span class="cm">  &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;,</span>
+<span class="cm">  &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;,</span>
+<span class="cm">  &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span>
+<span class="cm">]</span>
+<span class="cm">*/</span><span class="w"></span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">filepath</span><span class="o">).</span><span class="na">json</span><span class="w"> </span><span class="o">}</span><span class="w"></span>
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="w"></span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hola.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Bonjour.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span><span class="w"></span>
+<span class="o">]</span><span class="w"></span>
+
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span><span class="w"></span>
+</code></pre></div>
+<h3 id="channel-that-emits-a-tuple-of-strings-and-json-files">Channel that emits a tuple of strings and json files</h3>
+<p>See <a href="../files/">the files page</a> for more information on parsing and asserting various file types.</p>
+<p>Since the ordering of items within the tuples are consistent, we can assert this case:</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">process.out.outputCh = [</span>
+<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
+<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
+<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">]</span>
+<span class="cm">*/</span><span class="w"></span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">filepath</span><span class="o">).</span><span class="na">json</span><span class="o">]</span><span class="w"> </span><span class="o">}</span><span class="w"></span>
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="w"></span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hola.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">],</span><span class="w"> </span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">],</span><span class="w"></span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Bonjour&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Bonjour.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">],</span><span class="w"></span>
+<span class="o">]</span><span class="w"></span>
+
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span><span class="w"></span>
+</code></pre></div>
+<p>To assert the json only and ignore the strings:
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">process.out.outputCh = [</span>
+<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
+<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
+<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">]</span>
+<span class="cm">*/</span><span class="w"></span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">filepath</span><span class="o">).</span><span class="na">json</span><span class="w"> </span><span class="o">}</span><span class="w"></span>
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="w"></span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span><span class="w"> </span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hola.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Bonjour.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="w"></span>
+<span class="o">]</span><span class="w"></span>
+
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span><span class="w"></span>
+</code></pre></div></p>
+<p>To assert the strings only and not the json files:
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">process.out.outputCh = [</span>
+<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
+<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
+<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">]</span>
+<span class="cm">*/</span><span class="w"></span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">greeting</span><span class="w"> </span><span class="o">}</span><span class="w"></span>
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="err">&#39;</span><span class="n">Bonjour</span><span class="o">]</span><span class="w"></span>
+
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span><span class="w"></span>
+</code></pre></div></p>
 <h2 id="using-assertall">Using <code>assertAll</code></h2>
 <p><code>assertAll(Closure... closures)</code> ensures that all supplied closures do no throw exceptions. The number of failed closures is reported in the Exception message. This useful for efficient debugging
-a set of test assertions in one go.</p>
+of a set of test assertions from a single test run.</p>
 <p><div class="highlight"><pre><span></span><code><span class="kt">def</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
 
 <span class="n">assertAll</span><span class="o">(</span><span class="w"></span>
