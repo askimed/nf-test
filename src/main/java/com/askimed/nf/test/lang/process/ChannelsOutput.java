@@ -119,4 +119,9 @@ public class ChannelsOutput extends HashMap<Object, Object> {
 	public int compareNumbers(Comparable a, Comparable b) {
 		return a.compareTo(b);
 	}
+	
+	@Override
+	public Object get(Object key) {
+		return super.get(key.toString());
+	}
 }
