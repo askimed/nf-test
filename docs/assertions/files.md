@@ -38,6 +38,6 @@ nf-test extends `path` by a `linesGzip` property that can be used to read gzip c
 
 
 ```Groovy
-assert path(process.out.out_ch.get(0)).linesGzip.size == 5
+assert path(process.out.out_ch.get(0)).linesGzip.size() == 5
 assert path(process.out.out_ch.get(0)).linesGzip.contains("Line Content")
 ```
