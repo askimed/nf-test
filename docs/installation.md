@@ -39,6 +39,14 @@ Nextflow Runtime:
 
 Now you are ready to write your [first testcase](getting-started.md).
 
+### Install a specific version
+
+If you want to install a specific version pass it to the install script as so
+
+```sh
+curl -fsSL https://code.askimed.com/install/nf-test | bash -s 0.7.0
+```
+
 ### Nextflow Binary not found
 
 If you get an error message like this, then nf-test was not able to detect your Nextflow installation.
@@ -68,3 +76,20 @@ nf-test update
 ## Manual installation
 
 All releases are also available on [Github](https://github.com/askimed/nf-test/releases).
+
+## Compiling from source
+To compile nf-test from source you shall have maven installed. This will produce a `nf-test/target/nf-test.jar` file.
+```
+git clone git@github.com:askimed/nf-test.git
+cd nf-test
+mvn install
+```
+To use the newly compiled `nf-test.jar`, update the `nf-test` bash script that is on your PATH to point to the new `.jar` file.
+First locate it with `which nf-test`, and then modify `APP_HOME` and `APP_JAR` vars at the top:
+```
+#!/bin/bash
+APP_HOME="/PATH/TO/nf-test/target/"
+APP_JAR="nf-test.jar"
+APP_UPDATE_URL="https://code.askimed.com/install/nf-test"
+...
+```

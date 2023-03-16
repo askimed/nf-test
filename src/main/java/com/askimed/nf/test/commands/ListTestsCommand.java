@@ -1,6 +1,7 @@
 package com.askimed.nf.test.commands;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -17,7 +18,7 @@ import picocli.CommandLine.Help.Visibility;
 public class ListTestsCommand implements Callable<Integer> {
 
 	@Parameters(description = "list all tests")
-	private List<File> scripts;
+	private List<File> testPaths = new ArrayList<File>();
 
 	@Option(names = {
 			"--debug" }, description = "Show debugging infos", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -36,10 +37,9 @@ public class ListTestsCommand implements Callable<Integer> {
 
 					Config config = Config.parse(configFile);
 
-					if (scripts == null) {
+					if (testPaths.size() == 0) {
 						File folder = new File(config.getTestsDir());
-						scripts = RunTestsCommand.findTests(folder);
-						System.out.println("Found " + scripts.size() + " files in test directory.");
+						testPaths.add(folder);
 					}
 
 				} else {
@@ -56,7 +56,9 @@ public class ListTestsCommand implements Callable<Integer> {
 
 			}
 
-			if (scripts == null) {
+			List<File> scripts = RunTestsCommand.pathsToScripts(testPaths);
+
+			if (scripts.size() == 0) {
 				System.out.println(AnsiColors.red("Error: No tests provided and no test directory set."));
 				return 2;
 			}

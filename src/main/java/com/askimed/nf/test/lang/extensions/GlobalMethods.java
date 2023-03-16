@@ -3,8 +3,15 @@ package com.askimed.nf.test.lang.extensions;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import groovy.lang.Closure;
+import junit.framework.AssertionFailedError;
+
+import org.codehaus.groovy.runtime.powerassert.PowerAssertionError;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers;
 
 public class GlobalMethods {
 
@@ -20,5 +27,36 @@ public class GlobalMethods {
 		closure.setDelegate(context);
 		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
 		closure.call();
+	}
+
+	public static void assertAll(Closure... closures) throws PowerAssertionError {
+		// Asserts that all supplied closures do not throw exceptions.
+		// The number of failed closures is reported in the Exception message
+		int failed = 0;
+
+		for (Closure closure : closures) {
+			try {
+				closure.call();
+			}
+			catch (Throwable e) {
+				failed++;
+				System.err.println(e);
+			}
+		}
+
+		if (failed > 0) {
+			throw new PowerAssertionError(Integer.toString(failed) + " of " + Integer.toString(closures.length) + " assertions failed");
+		}
+	}
+	
+	public static void assertContainsInAnyOrder(List<Object> list, List<Object> expected) throws Exception {
+		// Asserts two order-agnostic lists are equal.
+		// Supports sublists, maps, JsonSlurpers objects and anything else with an appropriate equals method.
+		try {
+			assertThat(list, Matchers.containsInAnyOrder(expected.toArray()));
+		}
+		catch (Throwable thrown) {
+			throw new PowerAssertionError(thrown.getMessage());
+		}
 	}
 }

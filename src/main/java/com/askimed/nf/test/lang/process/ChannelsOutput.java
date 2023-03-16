@@ -3,15 +3,16 @@ package com.askimed.nf.test.lang.process;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.askimed.nf.test.util.AnsiText;
+import com.askimed.nf.test.util.AnsiColors;
 
 import groovy.json.JsonSlurper;
 
-public class ChannelsOutput extends HashMap<Object, Object> {
+public class ChannelsOutput extends TreeMap<Object, Object> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -80,7 +81,10 @@ public class ChannelsOutput extends HashMap<Object, Object> {
 		// TODO: check classA == classB
 
 		if (a.getClass() != b.getClass()) {
-			System.out.println("Warning: Items with different classes: " + a.getClass() + " vs. " + b.getClass());
+			System.err.println(AnsiColors.yellow(
+				"\nWarning: Cannot sort channel, order not deterministic. Objects are different types: " 
+				+ a.getClass() + " vs. " + b.getClass()
+			));
 			return 1;
 		}
 
@@ -93,7 +97,10 @@ public class ChannelsOutput extends HashMap<Object, Object> {
 		} else if (a instanceof Integer || a instanceof Double || a instanceof Float) {
 			return compareNumbers((Comparable) a, (Comparable) b);
 		} else {
-			System.out.println("Warning: Unsupported classes: " + a.getClass() + " vs. " + b.getClass());
+			System.err.println(AnsiColors.yellow(
+				"\nWarning: Cannot sort channel, order not deterministic. Unsupported objects types: " 
+				+ a.getClass() + " vs. " + b.getClass()
+			));
 			return 1;
 		}
 
@@ -111,5 +118,10 @@ public class ChannelsOutput extends HashMap<Object, Object> {
 
 	public int compareNumbers(Comparable a, Comparable b) {
 		return a.compareTo(b);
+	}
+	
+	@Override
+	public Object get(Object key) {
+		return super.get(key.toString());
 	}
 }

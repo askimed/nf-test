@@ -4,13 +4,10 @@ nextflow_pipeline {
   script "nextflow-io/hello"
 
   test("hello world example should start 4 processes") {
-
     expect {
       assert workflow.success
-		assert snapshot(workflow).match()
-
+      assert snapshot(workflow).match()
     }
-
   }
 
 }
