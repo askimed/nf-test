@@ -3,16 +3,16 @@ package com.askimed.nf.test.lang.process;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.AnsiColors;
 
 import groovy.json.JsonSlurper;
 
-public class ChannelsOutput extends HashMap<Object, Object> {
+public class ChannelsOutput extends TreeMap<Object, Object> {
 
 	private static final long serialVersionUID = 1L;
 
