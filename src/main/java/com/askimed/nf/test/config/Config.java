@@ -26,6 +26,8 @@ public class Config {
 
 	private boolean withTrace = true;
 
+	private boolean autoSort = true;
+
 	private PluginManager pluginManager = new PluginManager(PluginManager.FORCE_UPDATE);
 
 	private String configFile = DEFAULT_NEXTFLOW_CONFIG;
@@ -62,12 +64,28 @@ public class Config {
 		}
 	}
 
+	public void withTrace(boolean withTrace) {
+		this.withTrace = withTrace;
+	}
+
 	public void setWithTrace(boolean withTrace) {
 		this.withTrace = withTrace;
 	}
 
 	public boolean isWithTrace() {
 		return withTrace;
+	}
+
+	public void setAutoSort(boolean autoSort) {
+		this.autoSort = autoSort;
+	}
+
+	public void autoSort(boolean autoSort) {
+		this.autoSort = autoSort;
+	}
+
+	public boolean isAutoSort() {
+		return autoSort;
 	}
 
 	public void libDir(String libDir) {

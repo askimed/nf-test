@@ -22,8 +22,9 @@ config {
     // run all test with the defined docker profile from the main nextflow.config
     profile "docker"
     // disable tracing options in case container does not include `procps` Linux tool.
-    withTrace = false
-
+    withTrace false
+    //disable sorted channels
+    autoSort false
 }
 ```
 
@@ -49,13 +50,13 @@ nextflow_process {
     script "main.nf"
     process "my_process"
     config "path/to/test/nextflow.config"
-
+    autoSort false
     ...
 
 }
 ```
 
-It is also possible to overwrite the `config` property for a specific test:
+It is also possible to overwrite the `config` or `autoSort` property for a specific test:
 
 ```
 nextflow_process {
@@ -63,6 +64,7 @@ nextflow_process {
    test("my test") {
 
       config "path/to/test/nextflow.config"
+      autoSort false
       ...
 
     }

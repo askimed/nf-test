@@ -26,10 +26,6 @@ public class FunctionTest extends AbstractTest {
 
 	private String function = null;
 
-	private boolean debug = false;
-
-	private boolean withTrace = true;
-
 	private TestCode setup;
 
 	private TestCode cleanup;
@@ -83,15 +79,6 @@ public class FunctionTest extends AbstractTest {
 		when = new TestCode(closure);
 	}
 
-	public void debug(boolean debug) {
-		setDebug(debug);
-	}
-
-	@Override
-	public void setDebug(boolean debug) {
-		this.debug = debug;
-	}
-
 	@Override
 	public void execute() throws Throwable {
 
@@ -105,11 +92,10 @@ public class FunctionTest extends AbstractTest {
 		}
 
 		context.init(baseDir, outputDir.getAbsolutePath());
-		
+
 		if (setup != null) {
 			setup.execute(context);
 		}
-
 
 		if (when != null) {
 			when.execute(context);
@@ -117,6 +103,10 @@ public class FunctionTest extends AbstractTest {
 
 		context.evaluateParamsClosure();
 		context.evaluateFunctionClosure();
+
+		if (isDebug()) {
+			System.out.println();
+		}
 
 		// Create workflow mock
 		File workflow = new File(metaDir, "mock.nf");
@@ -137,12 +127,12 @@ public class FunctionTest extends AbstractTest {
 		nextflow.addConfig(parent.getGlobalConfigFile());
 		nextflow.addConfig(parent.getLocalConfig());
 		nextflow.addConfig(getConfig());
-		if (withTrace) {
+		if (isWithTrace()) {
 			nextflow.setTrace(traceFile);
 		}
 		nextflow.setOut(outFile);
 		nextflow.setErr(errFile);
-		nextflow.setSilent(!debug);
+		nextflow.setSilent(!isDebug());
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
 		nextflow.setParamsFile(paramsFile);
@@ -160,7 +150,7 @@ public class FunctionTest extends AbstractTest {
 		context.getWorkflow().exitStatus = exitCode;
 		context.getWorkflow().success = (exitCode == 0);
 		context.getWorkflow().failed = (exitCode != 0);
-		if (debug) {
+		if (isDebug()) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.getProcess().getOut().view();
 		}
@@ -205,11 +195,6 @@ public class FunctionTest extends AbstractTest {
 
 		FileUtil.write(file, template);
 
-	}
-
-	@Override
-	public void setWithTrace(boolean withTrace) {
-		this.withTrace = withTrace;
 	}
 
 }

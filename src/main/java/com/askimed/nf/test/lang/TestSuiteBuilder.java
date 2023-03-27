@@ -5,6 +5,7 @@ import java.io.File;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
+import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.core.ITestSuite;
 import com.askimed.nf.test.lang.function.FunctionTestSuite;
 import com.askimed.nf.test.lang.pipeline.PipelineTestSuite;
@@ -18,56 +19,58 @@ import groovy.lang.GroovyShell;
 
 public class TestSuiteBuilder {
 
-	static ITestSuite nextflow_pipeline(
-			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+	private static Config config = null;
 
-		final PipelineTestSuite suite = new PipelineTestSuite();
+	public static void setConfig(Config config) {
+		TestSuiteBuilder.config = config;
+	}
 
-		closure.setDelegate(suite);
-		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
-		closure.call();
+	public static ITestSuite nextflow_pipeline(final Closure closure) {
+
+		PipelineTestSuite suite = new PipelineTestSuite();
+		executeClosure(suite, closure);
 
 		return suite;
 
 	}
 
-	static ITestSuite nextflow_workflow(
-			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+	public static ITestSuite nextflow_workflow(Closure closure) {
 
-		final WorkflowTestSuite suite = new WorkflowTestSuite();
-
-		closure.setDelegate(suite);
-		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
-		closure.call();
+		WorkflowTestSuite suite = new WorkflowTestSuite();
+		executeClosure(suite, closure);
 
 		return suite;
 
 	}
 
-	static ITestSuite nextflow_process(
-			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+	public static ITestSuite nextflow_process(Closure closure) {
 
-		final ProcessTestSuite suite = new ProcessTestSuite();
-
-		closure.setDelegate(suite);
-		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
-		closure.call();
+		ProcessTestSuite suite = new ProcessTestSuite();
+		executeClosure(suite, closure);
 
 		return suite;
 
 	}
 
-	static ITestSuite nextflow_function(
+	public static ITestSuite nextflow_function(
 			@DelegatesTo(value = PipelineTestSuite.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
 
-		final FunctionTestSuite suite = new FunctionTestSuite();
+		FunctionTestSuite suite = new FunctionTestSuite();
+
+		executeClosure(suite, closure);
+
+		return suite;
+
+	}
+
+	private static void executeClosure(ITestSuite suite, Closure closure) {
+		if (config != null) {
+			suite.configure(config);
+		}
 
 		closure.setDelegate(suite);
 		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
 		closure.call();
-
-		return suite;
-
 	}
 
 	public static ITestSuite parse(File script) throws Exception {

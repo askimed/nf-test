@@ -29,6 +29,10 @@ public abstract class AbstractTest implements ITest {
 
 	private boolean updateSnapshot = false;
 
+	private boolean debug = false;
+
+	private boolean withTrace = true;
+	
 	public AbstractTest() {
 
 	}
@@ -158,6 +162,28 @@ public abstract class AbstractTest implements ITest {
 		return suite;		
 	}
 
+	public void debug(boolean debug) {
+		setDebug(debug);
+	}
+
+	@Override
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+
+	public boolean isDebug() {
+		return debug;
+	}
+	
+	@Override
+	public void setWithTrace(boolean withTrace) {
+		this.withTrace = withTrace;
+	}
+	
+	public boolean isWithTrace() {
+		return withTrace;
+	}
+	
 	protected void shareDirectories(String[] directories, String metaDir) throws IOException {
 		for (String directory : directories) {
 			File localDirectory = new File(directory);
