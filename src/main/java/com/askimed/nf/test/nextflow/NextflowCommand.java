@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -38,6 +39,8 @@ public class NextflowCommand {
 	private File paramsFile;
 
 	private Map<String, Object> params;
+
+	private List<String> options = new Vector<String>();
 
 	public static String ERROR = "Nextflow Binary not found. Please check if Nextflow is in a directory accessible by your $PATH variable or set $NEXTFLOW_HOME.";
 
@@ -120,6 +123,18 @@ public class NextflowCommand {
 		return paramsFile;
 	}
 
+	public void setOptions(List<String> options) {
+		this.options = options;
+	}
+
+	public void setOptions(String... options) {
+		this.options = Arrays.asList(options);
+	}
+
+	public List<String> getArguments() {
+		return options;
+	}
+
 	public int execute() throws IOException {
 
 		if (binary == null) {
@@ -161,6 +176,8 @@ public class NextflowCommand {
 			args.add("-w");
 			args.add(work.getAbsolutePath());
 		}
+
+		args.addAll(options);
 
 		Command nextflow = new Command(binary);
 		nextflow.setParams(args);
