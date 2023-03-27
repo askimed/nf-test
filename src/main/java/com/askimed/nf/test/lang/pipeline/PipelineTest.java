@@ -14,8 +14,6 @@ public class PipelineTest extends AbstractTest {
 
 	private String name = "Unknown test";
 
-	private boolean debug = false;
-
 	private TestCode setup;
 
 	private TestCode cleanup;
@@ -27,8 +25,6 @@ public class PipelineTest extends AbstractTest {
 	private PipelineTestSuite parent;
 
 	private TestContext context;
-
-	private boolean withTrace = true;
 
 	public PipelineTest(PipelineTestSuite parent) {
 		super();
@@ -68,20 +64,11 @@ public class PipelineTest extends AbstractTest {
 		then = new TestCode(closure);
 	}
 
-	public void debug(boolean debug) {
-		this.debug = debug;
-	}
-
-	@Override
-	public void setDebug(boolean debug) {
-		this.debug = debug;
-	}
-
 	@Override
 	public void execute() throws Throwable {
 
 		context.init(baseDir, outputDir.getAbsolutePath());
-		
+
 		if (setup != null) {
 			setup.execute(context);
 		}
@@ -93,7 +80,7 @@ public class PipelineTest extends AbstractTest {
 		context.evaluateParamsClosure();
 		context.evaluateProcessClosure();
 
-		if (debug) {
+		if (isDebug()) {
 			System.out.println();
 		}
 
@@ -110,12 +97,12 @@ public class PipelineTest extends AbstractTest {
 		nextflow.addConfig(parent.getGlobalConfigFile());
 		nextflow.addConfig(parent.getLocalConfig());
 		nextflow.addConfig(getConfig());
-		if (withTrace) {
+		if (isWithTrace()) {
 			nextflow.setTrace(traceFile);
 		}
 		nextflow.setOut(outFile);
 		nextflow.setErr(errFile);
-		nextflow.setSilent(!debug);
+		nextflow.setSilent(!isDebug());
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
 		nextflow.setParamsFile(paramsFile);
@@ -134,11 +121,6 @@ public class PipelineTest extends AbstractTest {
 		if (cleanup != null) {
 			cleanup.execute(context);
 		}
-	}
-
-	@Override
-	public void setWithTrace(boolean withTrace) {
-		this.withTrace = withTrace;
 	}
 
 }

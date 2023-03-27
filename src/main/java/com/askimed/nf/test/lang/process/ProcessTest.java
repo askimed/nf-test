@@ -24,10 +24,6 @@ public class ProcessTest extends AbstractTest {
 
 	private String name = "Unknown test";
 
-	private boolean debug = false;
-
-	private boolean withTrace = true;
-
 	private boolean autoSort = true;
 
 	private TestCode setup;
@@ -79,11 +75,6 @@ public class ProcessTest extends AbstractTest {
 		setDebug(debug);
 	}
 
-	@Override
-	public void setDebug(boolean debug) {
-		this.debug = debug;
-	}
-
 	public void autoSort(boolean autoSort) {
 		this.autoSort = autoSort;
 	}
@@ -98,7 +89,7 @@ public class ProcessTest extends AbstractTest {
 		}
 
 		context.init(baseDir, outputDir.getAbsolutePath());
-		
+
 		if (setup != null) {
 			setup.execute(context);
 		}
@@ -116,7 +107,7 @@ public class ProcessTest extends AbstractTest {
 
 		context.getParams().put("nf_test_output", metaDir.getAbsolutePath());
 
-		if (debug) {
+		if (isDebug()) {
 			System.out.println();
 		}
 
@@ -133,12 +124,12 @@ public class ProcessTest extends AbstractTest {
 		nextflow.addConfig(parent.getGlobalConfigFile());
 		nextflow.addConfig(parent.getLocalConfig());
 		nextflow.addConfig(getConfig());
-		if (withTrace) {
+		if (isWithTrace()) {
 			nextflow.setTrace(traceFile);
 		}
 		nextflow.setOut(outFile);
 		nextflow.setErr(errFile);
-		nextflow.setSilent(!debug);
+		nextflow.setSilent(!isDebug());
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
 		nextflow.setParamsFile(paramsFile);
@@ -155,7 +146,7 @@ public class ProcessTest extends AbstractTest {
 		context.getWorkflow().exitStatus = exitCode;
 		context.getWorkflow().success = (exitCode == 0);
 		context.getWorkflow().failed = (exitCode != 0);
-		if (debug) {
+		if (isDebug()) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.getProcess().getOut().view();
 		}
@@ -191,11 +182,6 @@ public class ProcessTest extends AbstractTest {
 
 		FileUtil.write(file, template);
 
-	}
-
-	@Override
-	public void setWithTrace(boolean withTrace) {
-		this.withTrace = withTrace;
 	}
 
 }

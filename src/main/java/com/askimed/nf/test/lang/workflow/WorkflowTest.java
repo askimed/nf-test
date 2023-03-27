@@ -25,11 +25,7 @@ public class WorkflowTest extends AbstractTest {
 
 	private String name = "Unknown test";
 
-	private boolean debug = false;
-
 	private boolean autoSort = true;
-
-	private boolean withTrace = true;
 
 	private TestCode setup;
 
@@ -92,15 +88,6 @@ public class WorkflowTest extends AbstractTest {
 		then = new TestCode(closure);
 	}
 
-	public void debug(boolean debug) {
-		setDebug(debug);
-	}
-
-	@Override
-	public void setDebug(boolean debug) {
-		this.debug = debug;
-	}
-
 	public void autoSort(boolean autoSort) {
 		this.autoSort = autoSort;
 	}
@@ -132,7 +119,7 @@ public class WorkflowTest extends AbstractTest {
 		writeWorkflowMock(workflow);
 
 		context.getParams().put("nf_test_output", metaDir.getAbsolutePath());
-		if (debug) {
+		if (isDebug()) {
 			System.out.println();
 		}
 
@@ -149,12 +136,12 @@ public class WorkflowTest extends AbstractTest {
 		nextflow.addConfig(parent.getGlobalConfigFile());
 		nextflow.addConfig(parent.getLocalConfig());
 		nextflow.addConfig(getConfig());
-		if (withTrace) {
+		if (isWithTrace()) {
 			nextflow.setTrace(traceFile);
 		}
 		nextflow.setOut(outFile);
 		nextflow.setErr(errFile);
-		nextflow.setSilent(!debug);
+		nextflow.setSilent(!isDebug());
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
 		nextflow.setParamsFile(paramsFile);
@@ -166,7 +153,7 @@ public class WorkflowTest extends AbstractTest {
 		context.getWorkflow().success = (exitCode == 0);
 		context.getWorkflow().failed = (exitCode != 0);
 
-		if (debug) {
+		if (isDebug()) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.getWorkflow().getOut().view();
 		}
@@ -204,11 +191,6 @@ public class WorkflowTest extends AbstractTest {
 
 		FileUtil.write(file, template);
 
-	}
-
-	@Override
-	public void setWithTrace(boolean withTrace) {
-		this.withTrace = withTrace;
 	}
 
 }
