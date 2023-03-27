@@ -140,7 +140,6 @@ public class RunTestsCommand implements Callable<Integer> {
 			}
 
 			TagQuery tagQuery = new TagQuery(tags);
-			System.out.println(tagQuery);
 
 			TestExecutionEngine engine = new TestExecutionEngine();
 			engine.setListener(listener);
