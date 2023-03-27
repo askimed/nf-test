@@ -42,7 +42,7 @@ public class WorkflowTest extends AbstractTest {
 	private TestContext context;
 
 	public WorkflowTest(WorkflowTestSuite parent) {
-		super();
+		super(parent);
 		this.parent = parent;
 		this.autoSort = parent.isAutoSort();
 		context = new TestContext(this);

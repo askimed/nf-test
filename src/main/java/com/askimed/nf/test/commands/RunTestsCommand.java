@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.core.AnsiTestExecutionListener;
 import com.askimed.nf.test.core.GroupTestExecutionListener;
+import com.askimed.nf.test.core.TagQuery;
 import com.askimed.nf.test.core.TestExecutionEngine;
 import com.askimed.nf.test.core.reports.TapTestReportWriter;
 import com.askimed.nf.test.core.reports.XmlReportWriter;
@@ -62,6 +63,10 @@ public class RunTestsCommand implements Callable<Integer> {
 	@Option(names = {
 			"--plugins" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String plugins = null;
+
+	@Option(names = {
+			"--tag" }, description = "Execute only tests with this tag", required = false, showDefaultValue = Visibility.ALWAYS)
+	private List<String> tags = new Vector<String>();
 
 	@Override
 	public Integer call() throws Exception {
@@ -117,7 +122,8 @@ public class RunTestsCommand implements Callable<Integer> {
 			}
 
 			if (scripts.size() == 0) {
-				System.out.println(AnsiColors.red("Error: No tests or test directories containing scripts that end with *.test provided."));
+				System.out.println(AnsiColors
+						.red("Error: No tests or test directories containing scripts that end with *.test provided."));
 				return 2;
 			}
 
@@ -133,9 +139,13 @@ public class RunTestsCommand implements Callable<Integer> {
 				listener.addListener(new XmlReportWriter(junitXml));
 			}
 
+			TagQuery tagQuery = new TagQuery(tags);
+			System.out.println(tagQuery);
+
 			TestExecutionEngine engine = new TestExecutionEngine();
 			engine.setListener(listener);
 			engine.setScripts(scripts);
+			engine.setTagQuery(tagQuery);
 			engine.setDebug(debug);
 			engine.setWorkDir(workDir);
 			engine.setUpdateSnapshot(updateSnapshot);
@@ -217,11 +227,12 @@ public class RunTestsCommand implements Callable<Integer> {
 		for (File path : paths) {
 			if (path.isDirectory()) {
 				scripts.addAll(findTests(path));
-			}
-			else {
+			} else {
 				scripts.add(path);
-			};
-		};
+			}
+			;
+		}
+		;
 		return scripts;
 	}
 }
