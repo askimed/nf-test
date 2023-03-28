@@ -4,10 +4,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.askimed.nf.test.util.BinaryFinder;
 import com.askimed.nf.test.util.Command;
@@ -40,7 +41,7 @@ public class NextflowCommand {
 
 	private Map<String, Object> params;
 
-	private List<String> options = new Vector<String>();
+	private String options = "";
 
 	public static String ERROR = "Nextflow Binary not found. Please check if Nextflow is in a directory accessible by your $PATH variable or set $NEXTFLOW_HOME.";
 
@@ -123,15 +124,11 @@ public class NextflowCommand {
 		return paramsFile;
 	}
 
-	public void setOptions(List<String> options) {
+	public void setOptions(String options) {
 		this.options = options;
 	}
 
-	public void setOptions(String... options) {
-		this.options = Arrays.asList(options);
-	}
-
-	public List<String> getArguments() {
+	public String getOptions() {
 		return options;
 	}
 
@@ -177,7 +174,7 @@ public class NextflowCommand {
 			args.add(work.getAbsolutePath());
 		}
 
-		args.addAll(options);
+		args.addAll(parseOptions(options));
 
 		Command nextflow = new Command(binary);
 		nextflow.setParams(args);
@@ -219,6 +216,15 @@ public class NextflowCommand {
 		writer.write(JsonOutput.toJson(params));
 		writer.close();
 
+	}
+
+	public static List<String> parseOptions(String options) {
+		List<String> list = new Vector<String>();
+		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(options);
+		while (m.find()) {
+			list.add(m.group(1).replace("\"", ""));
+		}
+		return list;
 	}
 
 }

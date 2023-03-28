@@ -106,7 +106,7 @@ public class PipelineTest extends AbstractTest {
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
 		nextflow.setParamsFile(paramsFile);
-		nextflow.setOptions(getOptions().split(" "));
+		nextflow.setOptions(getOptions());
 
 		int exitCode = nextflow.execute();
 
