@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -146,6 +148,7 @@ public class NextflowCommand {
 		writeParamsJson(params, paramsFile);
 
 		List<String> args = new Vector<String>();
+		args.add("-quiet");
 		if (log != null) {
 			args.add("-log");
 			args.add(log.getAbsolutePath());
@@ -177,7 +180,7 @@ public class NextflowCommand {
 
 		Command nextflow = new Command(binary);
 		nextflow.setParams(args);
-		nextflow.setSilent(silent);
+		nextflow.setSilent(true);
 		if (out != null) {
 			nextflow.saveStdOut(out.getAbsolutePath());
 		}
@@ -186,10 +189,58 @@ public class NextflowCommand {
 		}
 		if (!silent) {
 			System.out.println();
-			System.out.println("Command: " + nextflow.getExecutedCommand());
+			System.out.println("    Nextflow Command:");
+			System.out.println("      " + nextflow.getExecutedCommand());
 		}
-		return nextflow.execute();
 
+		int result = nextflow.execute();
+
+		if (!silent) {
+			printDebugInfo();
+		}
+		return result;
+
+	}
+
+	protected void printDebugInfo() throws IOException {
+		printStdout();
+		printStderr();
+		printLog();
+	}
+
+	protected void printStdout() throws IOException {
+		if (out != null) {
+			System.out.println();
+			System.out.println("    Stdout:");
+			List<String> lines = Files.readAllLines(out.toPath(), Charset.defaultCharset());
+			for (String line : lines) {
+				System.out.println("      " + line);
+			}
+			System.out.println();
+		}
+	}
+
+	protected void printStderr() throws IOException {
+		if (err != null) {
+			System.out.println("    Stderr:");
+			List<String> lines = Files.readAllLines(err.toPath(), Charset.defaultCharset());
+			;
+			for (String line : lines) {
+				System.out.println("      " + line);
+			}
+			System.out.println();
+		}
+	}
+
+	protected void printLog() throws IOException {
+		if (log != null) {
+			System.out.println("    Nextflow Output:");
+			List<String> lines = NextflowLog.parseLines(log, NextflowLogLevel.INFO);
+			for (String line : lines) {
+				System.out.println("      " + line);
+			}
+			System.out.println();
+		}
 	}
 
 	public int printVersion() throws IOException {
