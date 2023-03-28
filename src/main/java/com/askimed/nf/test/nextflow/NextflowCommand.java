@@ -146,7 +146,6 @@ public class NextflowCommand {
 		writeParamsJson(params, paramsFile);
 
 		List<String> args = new Vector<String>();
-		args.add("-quiet");
 		if (log != null) {
 			args.add("-log");
 			args.add(log.getAbsolutePath());
