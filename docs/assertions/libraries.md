@@ -104,14 +104,47 @@ nf-test test tests/testcase_1/hello_1.nf.test --lib tests/mylibs
 If multiple folders are used, the they need to be separate with a colon (like in Java or Groovy).
 
 ## Using Local Jar Files
-To integrate local jar files, you can either specify the path to the jar within the nf-test `--lib` option or add it as follows to the `nf-test.config` file.   
-```
-libDir "tests/lib:tests/lib/groovy-ngs-utils/groovy-ngs-utils.jar"
-```
+
+To integrate local jar files, you can either specify the path to the jar within the nf-test `--lib` option 
+
 ```
 nf-test test test.nf.test --lib tests/lib/groovy-ngs-utils/groovy-ngs-utils.jar
 ```
 
+or add it as follows to the `nf-test.config` file:
+
+```
+libDir "tests/lib:tests/lib/groovy-ngs-utils/groovy-ngs-utils.jar"
+```
+
+You could then import the class and use it in the `then` statement:
+
+```Groovy
+import gngs.VCF;
+
+nextflow_process {
+
+    name "Test Process VARIANT_CALLER"
+    script "variant_caller.nf"
+    process "VARIANT_CALLER"
+
+    test("Should run without failures") {
+
+        when {
+           ...
+        }
+
+        then {
+            assert process.success             
+            def vcf = VCF.parse("$baseDir/tests/test_data/NA12879.vcf.gz")
+            assert vcf.samples.size() == 10
+            assert vcf.variants.size() == 20
+        }
+
+    }
+
+}
+```
 
 ## Using Maven Artifcats with `@Grab`
 
