@@ -964,11 +964,38 @@
 </code></pre></div>
 <p>If multiple folders are used, the they need to be separate with a colon (like in Java or Groovy).</p>
 <h2 id="using-local-jar-files">Using Local Jar Files</h2>
-<p>To integrate local jar files, you can either specify the path to the jar within the nf-test <code>--lib</code> option or add it as follows to the <code>nf-test.config</code> file. <br />
+<p>To integrate local jar files, you can either specify the path to the jar within the nf-test <code>--lib</code> option </p>
+<div class="highlight"><pre><span></span><code>nf-test test test.nf.test --lib tests/lib/groovy-ngs-utils/groovy-ngs-utils.jar
+</code></pre></div>
+<p>or add it as follows to the <code>nf-test.config</code> file:</p>
 <div class="highlight"><pre><span></span><code>libDir &quot;tests/lib:tests/lib/groovy-ngs-utils/groovy-ngs-utils.jar&quot;
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>nf-test test test.nf.test --lib tests/lib/groovy-ngs-utils/groovy-ngs-utils.jar
-</code></pre></div></p>
+<p>You could then import the class and use it in the <code>then</code> statement:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">gngs.VCF</span><span class="o">;</span>
+
+<span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span>
+
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Process VARIANT_CALLER&quot;</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;variant_caller.nf&quot;</span>
+<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;VARIANT_CALLER&quot;</span>
+
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run without failures&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+
+<span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
+<span class="w">           </span><span class="o">...</span>
+<span class="w">        </span><span class="o">}</span>
+
+<span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">success</span><span class="w">             </span>
+<span class="w">            </span><span class="kt">def</span><span class="w"> </span><span class="n">vcf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VCF</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s2">&quot;$baseDir/tests/test_data/NA12879.vcf.gz&quot;</span><span class="o">)</span>
+<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">vcf</span><span class="o">.</span><span class="na">samples</span><span class="o">.</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">vcf</span><span class="o">.</span><span class="na">variants</span><span class="o">.</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">20</span>
+<span class="w">        </span><span class="o">}</span>
+
+<span class="w">    </span><span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div>
 <h2 id="using-maven-artifcats-with-grab">Using Maven Artifcats with <code>@Grab</code></h2>
 <p>nf-test supports the <code>@Grab</code> annotation to include third-party libraries that are available in a maven repository. As the dependency is defined as a maven artifact, there is no local copy of the jar file needed and maven enables to include an exact version as well as provides an easy update process.</p>
 <h3 id="example">Example</h3>
