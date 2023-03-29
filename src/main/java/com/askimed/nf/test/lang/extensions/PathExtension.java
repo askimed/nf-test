@@ -15,7 +15,6 @@ import com.askimed.nf.test.util.FileUtil;
 import groovy.json.JsonSlurper;
 import groovy.yaml.YamlSlurper;
 
-
 public class PathExtension {
 
 	public static String getMd5(Path self) throws IOException, NoSuchAlgorithmException {
@@ -28,7 +27,19 @@ public class PathExtension {
 		return GzipUtil.readLines(self);
 	}
 
+	public static String grepLineGzip(Path self, int start) throws FileNotFoundException, IOException {
+		return GzipUtil.readLine(self, start);
+	}
+	
+	public static List<String> grepLinesGzip(Path self, int start, int end) throws FileNotFoundException, IOException {
+		return GzipUtil.readLines(self, start, end);
+	}
+
 	public static List<String> getLinesGzip(Path self) throws FileNotFoundException, IOException {
+		return GzipUtil.readLines(self);
+	}
+
+	public static List<String> getLinesGzip(Path self, Integer[] range) throws FileNotFoundException, IOException {
 		return GzipUtil.readLines(self);
 	}
 
@@ -37,7 +48,6 @@ public class PathExtension {
 	}
 
 	/* JSON */
-
 	public static Object readJSON(Path self) throws FileNotFoundException, IOException {
 		JsonSlurper jsonSlurper = new JsonSlurper();
 		return jsonSlurper.parse(self);

@@ -1,0 +1,8 @@
+{
+    "Should work with snapshot": {
+        "content": [
+            "CHROM GENPOS ID ALLELE0 ALLELE1 A1FREQ INFO N TEST BETA SE CHISQ LOG10P EXTRA"
+        ],
+        "timestamp": "2023-03-28T08:25:01+0000"
+    }
+}
