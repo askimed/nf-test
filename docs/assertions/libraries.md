@@ -2,7 +2,7 @@
 
 nf-test supports including third party libraries (e.g. jar files ) or functions from groovy files to either extend it functionality or to avoid duplicate code and to keep the logic in test cases simple.
 
-## Using Local Files
+## Using Local Groovy Files
 
 :octicons-tag-24: 0.7.0 ·
 
@@ -102,6 +102,16 @@ nf-test test tests/testcase_1/hello_1.nf.test --lib tests/mylibs
 ```
 
 If multiple folders are used, the they need to be separate with a colon (like in Java or Groovy).
+
+## Using Local Jar Files
+To integrate local jar files, you can either specify the path to the jar within the nf-test `--lib` option or add it as follows to the `nf-test.config` file.   
+```
+libDir "tests/lib:tests/lib/groovy-ngs-utils/groovy-ngs-utils.jar"
+```
+```
+nf-test test test.nf.test --lib tests/lib/groovy-ngs-utils/groovy-ngs-utils.jar
+```
+
 
 ## Using Maven Artifcats with `@Grab`
 
