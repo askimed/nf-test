@@ -1,0 +1,125 @@
+nextflow_process {
+
+  name "Test COPY_GZIP"
+
+  script "test-data/process/gzip/copy_gz.nf"
+  process "COPY_GZIP"
+
+
+      test("Should work with complete gzip file") {
+
+    when {
+      process {
+        """
+        input[0] = file("test-data/process/gzip/gwas.gz")
+        """
+      }
+    }
+
+    then {
+      def lines = path(process.out.gzip.get(0)).readLinesGzip()
+      assert lines.size() == 10
+      
+    }
+
+  }
+  
+      test("Should work with gzip range") {
+
+    when {
+      process {
+        """
+        input[0] = file("test-data/process/gzip/gwas.gz")
+        """
+      }
+    }
+
+    then {
+      def lines = path(process.out.gzip.get(0)).linesGzip[0..5]
+      assert lines.size() == 6
+      assert lines.get(5).equals("1 5 5 2 1 0.194 1 500 ADD 0.043446 0.079837 0.296136 0.231869 NA")
+      
+    }
+
+  }
+  
+       test("Should work with gzip using grep") {
+
+    when {
+      process {
+        """
+        input[0] = file("test-data/process/gzip/gwas.gz")
+        """
+      }
+    }
+
+    then {
+      def lines = path(process.out.gzip.get(0)).grepLinesGzip(0,5)
+      assert lines.size() == 6
+      assert lines.get(5).equals("1 5 5 2 1 0.194 1 500 ADD 0.043446 0.079837 0.296136 0.231869 NA")
+      
+    }
+
+  }
+    
+  
+    test("Should work with single gzip line") {
+
+    when {
+      process {
+        """
+        input[0] = file("test-data/process/gzip/gwas.gz")
+        """
+      }
+    }
+
+    then {
+      def lines = path(process.out.gzip.get(0)).linesGzip[0]
+      assert lines.equals("CHROM GENPOS ID ALLELE0 ALLELE1 A1FREQ INFO N TEST BETA SE CHISQ LOG10P EXTRA")
+      
+    }
+
+  }
+  
+     test("Should work with single gzip line using grep") {
+
+    when {
+      process {
+        """
+        input[0] = file("test-data/process/gzip/gwas.gz")
+        """
+      }
+    }
+
+    then {
+      def lines = path(process.out.gzip.get(0)).grepLineGzip(0)
+      assert lines.equals("CHROM GENPOS ID ALLELE0 ALLELE1 A1FREQ INFO N TEST BETA SE CHISQ LOG10P EXTRA")
+      
+    }
+
+  }
+  
+      test("Should work with snapshot") {
+
+    when {
+      process {
+        """
+        input[0] = file("test-data/process/gzip/gwas.gz")
+        """
+      }
+    }
+
+    then {
+    
+      assert snapshot(
+     path(process.out.gzip.get(0)).linesGzip[0]
+     ).match()
+         
+    }
+
+  }
+  
+
+  
+
+}

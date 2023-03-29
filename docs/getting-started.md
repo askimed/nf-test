@@ -194,6 +194,17 @@ In this case, the `docker` profile defined in the Nextflow pipeline is used to e
 
 Congratulations! You created you first nf-test specification.
 
+### Nextflow options
+nf-test also allows to specify Nextflow options (e.g. `-dump-channels`, `-stub-run`) globally in the nf-test.config file or by adding an option to the test suite or the actual test. Read more about this in the [configuration](configuration.md) documentation. 
+
+
+```
+nextflow_process {
+  
+	options "-dump-channels"
+
+}
+```
 
 ## What's next?
 

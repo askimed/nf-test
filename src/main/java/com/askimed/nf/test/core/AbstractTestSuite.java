@@ -22,11 +22,14 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	private boolean autoSort = true;
 
+	private String options = "";
+
 	private List<String> tags = new Vector<String>();
 
 	@Override
 	public void configure(Config config) {
 		autoSort = config.isAutoSort();
+		options = config.getOptions();
 	}
 
 	public void name(String name) {
@@ -63,6 +66,14 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	public boolean isAutoSort() {
 		return autoSort;
+	}
+
+	public void options(String options) {
+		this.options = options;
+	}
+
+	public String getOptions() {
+		return options;
 	}
 
 	@Override

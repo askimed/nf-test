@@ -28,6 +28,8 @@ public class Config {
 
 	private boolean autoSort = true;
 
+	private String options = "";
+
 	private PluginManager pluginManager = new PluginManager(PluginManager.FORCE_UPDATE);
 
 	private String configFile = DEFAULT_NEXTFLOW_CONFIG;
@@ -86,6 +88,18 @@ public class Config {
 
 	public boolean isAutoSort() {
 		return autoSort;
+	}
+
+	public void setOptions(String options) {
+		this.options = options;
+	}
+
+	public void options(String options) {
+		this.options = options;
+	}
+
+	public String getOptions() {
+		return options;
 	}
 
 	public void libDir(String libDir) {

@@ -38,9 +38,12 @@ public abstract class AbstractTest implements ITest {
 	private List<String> tags = new Vector<String>();
 
 	private AbstractTestSuite parent;
-	
+
+	private String options;
+
 	public AbstractTest(AbstractTestSuite parent) {
 		this.parent = parent;
+		options = parent.getOptions();
 	}
 
 	public void config(String config) {
@@ -158,11 +161,19 @@ public abstract class AbstractTest implements ITest {
 		return tags;
 	}
 
+	public void options(String options) {
+		this.options = options;
+	}
+
+	public String getOptions() {
+		return options;
+	}
+
 	@Override
 	public AbstractTestSuite getParent() {
 		return parent;
 	}
-	
+
 	@Override
 	public void skip() {
 		skipped = true;

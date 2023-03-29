@@ -133,6 +133,8 @@ public class ProcessTest extends AbstractTest {
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
 		nextflow.setParamsFile(paramsFile);
+		nextflow.setOptions(getOptions());
+
 		int exitCode = nextflow.execute();
 
 		// Parse json output
