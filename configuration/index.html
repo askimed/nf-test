@@ -832,7 +832,7 @@
 
 <h1 id="configuration">Configuration</h1>
 <h2 id="setup-test-profile">Setup test profile</h2>
-<p>To run your test using a specific Netxflow profile, you can use the <code>--profile</code> argument on the command line or define a default profile in <code>nf-test.config</code>.</p>
+<p>To run your test using a specific Nextflow profile, you can use the <code>--profile</code> argument on the command line or define a default profile in <code>nf-test.config</code>.</p>
 <h2 id="nf-testconfig"><code>nf-test.config</code></h2>
 <p>This config file contains settings for nf-test.</p>
 <div class="highlight"><pre><span></span><code><span class="n">config</span><span class="w"> </span><span class="o">{</span>
@@ -850,6 +850,8 @@
 <span class="w">    </span><span class="n">withTrace</span><span class="w"> </span><span class="kc">false</span>
 <span class="w">    </span><span class="c1">//disable sorted channels</span>
 <span class="w">    </span><span class="n">autoSort</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="c1">// add Nextflow options</span>
+<span class="w">    </span><span class="n">options</span><span class="w"> </span><span class="s2">&quot;-dump-channels -stub-run&quot;</span>
 <span class="o">}</span>
 </code></pre></div>
 <h2 id="testsnextflowconfig"><code>tests/nextflow.config</code></h2>
@@ -868,17 +870,19 @@
     process &quot;my_process&quot;
     config &quot;path/to/test/nextflow.config&quot;
     autoSort false
+    options &quot;-dump-channels&quot;
     ...
 
 }
 </code></pre></div>
-<p>It is also possible to overwrite the <code>config</code> or <code>autoSort</code> property for a specific test:</p>
+<p>It is also possible to overwrite the <code>config</code>, <code>autoSort</code> or Nextflow properties (e.g. <code>options "-dump-channels"</code>) for a specific test. Depending on the used Nextflow option, also add the <code>--debug</code> nf-test option on the command-line to see the addtional output.  </p>
 <div class="highlight"><pre><span></span><code>nextflow_process {
 
    test(&quot;my test&quot;) {
 
       config &quot;path/to/test/nextflow.config&quot;
       autoSort false
+      options &quot;-dump-channels&quot;
       ...
 
     }

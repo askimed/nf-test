@@ -340,6 +340,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#nextflow-options" class="md-nav__link">
+    Nextflow options
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -894,6 +901,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#nextflow-options" class="md-nav__link">
+    Nextflow options
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1071,6 +1085,14 @@ nf-test<span class="w"> </span>generate<span class="w"> </span>process<span clas
 <h3 id="specifying-profiles">Specifying profiles</h3>
 <p>In this case, the <code>docker</code> profile defined in the Nextflow pipeline is used to execute the test. The profile is set using the <code>--profile</code> parameter, but you can also define a default profile in the <a href="../configuration/">configuration file</a>.</p>
 <p>Congratulations! You created you first nf-test specification.</p>
+<h3 id="nextflow-options">Nextflow options</h3>
+<p>nf-test also allows to specify Nextflow options (e.g. <code>-dump-channels</code>, <code>-stub-run</code>) globally in the nf-test.config file or by adding an option to the test suite or the actual test. Read more about this in the <a href="../configuration/">configuration</a> documentation. </p>
+<div class="highlight"><pre><span></span><code>nextflow_process {
+
+    options &quot;-dump-channels&quot;
+
+}
+</code></pre></div>
 <h2 id="whats-next">What's next?</h2>
 <ul>
 <li>Learn how to write assertions</li>
