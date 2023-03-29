@@ -30,6 +30,7 @@ nav:
     - Process Testing: testcases/nextflow_process.md
     - Function Testing: testcases/nextflow_function.md
     - Params and Global Variables: testcases/global_variables.md
+  - Running Tests: running-tests.md
   - Writing Assertions:
     - Power Assertions: assertions/assertions.md
     - Files: assertions/files.md

@@ -102,6 +102,8 @@ public class TestExecutionEngine {
 			}
 			ITestSuite testSuite = TestSuiteBuilder.parse(script, libDir, pluginManager);
 
+			boolean empty = true;
+
 			for (ITest test : testSuite.getTests()) {
 				if (testId != null) {
 					if (!test.getHash().startsWith(testId)) {
@@ -112,9 +114,16 @@ public class TestExecutionEngine {
 				if (!tagQuery.matches(test)) {
 					test.skip();
 				}
+
+				if (!test.isSkipped()) {
+					empty = false;
+				}
+
 			}
 
-			testSuits.add(testSuite);
+			if (!empty) {
+				testSuits.add(testSuite);
+			}
 		}
 
 		return testSuits;

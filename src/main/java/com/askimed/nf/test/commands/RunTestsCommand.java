@@ -65,7 +65,7 @@ public class RunTestsCommand implements Callable<Integer> {
 	private String plugins = null;
 
 	@Option(names = {
-			"--tag" }, description = "Execute only tests with this tag", required = false, showDefaultValue = Visibility.ALWAYS)
+			"--tag" }, split = ",", description = "Execute only tests with this tag", required = false, showDefaultValue = Visibility.ALWAYS)
 	private List<String> tags = new Vector<String>();
 
 	@Override
