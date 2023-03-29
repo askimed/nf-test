@@ -365,6 +365,21 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../running-tests/" class="md-nav__link">
+        Running Tests
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
@@ -373,17 +388,17 @@
       
         
       
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
       
       
       
-        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
           Writing Assertions
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_5">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Writing Assertions
         </label>
@@ -494,17 +509,17 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
       
       
       
-        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
           Command line Interface (CLI)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
-        <label class="md-nav__title" for="__nav_6">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           Command line Interface (CLI)
         </label>
@@ -615,6 +630,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#-tag-tag" class="md-nav__link">
+    --tag &lt;tag&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#-tap-filename" class="md-nav__link">
     --tap &lt;filename&gt;
   </a>
@@ -704,17 +726,17 @@
       
         
       
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
       
       
       
-        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
           Plugins
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_8">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
           Plugins
         </label>
@@ -862,6 +884,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#-tag-tag" class="md-nav__link">
+    --tag &lt;tag&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#-tap-filename" class="md-nav__link">
     --tap &lt;filename&gt;
   </a>
@@ -920,6 +949,8 @@
 <p>The debug parameter prints out all available output channels which can be accessed in the <code>then</code> clause.</p>
 <h4 id="-without-trace"><code>--without-trace</code></h4>
 <p>The Linux tool <code>procps</code> is required to run Nextflow tracing. In case your container does not support this tool, you can also run nf-test without tracing. Please note that the <code>workflow.trace</code> are not available when running it with this flag.</p>
+<h4 id="-tag-tag"><code>--tag &lt;tag&gt;</code></h4>
+<p>Execute only tests with the provided tag. Multiple tags can be used and have to be separated by commas (e.g. <code>tag1,tag2</code>).</p>
 <h4 id="-tap-filename"><code>--tap &lt;filename&gt;</code></h4>
 <p>Writes test results in <a href="https://testanything.org">TAP format</a> to file.</p>
 <h4 id="-junitxml-filename"><code>--junitxml &lt;filename&gt;</code></h4>

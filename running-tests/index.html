@@ -9,24 +9,24 @@
       
       
       
-        <link rel="prev" href="../fasta/">
+        <link rel="prev" href="../testcases/global_variables/">
       
       
-        <link rel="next" href="../../cli/init/">
+        <link rel="next" href="../assertions/assertions/">
       
-      <link rel="icon" href="../../images/favicon.svg">
+      <link rel="icon" href="../images/favicon.svg">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.4">
     
     
       
-        <title>Using Third-Party Libraries - nf-test</title>
+        <title>Running Tests - nf-test</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.240905d7.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.240905d7.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
       
       
 
@@ -42,9 +42,9 @@
       
     
     
-      <link rel="stylesheet" href="../../extra.css">
+      <link rel="stylesheet" href="../extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#using-third-party-libraries" class="md-skip">
+        <a href="#running-tests" class="md-skip">
           Skip to content
         </a>
       
@@ -85,7 +85,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="nf-test" class="md-header__button md-logo" aria-label="nf-test" data-md-component="logo">
+    <a href=".." title="nf-test" class="md-header__button md-logo" aria-label="nf-test" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27l-2.77 6.1M5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83-.78.78-2.05.78-2.83 0m-5.66 7.07-1.41-1.41 1.41 1.41M6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22h1.41M2 22h1.41l4.77-4.76-1.42-1.41L2 20.59V22m0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76v1.41Z"/></svg>
@@ -104,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Using Third-Party Libraries
+              Running Tests
             
           </span>
         </div>
@@ -183,7 +183,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="nf-test" class="md-nav__button md-logo" aria-label="nf-test" data-md-component="logo">
+    <a href=".." title="nf-test" class="md-nav__button md-logo" aria-label="nf-test" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27l-2.77 6.1M5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M19.22 4c.28 0 .53 0 .74.05.17 1.39-.02 4.25-3.3 7.53-1.7 1.71-3.73 3.02-6.01 3.89l-2.15-2.1c.92-2.31 2.23-4.34 3.92-6.03C15.18 4.58 17.64 4 19.22 4m0-2c-1.98 0-4.98.69-8.22 3.93-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.38.38.89.61 1.42.61.23 0 .47-.06.7-.15A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61S20.7 2 19.22 2m-4.68 7.46c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83-.78.78-2.05.78-2.83 0m-5.66 7.07-1.41-1.41 1.41 1.41M6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22h1.41M2 22h1.41l4.77-4.76-1.42-1.41L2 20.59V22m0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76v1.41Z"/></svg>
@@ -214,7 +214,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         Home
       </a>
     </li>
@@ -229,7 +229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/" class="md-nav__link">
+      <a href="../installation/" class="md-nav__link">
         Installation
       </a>
     </li>
@@ -244,7 +244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../getting-started/" class="md-nav__link">
+      <a href="../getting-started/" class="md-nav__link">
         Getting Started
       </a>
     </li>
@@ -288,7 +288,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../testcases/nextflow_pipeline/" class="md-nav__link">
+      <a href="../testcases/nextflow_pipeline/" class="md-nav__link">
         Pipeline Testing
       </a>
     </li>
@@ -302,7 +302,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../testcases/nextflow_workflow/" class="md-nav__link">
+      <a href="../testcases/nextflow_workflow/" class="md-nav__link">
         Workflow Testing
       </a>
     </li>
@@ -316,7 +316,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../testcases/nextflow_process/" class="md-nav__link">
+      <a href="../testcases/nextflow_process/" class="md-nav__link">
         Process Testing
       </a>
     </li>
@@ -330,7 +330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../testcases/nextflow_function/" class="md-nav__link">
+      <a href="../testcases/nextflow_function/" class="md-nav__link">
         Function Testing
       </a>
     </li>
@@ -344,7 +344,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../testcases/global_variables/" class="md-nav__link">
+      <a href="../testcases/global_variables/" class="md-nav__link">
         Params and Global Variables
       </a>
     </li>
@@ -364,120 +364,6 @@
 
   
   
-  
-    <li class="md-nav__item">
-      <a href="../../running-tests/" class="md-nav__link">
-        Running Tests
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
-      
-      
-      
-        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-          Writing Assertions
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
-        <label class="md-nav__title" for="__nav_6">
-          <span class="md-nav__icon md-icon"></span>
-          Writing Assertions
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../assertions/" class="md-nav__link">
-        Power Assertions
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../files/" class="md-nav__link">
-        Files
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../snapshots/" class="md-nav__link">
-        Snapshots
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../regular-expressions/" class="md-nav__link">
-        Regular Expressions
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../fasta/" class="md-nav__link">
-        FASTA Files
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -490,12 +376,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Using Third-Party Libraries
+          Running Tests
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Using Third-Party Libraries
+        Running Tests
       </a>
       
         
@@ -514,42 +400,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#using-local-files" class="md-nav__link">
-    Using Local Files
+  <a href="#basic-usage" class="md-nav__link">
+    Basic usage
   </a>
-  
-    <nav class="md-nav" aria-label="Using Local Files">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-maven-artifcats-with-grab" class="md-nav__link">
-    Using Maven Artifcats with @Grab
-  </a>
-  
-    <nav class="md-nav" aria-label="Using Maven Artifcats with @Grab">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
+  <a href="#execute-specific-tests" class="md-nav__link">
+    Execute specific tests
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#tag-tests" class="md-nav__link">
+    Tag tests
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-tap-output" class="md-nav__link">
+    Create a TAP output
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-test-by-its-hash-value" class="md-nav__link">
+    Run test by its hash value
+  </a>
   
 </li>
       
@@ -557,6 +438,120 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Writing Assertions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Writing Assertions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/assertions/" class="md-nav__link">
+        Power Assertions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/files/" class="md-nav__link">
+        Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/snapshots/" class="md-nav__link">
+        Snapshots
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/regular-expressions/" class="md-nav__link">
+        Regular Expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/fasta/" class="md-nav__link">
+        FASTA Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/libraries/" class="md-nav__link">
+        Using Third-Party Libraries
+      </a>
     </li>
   
 
@@ -605,7 +600,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli/init/" class="md-nav__link">
+      <a href="../cli/init/" class="md-nav__link">
         init
       </a>
     </li>
@@ -619,7 +614,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli/generate/" class="md-nav__link">
+      <a href="../cli/generate/" class="md-nav__link">
         generate
       </a>
     </li>
@@ -633,7 +628,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli/test/" class="md-nav__link">
+      <a href="../cli/test/" class="md-nav__link">
         test
       </a>
     </li>
@@ -647,7 +642,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli/clean/" class="md-nav__link">
+      <a href="../cli/clean/" class="md-nav__link">
         clean
       </a>
     </li>
@@ -669,7 +664,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configuration/" class="md-nav__link">
+      <a href="../configuration/" class="md-nav__link">
         Configuration
       </a>
     </li>
@@ -727,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugins/using-plugins/" class="md-nav__link">
+      <a href="../plugins/using-plugins/" class="md-nav__link">
         Using Plugins
       </a>
     </li>
@@ -741,7 +736,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugins/developing-plugins/" class="md-nav__link">
+      <a href="../plugins/developing-plugins/" class="md-nav__link">
         Developing Plugins
       </a>
     </li>
@@ -763,7 +758,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../nftest_pipelines/" class="md-nav__link">
+      <a href="../nftest_pipelines/" class="md-nav__link">
         Available Pipelines
       </a>
     </li>
@@ -778,7 +773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/" class="md-nav__link">
+      <a href="../about/" class="md-nav__link">
         About
       </a>
     </li>
@@ -812,42 +807,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#using-local-files" class="md-nav__link">
-    Using Local Files
+  <a href="#basic-usage" class="md-nav__link">
+    Basic usage
   </a>
-  
-    <nav class="md-nav" aria-label="Using Local Files">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-maven-artifcats-with-grab" class="md-nav__link">
-    Using Maven Artifcats with @Grab
-  </a>
-  
-    <nav class="md-nav" aria-label="Using Maven Artifcats with @Grab">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
+  <a href="#execute-specific-tests" class="md-nav__link">
+    Execute specific tests
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#tag-tests" class="md-nav__link">
+    Tag tests
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-tap-output" class="md-nav__link">
+    Create a TAP output
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-test-by-its-hash-value" class="md-nav__link">
+    Run test by its hash value
+  </a>
   
 </li>
       
@@ -869,117 +859,57 @@
   
 
 
-<h1 id="using-third-party-libraries">Using Third-Party Libraries</h1>
-<p>nf-test supports including third party libraries (e.g. jar files ) or functions from groovy files to either extend it functionality or to avoid duplicate code and to keep the logic in test cases simple.</p>
-<h2 id="using-local-files">Using Local Files</h2>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 6.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Z"/><path d="M2.5 1h8.44a1.5 1.5 0 0 1 1.06.44l10.25 10.25a1.5 1.5 0 0 1 0 2.12l-8.44 8.44a1.5 1.5 0 0 1-2.12 0L1.44 12A1.497 1.497 0 0 1 1 10.94V2.5A1.5 1.5 0 0 1 2.5 1Zm0 1.5v8.44l10.25 10.25 8.44-8.44L10.94 2.5Z"/></svg></span> 0.7.0 ·</p>
-<p>If nf-test detects a <code>lib</code> folder in the directory of a tescase, then it adds it automatically to the classpath.</p>
-<h3 id="examples">Examples</h3>
-<p>We have a Groovy script <code>MyWordUtils.groovy</code> that contains the following class:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">MyWordUtils</span><span class="w"> </span><span class="o">{</span>
-
-<span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="nf">capitalize</span><span class="o">(</span><span class="n">String</span><span class="w"> </span><span class="n">word</span><span class="o">){</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">word</span><span class="o">.</span><span class="na">toUpperCase</span><span class="o">();</span>
-<span class="w">    </span><span class="o">}</span>
-
-<span class="o">}</span>
+<h1 id="running-tests">Running tests</h1>
+<h2 id="basic-usage">Basic usage</h2>
+<p>The easiest way to use nf-test is to run the following command. This command will run all tests under the <code>tests</code> directory. The <code>testDir</code> can be changed in the <code>nf-test.config</code>.</p>
+<div class="highlight"><pre><span></span><code>nf-test test
 </code></pre></div>
-<p>We can put this file in a subfolder called <code>lib</code>:</p>
-<div class="highlight"><pre><span></span><code>testcase_1
-├── capitalizer.nf
-├── capitalizer.test
-└── lib
-    └── MyWordUtils.groovy
+<h2 id="execute-specific-tests">Execute specific tests</h2>
+<p>You can also specify a list of tests, which should be executed. </p>
+<div class="highlight"><pre><span></span><code>nf-test test tests/modules/local/salmon_index.nf.test tests/modules/bwa_index.nf.test
+
+nf-test test tests/modules tests/modules/bwa_index.nf.test
 </code></pre></div>
-<p>The file <code>capitalizer.nf</code> contains the <code>CAPITALIZER</code> process:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#!/usr/bin/env nextflow</span>
-<span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span>
+<h2 id="tag-tests">Tag tests</h2>
+<p>nf-test provides a simple tagging mechanism that allows to execute tests by name or by tag.</p>
+<p>Tags can be defined for each testsuite or for each testcase using the new <code>tag</code> directive:</p>
+<div class="highlight"><pre><span></span><code>nextflow_process {
 
-<span class="n">process</span><span class="w"> </span><span class="n">CAPITALIZER</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="nl">input:</span>
-<span class="w">        </span><span class="n">val</span><span class="w"> </span><span class="n">cheers</span>
-<span class="w">    </span><span class="nl">output:</span>
-<span class="w">        </span><span class="n">stdout</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">output</span>
-<span class="w">    </span><span class="nl">script:</span>
-<span class="w">       </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;$cheers&quot;</span><span class="o">.</span><span class="na">toUpperCase</span><span class="o">()</span>
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &quot;&quot;&quot;</span>
+    name &quot;suite 1&quot;
+    tag &quot;tag1&quot;
 
-<span class="o">}</span>
+    test(&quot;test 1&quot;) {
+        tag &quot;tag2&quot;
+        tag &quot;tag3&quot;   
+        ...
+    }
+
+    test(&quot;test 2&quot;) {
+
+        tag &quot;tag4&quot;
+        tag &quot;tag5&quot;   
+        ...
+
+    }
+}
 </code></pre></div>
-<p>Next, we can use this class in the <code>capitalizer.nf.test</code> like every other class that is provided by nf-test or Groovy itself:</p>
-<div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span>
-
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Process CAPITALIZER&quot;</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;capitalizer.nf&quot;</span>
-<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;CAPITALIZER&quot;</span>
-
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run without failures&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-
-<span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                input[0] = &quot;world&quot;</span>
-<span class="s2">                &quot;&quot;&quot;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-
-<span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">success</span>
-<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">MyWordUtils</span><span class="o">.</span><span class="na">capitalize</span><span class="o">(</span><span class="s1">&#39;world&#39;</span><span class="o">))</span>
-<span class="w">        </span><span class="o">}</span>
-
-<span class="w">    </span><span class="o">}</span>
-
-<span class="o">}</span>
+<p>For example, to execute all tests with <code>tag2</code> use the following command.</p>
+<div class="highlight"><pre><span></span><code>nf-test test --tag tag2  # collects test1
 </code></pre></div>
-<p>If we have a project and we want to reuse libraries in multiple test cases, then we can store the class in the shared lib folder. Both test cases are now able to use <code>MyWordUtils</code>:</p>
-<div class="highlight"><pre><span></span><code>tests
-├── testcase_1
-    ├── hello_1.nf
-    ├── hello_1.nf.test
-├── testcase_2
-    ├── hello_2.nf
-    ├── hello_2.nf.test
-└── lib
-    └── MyWordUtils.groovy
+<p>Names are automatically added to tags. This enables to execute suits or tests directly. </p>
+<div class="highlight"><pre><span></span><code>nf-test test --tag &quot;suite 1&quot;  # collects test1 and test2
 </code></pre></div>
-<p>The default location is <code>tests/lib</code>. This folder location can be changed in nf-test config file.</p>
-<p>It is also possible to use the <code>--lib</code> parameter to add an additional folder to the classpath:</p>
-<div class="highlight"><pre><span></span><code>nf-test test tests/testcase_1/hello_1.nf.test --lib tests/mylibs
+<p>When more tags are provided, all tests that match at least one tag will be executed. Tags are also <strong>not</strong> case-sensitive, both lines will result the same tests.</p>
+<div class="highlight"><pre><span></span><code>nf-test test --tag tag3,tag4  # collects test1 and test2
+nf-test test --tag TAG3,TAG4  # collects test1 and test2
 </code></pre></div>
-<p>If multiple folders are used, the they need to be separate with a colon (like in Java or Groovy).</p>
-<h2 id="using-maven-artifcats-with-grab">Using Maven Artifcats with <code>@Grab</code></h2>
-<p>nf-test supports the <code>@Grab</code> annotation to include third-party libraries that are available in a maven repository. As the dependency is defined as a maven artifact, there is no local copy of the jar file needed and maven enables to include an exact version as well as provides an easy update process.</p>
-<h3 id="example">Example</h3>
-<p>The following example uses the <code>WordUtil</code> class from <code>commons-lang</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@Grab</span><span class="o">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;commons-lang&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">module</span><span class="o">=</span><span class="s1">&#39;commons-lang&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;2.4&#39;</span><span class="o">)</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.lang.WordUtils</span>
-
-<span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span>
-
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Process CAPITALIZER&quot;</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;capitalizer.nf&quot;</span>
-<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;CAPITALIZER&quot;</span>
-
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run without failures&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-
-<span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                input[0] = &quot;world&quot;</span>
-<span class="s2">                &quot;&quot;&quot;</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="o">}</span>
-
-<span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">success</span>
-<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">WordUtils</span><span class="o">.</span><span class="na">capitalize</span><span class="o">(</span><span class="s1">&#39;world&#39;</span><span class="o">))</span>
-<span class="w">        </span><span class="o">}</span>
-
-<span class="w">    </span><span class="o">}</span>
-
-<span class="o">}</span>
+<h2 id="create-a-tap-output">Create a TAP output</h2>
+<p>To run all tests and create a <code>report.tap</code> <a href="https://testanything.org/">file</a>, use the following command.</p>
+<div class="highlight"><pre><span></span><code>nf-test test --tap report.tap
+</code></pre></div>
+<h2 id="run-test-by-its-hash-value">Run test by its hash value</h2>
+<p>To run a specific test using its hash, the following command can be used. The hash value is generated during its first execution. </p>
+<div class="highlight"><pre><span></span><code>nf-test test tests/main.nf.test@d41119e4
 </code></pre></div>
 
 
@@ -1018,10 +948,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.expand", "tabs"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.expand", "tabs"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.19047be9.min.js"></script>
+      <script src="../assets/javascripts/bundle.19047be9.min.js"></script>
       
     
   </body>
