@@ -16,6 +16,9 @@ The debug parameter prints out all available output channels which can be access
 #### `--without-trace`
 The Linux tool `procps` is required to run Nextflow tracing. In case your container does not support this tool, you can also run nf-test without tracing. Please note that the `workflow.trace` are not available when running it with this flag.
 
+#### `--tag <tag>`
+Execute only tests with the provided tag. Multiple tags can be used and have to be separated by commas (e.g. `tag1,tag2`).
+
 #### `--tap <filename>`
 Writes test results in [TAP format](https://testanything.org) to file.
 
