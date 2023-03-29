@@ -468,6 +468,33 @@
     GZip Files
   </a>
   
+    <nav class="md-nav" aria-label="GZip Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filter-lines" class="md-nav__link">
+    Filter lines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grep-lines" class="md-nav__link">
+    Grep lines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshot-support" class="md-nav__link">
+    Snapshot Support
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -810,6 +837,33 @@
     GZip Files
   </a>
   
+    <nav class="md-nav" aria-label="GZip Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filter-lines" class="md-nav__link">
+    Filter lines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grep-lines" class="md-nav__link">
+    Grep lines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshot-support" class="md-nav__link">
+    Snapshot Support
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -852,9 +906,29 @@ Individual keys can also be asserted:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">yaml</span><span class="o">.</span><span class="na">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;value&quot;</span>
 </code></pre></div>
 <h2 id="gzip-files">GZip Files</h2>
-<p>nf-test extends <code>path</code> by a <code>linesGzip</code> property that can be used to read gzip compressed files:</p>
+<p>nf-test extends <code>path</code> by a <code>linesGzip</code> property that can be used to read gzip compressed files.</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">linesGzip</span><span class="o">.</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">5</span>
 <span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">linesGzip</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Line Content&quot;</span><span class="o">)</span>
+</code></pre></div>
+<h3 id="filter-lines">Filter lines</h3>
+<p>The returned array can also be filtered by lines.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">def</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">gzip</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">linesGzip</span><span class="o">[</span><span class="mi">0</span><span class="o">..</span><span class="mi">5</span><span class="o">]</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">lines</span><span class="o">.</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">6</span>
+<span class="kt">def</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">gzip</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">linesGzip</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">lines</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s2">&quot;MY_HEADER&quot;</span><span class="o">)</span>
+</code></pre></div>
+<h3 id="grep-lines">Grep lines</h3>
+<p>nf-test also provides the possibility to grep only specific lines with the advantage that only a subset of lines need to be read (especially helpful for larger files).</p>
+<div class="highlight"><pre><span></span><code><span class="kt">def</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">gzip</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">grepLinesGzip</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">5</span><span class="o">)</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">lines</span><span class="o">.</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">6</span>
+<span class="kt">def</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">gzip</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">grepLineGzip</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">lines</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s2">&quot;MY_HEADER&quot;</span><span class="o">)</span>
+</code></pre></div>
+<h3 id="snapshot-support">Snapshot Support</h3>
+<p>The possibility of filter lines from a *.gz file can also be combined with the snapshot functionality. </p>
+<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span>
+<span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">gzip</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">linesGzip</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+<span class="o">).</span><span class="na">match</span><span class="o">()</span>
 </code></pre></div>
 
 
