@@ -27,7 +27,7 @@ public class PipelineTest extends AbstractTest {
 	private TestContext context;
 
 	public PipelineTest(PipelineTestSuite parent) {
-		super();
+		super(parent);
 		this.parent = parent;
 		context = new TestContext(this);
 		context.setName(parent.getName());
@@ -106,6 +106,8 @@ public class PipelineTest extends AbstractTest {
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
 		nextflow.setParamsFile(paramsFile);
+		nextflow.setOptions(getOptions());
+
 		int exitCode = nextflow.execute();
 
 		context.getWorkflow().loadFromFolder(metaDir);

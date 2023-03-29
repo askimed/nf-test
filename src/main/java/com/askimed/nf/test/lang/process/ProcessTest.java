@@ -39,7 +39,7 @@ public class ProcessTest extends AbstractTest {
 	private TestContext context;
 
 	public ProcessTest(ProcessTestSuite parent) {
-		super();
+		super(parent);
 		this.parent = parent;
 		this.autoSort = parent.isAutoSort();
 		context = new TestContext(this);
@@ -133,6 +133,8 @@ public class ProcessTest extends AbstractTest {
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
 		nextflow.setParamsFile(paramsFile);
+		nextflow.setOptions(getOptions());
+
 		int exitCode = nextflow.execute();
 
 		// Parse json output

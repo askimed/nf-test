@@ -2,7 +2,7 @@ package com.askimed.nf.test.core;
 
 import java.io.File;
 
-public interface ITest {
+public interface ITest extends ITaggable {
 
 	public void setup(File baseDir) throws Throwable;
 
@@ -21,15 +21,15 @@ public interface ITest {
 	public void setDebug(boolean debug);
 
 	public String getHash();
-	
+
 	public void setTestSuite(ITestSuite suite);
-	
+
 	public ITestSuite getTestSuite();
 
 	public void setWithTrace(boolean withTrace);
-	
+
 	public void setUpdateSnapshot(boolean updateSnapshot);
-	
+
 	public boolean isUpdateSnapshot();
 
 }

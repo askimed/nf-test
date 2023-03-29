@@ -34,12 +34,12 @@ public class FunctionTest extends AbstractTest {
 
 	private TestCode then;
 
-	private FunctionTestSuite parent;
-
 	private TestContext context;
 
+	private FunctionTestSuite parent;
+
 	public FunctionTest(FunctionTestSuite parent) {
-		super();
+		super(parent);
 		this.parent = parent;
 		context = new TestContext(this);
 		context.setName(parent.getFunction());
@@ -136,6 +136,7 @@ public class FunctionTest extends AbstractTest {
 		nextflow.setLog(logFile);
 		nextflow.setWork(workDir);
 		nextflow.setParamsFile(paramsFile);
+		nextflow.setOptions(getOptions());
 
 		int exitCode = nextflow.execute();
 

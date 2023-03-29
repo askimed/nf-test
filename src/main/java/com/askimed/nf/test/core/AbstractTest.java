@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Vector;
 
 import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.util.FileUtil;
@@ -32,9 +34,16 @@ public abstract class AbstractTest implements ITest {
 	private boolean debug = false;
 
 	private boolean withTrace = true;
-	
-	public AbstractTest() {
 
+	private List<String> tags = new Vector<String>();
+
+	private AbstractTestSuite parent;
+
+	private String options;
+
+	public AbstractTest(AbstractTestSuite parent) {
+		this.parent = parent;
+		options = parent.getOptions();
 	}
 
 	public void config(String config) {
@@ -44,7 +53,7 @@ public abstract class AbstractTest implements ITest {
 	public File getConfig() {
 		return config;
 	}
-	
+
 	protected String getWorkDir() {
 
 		File workDir = new File("nf-test");
@@ -143,6 +152,28 @@ public abstract class AbstractTest implements ITest {
 		}
 	}
 
+	public void tag(String tag) {
+		tags.add(tag);
+	}
+
+	@Override
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public void options(String options) {
+		this.options = options;
+	}
+
+	public String getOptions() {
+		return options;
+	}
+
+	@Override
+	public AbstractTestSuite getParent() {
+		return parent;
+	}
+
 	@Override
 	public void skip() {
 		skipped = true;
@@ -156,10 +187,10 @@ public abstract class AbstractTest implements ITest {
 	public void setTestSuite(ITestSuite suite) {
 		this.suite = suite;
 	}
-	
+
 	@Override
 	public ITestSuite getTestSuite() {
-		return suite;		
+		return suite;
 	}
 
 	public void debug(boolean debug) {
@@ -174,16 +205,16 @@ public abstract class AbstractTest implements ITest {
 	public boolean isDebug() {
 		return debug;
 	}
-	
+
 	@Override
 	public void setWithTrace(boolean withTrace) {
 		this.withTrace = withTrace;
 	}
-	
+
 	public boolean isWithTrace() {
 		return withTrace;
 	}
-	
+
 	protected void shareDirectories(String[] directories, String metaDir) throws IOException {
 		for (String directory : directories) {
 			File localDirectory = new File(directory);
@@ -194,14 +225,13 @@ public abstract class AbstractTest implements ITest {
 		}
 	}
 
-	
 	@Override
 	public void setUpdateSnapshot(boolean updateSnapshot) {
 		this.updateSnapshot = updateSnapshot;
 	}
-	
+
 	public boolean isUpdateSnapshot() {
 		return updateSnapshot;
 	}
-	
+
 }

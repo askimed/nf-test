@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.askimed.nf.test.config.Config;
 
-public interface ITestSuite {
+public interface ITestSuite extends ITaggable {
 
 	public List<ITest> getTests();
 

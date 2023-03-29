@@ -22,9 +22,14 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	private boolean autoSort = true;
 
+	private String options = "";
+
+	private List<String> tags = new Vector<String>();
+
 	@Override
 	public void configure(Config config) {
 		autoSort = config.isAutoSort();
+		options = config.getOptions();
 	}
 
 	public void name(String name) {
@@ -58,11 +63,18 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	public void autoSort(boolean autoSort) {
 		this.autoSort = autoSort;
 	}
-	
+
 	public boolean isAutoSort() {
 		return autoSort;
 	}
-	
+
+	public void options(String options) {
+		this.options = options;
+	}
+
+	public String getOptions() {
+		return options;
+	}
 
 	@Override
 	public void setGlobalConfigFile(File globalConfig) {
@@ -99,6 +111,20 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	protected void addTest(ITest test) {
 		tests.add(test);
 		test.setTestSuite(this);
+	}
+
+	public void tag(String tag) {
+		tags.add(tag);
+	}
+
+	@Override
+	public List<String> getTags() {
+		return tags;
+	}
+
+	@Override
+	public ITaggable getParent() {
+		return null;
 	}
 
 }

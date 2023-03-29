@@ -4,9 +4,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.askimed.nf.test.util.BinaryFinder;
 import com.askimed.nf.test.util.Command;
@@ -38,6 +42,8 @@ public class NextflowCommand {
 	private File paramsFile;
 
 	private Map<String, Object> params;
+
+	private String options = "";
 
 	public static String ERROR = "Nextflow Binary not found. Please check if Nextflow is in a directory accessible by your $PATH variable or set $NEXTFLOW_HOME.";
 
@@ -120,6 +126,14 @@ public class NextflowCommand {
 		return paramsFile;
 	}
 
+	public void setOptions(String options) {
+		this.options = options;
+	}
+
+	public String getOptions() {
+		return options;
+	}
+
 	public int execute() throws IOException {
 
 		if (binary == null) {
@@ -162,9 +176,11 @@ public class NextflowCommand {
 			args.add(work.getAbsolutePath());
 		}
 
+		args.addAll(parseOptions(options));
+
 		Command nextflow = new Command(binary);
 		nextflow.setParams(args);
-		nextflow.setSilent(silent);
+		nextflow.setSilent(true);
 		if (out != null) {
 			nextflow.saveStdOut(out.getAbsolutePath());
 		}
@@ -173,10 +189,58 @@ public class NextflowCommand {
 		}
 		if (!silent) {
 			System.out.println();
-			System.out.println("Command: " + nextflow.getExecutedCommand());
+			System.out.println("    Nextflow Command:");
+			System.out.println("      " + nextflow.getExecutedCommand());
 		}
-		return nextflow.execute();
 
+		int result = nextflow.execute();
+
+		if (!silent) {
+			printDebugInfo();
+		}
+		return result;
+
+	}
+
+	protected void printDebugInfo() throws IOException {
+		printStdout();
+		printStderr();
+		printLog();
+	}
+
+	protected void printStdout() throws IOException {
+		if (out != null) {
+			System.out.println();
+			System.out.println("    Stdout:");
+			List<String> lines = Files.readAllLines(out.toPath(), Charset.defaultCharset());
+			for (String line : lines) {
+				System.out.println("      " + line);
+			}
+			System.out.println();
+		}
+	}
+
+	protected void printStderr() throws IOException {
+		if (err != null) {
+			System.out.println("    Stderr:");
+			List<String> lines = Files.readAllLines(err.toPath(), Charset.defaultCharset());
+			;
+			for (String line : lines) {
+				System.out.println("      " + line);
+			}
+			System.out.println();
+		}
+	}
+
+	protected void printLog() throws IOException {
+		if (log != null) {
+			System.out.println("    Nextflow Output:");
+			List<String> lines = NextflowLog.parseLines(log, NextflowLogLevel.INFO);
+			for (String line : lines) {
+				System.out.println("      " + line);
+			}
+			System.out.println();
+		}
 	}
 
 	public int printVersion() throws IOException {
@@ -202,6 +266,15 @@ public class NextflowCommand {
 		writer.write(JsonOutput.toJson(params));
 		writer.close();
 
+	}
+
+	public static List<String> parseOptions(String options) {
+		List<String> list = new Vector<String>();
+		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(options);
+		while (m.find()) {
+			list.add(m.group(1).replace("\"", ""));
+		}
+		return list;
 	}
 
 }

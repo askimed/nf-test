@@ -1,0 +1,21 @@
+nextflow_process {
+
+	name "suite 1"
+	tag "tag1"
+
+
+	test("test 1") {
+	
+		tag "tag2"
+		tag "tag3"	 
+
+	}
+	
+	test("test 2") {
+	
+		tag "tag4"
+		tag "tag5"	 
+
+	}
+
+}

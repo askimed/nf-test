@@ -27,12 +27,14 @@ public class TestExecutionEngine {
 	private File baseDir = new File(System.getProperty("user.dir"));
 
 	private boolean withTrace = true;
-	
+
 	private boolean updateSnapshot = false;
 
 	private String libDir = "";
-	
+
 	private PluginManager pluginManager = null;
+
+	private TagQuery tagQuery = new TagQuery();
 
 	public void setScripts(List<File> scripts) {
 		this.scripts = scripts;
@@ -67,7 +69,11 @@ public class TestExecutionEngine {
 		}
 		this.updateSnapshot = updateSnapshot;
 	}
-	
+
+	public void setTagQuery(TagQuery tagQuery) {
+		this.tagQuery = tagQuery;
+	}
+
 	public void setLibDir(String libDir) {
 		this.libDir = libDir;
 	}
@@ -75,12 +81,12 @@ public class TestExecutionEngine {
 	public void setListener(ITestExecutionListener listener) {
 		this.listener = listener;
 	}
-	
+
 	public void setPluginManager(PluginManager pluginManager) {
 		this.pluginManager = pluginManager;
 	}
 
-	protected List<ITestSuite> parse() throws Exception {
+	protected List<ITestSuite> parse(TagQuery tagQuery) throws Exception {
 
 		List<ITestSuite> testSuits = new Vector<ITestSuite>();
 
@@ -95,13 +101,19 @@ public class TestExecutionEngine {
 				throw new Exception("Test file '" + script.getAbsolutePath() + "' not found.");
 			}
 			ITestSuite testSuite = TestSuiteBuilder.parse(script, libDir, pluginManager);
-			if (testId != null) {
-				for (ITest test : testSuite.getTests()) {
+
+			for (ITest test : testSuite.getTests()) {
+				if (testId != null) {
 					if (!test.getHash().startsWith(testId)) {
 						test.skip();
 					}
 				}
+
+				if (!tagQuery.matches(test)) {
+					test.skip();
+				}
 			}
+
 			testSuits.add(testSuite);
 		}
 
@@ -120,7 +132,7 @@ public class TestExecutionEngine {
 			}
 		}
 
-		List<ITestSuite> testSuits = parse();
+		List<ITestSuite> testSuits = parse(tagQuery);
 
 		if (testSuits.size() == 0) {
 			System.out.println(AnsiColors.red("Error: no valid tests found."));
@@ -204,7 +216,7 @@ public class TestExecutionEngine {
 			}
 		}
 
-		List<ITestSuite> testSuits = parse();
+		List<ITestSuite> testSuits = parse(tagQuery);
 
 		if (testSuits.size() == 0) {
 			System.out.println(AnsiColors.red("Error: no valid tests found."));

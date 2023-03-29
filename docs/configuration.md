@@ -2,7 +2,7 @@
 
 ## Setup test profile
 
-To run your test using a specific Netxflow profile, you can use the `--profile` argument on the command line or define a default profile in `nf-test.config`.
+To run your test using a specific Nextflow profile, you can use the `--profile` argument on the command line or define a default profile in `nf-test.config`.
 
 
 ##  `nf-test.config`
@@ -25,6 +25,8 @@ config {
     withTrace false
     //disable sorted channels
     autoSort false
+    // add Nextflow options
+    options "-dump-channels -stub-run"
 }
 ```
 
@@ -51,12 +53,13 @@ nextflow_process {
     process "my_process"
     config "path/to/test/nextflow.config"
     autoSort false
+    options "-dump-channels"
     ...
 
 }
 ```
 
-It is also possible to overwrite the `config` or `autoSort` property for a specific test:
+It is also possible to overwrite the `config`, `autoSort` or Nextflow properties (e.g. `options "-dump-channels"`) for a specific test. Depending on the used Nextflow option, also add the `--debug` nf-test option on the command-line to see the addtional output.  
 
 ```
 nextflow_process {
@@ -65,6 +68,7 @@ nextflow_process {
 
       config "path/to/test/nextflow.config"
       autoSort false
+      options "-dump-channels"
       ...
 
     }
