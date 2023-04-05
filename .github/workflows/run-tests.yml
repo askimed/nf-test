@@ -19,6 +19,7 @@ jobs:
       - name: Install Nextflow v22.10.4
         run: |
           export NXF_VER=22.10.4;curl -s https://get.nextflow.io | bash
+          sudo mv nextflow /usr/local/bin/
 
       - name: Test
         run: mvn install
