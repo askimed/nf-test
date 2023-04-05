@@ -44,9 +44,9 @@ public class NextflowScript {
 
 		List<String> names = new Vector<String>();
 
-		String patternProcessName = "(?i)process\\s*(.*)(\\s*\\{|\\{)";
+		String patternProcessName = "(?i)^\\s*process\\s*(.+)(\\s*\\{|\\{)";
 
-		Pattern r = Pattern.compile(patternProcessName);
+		Pattern r = Pattern.compile(patternProcessName, Pattern.MULTILINE);
 
 		Matcher m = r.matcher(content);
 		while (m.find()) {
@@ -64,9 +64,9 @@ public class NextflowScript {
 
 		List<String> names = new Vector<String>();
 
-		String patternFunctionName = "(?i)def\\s*(.+)(\\s*\\(|\\()";
+		String patternFunctionName = "(?i)^\\s*def\\s*(.+)(\\s*\\(|\\()";
 
-		Pattern r = Pattern.compile(patternFunctionName);
+		Pattern r = Pattern.compile(patternFunctionName, Pattern.MULTILINE);
 
 		Matcher m = r.matcher(content);
 		while (m.find()) {
@@ -84,9 +84,9 @@ public class NextflowScript {
 
 		List<String> names = new Vector<String>();
 
-		String patternProcessName = "(?i)workflow\\s*(.+)(\\s*\\{|\\{)";
+		String patternProcessName = "(?i)^\\s*workflow\\s*(.+)(\\s*\\{|\\{)";
 
-		Pattern r = Pattern.compile(patternProcessName);
+		Pattern r = Pattern.compile(patternProcessName, Pattern.MULTILINE);
 
 		Matcher m = r.matcher(content);
 		while (m.find()) {
