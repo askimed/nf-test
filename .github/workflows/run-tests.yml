@@ -16,9 +16,9 @@ jobs:
         with:
           java-version: 11
 
-      - name: Install Nextflow
+      - name: Install Nextflow v22.10.4
         run: |
-          wget -qO- get.nextflow.io | bash
+          wget -qO- https://github.com/nextflow-io/nextflow/releases/download/v22.10.4/nextflow
           sudo mv nextflow /usr/local/bin/
 
       - name: Test
