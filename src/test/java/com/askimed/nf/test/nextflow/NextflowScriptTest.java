@@ -35,11 +35,11 @@ public class NextflowScriptTest {
 		assertEquals(1, names.size());
 		assertEquals("process1", names.get(0));
 	}
-
+	
 	@Test
 	public void testGetProcessName4() {
 		List<String> names = NextflowScript
-				.getProcesseNames("\n   process process1\n{some content }\\n   process process2{some content }\"");
+				.getProcesseNames("\n   process process1\n{some content }\n   process process2{some content }\"");
 		assertEquals(2, names.size());
 		assertEquals("process1", names.get(0));
 		assertEquals("process2", names.get(1));
@@ -104,7 +104,7 @@ public class NextflowScriptTest {
 	@Test
 	public void testFunctionNames4() {
 		List<String> names = NextflowScript
-				.getFunctionNames("\n   def function1()\n{some content }\\n   def function2(arg1, arg2){some content }\"");
+				.getFunctionNames("\n   def function1()\n{some content }\n   def function2(arg1, arg2){some content }\"");
 		assertEquals(2, names.size());
 		assertEquals("function1", names.get(0));
 		assertEquals("function2", names.get(1));
@@ -175,7 +175,7 @@ public class NextflowScriptTest {
 	@Test
 	public void testGetWorkflowName4() {
 		List<String> names = NextflowScript
-				.getWorkflowNames("\n   workflow process1\n{some content }\\n   workflow process2{some content }\"");
+				.getWorkflowNames("\n   workflow process1\n{some content }\n   workflow process2{some content }\"");
 		assertEquals(2, names.size());
 		assertEquals("process1", names.get(0));
 		assertEquals("process2", names.get(1));
@@ -212,6 +212,12 @@ public class NextflowScriptTest {
 	@Test
 	public void testGetWorkflowNames9() {
 		List<String> names = NextflowScript.getWorkflowNames("workflow      { some content }");
+		assertEquals(0, names.size());
+	}
+	
+	@Test
+	public void testGetWorkflowNames10() {
+		List<String> names = NextflowScript.getWorkflowNames("echo workflow ${value}");
 		assertEquals(0, names.size());
 	}
 
