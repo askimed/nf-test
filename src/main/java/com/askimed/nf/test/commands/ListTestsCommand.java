@@ -3,19 +3,18 @@ package com.askimed.nf.test.commands;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.core.TestExecutionEngine;
 import com.askimed.nf.test.util.AnsiColors;
 
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Help.Visibility;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
-import picocli.CommandLine.Help.Visibility;
 
 @Command(name = "list")
-public class ListTestsCommand implements Callable<Integer> {
+public class ListTestsCommand extends AbstractCommand {
 
 	@Parameters(description = "list all tests")
 	private List<File> testPaths = new ArrayList<File>();
@@ -24,8 +23,12 @@ public class ListTestsCommand implements Callable<Integer> {
 			"--debug" }, description = "Show debugging infos", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean debug = false;
 
+	@Option(names = {
+			"--tags" }, description = "Show all available tags", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean tags = false;
+
 	@Override
-	public Integer call() throws Exception {
+	public Integer execute() throws Exception {
 
 		try {
 
@@ -65,7 +68,11 @@ public class ListTestsCommand implements Callable<Integer> {
 
 			TestExecutionEngine engine = new TestExecutionEngine();
 			engine.setScripts(scripts);
-			return engine.listTests();
+			if (tags) {
+				return engine.listTags();
+			} else {
+				return engine.listTests();
+			}
 
 		} catch (Throwable e) {
 

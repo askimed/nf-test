@@ -2,7 +2,7 @@ package com.askimed.nf.test.core;
 
 import java.io.File;
 import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 import com.askimed.nf.test.lang.TestSuiteBuilder;
 import com.askimed.nf.test.plugins.PluginManager;
@@ -254,6 +254,40 @@ public class TestExecutionEngine {
 		System.out.println("Found " + count + " tests.");
 		System.out.println();
 
+		return 0;
+
+	}
+
+	public int listTags() throws Throwable {
+
+		if (configFile != null) {
+			if (!configFile.exists()) {
+				System.out.println(
+						AnsiColors.red("Error: Test config file '" + configFile.getAbsolutePath() + "'not found"));
+				System.out.println();
+				return 1;
+			}
+		}
+
+		List<ITestSuite> testSuits = parse(tagQuery);
+
+		if (testSuits.size() == 0) {
+			System.out.println(AnsiColors.red("Error: no valid tests found."));
+			System.out.println();
+			return 1;
+		}
+
+		Set<String> tags = new HashSet<String>();
+		for (ITestSuite testSuite : testSuits) {
+			tags.addAll(testSuite.getTags());
+			for (ITest test : testSuite.getTests()) {
+				tags.addAll(test.getTags());
+			}
+		}
+
+		for (String tag : tags) {
+			System.out.println(tag);
+		}
 		return 0;
 
 	}
