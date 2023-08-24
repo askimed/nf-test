@@ -16,9 +16,7 @@ Test your production ready Nextflow pipelines in an efficient and automated wa
 
 ---
 
-## Features
-
-[:material-check-circle:]() DSL language that is as **similar to Nextflow** <br/>
+[:material-check-circle:]() DSL language that is **similar to Nextflow** <br/>
 [:material-check-circle:]() Describe expected behaviour with `when` and `then` blocks <br/>
 [:material-check-circle:]() Tons of functions to write **elegant and readable assertions** <br/>
 [:material-check-circle:]() Use **snaphosts** to write tests for complex data structures <br/>
@@ -28,7 +26,7 @@ Test your production ready Nextflow pipelines in an efficient and automated wa
 
 ---
 
-## Modular testing
+## :material-check-all: Unit testing
 
 nf-test allows you to test all units of your data science pipeline: from end-to-end test of the entire pipeline to specific tests of processes or even custom functions.
 
@@ -116,9 +114,27 @@ nf-test allows you to test all units of your data science pipeline: from end-to-
     }
     ```
 
+:material-arrow-right: Learn more about [pipeline tests](docs/testcases/nextflow_pipeline), [workflow tests](docs/testcases/nextflow_workflow), [process tests](docs/testcases/nextflow_process) and [function tests](docs/testcases/nextflow_function) in the documentation.
+
 ---
 
-## Support us
+## :material-content-save-check: Snapshot testing
+
+nf-test supports **snapshot testing** and **creates automatically the baseline set of unit tests** to ensure changes won’t result in a regression.<br/>nf-test takes a snapshot of the output channels or any other object, then compares it to a reference snapshot file stored alongside the test. The test will fail, if the two snapshots do not match.
+
+:material-arrow-right: [Learn more](docs/assertions/snapshots)
+
+---
+
+## :material-power-plug-outline: Highly extendable
+
+nf-test supports including third party libraries (e.g. jar files ) or functions from groovy files to either extend it functionality or to avoid duplicate code and to keep the logic in test cases simple. As most assertions are usecase specific, nf-test integrates a plugin system that provides the possibility to extend existing classes with custom methods. For example [FASTA file support](docs/assertions/fasta).
+
+:material-arrow-right: [Learn more](docs/assertions/libraries)
+
+---
+
+## :material-star: Support us
 
 We love stars as much as we love rockets! So make sure you [star us on GitHub](https://github.com/askimed/nf-test).
 
@@ -135,7 +151,7 @@ Show the world your Nextflow pipeline is using nf-test and at the following badg
 
 ----
 
-## About
+## :material-account-supervisor: About
 
 nf-test has been created by [Lukas Forer](https://twitter.com/lukfor) and [Sebastian Schönherr](https://twitter.com/seppinho) and is MIT Licensed.
 

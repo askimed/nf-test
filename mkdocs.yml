@@ -21,7 +21,7 @@ theme:
     primary: teal
     accent: teal
   icon:
-    logo: material/rocket-launch-outline
+    logo: material/rocket-launch
   favicon: images/favicon.svg
 
 extra_css:
