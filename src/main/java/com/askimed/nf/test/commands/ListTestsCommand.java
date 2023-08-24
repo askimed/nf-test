@@ -7,6 +7,7 @@ import java.util.List;
 import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.core.TestExecutionEngine;
 import com.askimed.nf.test.util.AnsiColors;
+import com.askimed.nf.test.util.OutputFormat;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Help.Visibility;
@@ -26,6 +27,10 @@ public class ListTestsCommand extends AbstractCommand {
 	@Option(names = {
 			"--tags" }, description = "Show all available tags", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean tags = false;
+
+	@Option(names = {
+			"--format" }, description = "Output format", required = false, showDefaultValue = Visibility.ALWAYS)
+	private OutputFormat format = OutputFormat.PRETTY;
 
 	@Override
 	public Integer execute() throws Exception {
@@ -69,9 +74,9 @@ public class ListTestsCommand extends AbstractCommand {
 			TestExecutionEngine engine = new TestExecutionEngine();
 			engine.setScripts(scripts);
 			if (tags) {
-				return engine.listTags();
+				return engine.listTags(format);
 			} else {
-				return engine.listTests();
+				return engine.listTests(format);
 			}
 
 		} catch (Throwable e) {
