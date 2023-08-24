@@ -1,0 +1,22 @@
+.md-typeset h1, .md-typeset h2, .md-typeset h3 {
+    color: #000;
+    font-weight: 600;
+}
+
+.left{
+    float: left;
+}
+
+.right{
+    float: right;
+    width: 500px;
+}
+
+.md-footer {
+    margin-top: 40px;
+    background-color: #009485;
+}
+
+.md-footer__inner {
+    display: none !important;
+}

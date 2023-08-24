@@ -1,65 +1,78 @@
 site_name: nf-test
+copyright: "&copy; 2021 - 2023 Lukas Forer and Sebastian Schönherr"
 
 theme:
   name: material
   features:
-    - navigation.instant
-    - navigation.expand
-    - tabs
+      - content.tooltips
+      #- navigation.expand
+      - navigation.footer
+      - navigation.tabs
+      #- navigation.tabs.sticky
+      - search.highlight
+      - search.share
+      - search.suggest
+      - toc.integrate
+      - content.tabs.link
+  font:
+    text: Segoe UI
+
   palette:
     primary: teal
     accent: teal
   icon:
     logo: material/rocket-launch-outline
   favicon: images/favicon.svg
-  font:
-    text: Roboto
-    code: Roboto Mono
 
 extra_css:
-  - extra.css
+  - "style.css"
+
+extra_javascript:
+  - https://buttons.github.io/buttons.js
+
 repo_url: https://github.com/askimed/nf-test
 
 nav:
   - Home: index.md
   - Installation: installation.md
-  - Getting Started: getting-started.md
-  - Writing Tests:
-    - Pipeline Testing: testcases/nextflow_pipeline.md
-    - Workflow Testing: testcases/nextflow_workflow.md
-    - Process Testing: testcases/nextflow_process.md
-    - Function Testing: testcases/nextflow_function.md
-    - Params and Global Variables: testcases/global_variables.md
-  - Running Tests: running-tests.md
-  - Writing Assertions:
-    - Power Assertions: assertions/assertions.md
-    - Files: assertions/files.md
-    - Snapshots: assertions/snapshots.md
-    - Regular Expressions: assertions/regular-expressions.md
-    - FASTA Files: assertions/fasta.md
-    - Using Third-Party Libraries: assertions/libraries.md
-  - Command line Interface (CLI):
-    - init: cli/init.md
-    - generate: cli/generate.md
-    - test: cli/test.md
-    - clean: cli/clean.md
-  - Configuration: configuration.md
-  - Plugins:
-    - Available Plugins: https://code.askimed.com/nf-test-plugins
-    - Using Plugins: plugins/using-plugins.md
-    - Developing Plugins: plugins/developing-plugins.md
-  - Available Pipelines: nftest_pipelines.md
+  - Documentation:
+    - Getting Started: docs/getting-started.md
+    - Writing Tests:
+      - Pipeline Testing: docs/testcases/nextflow_pipeline.md
+      - Workflow Testing: docs/testcases/nextflow_workflow.md
+      - Process Testing: docs/testcases/nextflow_process.md
+      - Function Testing: docs/testcases/nextflow_function.md
+      - Params and Global Variables: docs/testcases/global_variables.md
+    - Running Tests: docs/running-tests.md
+    - Writing Assertions:
+      - Power Assertions: docs/assertions/assertions.md
+      - Files: docs/assertions/files.md
+      - Snapshots: docs/assertions/snapshots.md
+      - Regular Expressions: docs/assertions/regular-expressions.md
+      - FASTA Files: docs/assertions/fasta.md
+      - Using Third-Party Libraries: docs/assertions/libraries.md
+    - Command line Interface (CLI):
+      - init: docs/cli/init.md
+      - generate: docs/cli/generate.md
+      - test: docs/cli/test.md
+      - list: docs/cli/list.md
+      - clean: docs/cli/clean.md
+    - Configuration: docs/configuration.md
+    - Plugins:
+      - Available Plugins: https://code.askimed.com/nf-test-plugins
+      - Using Plugins: docs/plugins/using-plugins.md
+      - Developing Plugins: docs/plugins/developing-plugins.md
+  - Resources: resources.md
   - About: about.md
 
 
 markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true 
   - attr_list
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
-  - admonition
-  - footnotes
-  - pymdownx.highlight
-  - pymdownx.inlinehilite
-  - pymdownx.superfences
-  - pymdownx.snippets
+      emoji_generator: !!python/name:materialx.emoji.to_svg 

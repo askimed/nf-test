@@ -1,75 +1,148 @@
-# Welcome to nf-test 🚀
+---
+hide:
+  - navigation
+  - toc 
+---
 
-nf-test is a simple test framework for Nextflow pipelines.
+![](assets/example.png){ .right}
+
+# Simple testing framework for Nextflow pipelines
 
 
-[:fontawesome-solid-book: Getting Started](getting-started.md){ .md-button .md-button--primary} [:fontawesome-solid-download: Installation](installation.md){ .md-button } [:fontawesome-brands-github: Source](https://github.com/askimed/nf-test){ .md-button }
+Test your production ready Nextflow pipelines in an efficient and automated way. 🚀
 
-## Test your pipeline
-Let's start with a simple example to test the [Hello World](https://github.com/nextflow-io/hello) Nextflow pipeline. To run it, copy/paste the code into a text file (e.g. `hello-world.test`) and run it with `nf-test test hello-world.test`.
 
-```Groovy
-nextflow_pipeline {
+[:fontawesome-solid-book: Getting Started](docs/getting-started.md){ .md-button .md-button--primary} [:fontawesome-solid-download: Installation](installation.md){ .md-button } [:fontawesome-brands-github: Source](https://github.com/askimed/nf-test){ .md-button }
 
-  name "Test Hello World"
-  script "nextflow-io/hello"
+---
 
-  test("hello world example should start 4 processes") {
+## Features
 
-    expect {
-      with(workflow){
-        assert success
-        //analyze Nextflow trace file
-        assert trace.tasks().size() == 4
-        //Verify if strings have been written to stdout object
-        assert "Ciao world!" in stdout
-        assert "Bonjour world!" in stdout
-        assert "Hello world!" in stdout
-        assert "Hola world!" in stdout
+[:material-check-circle:]() DSL language that is as **similar to Nextflow** <br/>
+[:material-check-circle:]() Describe expected behaviour with `when` and `then` blocks <br/>
+[:material-check-circle:]() Tons of functions to write **elegant and readable assertions** <br/>
+[:material-check-circle:]() Use **snaphosts** to write tests for complex data structures <br/>
+[:material-check-circle:]() Commands to **generate boilerplate** code <br/>
+[:material-check-circle:]() Test-runner that executes these scripts <br/>
+[:material-check-circle:]() Easy to install on **CI systems** <br/>
+
+---
+
+## Modular testing
+
+nf-test allows you to test all units of your data science pipeline: from end-to-end test of the entire pipeline to specific tests of processes or even custom functions.
+
+=== ":fontawesome-solid-diagram-project: Pipeline"
+
+    ```Groovy
+    nextflow_pipeline {
+
+      name "Test Hello World"
+      script "nextflow-io/hello"
+
+      test("hello world example should start 4 processes") {
+
+        expect {
+          with(workflow) {
+            assert success
+            assert trace.tasks().size() == 4
+            assert "Ciao world!" in stdout
+            assert "Bonjour world!" in stdout
+            assert "Hello world!" in stdout
+            assert "Hola world!" in stdout
+          }
+        }
       }
     }
-  }
-}
-```
-## Test your process
-In the nf-test script below we add some basic checks to a process of a [recently published pipeline](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow).
+    ```
 
-```Groovy
-nextflow_process {
+=== ":material-square-circle: Process"
 
-    name "Test Process SALMON_INDEX"
-    script "modules/local/salmon_index.nf"
-    process "SALMON_INDEX"
+    ```Groovy
+    nextflow_process {
 
-    test("Should create channel index files") {
+        name "Test Process SALMON_INDEX"
+        script "modules/local/salmon_index.nf"
+        process "SALMON_INDEX"
 
-        when {
-            process {
-                """
-                input[0] = file("test_data/transcriptome.fa")
-                """
+        test("Should create channel index files") {
+
+            when {
+                process {
+                    """
+                    input[0] = file("test_data/transcriptome.fa")
+                    """
+                }
             }
-        }
 
-        then {
-            //check if test case succeeded
-            assert process.success
-            //analyze trace file
-            assert process.trace.tasks().size() == 1
-            with(process.out) {
-                // check if emitted output has been created
-                assert index.size() == 1
-                // count amount of created files
-                assert path(index.get(0)).list().size() == 16
-                // parse info.json file
-                def info = path(index.get(0)+'/info.json').json
-                assert info.num_kmers == 375730
-                assert info.seq_length == 443050
-                //verify md5 checksum
-                assert path(index.get(0)+'/info.json').md5 == "80831602e2ac825e3e63ba9df5d23505"
+            then {
+                //check if test case succeeded
+                assert process.success
+                //analyze trace file
+                assert process.trace.tasks().size() == 1
+                with(process.out) {
+                    // check if emitted output has been created
+                    assert index.size() == 1
+                    // count amount of created files
+                    assert path(index.get(0)).list().size() == 16
+                    // parse info.json file
+                    def info = path(index.get(0)+'/info.json').json
+                    assert info.num_kmers == 375730
+                    assert info.seq_length == 443050
+                    //verify md5 checksum
+                    assert path(index.get(0)+'/info.json').md5 == "80831602e2ac825e3e63ba9df5d23505"
+                }
             }
         }
     }
-}
+    ```
+
+=== ":material-square-root: Functions"
+    ```Groovy
+    nextflow_function {
+
+        name "Test functions"
+        script "functions.nf"
+
+        test("Test function1") {
+          function "function1"
+          ...
+        }
+
+        test("Test function2") {
+          function "function2"
+          ...
+        }
+    }
+    ```
+
+---
+
+## Support us
+
+We love stars as much as we love rockets! So make sure you [star us on GitHub](https://github.com/askimed/nf-test).
+
+<!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/askimed/nf-test" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star askimed/nf-test on GitHub">Star</a>
+
+Show the world your Nextflow pipeline is using nf-test and at the following badge to your `REAMDE.md`:
+
+[![nf-test](https://img.shields.io/badge/tested_with-nf--test-337ab7.svg)](https://code.askimed.com/nf-test)
 
 ```
+[![nf-test](https://img.shields.io/badge/tested_with-nf--test-337ab7.svg)](https://code.askimed.com/nf-test)
+```
+
+----
+
+## About
+
+nf-test has been created by [Lukas Forer](https://twitter.com/lukfor) and [Sebastian Schönherr](https://twitter.com/seppinho) and is MIT Licensed.
+
+
+[![@lukfor](https://avatars.githubusercontent.com/u/210220?s=64&v=4)](https://github.com/lukfor)
+[![@seppinho](https://avatars.githubusercontent.com/u/1942824?s=64&v=4)](https://github.com/seppinho)
+
+Thanks to all the [contributors](about.md) to help us maintaining and improving nf-test!
+
+---
