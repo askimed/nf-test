@@ -6,16 +6,10 @@ import com.askimed.nf.test.lang.WorkflowMeta;
 import com.askimed.nf.test.lang.process.ChannelsOutput;
 
 public class Workflow extends WorkflowMeta {
-	
+
 	private String mapping = "";
 
-	private String name = "workflow";
-
 	private ChannelsOutput out = new ChannelsOutput();
-	
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	@Transient
 	public void setMapping(String mapping) {
@@ -25,14 +19,9 @@ public class Workflow extends WorkflowMeta {
 	public String getMapping() {
 		return mapping;
 	}
-	
+
 	public ChannelsOutput getOut() {
 		return out;
-	}
-
-	@Override
-	public String toString() {
-		return name;
 	}
 
 }

@@ -10,7 +10,6 @@ import org.codehaus.groovy.control.CompilationFailedException;
 
 import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
-import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.nextflow.NextflowCommand;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
@@ -36,13 +35,13 @@ public class ProcessTest extends AbstractTest {
 
 	private ProcessTestSuite parent;
 
-	private TestContext context;
+	private ProcessContext context;
 
 	public ProcessTest(ProcessTestSuite parent) {
 		super(parent);
 		this.parent = parent;
 		this.autoSort = parent.isAutoSort();
-		context = new TestContext(this);
+		context = new ProcessContext(this);
 		context.setName(parent.getProcess());
 	}
 
