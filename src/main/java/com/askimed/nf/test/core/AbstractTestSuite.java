@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.askimed.nf.test.config.Config;
+import com.askimed.nf.test.lang.extensions.SnapshotFile;
 
 public abstract class AbstractTestSuite implements ITestSuite {
 
@@ -23,6 +24,8 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	private boolean autoSort = true;
 
 	private String options = "";
+
+	private SnapshotFile snapshotFile;
 
 	private List<String> tags = new Vector<String>();
 
@@ -127,4 +130,26 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		return null;
 	}
 
+	@Override
+	public boolean hasSkippedTests() {
+		for (ITest test : getTests()) {
+			if (test.isSkipped()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public SnapshotFile getSnapshot() {
+		if (snapshotFile == null) {
+			snapshotFile = SnapshotFile.loadByTestSuite(this);
+		}
+		return snapshotFile;
+	}
+	
+	@Override
+	public boolean hasSnapshotLoaded() {
+		return (snapshotFile != null);
+	}
 }

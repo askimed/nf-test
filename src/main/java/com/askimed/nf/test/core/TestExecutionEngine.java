@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.askimed.nf.test.lang.TestSuiteBuilder;
+import com.askimed.nf.test.lang.extensions.SnapshotFile;
 import com.askimed.nf.test.plugins.PluginManager;
 import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
@@ -200,6 +201,14 @@ public class TestExecutionEngine {
 				result.setEndTime(System.currentTimeMillis());
 				listener.executionFinished(test, result);
 
+			}
+
+			// Remove obsolete snapshots in update mode and when no test was skipped.
+			//TODO: removeObsolete snapshots only when no test failed!!
+			if (updateSnapshot && !testSuite.hasSkippedTests() && testSuite.hasSnapshotLoaded()) {
+				SnapshotFile snapshot = testSuite.getSnapshot();
+				snapshot.removeObsoleteSnapshots();
+				snapshot.save();
 			}
 
 			listener.testSuiteExecutionFinished(testSuite);
