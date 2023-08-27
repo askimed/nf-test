@@ -31,6 +31,8 @@ public class TestExecutionEngine {
 
 	private boolean updateSnapshot = false;
 
+	private boolean cleanSnapshot = false;
+
 	private String libDir = "";
 
 	private PluginManager pluginManager = null;
@@ -69,6 +71,10 @@ public class TestExecutionEngine {
 			System.out.println("Warning: every snapshot that fails during this test run is re-record.");
 		}
 		this.updateSnapshot = updateSnapshot;
+	}
+
+	public void setCleanSnapshot(boolean cleanSnapshot) {
+		this.cleanSnapshot = cleanSnapshot;
 	}
 
 	public void setTagQuery(TagQuery tagQuery) {
@@ -203,9 +209,9 @@ public class TestExecutionEngine {
 
 			}
 
-			// Remove obsolete snapshots in update mode and when no test was skipped.
-			//TODO: removeObsolete snapshots only when no test failed!!
-			if (updateSnapshot && !testSuite.hasSkippedTests() && testSuite.hasSnapshotLoaded()) {
+			// Remove obsolete snapshots and when no test was skipped.
+			// TODO: removeObsolete snapshots only when no test failed!!
+			if (cleanSnapshot && !testSuite.hasSkippedTests() && testSuite.hasSnapshotLoaded()) {
 				SnapshotFile snapshot = testSuite.getSnapshot();
 				snapshot.removeObsoleteSnapshots();
 				snapshot.save();
