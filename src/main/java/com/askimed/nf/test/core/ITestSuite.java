@@ -24,6 +24,10 @@ public interface ITestSuite extends ITaggable {
 	
 	public boolean hasSkippedTests();
 	
+	public void setFailedTests(boolean b);
+	
+	public boolean hasFailedTests();
+	
 	public SnapshotFile getSnapshot();
 	
 	public boolean hasSnapshotLoaded();

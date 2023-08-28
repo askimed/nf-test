@@ -111,14 +111,14 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 
 		// if we have at least one skipped test, we can not
 		// determine if a snapshot is obsolete.
-		// TODO: add check. if at lest one test failed, same situation.
-		if (testSuite.hasSkippedTests()) {
+		if (testSuite.hasSkippedTests() || testSuite.hasFailedTests()) {
 			System.out.println(AnsiText.padding(
-					"Obsolete snapshots can only be checked if all tests of a file are executed.", 2 * TEST_PADDING));
+					"Obsolete snapshots can only be checked if all tests of a file are executed successful.",
+					2 * TEST_PADDING));
 			return;
 		}
 
-		if (snapshot.getObsoleteSnapshots().size() > 0) {			
+		if (snapshot.getObsoleteSnapshots().size() > 0) {
 			System.out.println(AnsiColors.yellow(AnsiText.padding(
 					snapshot.getObsoleteSnapshots().size() + " obsolete " + snapshot.getObsoleteSnapshots(),
 					2 * TEST_PADDING)));

@@ -201,6 +201,7 @@ public class TestExecutionEngine {
 					result.setThrowable(e);
 					result.setErrorReport(test.getErrorReport());
 					failed = true;
+					testSuite.setFailedTests(true);
 
 				}
 				test.cleanup();
@@ -209,9 +210,9 @@ public class TestExecutionEngine {
 
 			}
 
-			// Remove obsolete snapshots and when no test was skipped.
-			// TODO: removeObsolete snapshots only when no test failed!!
-			if (cleanSnapshot && !testSuite.hasSkippedTests() && testSuite.hasSnapshotLoaded()) {
+			// Remove obsolete snapshots when no test was skipped and no test failed.
+			if (cleanSnapshot && !testSuite.hasSkippedTests() && !testSuite.hasFailedTests()
+					&& testSuite.hasSnapshotLoaded()) {
 				SnapshotFile snapshot = testSuite.getSnapshot();
 				snapshot.removeObsoleteSnapshots();
 				snapshot.save();

@@ -27,6 +27,8 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	private SnapshotFile snapshotFile;
 
+	private boolean failedTests = false;
+
 	private List<String> tags = new Vector<String>();
 
 	@Override
@@ -147,9 +149,19 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		}
 		return snapshotFile;
 	}
-	
+
 	@Override
 	public boolean hasSnapshotLoaded() {
 		return (snapshotFile != null);
+	}
+
+	@Override
+	public void setFailedTests(boolean failedTests) {
+		this.failedTests = failedTests;
+	}
+
+	@Override
+	public boolean hasFailedTests() {
+		return failedTests;
 	}
 }
