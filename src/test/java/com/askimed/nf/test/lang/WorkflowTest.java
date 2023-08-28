@@ -40,7 +40,7 @@ public class WorkflowTest {
 
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/workflow/no-outputs/trial.nf.test" });
-		assertEquals(0, exitCode);
+		assertEquals(1, exitCode);
 
 	}
 

@@ -80,6 +80,15 @@ public class ProcessTest {
 	}
 
 	@Test
+	public void testWithNoOutputsAndAccess() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/no-outputs/process.failed.nf.test" });
+		assertEquals(1, exitCode);
+
+	}
+	
+	@Test
 	public void testMissingScript() throws Exception {
 
 		App app = new App();

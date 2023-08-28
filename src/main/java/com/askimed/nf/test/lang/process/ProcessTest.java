@@ -137,7 +137,7 @@ public class ProcessTest extends AbstractTest {
 		int exitCode = nextflow.execute();
 
 		// Parse json output
-		context.getProcess().getOut().loadFromFolder(metaDir, autoSort);
+		context.getProcess().loadOutputChannels(metaDir, autoSort);
 		context.getProcess().loadFromFolder(metaDir);
 		context.getProcess().exitStatus = exitCode;
 		context.getProcess().success = (exitCode == 0);
@@ -149,7 +149,7 @@ public class ProcessTest extends AbstractTest {
 		context.getWorkflow().failed = (exitCode != 0);
 		if (isDebug()) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
-			context.getProcess().getOut().view();
+			context.getProcess().viewChannels();
 		}
 
 		then.execute(context);

@@ -1,6 +1,7 @@
 package com.askimed.nf.test.lang.workflow;
 
 import java.beans.Transient;
+import java.io.File;
 
 import com.askimed.nf.test.lang.WorkflowMeta;
 import com.askimed.nf.test.lang.process.ChannelsOutput;
@@ -21,7 +22,18 @@ public class Workflow extends WorkflowMeta {
 	}
 
 	public ChannelsOutput getOut() {
+		if (out.isEmpty()) {
+			throw new RuntimeException("Workflow has no output channels. workflow.out can not be used.");
+		}
 		return out;
+	}
+
+	public void loadOutputChannels(File metaDir, boolean autoSort) {
+		out.loadFromFolder(metaDir, autoSort);
+	}
+
+	public void viewChannels() {
+		out.view();
 	}
 
 }
