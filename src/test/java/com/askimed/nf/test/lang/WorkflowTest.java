@@ -36,6 +36,15 @@ public class WorkflowTest {
 	}
 
 	@Test
+	public void testWorkflowAndSnapshot() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/default/trial.snapshot.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+	
+	@Test
 	public void testWorkflowWithNoOutputs() throws Exception {
 
 		App app = new App();
