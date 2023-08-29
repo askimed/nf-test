@@ -34,7 +34,16 @@ public class WorkflowTest {
 		assertEquals(0, exitCode);
 
 	}
+	
+	@Test
+	public void testWorkflowUnamedOutputs() throws Exception {
 
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/unnamed/trial.unnamed.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+	
 	@Test
 	public void testWorkflowWithNoOutputs() throws Exception {
 
@@ -76,6 +85,15 @@ public class WorkflowTest {
 
 	  App app = new App();
 	  int exitCode = app.run(new String[] { "test", "test-data/workflow/issue34/trial.setup.nf.test"});
+	  assertEquals(0, exitCode);
+
+	}
+	
+	@Test
+	public void testHangingWorkflowIssue57() throws Exception {
+
+	  App app = new App();
+	  int exitCode = app.run(new String[] { "test", "test-data/workflow/hanging/meaningless_workflow.nf.test","--debug"});
 	  assertEquals(0, exitCode);
 
 	}
