@@ -1,0 +1,1486 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../running-tests/">
+      
+      
+        <link rel="next" href="../files/">
+      
+      
+      <link rel="icon" href="../../../images/favicon.svg">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.5">
+    
+    
+      
+        <title>Power Assertions - nf-test</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0e669242.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.85d0ee34.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Segoe+UI:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Segoe UI";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../style.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#assertions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="nf-test" class="md-header__button md-logo" aria-label="nf-test" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27l-2.77 6.1M5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83-.78.78-2.05.78-2.83 0m-5.66 7.07-1.41-1.41 1.41 1.41M6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22h1.41M2 22h1.41l4.77-4.76-1.42-1.41L2 20.59V22m0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76v1.41Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            nf-test
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Power Assertions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/askimed/nf-test" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../installation/" class="md-tabs__link">
+        
+  
+    
+  
+  Installation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../getting-started/" class="md-tabs__link">
+          
+  
+  Documentation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about/" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="nf-test" class="md-nav__button md-logo" aria-label="nf-test" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27l-2.77 6.1M5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83-.78.78-2.05.78-2.83 0m-5.66 7.07-1.41-1.41 1.41 1.41M6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22h1.41M2 22h1.41l4.77-4.76-1.42-1.41L2 20.59V22m0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76v1.41Z"/></svg>
+
+    </a>
+    nf-test
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/askimed/nf-test" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Writing Tests
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Writing Tests
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testcases/nextflow_pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pipeline Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testcases/nextflow_workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Workflow Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testcases/nextflow_process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Process Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testcases/nextflow_function/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Function Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testcases/global_variables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Params and Global Variables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked>
+        
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Writing Assertions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Writing Assertions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Power Assertions
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Power Assertions
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nextflow-channels-and-nf-test-channel-sorting" class="md-nav__link">
+    Nextflow channels and nf-test channel sorting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-with" class="md-nav__link">
+    Using with
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-contains-to-assert-an-item-in-the-channel-is-present" class="md-nav__link">
+    Using contains to assert an item in the channel is present
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-assertcontainsinanyorder-for-order-agnostic-assertion-of-the-contents-of-a-channel" class="md-nav__link">
+    Using assertContainsInAnyOrder for order-agnostic assertion of the contents of a channel
+  </a>
+  
+    <nav class="md-nav" aria-label="Using assertContainsInAnyOrder for order-agnostic assertion of the contents of a channel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-strings" class="md-nav__link">
+    Channel that emits strings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-a-single-maps-eg-valmymap" class="md-nav__link">
+    Channel that emits a single maps, e.g. val(myMap)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-json-files" class="md-nav__link">
+    Channel that emits json files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#channel-that-emits-a-tuple-of-strings-and-json-files" class="md-nav__link">
+    Channel that emits a tuple of strings and json files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-assertall" class="md-nav__link">
+    Using assertAll
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snapshots/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snapshots
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../regular-expressions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Regular Expressions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fasta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FASTA Files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../libraries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using Third-Party Libraries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Command line Interface (CLI)
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Command line Interface (CLI)
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cli/init/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    init
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cli/generate/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    generate
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cli/test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cli/list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    list
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cli/clean/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    clean
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Plugins
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            Plugins
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://code.askimed.com/nf-test-plugins" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Available Plugins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/using-plugins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using Plugins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/developing-plugins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developing Plugins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="assertions">Assertions</h1>
+<p>Writing test cases means formulating assumptions by using assertions. Groovy’s power assert provides a detailed output when the boolean expression validates to false. nf-test provides several extensions and commands to simplify the work with Nextflow channels. Here we summarise how nextflow and nf-test handles channels and provide examples for the tools that <code>nf-test</code> provides: </p>
+<ul>
+<li><code>with</code>: assert the contents of an item in a channel by index</li>
+<li><code>contains</code>: assert the contents of an item in the channel is present anywhere in the channel</li>
+<li><code>assertContainsInAnyOrder</code>: order-agnostic assertion of the contents of a channel</li>
+</ul>
+<h2 id="nextflow-channels-and-nf-test-channel-sorting">Nextflow channels and nf-test channel sorting</h2>
+<p>Nextflow channels emit (in a random order) a single value or a tuple of values. </p>
+<p>Channels that emit a single item produce an unordered list of objects, <code>List&lt;Object&gt;</code>, for example:
+<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Bonjour&#39;</span><span class="o">]</span>
+</code></pre></div></p>
+<p>Channels that contain Nextflow <code>file</code> values have a unique path each run. For Example:
+<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;</span><span class="o">]</span>
+</code></pre></div></p>
+<p>Channels that emit tuples produce an unordered list of ordered objects, <code>List&lt;List&lt;Object&gt;&gt;</code>:
+<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span><span class="o">],</span><span class="w"> </span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;</span><span class="o">],</span><span class="w"> </span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Bonjour&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;</span><span class="o">]</span>
+<span class="o">]</span>
+</code></pre></div></p>
+<p>Assertions by channel index are made possible through sorting of the nextflow channel. The sorting is performed automatically by <code>nf-test</code> prior to launch of the <code>then</code> closure via integer, string and path comparisons. For example, the above would be sorted by <code>nf-test</code>:
+<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Bonjour&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;</span><span class="o">],</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;</span><span class="o">],</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span><span class="o">]</span>
+<span class="o">]</span>
+</code></pre></div></p>
+<p><code>nf-test</code> cannot guarantee the order of nextflow channels that contain alternative object types, such as maps. A warning message appears in the console in such cases to highlight the potential issue. To test these channels, the <code>contains</code> and <code>assertContainsInAnyOrder</code> methods described below can be used
+<div class="highlight"><pre><span></span><code>Warning: Cannot sort channel, order not deterministic. Unsupported objects types:
+</code></pre></div></p>
+<h2 id="using-with">Using <code>with</code></h2>
+<p>This assertions...</p>
+<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;example.vcf&quot;</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.pgen&quot;</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.psam&quot;</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.pvar&quot;</span>
+</code></pre></div>
+<p>... can be written by using <code>with(){}</code> to improve readability:</p>
+<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span>
+<span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="n">with</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;example.vcf&quot;</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.pgen&quot;</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.psam&quot;</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.pvar&quot;</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2 id="using-contains-to-assert-an-item-in-the-channel-is-present">Using <code>contains</code> to assert an item in the channel is present</h2>
+<p>Groovy's <a href="https://docs.groovy-lang.org/latest/html/groovy-jdk/java/lang/Iterable.html#contains(java.lang.Object)">contains</a> and <a href="https://docs.groovy-lang.org/latest/html/groovy-jdk/java/lang/Iterable.html#collect()">collect</a> methods can be used to flexibly assert an item exists in the channel output. </p>
+<p>For example, the below represents a channel that emits a two-element tuple, a string and a json file: 
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">def process.out.outputCh = [</span>
+<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
+<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
+<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">]</span>
+<span class="cm">*/</span>
+</code></pre></div></p>
+<p>To assert the channel contains one of the tuples, parse the json and assert:
+<div class="highlight"><pre><span></span><code><span class="n">testData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">jsonPath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">jsonPath</span><span class="o">).</span><span class="na">json</span><span class="o">]</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>
+<span class="k">assert</span><span class="w"> </span><span class="n">testData</span><span class="o">.</span><span class="na">contains</span><span class="o">([</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">])</span>
+</code></pre></div></p>
+<p>To assert a subset of the tuple data, filter the channel using collect. For example, to assert the greeting only:
+<div class="highlight"><pre><span></span><code><span class="n">testData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">jsonPath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">greeting</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>
+<span class="k">assert</span><span class="w"> </span><span class="n">testData</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s1">&#39;Hello&#39;</span><span class="o">)</span>
+</code></pre></div></p>
+<p>See <a href="../files/">the files page</a> for more information on parsing and asserting various file types.</p>
+<h2 id="using-assertcontainsinanyorder-for-order-agnostic-assertion-of-the-contents-of-a-channel">Using <code>assertContainsInAnyOrder</code> for order-agnostic assertion of the contents of a channel</h2>
+<p><code>assertContainsInAnyOrder(List&lt;object&gt; list1, List&lt;object&gt; list2)</code> performs an order agnostic assertion on channels contents and is available in every <code>nf-test</code> closure. It is a binding for Hamcrest's <a href="http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matchers.html#containsInAnyOrder(org.hamcrest.Matcher)">assertContainsInAnyOrder</a>.</p>
+<p>Some example use-cases are provided below.</p>
+<h3 id="channel-that-emits-strings">Channel that emits strings</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// process.out.outputCh = [&#39;Bonjour&#39;, &#39;Hello&#39;, &#39;Hola&#39;] </span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Bonjour&#39;</span><span class="o">]</span>
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span>
+</code></pre></div>
+<h3 id="channel-that-emits-a-single-maps-eg-valmymap">Channel that emits a single maps, e.g. val(myMap)</h3>
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">process.out.outputCh = [</span>
+<span class="cm">  [</span>
+<span class="cm">    &#39;D&#39;: [10,11,12],</span>
+<span class="cm">    &#39;C&#39;: [7,8,9]</span>
+<span class="cm">  ],</span>
+<span class="cm">  [</span>
+<span class="cm">    &#39;B&#39;: [4,5,6],</span>
+<span class="cm">    &#39;A&#39;: [1,2,3]</span>
+<span class="cm">  ]</span>
+<span class="cm">]</span>
+<span class="cm">*/</span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">  </span><span class="o">[</span>
+<span class="w">    </span><span class="s1">&#39;A&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">],</span>
+<span class="w">    </span><span class="s1">&#39;B&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">]</span>
+<span class="w">  </span><span class="o">],</span>
+<span class="w">  </span><span class="o">[</span>
+<span class="w">    </span><span class="s1">&#39;C&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">7</span><span class="o">,</span><span class="mi">8</span><span class="o">,</span><span class="mi">9</span><span class="o">],</span>
+<span class="w">    </span><span class="s1">&#39;D&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">10</span><span class="o">,</span><span class="mi">11</span><span class="o">,</span><span class="mi">12</span><span class="o">]</span>
+<span class="w">  </span><span class="o">]</span>
+<span class="o">]</span>
+
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span>
+</code></pre></div>
+<h3 id="channel-that-emits-json-files">Channel that emits json files</h3>
+<p>See <a href="../files/">the files page</a> for more information on parsing and asserting various file types.</p>
+<p>Since the outputCh filepaths are different between consecutive runs, the files need to be read/parsed prior to comparison</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">process.out.outputCh = [</span>
+<span class="cm">  &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;,</span>
+<span class="cm">  &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;,</span>
+<span class="cm">  &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span>
+<span class="cm">]</span>
+<span class="cm">*/</span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">filepath</span><span class="o">).</span><span class="na">json</span><span class="w"> </span><span class="o">}</span>
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hola.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Bonjour.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
+<span class="o">]</span>
+
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span>
+</code></pre></div>
+<h3 id="channel-that-emits-a-tuple-of-strings-and-json-files">Channel that emits a tuple of strings and json files</h3>
+<p>See <a href="../files/">the files page</a> for more information on parsing and asserting various file types.</p>
+<p>Since the ordering of items within the tuples are consistent, we can assert this case:</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">process.out.outputCh = [</span>
+<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
+<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
+<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">]</span>
+<span class="cm">*/</span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">filepath</span><span class="o">).</span><span class="na">json</span><span class="o">]</span><span class="w"> </span><span class="o">}</span>
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hola.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">],</span><span class="w"> </span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">],</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Bonjour&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Bonjour.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">],</span>
+<span class="o">]</span>
+
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span>
+</code></pre></div>
+<p>To assert the json only and ignore the strings:
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">process.out.outputCh = [</span>
+<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
+<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
+<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">]</span>
+<span class="cm">*/</span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">filepath</span><span class="o">).</span><span class="na">json</span><span class="w"> </span><span class="o">}</span>
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span><span class="w"> </span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hola.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Bonjour.json&#39;</span><span class="o">).</span><span class="na">json</span>
+<span class="o">]</span>
+
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span>
+</code></pre></div></p>
+<p>To assert the strings only and not the json files:
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">process.out.outputCh = [</span>
+<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
+<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
+<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">]</span>
+<span class="cm">*/</span>
+
+<span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">greeting</span><span class="w"> </span><span class="o">}</span>
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="err">&#39;</span><span class="n">Bonjour</span><span class="o">]</span>
+
+<span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span>
+</code></pre></div></p>
+<h2 id="using-assertall">Using <code>assertAll</code></h2>
+<p><code>assertAll(Closure... closures)</code> ensures that all supplied closures do no throw exceptions. The number of failed closures is reported in the Exception message. This useful for efficient debugging
+of a set of test assertions from a single test run.</p>
+<p><div class="highlight"><pre><span></span><code><span class="kt">def</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+
+<span class="n">assertAll</span><span class="o">(</span>
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="k">assert</span><span class="w"> </span><span class="n">a</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="o">},</span>
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="w"> </span><span class="o">},</span>
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="k">assert</span><span class="w"> </span><span class="n">a</span><span class="o">==</span><span class="mi">2</span><span class="w"> </span><span class="o">},</span>
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="k">assert</span><span class="w"> </span><span class="n">a</span><span class="o">==</span><span class="mi">3</span><span class="w"> </span><span class="o">}</span>
+<span class="o">)</span>
+</code></pre></div>
+The output will look like this:
+<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">a</span><span class="o">==</span><span class="mi">1</span>
+<span class="w">       </span><span class="o">||</span>
+<span class="w">       </span><span class="o">|</span><span class="kc">false</span>
+<span class="w">       </span><span class="mi">2</span>
+
+<span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">ArithmeticException</span><span class="o">:</span><span class="w"> </span><span class="n">Division</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">zero</span>
+<span class="n">Assertion</span><span class="w"> </span><span class="nl">failed:</span>
+
+<span class="k">assert</span><span class="w"> </span><span class="n">a</span><span class="o">==</span><span class="mi">3</span>
+<span class="w">       </span><span class="o">||</span>
+<span class="w">       </span><span class="o">|</span><span class="kc">false</span>
+<span class="w">       </span><span class="mi">2</span>
+
+<span class="n">FAILED</span><span class="w"> </span><span class="o">(</span><span class="mf">7.106</span><span class="n">s</span><span class="o">)</span>
+
+<span class="w">  </span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Exception</span><span class="o">:</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="n">assertions</span><span class="w"> </span><span class="n">failed</span>
+</code></pre></div></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../running-tests/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Running Tests" rel="prev">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Running Tests
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../files/" class="md-footer__link md-footer__link--next" aria-label="Next: Files" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Files
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2021 - 2023 Lukas Forer and Sebastian Schönherr
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      
+        <script src="https://buttons.github.io/buttons.js"></script>
+      
+    
+  </body>
+</html>
