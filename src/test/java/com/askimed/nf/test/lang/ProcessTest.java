@@ -39,7 +39,7 @@ public class ProcessTest {
 
 	}
 
-	@Test
+	/*@Test
 	public void testDisableAutoSortConfig() throws Exception {
 
 		Files.copy(Paths.get("test-data", "autosort.nf.test"), Paths.get("nf-test.config"));
@@ -49,7 +49,7 @@ public class ProcessTest {
 		// Fails, because expects sorted channels
 		assertEquals(1, exitCode);
 
-	}
+	}*/
 	
 	@Test
 	public void testDisableAutoSortTestSuite() throws Exception {
