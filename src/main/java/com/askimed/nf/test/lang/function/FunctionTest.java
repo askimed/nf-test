@@ -10,9 +10,7 @@ import org.codehaus.groovy.control.CompilationFailedException;
 
 import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
-import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.nextflow.NextflowCommand;
-import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
 
 import groovy.lang.Closure;
@@ -34,14 +32,14 @@ public class FunctionTest extends AbstractTest {
 
 	private TestCode then;
 
-	private TestContext context;
+	private FunctionContext context;
 
 	private FunctionTestSuite parent;
 
 	public FunctionTest(FunctionTestSuite parent) {
 		super(parent);
 		this.parent = parent;
-		context = new TestContext(this);
+		context = new FunctionContext(this);
 		context.setName(parent.getFunction());
 	}
 
@@ -151,10 +149,6 @@ public class FunctionTest extends AbstractTest {
 		context.getWorkflow().exitStatus = exitCode;
 		context.getWorkflow().success = (exitCode == 0);
 		context.getWorkflow().failed = (exitCode != 0);
-		if (isDebug()) {
-			System.out.println(AnsiText.padding("Output Channels:", 4));
-			context.getProcess().getOut().view();
-		}
 
 		then.execute(context);
 
@@ -188,7 +182,7 @@ public class FunctionTest extends AbstractTest {
 		binding.put("script", script);
 
 		// Get body of when closure
-		binding.put("mapping", context.getProcess().getMapping());
+		binding.put("mapping", context.getFunction().getMapping());
 
 		URL templateUrl = this.getClass().getResource("WorkflowMock.nf");
 		SimpleTemplateEngine engine = new SimpleTemplateEngine();
