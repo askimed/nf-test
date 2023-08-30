@@ -1,0 +1,40 @@
+{
+    "outputCh": [
+        {
+            "id": 1
+        },
+        {
+            "id": 2
+        },
+        {
+            "id": 3
+        },
+        {
+            "id": 4
+        },
+        {
+            "id": 5,
+            "name": "lukas"
+        },
+        {
+            "id": 8
+        },
+        {
+            "id": 6
+        },
+        {
+            "a": [
+                {
+                    "ab": "item1",
+                    "id": "item1"
+                }
+            ],
+            "id": 5,
+            "name": "sebastian",
+            "data": {
+                "blabla": "abc",
+                "age": 40
+            }
+        }
+    ]
+}

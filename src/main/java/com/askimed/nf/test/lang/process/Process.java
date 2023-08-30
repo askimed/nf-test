@@ -1,10 +1,11 @@
 package com.askimed.nf.test.lang.process;
 
 import com.askimed.nf.test.lang.WorkflowMeta;
+import com.askimed.nf.test.lang.channels.Channels;
 
 public class Process extends WorkflowMeta{
 
-	private ChannelsOutput out = new ChannelsOutput();
+	private Channels out = new Channels();
 
 	private String mapping = "";
 
@@ -22,7 +23,7 @@ public class Process extends WorkflowMeta{
 		return mapping;
 	}
 
-	public ChannelsOutput getOut() {
+	public Channels getOut() {
 		return out;
 	}
 

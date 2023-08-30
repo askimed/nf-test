@@ -3,7 +3,7 @@ package com.askimed.nf.test.lang.workflow;
 import java.beans.Transient;
 
 import com.askimed.nf.test.lang.WorkflowMeta;
-import com.askimed.nf.test.lang.process.ChannelsOutput;
+import com.askimed.nf.test.lang.channels.Channels;
 
 public class Workflow extends WorkflowMeta {
 	
@@ -11,7 +11,7 @@ public class Workflow extends WorkflowMeta {
 
 	private String name = "workflow";
 
-	private ChannelsOutput out = new ChannelsOutput();
+	private Channels out = new Channels();
 	
 	public void setName(String name) {
 		this.name = name;
@@ -26,7 +26,7 @@ public class Workflow extends WorkflowMeta {
 		return mapping;
 	}
 	
-	public ChannelsOutput getOut() {
+	public Channels getOut() {
 		return out;
 	}
 
