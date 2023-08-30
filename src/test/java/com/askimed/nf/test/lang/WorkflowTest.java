@@ -34,6 +34,15 @@ public class WorkflowTest {
 		assertEquals(0, exitCode);
 
 	}
+	
+	@Test
+	public void testWorkflowWithRelativePath() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/default/tests/trial.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
 
 	@Test
 	public void testWorkflowWithNoOutputs() throws Exception {
@@ -57,7 +66,7 @@ public class WorkflowTest {
 	public void testLibs() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/workflow/libs/hello.nf.test", "--lib", "lib" });
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/libs/hello.nf.test", "--lib", "lib" ,"--debug"});
 		assertEquals(0, exitCode);
 
 	}
