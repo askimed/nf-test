@@ -9,7 +9,7 @@
 
 .right{
     float: right;
-    width: 500px;
+    width: 40%;
 }
 
 .md-footer {
@@ -19,4 +19,11 @@
 
 .md-footer__inner {
     display: none !important;
+}
+
+
+@media (max-width: 600px) {
+    .image  {
+        display:none;
+    }
 }

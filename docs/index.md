@@ -4,7 +4,7 @@ hide:
   - toc 
 ---
 
-![](assets/example.png){ .right}
+![](assets/example.png){ .right .image}
 
 # Simple testing framework for Nextflow pipelines
 
@@ -16,19 +16,19 @@ Test your production ready Nextflow pipelines in an efficient and automated wa
 
 ---
 
-[:material-check-circle:]() DSL language that is **similar to Nextflow** <br/>
-[:material-check-circle:]() Describe expected behaviour with `when` and `then` blocks <br/>
-[:material-check-circle:]() Tons of functions to write **elegant and readable assertions** <br/>
-[:material-check-circle:]() Use **snaphosts** to write tests for complex data structures <br/>
-[:material-check-circle:]() Commands to **generate boilerplate** code <br/>
-[:material-check-circle:]() Test-runner that executes these scripts <br/>
-[:material-check-circle:]() Easy to install on **CI systems** <br/>
+[:material-check-circle:]() A DSL language **similar to Nextflow**  <br/>
+[:material-check-circle:]() Describes expected behavior using 'when' and 'then' blocks <br/>
+[:material-check-circle:]() Abundance of functions for writing **elegant and readable assertions** <br/>
+[:material-check-circle:]() Utilizes **snapshots** to write tests for complex data structures <br/>
+[:material-check-circle:]() Provides commands for **generating boilerplate** code <br/>
+[:material-check-circle:]() Includes a **test-runner** that executes these scripts <br/>
+[:material-check-circle:]() Easy installation on **CI systems** <br/>
 
 ---
 
 ## :material-check-all: Unit testing
 
-nf-test allows you to test all units of your data science pipeline: from end-to-end test of the entire pipeline to specific tests of processes or even custom functions.
+nf-test enables you to test all components of your data science pipeline: from end-to-end testing of the entire pipeline to specific tests of processes or even custom functions. This ensures that all testing is conducted consistently, promoting reliability across your project.
 
 === ":fontawesome-solid-diagram-project: Pipeline"
 
@@ -39,7 +39,6 @@ nf-test allows you to test all units of your data science pipeline: from end-to-
       script "nextflow-io/hello"
 
       test("hello world example should start 4 processes") {
-
         expect {
           with(workflow) {
             assert success
@@ -51,6 +50,7 @@ nf-test allows you to test all units of your data science pipeline: from end-to-
           }
         }
       }
+
     }
     ```
 
@@ -91,7 +91,9 @@ nf-test allows you to test all units of your data science pipeline: from end-to-
                     assert path(index.get(0)+'/info.json').md5 == "80831602e2ac825e3e63ba9df5d23505"
                 }
             }
+
         }
+
     }
     ```
 
@@ -120,7 +122,7 @@ nf-test allows you to test all units of your data science pipeline: from end-to-
 
 ## :material-content-save-check: Snapshot testing
 
-nf-test supports **snapshot testing** and **creates automatically the baseline set of unit tests** to ensure changes won’t result in a regression.<br/>nf-test takes a snapshot of the output channels or any other object, then compares it to a reference snapshot file stored alongside the test. The test will fail, if the two snapshots do not match.
+nf-test supports **snapshot testing** and automatically **generates a baseline set of unit tests** to safeguard against regressions caused by changes.</br>nf-test captures a snapshot of output channels or any other objects and subsequently compares them to reference snapshot files stored alongside the tests. If the two snapshots do not match, the test will fail
 
 :material-arrow-right: [Learn more](docs/assertions/snapshots)
 
@@ -128,7 +130,7 @@ nf-test supports **snapshot testing** and **creates automatically the baseline s
 
 ## :material-power-plug-outline: Highly extendable
 
-nf-test supports including third party libraries (e.g. jar files ) or functions from groovy files to either extend it functionality or to avoid duplicate code and to keep the logic in test cases simple. As most assertions are usecase specific, nf-test integrates a plugin system that provides the possibility to extend existing classes with custom methods. For example [FASTA file support](docs/assertions/fasta).
+nf-test supports the **inclusion of third-party libraries** (e.g., jar files) or functions from Groovy files. This can be done to either extend its functionality or to prevent code duplication, thus maintaining simplicity in the logic of test cases. Given that many assertions are specific to use cases, nf-test incorporates a **plugin system** that allows for the extension of existing classes with custom methods. For example [FASTA file support](docs/assertions/fasta).
 
 :material-arrow-right: [Learn more](docs/assertions/libraries)
 
