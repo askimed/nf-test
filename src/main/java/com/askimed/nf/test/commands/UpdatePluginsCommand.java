@@ -1,7 +1,6 @@
 package com.askimed.nf.test.commands;
 
 import java.io.File;
-import java.util.concurrent.Callable;
 
 import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.plugins.PluginManager;
@@ -10,10 +9,10 @@ import com.askimed.nf.test.util.AnsiColors;
 import picocli.CommandLine.Command;
 
 @Command(name = "update-plugins")
-public class UpdatePluginsCommand implements Callable<Integer> {
+public class UpdatePluginsCommand extends AbstractCommand {
 
 	@Override
-	public Integer call() throws Exception {
+	public Integer execute() throws Exception {
 
 		File configFile = new File(Config.FILENAME);
 

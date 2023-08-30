@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
 import com.askimed.nf.test.config.Config;
@@ -28,7 +27,7 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 @Command(name = "test")
-public class RunTestsCommand implements Callable<Integer> {
+public class RunTestsCommand extends AbstractCommand {
 
 	@Parameters(description = "test files")
 	private List<File> testPaths = new ArrayList<File>();
@@ -74,7 +73,8 @@ public class RunTestsCommand implements Callable<Integer> {
 	private List<String> tags = new Vector<String>();
 
 	@Override
-	public Integer call() throws Exception {
+	public Integer execute() throws Exception {
+
 		List<File> scripts = new ArrayList<File>();
 		PluginManager manager = new PluginManager(false);
 
