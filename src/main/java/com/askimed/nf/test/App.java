@@ -22,8 +22,6 @@ public class App {
 
 	public int run(String[] args) {
 
-		printHeader();
-
 		CommandLine commandLine = new CommandLine(new App());
 		commandLine.addSubcommand("clean", new CleanCommand());
 		commandLine.addSubcommand("init", new InitCommand());
@@ -35,16 +33,6 @@ public class App {
 		commandLine.addSubcommand("version", new VersionCommand());
 		commandLine.setExecutionStrategy(new CommandLine.RunLast());
 		return commandLine.execute(args);
-
-	}
-
-	private void printHeader() {
-
-		System.out.println();
-		System.out.println(Emoji.ROCKET + AnsiText.bold(" " + App.NAME + " " + App.VERSION));
-		System.out.println("https://code.askimed.com/nf-test");
-		System.out.println("(c) 2021 - 2023 Lukas Forer and Sebastian Schoenherr");
-		System.out.println();
 
 	}
 
