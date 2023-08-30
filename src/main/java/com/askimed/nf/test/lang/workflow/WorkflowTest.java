@@ -10,7 +10,6 @@ import org.codehaus.groovy.control.CompilationFailedException;
 
 import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
-import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.lang.pipeline.PipelineTest;
 import com.askimed.nf.test.nextflow.NextflowCommand;
 import com.askimed.nf.test.util.AnsiText;
@@ -39,13 +38,13 @@ public class WorkflowTest extends AbstractTest {
 
 	private WorkflowTestSuite parent;
 
-	private TestContext context;
+	private WorkflowContext context;
 
 	public WorkflowTest(WorkflowTestSuite parent) {
 		super(parent);
 		this.parent = parent;
 		this.autoSort = parent.isAutoSort();
-		context = new TestContext(this);
+		context = new WorkflowContext(this);
 		context.setName(parent.getWorkflow());
 	}
 
@@ -150,7 +149,7 @@ public class WorkflowTest extends AbstractTest {
 
 		int exitCode = nextflow.execute();
 
-		context.getWorkflow().getOut().loadFromFolder(metaDir, autoSort);
+		context.getWorkflow().loadOutputChannels(metaDir, autoSort);
 		context.getWorkflow().loadFromFolder(metaDir);
 		context.getWorkflow().exitStatus = exitCode;
 		context.getWorkflow().success = (exitCode == 0);
@@ -158,7 +157,7 @@ public class WorkflowTest extends AbstractTest {
 
 		if (isDebug()) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
-			context.getWorkflow().getOut().view();
+			context.getWorkflow().viewChannels();
 		}
 
 		then.execute(context);

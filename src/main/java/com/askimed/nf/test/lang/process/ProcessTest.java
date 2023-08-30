@@ -10,7 +10,6 @@ import org.codehaus.groovy.control.CompilationFailedException;
 
 import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
-import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.nextflow.NextflowCommand;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
@@ -36,13 +35,13 @@ public class ProcessTest extends AbstractTest {
 
 	private ProcessTestSuite parent;
 
-	private TestContext context;
+	private ProcessContext context;
 
 	public ProcessTest(ProcessTestSuite parent) {
 		super(parent);
 		this.parent = parent;
 		this.autoSort = parent.isAutoSort();
-		context = new TestContext(this);
+		context = new ProcessContext(this);
 		context.setName(parent.getProcess());
 	}
 
@@ -139,7 +138,7 @@ public class ProcessTest extends AbstractTest {
 		int exitCode = nextflow.execute();
 
 		// Parse json output
-		context.getProcess().getOut().loadFromFolder(metaDir, autoSort);
+		context.getProcess().loadOutputChannels(metaDir, autoSort);
 		context.getProcess().loadFromFolder(metaDir);
 		context.getProcess().exitStatus = exitCode;
 		context.getProcess().success = (exitCode == 0);
@@ -151,7 +150,7 @@ public class ProcessTest extends AbstractTest {
 		context.getWorkflow().failed = (exitCode != 0);
 		if (isDebug()) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
-			context.getProcess().getOut().view();
+			context.getProcess().viewChannels();
 		}
 
 		then.execute(context);

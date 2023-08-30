@@ -1,0 +1,25 @@
+nextflow_workflow {
+
+    name "Test workflow"
+    script "test-data/workflow/default/trial.nf"
+    workflow "trial"
+
+    test("Should run without failures") {
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            workflow {
+                """
+                input[0] = Channel.of('a','b')
+                """
+            }
+        }
+
+        then {
+            //check if test case succeeded
+            assert workflow.success
+            assert snapshot(workflow.out).match()
+        }
+    }
+}

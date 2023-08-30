@@ -4,7 +4,6 @@ import java.io.File;
 
 import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.TestCode;
-import com.askimed.nf.test.lang.TestContext;
 import com.askimed.nf.test.nextflow.NextflowCommand;
 
 import groovy.lang.Closure;
@@ -24,12 +23,12 @@ public class PipelineTest extends AbstractTest {
 
 	private PipelineTestSuite parent;
 
-	private TestContext context;
+	private PipelineContext context;
 
 	public PipelineTest(PipelineTestSuite parent) {
 		super(parent);
 		this.parent = parent;
-		context = new TestContext(this);
+		context = new PipelineContext(this);
 		context.setName(parent.getName());
 	}
 
@@ -78,7 +77,6 @@ public class PipelineTest extends AbstractTest {
 		}
 
 		context.evaluateParamsClosure();
-		context.evaluateProcessClosure();
 
 		if (isDebug()) {
 			System.out.println();

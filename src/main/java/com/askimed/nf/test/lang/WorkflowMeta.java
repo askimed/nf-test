@@ -30,6 +30,8 @@ public class WorkflowMeta {
 
 	public List<String> stderr = new Vector<String>();
 
+	private String name = "workflow";
+
 	public void loadFromFolder(File folder) {
 
 		File file = new File(folder, "workflow.json");
@@ -110,33 +112,41 @@ public class WorkflowMeta {
 			return true;
 		}
 	}
-	
+
 	public boolean isSuccess() {
 		return success;
 	}
-	
+
 	public boolean isFailed() {
 		return failed;
 	}
-	
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}
-	
+
 	public int getExitStatus() {
 		return exitStatus;
 	}
-	
+
 	public String getErrorReport() {
 		return errorReport;
 	}
-	
+
 	public List<String> getStderr() {
 		return stderr;
 	}
-	
+
 	public List<String> getStdout() {
 		return stdout;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 }

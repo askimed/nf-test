@@ -1,21 +1,16 @@
 package com.askimed.nf.test.lang.workflow;
 
 import java.beans.Transient;
+import java.io.File;
 
 import com.askimed.nf.test.lang.WorkflowMeta;
-import com.askimed.nf.test.lang.process.ChannelsOutput;
+import com.askimed.nf.test.lang.channels.Channels;
 
 public class Workflow extends WorkflowMeta {
-	
+
 	private String mapping = "";
 
-	private String name = "workflow";
-
-	private ChannelsOutput out = new ChannelsOutput();
-	
-	public void setName(String name) {
-		this.name = name;
-	}
+	private Channels out = new Channels();
 
 	@Transient
 	public void setMapping(String mapping) {
@@ -25,14 +20,20 @@ public class Workflow extends WorkflowMeta {
 	public String getMapping() {
 		return mapping;
 	}
-	
-	public ChannelsOutput getOut() {
+
+	public Channels getOut() {
+		if (out.isEmpty()) {
+			throw new RuntimeException("Workflow has no output channels. workflow.out can not be used.");
+		}
 		return out;
 	}
 
-	@Override
-	public String toString() {
-		return name;
+	public void loadOutputChannels(File metaDir, boolean autoSort) {
+		out.loadFromFolder(metaDir, autoSort);
+	}
+
+	public void viewChannels() {
+		out.view();
 	}
 
 }
