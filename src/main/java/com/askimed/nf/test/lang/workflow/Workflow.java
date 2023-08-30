@@ -4,13 +4,17 @@ import java.beans.Transient;
 import java.io.File;
 
 import com.askimed.nf.test.lang.WorkflowMeta;
-import com.askimed.nf.test.lang.process.ChannelsOutput;
+import com.askimed.nf.test.lang.channels.Channels;
 
 public class Workflow extends WorkflowMeta {
 
 	private String mapping = "";
 
-	private ChannelsOutput out = new ChannelsOutput();
+	private Channels out = new Channels();
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Transient
 	public void setMapping(String mapping) {
@@ -21,7 +25,7 @@ public class Workflow extends WorkflowMeta {
 		return mapping;
 	}
 
-	public ChannelsOutput getOut() {
+	public Channels getOut() {
 		if (out.isEmpty()) {
 			throw new RuntimeException("Workflow has no output channels. workflow.out can not be used.");
 		}
