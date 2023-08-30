@@ -19,6 +19,8 @@ public interface ITestSuite extends ITaggable {
 	public void setFilename(String filename);
 
 	public String getFilename();
+	
+	public String getDirectory();
 
 	public void configure(Config config);
 	
