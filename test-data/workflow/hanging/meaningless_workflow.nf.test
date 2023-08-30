@@ -1,0 +1,28 @@
+nextflow_workflow {
+
+    name "Test workflow"
+    script "test-data/workflow/hanging/meaningless_workflow.nf"
+    workflow "PipeWf"
+
+    test("PipeWf will hang") {
+
+        when {
+            workflow {
+                """
+                input[0] = Channel.from([
+                  [
+                    ["patientID": "patientA"],
+                    'test_file_1.txt'
+                  ]
+                ])
+                """
+            }
+        }
+
+        then {
+              assert workflow.success
+            }
+
+    }
+
+}

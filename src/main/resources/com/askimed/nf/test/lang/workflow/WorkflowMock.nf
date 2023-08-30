@@ -3,8 +3,7 @@ import groovy.json.JsonGenerator.Converter
 
 nextflow.enable.dsl=2
 
-
-// comes from testflight to find json files
+// comes from nf-test to store json files
 params.nf_test_output  = ""
 
 // process mapping
@@ -25,42 +24,53 @@ def jsonOutput =
 
 workflow {
 
-  	${workflow}(*input)
-  	
-	if (${workflow}.output){
-	  // consumes all output channels and stores items in a json
-	  def channel = Channel.empty()
-	  for (def name in ${workflow}.out.getNames()) {
-	      channel << tuple(name, ${workflow}.out.getProperty(name))
-	  }
-
+    //run workflow
+    ${workflow}(*input)
     
-	  def array = ${workflow}.out as Object[]
-	  for (def i = 0; i < array.length ; i++) {
-          channel << tuple(i, array[i])
-      }    	
-	
-	  channel.subscribe { outputTupel ->
-	    def sortedList = outputTupel[1].toList()
-	    sortedList.subscribe { list ->
-	      def map = new HashMap()
-	      def outputName = outputTupel[0]
-	      map[outputName] = list
-	      new File("\${params.nf_test_output}/output_\${outputName}.json").text = jsonOutput.toJson(map)
-	    }
-	  }
-	}
+    if (${workflow}.output){
+
+        // consumes all named output channels and stores items in a json file
+        for (def name in ${workflow}.out.getNames()) {
+            serializeChannel(name, ${workflow}.out.getProperty(name), jsonOutput)
+        }	  
+    
+        // consumes all unnamed output channels and stores items in a json file
+        def array = ${workflow}.out as Object[]
+        for (def i = 0; i < array.length ; i++) {
+            serializeChannel(i, array[i], jsonOutput)
+        }    	
+
+    }
+}
+
+
+def serializeChannel(name, channel, jsonOutput) {
+    def _name = name
+    println "Process channel \${_name}..."
+    def list = [ ]
+    channel.subscribe(
+        onNext: {
+            list.add(it)
+        },
+        onComplete: {
+              def map = new HashMap()
+              map[_name] = list
+              def filename = "\${params.nf_test_output}/output_\${_name}.json"
+              new File(filename).text = jsonOutput.toJson(map)		  		
+              println "Wrote channel \${_name} to \${filename}"  	
+        } 
+    )
 }
 
 
 workflow.onComplete {
 
-	def result = [
-		success: workflow.success,
-		exitStatus: workflow.exitStatus,
-		errorMessage: workflow.errorMessage,
-		errorReport: workflow.errorReport
-	]
+    def result = [
+        success: workflow.success,
+        exitStatus: workflow.exitStatus,
+        errorMessage: workflow.errorMessage,
+        errorReport: workflow.errorReport
+    ]
     new File("\${params.nf_test_output}/workflow.json").text = jsonOutput.toJson(result)
     
 }
