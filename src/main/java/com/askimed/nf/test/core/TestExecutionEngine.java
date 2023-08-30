@@ -1,7 +1,9 @@
 package com.askimed.nf.test.core;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import com.askimed.nf.test.lang.TestSuiteBuilder;
@@ -9,6 +11,9 @@ import com.askimed.nf.test.plugins.PluginManager;
 import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
+import com.askimed.nf.test.util.OutputFormat;
+
+import groovy.json.JsonOutput;
 
 public class TestExecutionEngine {
 
@@ -212,9 +217,7 @@ public class TestExecutionEngine {
 
 	}
 
-	public int listTests() throws Throwable {
-
-		int count = 0;
+	public int listTests(OutputFormat format) throws Throwable {
 
 		if (configFile != null) {
 			if (!configFile.exists()) {
@@ -233,7 +236,90 @@ public class TestExecutionEngine {
 			return 1;
 		}
 
+		switch (format) {
+		case JSON:
+		case json:
+			printTestsAsJson(testSuits);
+			break;
+		case RAW:
+		case raw:
+			printTestsAsList(testSuits);
+			break;
+		default:
+			printTestsPretty(testSuits);
+			break;
+		}
+
+		return 0;
+
+	}
+
+	public int listTags(OutputFormat format) throws Throwable {
+
+		if (configFile != null) {
+			if (!configFile.exists()) {
+				System.out.println(
+						AnsiColors.red("Error: Test config file '" + configFile.getAbsolutePath() + "'not found"));
+				System.out.println();
+				return 1;
+			}
+		}
+
+		List<ITestSuite> testSuits = parse(tagQuery);
+
+		if (testSuits.size() == 0) {
+			System.out.println(AnsiColors.red("Error: no valid tests found."));
+			System.out.println();
+			return 1;
+		}
+
+		Set<String> tags = new HashSet<String>();
+		for (ITestSuite testSuite : testSuits) {
+			tags.addAll(testSuite.getTags());
+			for (ITest test : testSuite.getTests()) {
+				tags.addAll(test.getTags());
+			}
+		}
+
+		switch (format) {
+		case JSON:
+		case json:
+			printTagsAsJson(tags);
+			break;
+		default:
+			printTagsPretty(tags);
+			break;
+		}
+
+		return 0;
+
+	}
+
+	private void printTestsAsJson(List<ITestSuite> testSuits) {
+		List<String> tests = new Vector<String>();
 		int index = 0;
+		for (ITestSuite testSuite : testSuits) {
+			for (ITest test : testSuite.getTests()) {
+				tests.add(scripts.get(index).getAbsolutePath() + "@" + test.getHash().substring(0, 8));
+			}
+			index++;
+		}
+		System.out.println(JsonOutput.toJson(tests));
+	}
+
+	private void printTestsAsList(List<ITestSuite> testSuits) {
+		int index = 0;
+		for (ITestSuite testSuite : testSuits) {
+			for (ITest test : testSuite.getTests()) {
+				System.out.println(scripts.get(index).getAbsolutePath() + "@" + test.getHash().substring(0, 8));
+			}
+			index++;
+		}
+	}
+
+	private void printTestsPretty(List<ITestSuite> testSuits) {
+		int index = 0;
+		int count = 0;
 		for (ITestSuite testSuite : testSuits) {
 
 			System.out.println();
@@ -253,9 +339,16 @@ public class TestExecutionEngine {
 		System.out.println();
 		System.out.println("Found " + count + " tests.");
 		System.out.println();
+	}
 
-		return 0;
+	private void printTagsAsJson(Set<String> tags) {
+		System.out.println(JsonOutput.toJson(tags));
+	}
 
+	private void printTagsPretty(Set<String> tags) {
+		for (String tag : tags) {
+			System.out.println(tag);
+		}
 	}
 
 }
