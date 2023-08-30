@@ -10,19 +10,19 @@ A typical snapshot test case takes a snapshot of the output channels or any othe
 
 The `snapshot` keyword creates a snapshot of the object and its `match` method can then be used to check if its contains the expected data from the snap file. The following example shows how to create a snapshot of a workflow channel:
 
-```
+```Groovy
 assert snapshot(workflow.out.channel1).match()
 ```
 
 You can also create a snapshot of all output channels of a process:
 
-```
+```Groovy
 assert snapshot(process.out).match()
 ```
 
 Even the result of a function can be used:
 
-```
+```Groovy
 assert snapshot(function.result).match()
 ```
 
@@ -42,19 +42,19 @@ nf-test test tests/main.nf.test --update-snapshot
 
 It is also possible to include multiple objects into one snapshot:
 
-```
+```Groovy
 assert snapshot(workflow.out.channel1, workflow.out.channel2).match()
 ```
 
 Every object that is serializable can be included into snapshots. Therefore you can even make a snapshot of the complete workflow or process object. This includes stdout, stderr, exist status, trace etc.  and is the easiest way to create a test that checks for all of this properties:
 
-```
+```Groovy
 assert snapshot(workflow).match()
 ```
 
 You can also include output files to a snapshot (e.g. useful in pipeline tests where no channels are available):
 
-```
+```Groovy
 assert snapshot(
     workflow,
     path("${params.outdir}/file1.txt"),
@@ -63,16 +63,21 @@ assert snapshot(
 ).match()
 ```
 
-By default the snapshot has the same name as the test. You can also store a snapshot under a user defined name. This enables you to use multiple snapshots in one single test and to separate them in a logical way. In the following example a workflow snapshot is created, stored under the name "workflow". The second example, creates a snaphot of two files and saves it under "files".
+By default the snapshot has the same name as the test. You can also store a snapshot under a user defined name. This enables you to use multiple snapshots in one single test and to separate them in a logical way. In the following example a workflow snapshot is created, stored under the name "workflow".
 
-```
+```Groovy
 assert snapshot(workflow).match("workflow")
+```
+
+The next example creates a snaphot of two files and saves it under "files".
+
+```Groovy
 assert snapshot(path("${params.outdir}/file1.txt"), path("${params.outdir}/file2.txt")).match("files")
 ```
 
 You can also use helper methods to add objects to snapshots. For example, you can use the `list()`method to add all files of a folder to a snapshot:
 
-```
+```Groovy
  assert snapshot(workflow, path(params.outdir).list()).match()
 ```
 
