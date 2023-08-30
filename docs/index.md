@@ -6,10 +6,10 @@ hide:
 
 ![](assets/example.png){ .right .image}
 
-# Simple testing framework for Nextflow pipelines
+# nf-test: A simple testing framework<br> for Nextflow pipelines
 
 
-Test your production ready Nextflow pipelines in an efficient and automated way. 🚀
+Test your production ready [Nextflow pipelines](https://nextflow.io) in an efficient and automated way. 🚀
 
 
 [:fontawesome-solid-book: Getting Started](docs/getting-started.md){ .md-button .md-button--primary} [:fontawesome-solid-download: Installation](installation.md){ .md-button } [:fontawesome-brands-github: Source](https://github.com/askimed/nf-test){ .md-button }
@@ -28,7 +28,7 @@ Test your production ready Nextflow pipelines in an efficient and automated wa
 
 ## :material-check-all: Unit testing
 
-nf-test enables you to test all components of your data science pipeline: from end-to-end testing of the entire pipeline to specific tests of processes or even custom functions. This ensures that all testing is conducted consistently, promoting reliability across your project.
+nf-test enables you to test all components of your data science pipeline: from end-to-end testing of the entire pipeline to specific tests of processes or even custom functions. This ensures that all testing is conducted consistently across your project.
 
 === ":fontawesome-solid-diagram-project: Pipeline"
 
@@ -143,7 +143,7 @@ We love stars as much as we love rockets! So make sure you [star us on GitHub](h
 <!-- Place this tag where you want the button to render. -->
 <a class="github-button" href="https://github.com/askimed/nf-test" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star askimed/nf-test on GitHub">Star</a>
 
-Show the world your Nextflow pipeline is using nf-test and at the following badge to your `REAMDE.md`:
+Show the world your Nextflow pipeline is using nf-test and add the following badge to your `README.md`:
 
 [![nf-test](https://img.shields.io/badge/tested_with-nf--test-337ab7.svg)](https://code.askimed.com/nf-test)
 
