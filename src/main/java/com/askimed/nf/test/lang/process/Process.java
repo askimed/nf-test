@@ -1,9 +1,11 @@
 package com.askimed.nf.test.lang.process;
 
+import java.io.File;
+
 import com.askimed.nf.test.lang.WorkflowMeta;
 import com.askimed.nf.test.lang.channels.Channels;
 
-public class Process extends WorkflowMeta{
+public class Process extends WorkflowMeta {
 
 	private Channels out = new Channels();
 
@@ -24,7 +26,18 @@ public class Process extends WorkflowMeta{
 	}
 
 	public Channels getOut() {
+		if (out.isEmpty()) {
+			throw new RuntimeException("Process has no output channels. process.out can not be used.");
+		}
 		return out;
+	}
+
+	public void loadOutputChannels(File metaDir, boolean autoSort) {
+		out.loadFromFolder(metaDir, autoSort);
+	}
+
+	public void viewChannels() {
+		out.view();
 	}
 
 	@Override

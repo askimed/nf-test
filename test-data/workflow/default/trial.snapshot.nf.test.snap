@@ -1,0 +1,25 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    "a",
+                    "b"
+                ],
+                "1": [
+                    "a.txt:md5,0cc175b9c0f1b6a831c399e269772661",
+                    "b.txt:md5,92eb5ffee6ae2fec3ad71c777531578f"
+                ],
+                "lukas": [
+                    "a",
+                    "b"
+                ],
+                "sebastian": [
+                    "a.txt:md5,0cc175b9c0f1b6a831c399e269772661",
+                    "b.txt:md5,92eb5ffee6ae2fec3ad71c777531578f"
+                ]
+            }
+        ],
+        "timestamp": "2023-08-28T14:23:59+0000"
+    }
+}

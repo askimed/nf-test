@@ -7,9 +7,6 @@
                 ],
                 "errorReport": "",
                 "exitStatus": 0,
-                "out": {
-                    
-                },
                 "failed": false,
                 "stdout": [
                     "WARN: Input `set` must define at least two component -- Check process `test`"
