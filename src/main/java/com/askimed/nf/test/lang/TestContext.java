@@ -1,9 +1,12 @@
 package com.askimed.nf.test.lang;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.codehaus.groovy.control.CompilationFailedException;
 
+import com.askimed.nf.test.core.AbstractTest;
+import com.askimed.nf.test.core.AbstractTestSuite;
 import com.askimed.nf.test.core.ITest;
 import com.askimed.nf.test.lang.extensions.Snapshot;
 import com.askimed.nf.test.lang.function.Function;
@@ -26,9 +29,15 @@ public class TestContext {
 
 	private Closure processClosure;
 
-	public String baseDir = "nf-test";
+	public String baseDir = "";
 
-	public String outputDir = "nf-test";
+	public String projectDir = "";
+
+	public String launchDir = "";
+
+	public String workDir = "";
+
+	public String outputDir = "";
 
 	public ITest test;
 
@@ -139,19 +148,26 @@ public class TestContext {
 
 	}
 
-	public Snapshot snapshot(Object ... object ) {
+	public Snapshot snapshot(Object... object) {
 		return new Snapshot(object, test);
 	}
 
-	public void init(String baseDir, String outputDir) {
-		params.setBaseDir(baseDir);
-		params.setOutputDir(outputDir);
-		this.baseDir = baseDir;
-		this.outputDir = outputDir;
+	public void init(AbstractTest test) {
+		params.setBaseDir(test.baseDir);
+		params.setProjectDir(test.baseDir);
+		params.setLaunchDir(test.launchDir.getAbsolutePath());
+		params.setWorkDir(test.workDir.getAbsolutePath());
+		params.setOutputDir(test.outputDir.getAbsolutePath());
+
+		this.baseDir = test.baseDir;
+		this.projectDir = test.baseDir;
+		this.launchDir = test.launchDir.getAbsolutePath();
+		this.workDir = test.workDir.getAbsolutePath();
+		this.outputDir = test.outputDir.getAbsolutePath();
 	}
 
 	public void loadParams(String filename) throws CompilationFailedException, ClassNotFoundException, IOException {
 		params.load(filename);
 	}
-	
+
 }

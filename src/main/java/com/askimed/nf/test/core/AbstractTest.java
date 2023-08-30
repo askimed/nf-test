@@ -13,6 +13,8 @@ import com.askimed.nf.test.util.FileUtil;
 
 public abstract class AbstractTest implements ITest {
 
+	public File launchDir;
+
 	public File metaDir;
 
 	public File outputDir;
@@ -25,7 +27,7 @@ public abstract class AbstractTest implements ITest {
 
 	private ITestSuite suite;
 
-	public static String[] SHARED_DIRECTORIES = { "bin", "lib" };
+	public static String[] SHARED_DIRECTORIES = { "bin", "lib", "assets" };
 
 	protected File config = null;
 
@@ -70,10 +72,20 @@ public abstract class AbstractTest implements ITest {
 
 	@Override
 	public void setup(File baseDir) throws IOException {
-		String metaDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "meta");
+
+		String launchDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash());
 
 		try {
-			this.metaDir = new File(metaDir);
+			this.launchDir = new File(launchDir);
+			FileUtil.deleteDirectory(this.launchDir);
+			FileUtil.createDirectory(this.launchDir);
+		} catch (Exception e) {
+			throw new IOException("Launch Directory '" + launchDir + "' could not be deleted or created:\n" + e);
+		}
+
+		String metaDir = FileUtil.path(launchDir, "meta");
+		this.metaDir = new File(metaDir);
+		try {
 			FileUtil.deleteDirectory(this.metaDir);
 			FileUtil.createDirectory(this.metaDir);
 		} catch (Exception e) {
@@ -88,7 +100,7 @@ public abstract class AbstractTest implements ITest {
 			throw new IOException("Directories could not be shared:\n" + e);
 		}
 
-		String outputDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "output");
+		String outputDir = FileUtil.path(launchDir, "output");
 
 		try {
 			this.outputDir = new File(outputDir);
@@ -98,7 +110,7 @@ public abstract class AbstractTest implements ITest {
 			throw new IOException("Output Directory '" + outputDir + "' could not be deleted:\n" + e);
 		}
 
-		String workDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash(), "work");
+		String workDir = FileUtil.path(launchDir, "work");
 		try {
 			this.workDir = new File(workDir);
 			FileUtil.deleteDirectory(this.workDir);

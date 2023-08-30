@@ -91,7 +91,7 @@ public class FunctionTest extends AbstractTest {
 			}
 		}
 
-		context.init(baseDir, outputDir.getAbsolutePath());
+		context.init(this);
 
 		if (setup != null) {
 			setup.execute(context);
@@ -134,7 +134,8 @@ public class FunctionTest extends AbstractTest {
 		nextflow.setErr(errFile);
 		nextflow.setSilent(!isDebug());
 		nextflow.setLog(logFile);
-		nextflow.setWork(workDir);
+		nextflow.setLaunchDir(launchDir);
+		nextflow.setWorkDir(workDir);
 		nextflow.setParamsFile(paramsFile);
 		nextflow.setOptions(getOptions());
 

@@ -24,6 +24,12 @@ public class ParamsMap extends HashMap<String, Object> {
 
 	public String outputDir = "";
 
+	public String projectDir = "";
+
+	public String launchDir = "";
+
+	public String workDir = "";
+
 	public void setBaseDir(String baseDir) {
 		this.baseDir = baseDir;
 		put("baseDir", baseDir);
@@ -40,6 +46,21 @@ public class ParamsMap extends HashMap<String, Object> {
 
 	public String getOutputDir() {
 		return outputDir;
+	}
+
+	public void setProjectDir(String projectDir) {
+		this.projectDir = projectDir;
+		put("projectDir", projectDir);
+	}
+
+	public void setLaunchDir(String launchDir) {
+		this.launchDir = launchDir;
+		put("launchDir", launchDir);
+	}
+
+	public void setWorkDir(String workDir) {
+		this.workDir = workDir;
+		put("workDir", workDir);
 	}
 
 	public void load(String filename) throws CompilationFailedException, ClassNotFoundException, IOException {

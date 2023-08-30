@@ -10,14 +10,14 @@ nextflow_process {
     when {
       process {
         """
-        input[0] = file("test-data/extensions/fasta/fasta.1.fasta")
+        input[0] = file("$baseDir/test-data/extensions/fasta/fasta.1.fasta")
         """
       }
     }
 
     then {
       helloFasta()
-      assert path(process.out.fasta.get(0)).fasta == path("test-data/extensions/fasta/fasta.2.fasta").fasta
+      assert path(process.out.fasta.get(0)).fasta == path("$baseDir/test-data/extensions/fasta/fasta.2.fasta").fasta
     }
 
   }
@@ -27,13 +27,13 @@ nextflow_process {
     when {
       process {
         """
-        input[0] = file("test-data/extensions/fasta/fasta.1.fasta.gz")
+        input[0] = file("$baseDir/test-data/extensions/fasta/fasta.1.fasta.gz")
         """
       }
     }
 
     then {
-      assert path(process.out.fasta.get(0)).fasta == path("test-data/extensions/fasta/fasta.2.fasta.gz").fasta
+      assert path(process.out.fasta.get(0)).fasta == path("$baseDir/test-data/extensions/fasta/fasta.2.fasta.gz").fasta
     }
 
   }
@@ -43,7 +43,7 @@ nextflow_process {
     when {
       process {
         """
-        input[0] = file("test-data/extensions/fasta/fasta.1.fasta.gz")
+        input[0] = file("$baseDir/test-data/extensions/fasta/fasta.1.fasta.gz")
         """
       }
     }
@@ -59,13 +59,13 @@ nextflow_process {
     when {
       process {
         """
-        input[0] = file("test-data/extensions/fasta/fasta.1.fasta.gz")
+        input[0] = file("$baseDir/test-data/extensions/fasta/fasta.1.fasta.gz")
         """
       }
     }
 
     then {
-      assert path(process.out.fasta.get(0)).fasta != path("test-data/extensions/fasta/fasta.3.fasta").fasta
+      assert path(process.out.fasta.get(0)).fasta != path("$baseDir/test-data/extensions/fasta/fasta.3.fasta").fasta
     }
 
   }
@@ -75,7 +75,7 @@ nextflow_process {
     when {
       process {
         """
-        input[0] = file("test-data/extensions/fasta/fasta.1.fasta.gz")
+        input[0] = file("$baseDir/test-data/extensions/fasta/fasta.1.fasta.gz")
         """
       }
     }

@@ -88,7 +88,7 @@ public class ProcessTest extends AbstractTest {
 			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
 		}
 
-		context.init(baseDir, outputDir.getAbsolutePath());
+		context.init(this);
 
 		if (setup != null) {
 			setup.execute(context);
@@ -131,7 +131,8 @@ public class ProcessTest extends AbstractTest {
 		nextflow.setErr(errFile);
 		nextflow.setSilent(!isDebug());
 		nextflow.setLog(logFile);
-		nextflow.setWork(workDir);
+		nextflow.setLaunchDir(launchDir);
+		nextflow.setWorkDir(workDir);
 		nextflow.setParamsFile(paramsFile);
 		nextflow.setOptions(getOptions());
 
@@ -170,6 +171,7 @@ public class ProcessTest extends AbstractTest {
 		if (!script.startsWith("/") && !script.startsWith("./")) {
 			script = new File(script).getAbsolutePath();
 		}
+		System.out.println("Script: " + script);
 
 		Map<Object, Object> binding = new HashMap<Object, Object>();
 		binding.put("process", parent.getProcess());

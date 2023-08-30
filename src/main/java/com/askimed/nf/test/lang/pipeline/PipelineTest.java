@@ -67,7 +67,7 @@ public class PipelineTest extends AbstractTest {
 	@Override
 	public void execute() throws Throwable {
 
-		context.init(baseDir, outputDir.getAbsolutePath());
+		context.init(this);
 
 		if (setup != null) {
 			setup.execute(context);
@@ -90,8 +90,15 @@ public class PipelineTest extends AbstractTest {
 		File logFile = new File(metaDir, "nextflow.log");
 		File paramsFile = new File(metaDir, "params.json");
 
+		String script = parent.getScript();
+
+		if (!script.startsWith("/") && !script.startsWith("./")) {
+			script = new File(script).getAbsolutePath();
+		}
+		System.out.println("Script: " + script);
+		
 		NextflowCommand nextflow = new NextflowCommand();
-		nextflow.setScript(parent.getScript());
+		nextflow.setScript(script);
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.addConfig(parent.getGlobalConfigFile());
@@ -104,7 +111,8 @@ public class PipelineTest extends AbstractTest {
 		nextflow.setErr(errFile);
 		nextflow.setSilent(!isDebug());
 		nextflow.setLog(logFile);
-		nextflow.setWork(workDir);
+		nextflow.setLaunchDir(launchDir);
+		nextflow.setWorkDir(workDir);
 		nextflow.setParamsFile(paramsFile);
 		nextflow.setOptions(getOptions());
 
