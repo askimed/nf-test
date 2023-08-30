@@ -1,3 +1,5 @@
+
+
 # Installation
 
 nf-test has the same requirements as Nextflow and can be used on POSIX compatible systems like Linux or OS X. You can install nf-test using the following command:
@@ -13,6 +15,8 @@ wget -qO- https://code.askimed.com/install/nf-test | bash
 ```
 
 It will create the `nf-test` executable file in the current directory. Optionally, move the `nf-test` file to a directory accessible by your `$PATH` variable.
+
+### Verify installation
 
 Test the installation with the following command:
 
@@ -47,7 +51,12 @@ If you want to install a specific version pass it to the install script as so
 curl -fsSL https://code.askimed.com/install/nf-test | bash -s 0.7.0
 ```
 
-### Nextflow Binary not found
+### Manual installation
+
+All releases are also available on [Github](https://github.com/askimed/nf-test/releases).
+
+
+### Nextflow Binary not found?
 
 If you get an error message like this, then nf-test was not able to detect your Nextflow installation.
 
@@ -73,12 +82,10 @@ To update an existing nf-test installtion to the latest version, run the followi
 nf-test update
 ```
 
-## Manual installation
-
-All releases are also available on [Github](https://github.com/askimed/nf-test/releases).
-
 ## Compiling from source
+
 To compile nf-test from source you shall have maven installed. This will produce a `nf-test/target/nf-test.jar` file.
+
 ```
 git clone git@github.com:askimed/nf-test.git
 cd nf-test

@@ -15,7 +15,7 @@ cd nf-test-examples
 
 The pipeline consists of three modules (`salmon.index.nf`, `salmon_align_quant.nf`,`fastqc.nf`). Here, we use the [`salmon.index.nf`]() process to create a test case from scratch. This process takes a reference as an input and creates an index using salmon.
 
-## Init
+## Init new project
 
 Before creating test cases, we use the `init` command to setup nf-test.
 
