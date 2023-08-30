@@ -23,6 +23,8 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	private boolean autoSort = true;
 
 	private String options = "";
+	
+	private String directory = "";
 
 	private List<String> tags = new Vector<String>();
 
@@ -96,6 +98,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	@Override
 	public void setFilename(String filename) {
 		this.filename = filename;
+		this.directory = new File(filename).getParentFile().getAbsolutePath();
 	}
 
 	@Override
@@ -103,6 +106,11 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		return filename;
 	}
 
+	@Override
+	public String getDirectory() {
+		return directory;
+	}
+	
 	@Override
 	public List<ITest> getTests() {
 		return tests;
@@ -127,4 +135,12 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		return null;
 	}
 
+	protected String makeAbsolute(String path) {
+		return new File(directory, path).getAbsolutePath();
+	}
+	
+	protected boolean isRelative(String path) {
+		return path.startsWith("../") || path.startsWith("./");
+	}
+	
 }

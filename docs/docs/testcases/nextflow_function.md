@@ -15,6 +15,9 @@ nextflow_function {
 }
 ```
 
+>:bulb: Script paths that start with `./` or `../` are considered relative paths. These paths are resolved based on the location of the test script. Relative paths are beneficial when you want to reference files or directories located within the same directory as your test script or in a parent directory. These paths provide a convenient way to access files without specifying the entire path.
+
+
 ### Multiple Functions
 
 If a Nextflow script contains multiple functions and you want to test them all in the same testsuite, you can override the `function` property in each test. For example:
