@@ -28,7 +28,11 @@ public class FunctionTestSuite extends AbstractTestSuite {
 	}
 
 	public String getScript() {
-		return script;
+		if (script != null && isRelative(script)) {
+			return makeAbsolute(script);
+		} else {
+			return script;
+		}
 	}
 
 	public void setScript(String script) {
