@@ -16,6 +16,9 @@ nextflow_process {
 }
 ```
 
+
+>:bulb: Script paths that start with `./` or `../` are considered relative paths. These paths are resolved based on the location of the test script. Relative paths are beneficial when you want to reference files or directories located within the same directory as your test script or in a parent directory. These paths provide a convenient way to access files without specifying the entire path.
+
 ## Assertions
 
 The `process` object can be used in asserts to check its status or error messages.
@@ -51,6 +54,19 @@ assert process.out.my_channel.size() == 3
 // first element is "hello"
 assert process.out.my_channel.get(0) == "hello"
 ```
+
+Channels that lack explicit names can be addressed using square brackets and the corresponding index. This indexing method provides a straightforward way to interact with channels without the need for predefined names. To access the first output channel, you can use the index [0] as demonstrated below:
+
+```Groovy
+// channel exists
+assert process.out[0] != null
+
+// channel contains 3 elements
+assert process.out[0].size() == 3
+
+// first element is "hello"
+assert process.out[0].get(0) == "hello"
+````
 
 ## Example
 
