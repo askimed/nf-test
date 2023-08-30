@@ -96,6 +96,11 @@ public class PipelineTest extends AbstractTest {
 			script = new File(script).getAbsolutePath();
 		}
 		
+		//file not found. try as github location
+		if (!new File(script).exists()) {
+			script = parent.getScript();
+		}
+		
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(script);
 		nextflow.setParams(context.getParams());
