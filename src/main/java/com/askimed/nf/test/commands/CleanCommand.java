@@ -1,7 +1,6 @@
 package com.askimed.nf.test.commands;
 
 import java.io.File;
-import java.util.concurrent.Callable;
 
 import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.util.AnsiColors;
@@ -10,12 +9,12 @@ import com.askimed.nf.test.util.FileUtil;
 import picocli.CommandLine.Command;
 
 @Command(name = "clean")
-public class CleanCommand implements Callable<Integer> {
+public class CleanCommand extends AbstractCommand {
 
 	public static String NF_DIRECTORY = ".nf-test";
 
 	@Override
-	public Integer call() throws Exception {
+	public Integer execute() throws Exception {
 
 		File workDir = new File(NF_DIRECTORY);
 

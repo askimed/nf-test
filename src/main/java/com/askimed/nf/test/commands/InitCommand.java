@@ -1,7 +1,6 @@
 package com.askimed.nf.test.commands;
 
 import java.io.File;
-import java.util.concurrent.Callable;
 
 import com.askimed.nf.test.App;
 import com.askimed.nf.test.commands.init.InitTemplates;
@@ -11,10 +10,10 @@ import com.askimed.nf.test.util.AnsiColors;
 import picocli.CommandLine.Command;
 
 @Command(name = "init")
-public class InitCommand implements Callable<Integer> {
+public class InitCommand extends AbstractCommand {
 
 	@Override
-	public Integer call() throws Exception {
+	public Integer execute() throws Exception {
 
 		try {
 
