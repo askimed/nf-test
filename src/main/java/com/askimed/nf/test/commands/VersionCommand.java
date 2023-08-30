@@ -1,17 +1,15 @@
 package com.askimed.nf.test.commands;
 
-import java.util.concurrent.Callable;
-
 import com.askimed.nf.test.nextflow.NextflowCommand;
 import com.askimed.nf.test.util.AnsiColors;
 
 import picocli.CommandLine.Command;
 
 @Command(name = "version")
-public class VersionCommand implements Callable<Integer> {
+public class VersionCommand extends AbstractCommand {
 
 	@Override
-	public Integer call() throws Exception {
+	public Integer execute() throws Exception {
 
 		try {
 
