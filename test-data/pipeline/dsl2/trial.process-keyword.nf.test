@@ -1,0 +1,23 @@
+nextflow_pipeline {
+
+    name "Test workflow"
+    script "test-data/pipeline/dsl2/trial.nf"
+
+    test("Should run without failures") {
+        when {
+            params {
+                output = "$outputDir"
+                input  = "a,b"
+            }
+        }
+
+        then {
+            //check if test case succeeded
+            assert workflow.success
+            snapshot(process.out).match()
+            assert workflow.trace.tasks().size() == 2
+            assert path("$outputDir/a.txt").exists()
+            assert path("$outputDir/b.txt").exists()
+        }
+    }
+}
