@@ -1,10 +1,8 @@
 package com.askimed.nf.test.core;
 
-import java.io.File;
-
 public interface ITest extends ITaggable {
 
-	public void setup(File baseDir) throws Throwable;
+	public void setup(String homeDirectory) throws Throwable;
 
 	public void execute() throws Throwable;
 
@@ -21,8 +19,6 @@ public interface ITest extends ITaggable {
 	public void setDebug(boolean debug);
 
 	public String getHash();
-
-	public void setTestSuite(ITestSuite suite);
 
 	public ITestSuite getTestSuite();
 

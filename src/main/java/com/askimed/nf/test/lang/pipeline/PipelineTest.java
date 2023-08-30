@@ -95,7 +95,6 @@ public class PipelineTest extends AbstractTest {
 		if (!script.startsWith("/") && !script.startsWith("./")) {
 			script = new File(script).getAbsolutePath();
 		}
-		System.out.println("Script: " + script);
 		
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(script);

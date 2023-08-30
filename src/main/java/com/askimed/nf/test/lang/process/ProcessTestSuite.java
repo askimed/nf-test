@@ -1,5 +1,7 @@
 package com.askimed.nf.test.lang.process;
 
+import java.io.IOException;
+
 import com.askimed.nf.test.core.AbstractTestSuite;
 
 import groovy.lang.Closure;
@@ -40,10 +42,11 @@ public class ProcessTestSuite extends AbstractTestSuite {
 	}
 
 	public void test(String name,
-			@DelegatesTo(value = ProcessTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+			@DelegatesTo(value = ProcessTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) throws IOException {
 
 		final ProcessTest test = new ProcessTest(this);
 		test.name(name);
+		test.setup(getHomeDirectory());
 		closure.setDelegate(test);
 		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
 		closure.call();

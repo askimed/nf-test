@@ -171,7 +171,6 @@ public class ProcessTest extends AbstractTest {
 		if (!script.startsWith("/") && !script.startsWith("./")) {
 			script = new File(script).getAbsolutePath();
 		}
-		System.out.println("Script: " + script);
 
 		Map<Object, Object> binding = new HashMap<Object, Object>();
 		binding.put("process", parent.getProcess());

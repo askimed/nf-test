@@ -8,7 +8,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Vector;
 
-import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.util.FileUtil;
 
 public abstract class AbstractTest implements ITest {
@@ -23,9 +22,9 @@ public abstract class AbstractTest implements ITest {
 
 	public String baseDir = System.getProperty("user.dir");
 
-	public boolean skipped = false;
+	public String projectDir = System.getProperty("user.dir");
 
-	private ITestSuite suite;
+	public boolean skipped = false;
 
 	public static String[] SHARED_DIRECTORIES = { "bin", "lib", "assets" };
 
@@ -56,41 +55,18 @@ public abstract class AbstractTest implements ITest {
 		return config;
 	}
 
-	protected String getWorkDir() {
-
-		File workDir = new File("nf-test");
-
-		try {
-
-			Config config = Config.parse(new File(Config.FILENAME));
-			workDir = new File(config.getWorkDir());
-		} catch (Exception e) {
-
-		}
-		return workDir.getAbsolutePath();
-	}
-
 	@Override
-	public void setup(File baseDir) throws IOException {
+	public void setup(String testDirectory) throws IOException {
 
-		String launchDir = FileUtil.path(baseDir.getAbsolutePath(), "tests", getHash());
+		launchDir = new File(FileUtil.path(testDirectory, "tests", getHash()));
+		metaDir = new File(FileUtil.path(launchDir.getAbsolutePath(), "meta"));
+		outputDir = new File(FileUtil.path(launchDir.getAbsolutePath(), "output"));
+		workDir = new File(FileUtil.path(launchDir.getAbsolutePath(), "work"));
 
-		try {
-			this.launchDir = new File(launchDir);
-			FileUtil.deleteDirectory(this.launchDir);
-			FileUtil.createDirectory(this.launchDir);
-		} catch (Exception e) {
-			throw new IOException("Launch Directory '" + launchDir + "' could not be deleted or created:\n" + e);
-		}
-
-		String metaDir = FileUtil.path(launchDir, "meta");
-		this.metaDir = new File(metaDir);
-		try {
-			FileUtil.deleteDirectory(this.metaDir);
-			FileUtil.createDirectory(this.metaDir);
-		} catch (Exception e) {
-			throw new IOException("Meta Directory '" + metaDir + "' could not be deleted:\n" + e);
-		}
+		initDirectory("Launch Directory", launchDir);
+		initDirectory("Meta Directory", metaDir);
+		initDirectory("Output Directory", outputDir);
+		initDirectory("Working Directory", workDir);
 
 		try {
 			// copy bin and lib to metaDir. TODO: use symlinks and read additional "mapping"
@@ -100,24 +76,16 @@ public abstract class AbstractTest implements ITest {
 			throw new IOException("Directories could not be shared:\n" + e);
 		}
 
-		String outputDir = FileUtil.path(launchDir, "output");
+	}
 
+	public void initDirectory(String name, File directory) throws IOException {
 		try {
-			this.outputDir = new File(outputDir);
-			FileUtil.deleteDirectory(this.outputDir);
-			FileUtil.createDirectory(this.outputDir);
+			FileUtil.deleteDirectory(directory);
+			FileUtil.createDirectory(directory);
 		} catch (Exception e) {
-			throw new IOException("Output Directory '" + outputDir + "' could not be deleted:\n" + e);
+			throw new IOException(name + " '" + directory + "' could not be deleted or created:\n" + e);
 		}
 
-		String workDir = FileUtil.path(launchDir, "work");
-		try {
-			this.workDir = new File(workDir);
-			FileUtil.deleteDirectory(this.workDir);
-			FileUtil.createDirectory(this.workDir);
-		} catch (Exception e) {
-			throw new IOException("Working Directory '" + workDir + "' could not be deleted:\n" + e);
-		}
 	}
 
 	@Override
@@ -145,7 +113,7 @@ public abstract class AbstractTest implements ITest {
 	@Override
 	public String getHash() {
 
-		return hash(suite.getFilename() + getName());
+		return hash(parent.getFilename() + getName());
 
 	}
 
@@ -196,13 +164,8 @@ public abstract class AbstractTest implements ITest {
 	}
 
 	@Override
-	public void setTestSuite(ITestSuite suite) {
-		this.suite = suite;
-	}
-
-	@Override
 	public ITestSuite getTestSuite() {
-		return suite;
+		return parent;
 	}
 
 	public void debug(boolean debug) {
@@ -227,11 +190,11 @@ public abstract class AbstractTest implements ITest {
 		return withTrace;
 	}
 
-	protected void shareDirectories(String[] directories, String metaDir) throws IOException {
+	protected void shareDirectories(String[] directories, File metaDir) throws IOException {
 		for (String directory : directories) {
 			File localDirectory = new File(directory);
 			if (localDirectory.exists()) {
-				String metaDirectory = FileUtil.path(metaDir, directory);
+				String metaDirectory = FileUtil.path(metaDir.getAbsolutePath(), directory);
 				FileUtil.copyDirectory(localDirectory.getAbsolutePath(), metaDirectory);
 			}
 		}

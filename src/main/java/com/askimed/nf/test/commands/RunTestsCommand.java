@@ -77,7 +77,6 @@ public class RunTestsCommand extends AbstractCommand {
 
 			String defaultProfile = null;
 			File defaultConfigFile = null;
-			File workDir = new File(".nf-test");
 			String libDir = lib;
 			boolean defaultWithTrace = true;
 			try {
@@ -89,7 +88,6 @@ public class RunTestsCommand extends AbstractCommand {
 					defaultProfile = config.getProfile();
 					defaultConfigFile = config.getConfigFile();
 					defaultWithTrace = config.isWithTrace();
-					workDir = new File(config.getWorkDir());
 					if (!libDir.isEmpty()) {
 						libDir += ":";
 					}
@@ -146,7 +144,6 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.setScripts(scripts);
 			engine.setTagQuery(tagQuery);
 			engine.setDebug(debug);
-			engine.setWorkDir(workDir);
 			engine.setUpdateSnapshot(updateSnapshot);
 			engine.setLibDir(libDir);
 			engine.setPluginManager(manager);

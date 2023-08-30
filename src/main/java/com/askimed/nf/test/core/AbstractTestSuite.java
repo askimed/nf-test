@@ -25,6 +25,8 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	private String options = "";
 	
 	private String directory = "";
+	
+	private String homeDirectory = Config.DEFAULT_HOME;
 
 	private List<String> tags = new Vector<String>();
 
@@ -32,6 +34,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	public void configure(Config config) {
 		autoSort = config.isAutoSort();
 		options = config.getOptions();
+		homeDirectory = config.getWorkDir();
 	}
 
 	public void name(String name) {
@@ -94,6 +97,10 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	public File getLocalConfig() {
 		return localConfig;
 	}
+	
+	public String getHomeDirectory() {
+		return homeDirectory;
+	}
 
 	@Override
 	public void setFilename(String filename) {
@@ -118,7 +125,6 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	protected void addTest(ITest test) {
 		tests.add(test);
-		test.setTestSuite(this);
 	}
 
 	public void tag(String tag) {

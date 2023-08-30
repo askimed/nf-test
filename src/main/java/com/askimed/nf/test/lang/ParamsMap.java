@@ -197,6 +197,9 @@ public class ParamsMap extends HashMap<String, Object> {
 		Map<String, Object> nestedMap = new HashMap<String, Object>();
 		nestedMap.put("baseDir", baseDir);
 		nestedMap.put("outputDir", outputDir);
+		nestedMap.put("projectDir", projectDir);
+		nestedMap.put("launchDir", launchDir);
+		nestedMap.put("workDir", workDir);	
 		if (map != null) {
 			nestedMap.putAll(map);
 		}

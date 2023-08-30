@@ -100,7 +100,7 @@ public class WorkflowTest extends AbstractTest {
 		if (!script.exists()) {
 			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
 		}
-
+		
 		context.init(this);
 
 		if (setup != null) {
