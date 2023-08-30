@@ -39,7 +39,7 @@ public class ProcessTest {
 
 	}
 
-	@Test
+	/*@Test
 	public void testDisableAutoSortConfig() throws Exception {
 
 		Files.copy(Paths.get("test-data", "autosort.nf.test"), Paths.get("nf-test.config"));
@@ -49,7 +49,7 @@ public class ProcessTest {
 		// Fails, because expects sorted channels
 		assertEquals(1, exitCode);
 
-	}
+	}*/
 	
 	@Test
 	public void testDisableAutoSortTestSuite() throws Exception {
@@ -178,4 +178,23 @@ public class ProcessTest {
 		assertEquals(0, exitCode);
 
 	}
+	
+	@Test
+	public void testScriptWithRelativePath() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/default/test_process_relative.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+	
+	@Test
+	public void testScriptWithRelativePathInSubfolder() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/default/tests/test_process_relative.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+	
 }

@@ -1,6 +1,9 @@
 # Workflow Testing
+
 nf-test also allows to test a specific workflow. Please checkout the [CLI](../cli/generate.md) to generate a workflow test.
+
 ## Syntax
+
 ```Groovy
 nextflow_workflow {
 
@@ -13,6 +16,9 @@ nextflow_workflow {
     }
 }
 ```
+
+> :bulb: Script paths that start with `./` or `../` are considered relative paths. These paths are resolved based on the location of the test script. Relative paths are beneficial when you want to reference files or directories located within the same directory as your test script or in a parent directory. These paths provide a convenient way to access files without specifying the entire path.
+
 
 ## Assertions
 
@@ -40,6 +46,21 @@ assert workflow.trace.tasks().size() == 3
 //returns a list containing all lines from stdout
 assert workflow.stdout.contains("Hello World") == 3
 
+```
+
+### Output Channels
+
+The `workflow.out` object provides access to the content of all named output Channels (see Nextflow `emit`):
+
+```groovy
+// channel exists
+assert workflow.out.my_channel != null
+
+// channel contains 3 elements
+assert workflow.out.my_channel.size() == 3
+
+// first element is "hello"
+assert workflow.out.my_channel.get(0) == "hello"
 ```
 
 

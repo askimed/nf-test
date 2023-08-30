@@ -10,4 +10,4 @@ output
 test_mock.nf
 /.nf-test/
 site
-tests
+/tests
