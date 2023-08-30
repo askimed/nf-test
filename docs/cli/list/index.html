@@ -906,6 +906,34 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#-tags" class="md-nav__link">
+    --tags
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-format-json" class="md-nav__link">
+    --format json
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-format-raw" class="md-nav__link">
+    --format raw
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-silent" class="md-nav__link">
+    --silent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#-debug" class="md-nav__link">
     --debug
   </a>
@@ -1157,6 +1185,14 @@
 <div class="highlight"><pre><span></span><code>nf-test list [&lt;NEXTFLOW_FILES&gt;|&lt;SCRIPT_FOLDERS&gt;]
 </code></pre></div>
 <h3 id="optional-arguments">Optional Arguments</h3>
+<h4 id="-tags"><code>--tags</code></h4>
+<p>Print a list of all used tags.</p>
+<h4 id="-format-json"><code>--format json</code></h4>
+<p>Print the list of tests or tags as json object.</p>
+<h4 id="-format-raw"><code>--format raw</code></h4>
+<p>Print the list of tests or tags as simple list without formatting.</p>
+<h4 id="-silent"><code>--silent</code></h4>
+<p>Hide program version and header infos.</p>
 <h4 id="-debug"><code>--debug</code></h4>
 <p>Show debugging infos.</p>
 <h2 id="examples">Examples</h2>
@@ -1173,7 +1209,36 @@
 nf-test list tests/modules tests/modules/bwa_index.nf.test
 </code></pre></div>
 </li>
+<li>
+<p>List of all testcases as json:</p>
+</li>
 </ul>
+<div class="highlight"><pre><span></span><code>nf-test list --format json --silent
+[&quot;/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@69b98c67&quot;,&quot;/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@fdb6c1cc&quot;,&quot;/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@d1c219eb&quot;,&quot;/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@3c54e3cb&quot;,...]
+</code></pre></div>
+<ul>
+<li>List of all testcases as unformatted ist:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>nf-test list --format raw --silent
+/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@69b98c67
+/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@fdb6c1cc
+/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@d1c219eb
+/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@3c54e3cb
+...
+</code></pre></div>
+<ul>
+<li>List of all tags as json:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>nf-test list --tags --format json --silent
+[&quot;fastqc&quot;,&quot;snakemake&quot;]
+</code></pre></div>
+<ul>
+<li>List of all tags as unformatted list:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>nf-test list --tags --format raw --silent
+fastqc
+snakemake
+</code></pre></div>
 
 
 
