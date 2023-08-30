@@ -567,26 +567,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
-  </a>
-  
-    <nav class="md-nav" aria-label="Example">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#nextflow-script" class="md-nav__link">
-    Nextflow script
-  </a>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#nf-test-script" class="md-nav__link">
     nf-test script
@@ -1186,6 +1166,9 @@
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
+<blockquote>
+<p><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4a1.svg" title=":bulb:" /> Script paths that start with <code>./</code> or <code>../</code> are considered relative paths. These paths are resolved based on the location of the test script. Relative paths are beneficial when you want to reference files or directories located within the same directory as your test script or in a parent directory. These paths provide a convenient way to access files without specifying the entire path.</p>
+</blockquote>
 <h2 id="assertions">Assertions</h2>
 <p>The <code>process</code> object can be used in asserts to check its status or error messages.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// process status</span>
@@ -1213,10 +1196,24 @@
 <span class="c1">// first element is &quot;hello&quot;</span>
 <span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span>
 </code></pre></div>
-<h2 id="example">Example</h2>
-<h3 id="nextflow-script">Nextflow script</h3>
-<p>Create a new file and name it <code>say_hello.nf</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#!/usr/bin/env nextflow</span>
+<p>Channels that lack explicit names can be addressed using square brackets and the corresponding index. This indexing method provides a straightforward way to interact with channels without the need for predefined names. To access the first output channel, you can use the index [0] as demonstrated below:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// channel exists</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span>
+
+<span class="c1">// channel contains 3 elements</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="c1">// first element is &quot;hello&quot;</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span>
+<span class="err">````</span>
+
+<span class="err">##</span><span class="w"> </span><span class="n">Example</span>
+
+<span class="err">###</span><span class="w"> </span><span class="n">Nextflow</span><span class="w"> </span><span class="n">script</span>
+<span class="n">Create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="err">`</span><span class="n">say_hello</span><span class="o">.</span><span class="na">nf</span><span class="err">`</span><span class="o">.</span>
+
+<span class="err">```</span><span class="n">Groovy</span>
+<span class="err">#</span><span class="o">!</span><span class="s">/usr/</span><span class="n">bin</span><span class="o">/</span><span class="n">env</span><span class="w"> </span><span class="n">nextflow</span>
 <span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span>
 
 <span class="n">process</span><span class="w"> </span><span class="n">SAY_HELLO</span><span class="w"> </span><span class="o">{</span>

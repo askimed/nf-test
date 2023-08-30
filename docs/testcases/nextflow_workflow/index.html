@@ -537,6 +537,19 @@
     Assertions
   </a>
   
+    <nav class="md-nav" aria-label="Assertions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#output-channels" class="md-nav__link">
+    Output Channels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1173,6 +1186,9 @@
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
+<blockquote>
+<p><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4a1.svg" title=":bulb:" /> Script paths that start with <code>./</code> or <code>../</code> are considered relative paths. These paths are resolved based on the location of the test script. Relative paths are beneficial when you want to reference files or directories located within the same directory as your test script or in a parent directory. These paths provide a convenient way to access files without specifying the entire path.</p>
+</blockquote>
 <h2 id="assertions">Assertions</h2>
 <p>The <code>workflow</code> object can be used in asserts to check its status, error messages or traces.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// workflow status</span>
@@ -1195,6 +1211,17 @@
 
 <span class="c1">//returns a list containing all lines from stdout</span>
 <span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Hello World&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span>
+</code></pre></div>
+<h3 id="output-channels">Output Channels</h3>
+<p>The <code>workflow.out</code> object provides access to the content of all named output Channels (see Nextflow <code>emit</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// channel exists</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span>
+
+<span class="c1">// channel contains 3 elements</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="o">.</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="c1">// first element is &quot;hello&quot;</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span>
 </code></pre></div>
 <h2 id="example">Example</h2>
 <h3 id="nextflow-script">Nextflow script</h3>
