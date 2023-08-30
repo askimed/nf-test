@@ -11,10 +11,6 @@ public class Workflow extends WorkflowMeta {
 	private String mapping = "";
 
 	private Channels out = new Channels();
-	
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	@Transient
 	public void setMapping(String mapping) {

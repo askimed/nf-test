@@ -29,8 +29,9 @@ public class Process extends WorkflowMeta {
 		if (out.isEmpty()) {
 			throw new RuntimeException("Process has no output channels. process.out can not be used.");
 		}
+		return out;
 	}
-	
+
 	public void loadOutputChannels(File metaDir, boolean autoSort) {
 		out.loadFromFolder(metaDir, autoSort);
 	}
