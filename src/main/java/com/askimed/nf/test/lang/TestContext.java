@@ -49,8 +49,12 @@ public class TestContext {
 		this.launchDir = test.launchDir.getAbsolutePath();
 		this.workDir = test.workDir.getAbsolutePath();
 		this.outputDir = test.outputDir.getAbsolutePath();
-		this.moduleDir = test.moduleDir.getAbsolutePath();
-		this.moduleTestDir = test.moduleTestDir.getAbsolutePath();
+		if (moduleDir != null) {
+			this.moduleDir = test.moduleDir.getAbsolutePath();
+		}
+		if (moduleTestDir != null) {
+			this.moduleTestDir = test.moduleTestDir.getAbsolutePath();
+		}
 	}
 
 	public ParamsMap getParams() {
