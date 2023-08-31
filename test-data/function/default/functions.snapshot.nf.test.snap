@@ -18,7 +18,7 @@
                     "tasksCount": 0,
                     "tasksSucceeded": 0
                 },
-                "name": "function",
+                "name": "say_hello",
                 "success": true
             }
         ],

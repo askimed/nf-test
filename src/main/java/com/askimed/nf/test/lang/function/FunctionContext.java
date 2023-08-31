@@ -14,7 +14,7 @@ public class FunctionContext extends TestContext {
 	public FunctionContext(ITest test) {
 		super(test);
 	}
-	
+
 	public Function getFunction() {
 		return function;
 	}
@@ -23,7 +23,10 @@ public class FunctionContext extends TestContext {
 		this.function = function;
 	}
 
-	
+	public void setName(String name) {
+		function.setName(name);
+	}
+
 	public void function(Closure<Object> closure) {
 		functionClosure = closure;
 	}
@@ -40,5 +43,5 @@ public class FunctionContext extends TestContext {
 		}
 
 	}
-	
+
 }
