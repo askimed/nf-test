@@ -1,12 +1,10 @@
 package com.askimed.nf.test.lang;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.codehaus.groovy.control.CompilationFailedException;
 
 import com.askimed.nf.test.core.AbstractTest;
-import com.askimed.nf.test.core.AbstractTestSuite;
 import com.askimed.nf.test.core.ITest;
 import com.askimed.nf.test.lang.extensions.Snapshot;
 import com.askimed.nf.test.lang.workflow.Workflow;
@@ -39,11 +37,18 @@ public class TestContext {
 		this.test = test;
 	}
 
-	public void init(String baseDir, String outputDir) {
-		params.setBaseDir(baseDir);
-		params.setOutputDir(outputDir);
-		this.baseDir = baseDir;
-		this.outputDir = outputDir;
+	public void init(AbstractTest test) {
+		params.setBaseDir(test.baseDir);
+		params.setProjectDir(test.baseDir);
+		params.setLaunchDir(test.launchDir.getAbsolutePath());
+		params.setWorkDir(test.workDir.getAbsolutePath());
+		params.setOutputDir(test.outputDir.getAbsolutePath());
+
+		this.baseDir = test.baseDir;
+		this.projectDir = test.baseDir;
+		this.launchDir = test.launchDir.getAbsolutePath();
+		this.workDir = test.workDir.getAbsolutePath();
+		this.outputDir = test.outputDir.getAbsolutePath();
 	}
 
 	public ParamsMap getParams() {
@@ -84,20 +89,6 @@ public class TestContext {
 
 	public void loadParams(String filename) throws CompilationFailedException, ClassNotFoundException, IOException {
 		params.load(filename);
-	}
-
-	public void init(AbstractTest test) {
-		params.setBaseDir(test.baseDir);
-		params.setProjectDir(test.baseDir);
-		params.setLaunchDir(test.launchDir.getAbsolutePath());
-		params.setWorkDir(test.workDir.getAbsolutePath());
-		params.setOutputDir(test.outputDir.getAbsolutePath());
-
-		this.baseDir = test.baseDir;
-		this.projectDir = test.baseDir;
-		this.launchDir = test.launchDir.getAbsolutePath();
-		this.workDir = test.workDir.getAbsolutePath();
-		this.outputDir = test.outputDir.getAbsolutePath();
 	}
 
 	public void setName(String name) {
