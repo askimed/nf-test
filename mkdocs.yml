@@ -42,7 +42,8 @@ nav:
       - Workflow Testing: docs/testcases/nextflow_workflow.md
       - Process Testing: docs/testcases/nextflow_process.md
       - Function Testing: docs/testcases/nextflow_function.md
-      - Params and Global Variables: docs/testcases/global_variables.md
+      - Params Dictionary: docs/testcases/params.md
+      - Global Variables: docs/testcases/global_variables.md      
     - Running Tests: docs/running-tests.md
     - Writing Assertions:
       - Power Assertions: docs/assertions/assertions.md
@@ -51,7 +52,7 @@ nav:
       - Regular Expressions: docs/assertions/regular-expressions.md
       - FASTA Files: docs/assertions/fasta.md
       - Using Third-Party Libraries: docs/assertions/libraries.md
-    - Command line Interface (CLI):
+    - Command Line Interface (CLI):
       - init: docs/cli/init.md
       - generate: docs/cli/generate.md
       - test: docs/cli/test.md
