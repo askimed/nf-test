@@ -109,6 +109,15 @@ public class PipelineTest {
 
 	}
 	
+	@Test
+	public void testPipelineThatUsesLaunchDir() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl2/trial.launch-dir.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+	
 	// Thanks: https://www.digitalocean.com/community/tutorials/how-to-validate-xml-against-xsd-in-java
 	public static void assertXmlSchemaValidation(String xsdPath, String xmlPath) throws Exception{
 		SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
