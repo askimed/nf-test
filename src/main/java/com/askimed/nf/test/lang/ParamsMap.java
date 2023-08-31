@@ -20,47 +20,39 @@ public class ParamsMap extends HashMap<String, Object> {
 
 	private static final long serialVersionUID = 1L;
 
-	public String baseDir = "";
+	public String baseDir;
 
-	public String outputDir = "";
+	public String outputDir;
 
-	public String projectDir = "";
+	public String projectDir;
 
-	public String launchDir = "";
+	public String launchDir;
 
-	public String workDir = "";
+	public String workDir;
 
-	public void setBaseDir(String baseDir) {
-		this.baseDir = baseDir;
-		put("baseDir", baseDir);
+	public void setBaseDir(File baseDir) {
+		this.baseDir = baseDir.getAbsolutePath();
+		put("baseDir", this.baseDir);
 	}
 
-	public void setOutputDir(String outputDir) {
-		this.outputDir = outputDir;
-		put("outputDir", outputDir);
+	public void setOutputDir(File outputDir) {
+		this.outputDir = outputDir.getAbsolutePath();
+		put("outputDir", this.outputDir);
 	}
 
-	public String getBaseDir() {
-		return baseDir;
+	public void setProjectDir(File projectDir) {
+		this.projectDir = projectDir.getAbsolutePath();
+		put("projectDir", this.projectDir);
 	}
 
-	public String getOutputDir() {
-		return outputDir;
+	public void setLaunchDir(File launchDir) {
+		this.launchDir = launchDir.getAbsolutePath();
+		put("launchDir", this.launchDir);
 	}
 
-	public void setProjectDir(String projectDir) {
-		this.projectDir = projectDir;
-		put("projectDir", projectDir);
-	}
-
-	public void setLaunchDir(String launchDir) {
-		this.launchDir = launchDir;
-		put("launchDir", launchDir);
-	}
-
-	public void setWorkDir(String workDir) {
-		this.workDir = workDir;
-		put("workDir", workDir);
+	public void setWorkDir(File workDir) {
+		this.workDir = workDir.getAbsolutePath();
+		put("workDir", this.workDir);
 	}
 
 	public void load(String filename) throws CompilationFailedException, ClassNotFoundException, IOException {
@@ -199,7 +191,7 @@ public class ParamsMap extends HashMap<String, Object> {
 		nestedMap.put("outputDir", outputDir);
 		nestedMap.put("projectDir", projectDir);
 		nestedMap.put("launchDir", launchDir);
-		nestedMap.put("workDir", workDir);	
+		nestedMap.put("workDir", workDir);
 		if (map != null) {
 			nestedMap.putAll(map);
 		}

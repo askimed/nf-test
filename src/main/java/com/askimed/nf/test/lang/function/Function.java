@@ -2,6 +2,7 @@ package com.askimed.nf.test.lang.function;
 
 import java.io.File;
 
+import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.lang.WorkflowMeta;
 
 import groovy.json.JsonSlurper;
@@ -40,13 +41,13 @@ public class Function extends WorkflowMeta {
 	}
 
 	public void loadResult(File folder) {
-		File file = new File(folder, "function.json");
+		File file = new File(folder, AbstractTest.FILE_FUNCTION_JSON);
 
 		if (file.exists()) {
 			JsonSlurper jsonSlurper = new JsonSlurper();
 			result = jsonSlurper.parse(file);
 		}
-		
+
 	}
-	
+
 }

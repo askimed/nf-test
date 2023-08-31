@@ -1,5 +1,6 @@
 package com.askimed.nf.test.lang;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.codehaus.groovy.control.CompilationFailedException;
@@ -17,15 +18,15 @@ public class TestContext {
 
 	private Closure paramsClosure;
 
-	public String baseDir = "";
+	public File baseDir;
 
-	public String projectDir = "";
+	public File projectDir;
 
-	public String launchDir = "";
+	public File launchDir;
 
-	public String workDir = "";
+	public File workDir;
 
-	public String outputDir = "";
+	public File outputDir;
 
 	public ITest test;
 
@@ -40,15 +41,15 @@ public class TestContext {
 	public void init(AbstractTest test) {
 		params.setBaseDir(test.baseDir);
 		params.setProjectDir(test.baseDir);
-		params.setLaunchDir(test.launchDir.getAbsolutePath());
-		params.setWorkDir(test.workDir.getAbsolutePath());
-		params.setOutputDir(test.outputDir.getAbsolutePath());
+		params.setLaunchDir(test.launchDir);
+		params.setWorkDir(test.workDir);
+		params.setOutputDir(test.outputDir);
 
 		this.baseDir = test.baseDir;
 		this.projectDir = test.baseDir;
-		this.launchDir = test.launchDir.getAbsolutePath();
-		this.workDir = test.workDir.getAbsolutePath();
-		this.outputDir = test.outputDir.getAbsolutePath();
+		this.launchDir = test.launchDir;
+		this.workDir = test.workDir;
+		this.outputDir = test.outputDir;
 	}
 
 	public ParamsMap getParams() {

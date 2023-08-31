@@ -1,14 +1,13 @@
 package com.askimed.nf.test.lang;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import com.opencsv.exceptions.CsvValidationException;
+import com.askimed.nf.test.core.AbstractTest;
 
 import groovy.json.JsonSlurper;
 
@@ -34,7 +33,7 @@ public class WorkflowMeta {
 
 	public void loadFromFolder(File folder) {
 
-		File file = new File(folder, "workflow.json");
+		File file = new File(folder, AbstractTest.FILE_WORKFLOW_JSON);
 
 		if (file.exists()) {
 			JsonSlurper jsonSlurper = new JsonSlurper();
@@ -46,7 +45,7 @@ public class WorkflowMeta {
 			this.errorReport = getString(map, "errorReport");
 		}
 
-		File outFile = new File(folder, "std.out");
+		File outFile = new File(folder, AbstractTest.FILE_STD_OUT);
 		if (outFile.exists()) {
 			try {
 				stdout = Files.readAllLines(outFile.toPath());
@@ -55,7 +54,7 @@ public class WorkflowMeta {
 			}
 		}
 
-		File outFileStdErr = new File(folder, "std.err");
+		File outFileStdErr = new File(folder, AbstractTest.FILE_STD_ERR);
 		if (outFileStdErr.exists()) {
 			try {
 				stderr = Files.readAllLines(outFileStdErr.toPath());
@@ -64,18 +63,11 @@ public class WorkflowMeta {
 			}
 		}
 
-		File traceFile = new File(folder, "trace.csv");
+		File traceFile = new File(folder, AbstractTest.FILE_TRACE);
 		if (traceFile.exists()) {
 			try {
 				trace = new WorkflowTrace(traceFile);
-			} catch (CsvValidationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

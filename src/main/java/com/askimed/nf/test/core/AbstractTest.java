@@ -12,6 +12,30 @@ import com.askimed.nf.test.util.FileUtil;
 
 public abstract class AbstractTest implements ITest {
 
+	public static final String FILE_STD_ERR = "std.err";
+
+	public static final String FILE_STD_OUT = "std.out";
+
+	public static final String FILE_TRACE = "trace.csv";
+
+	public static final String FILE_NEXTFLOW_LOG = "nextflow.log";
+
+	public static final String FILE_MOCK = "mock.nf";
+
+	public static final String FILE_PARAMS = "params.json";
+
+	public static final String FILE_WORKFLOW_JSON = "workflow.json";
+	
+	public static final String FILE_FUNCTION_JSON = "function.json";
+
+	public static final String DIRECTORY_WORK = "work";
+
+	public static final String DIRECTORY_OUTPUT = "output";
+
+	public static final String DIRECTORY_META = "meta";
+
+	public static final String DIRECTORY_TESTS = "tests";
+
 	public File launchDir;
 
 	public File metaDir;
@@ -20,9 +44,9 @@ public abstract class AbstractTest implements ITest {
 
 	public File workDir;
 
-	public String baseDir = System.getProperty("user.dir");
+	public File baseDir = new File(System.getProperty("user.dir"));
 
-	public String projectDir = System.getProperty("user.dir");
+	public File projectDir = new File(System.getProperty("user.dir"));
 
 	public boolean skipped = false;
 
@@ -56,17 +80,12 @@ public abstract class AbstractTest implements ITest {
 	}
 
 	@Override
-	public void setup(String testDirectory) throws IOException {
+	public void setup(File testDirectory) throws IOException {
 
-		launchDir = new File(FileUtil.path(testDirectory, "tests", getHash()));
-		metaDir = new File(FileUtil.path(launchDir.getAbsolutePath(), "meta"));
-		outputDir = new File(FileUtil.path(launchDir.getAbsolutePath(), "output"));
-		workDir = new File(FileUtil.path(launchDir.getAbsolutePath(), "work"));
-
-		initDirectory("Launch Directory", launchDir);
-		initDirectory("Meta Directory", metaDir);
-		initDirectory("Output Directory", outputDir);
-		initDirectory("Working Directory", workDir);
+		launchDir = initDirectory("Launch Directory", testDirectory, DIRECTORY_TESTS, getHash());
+		metaDir = initDirectory("Meta Directory", launchDir, DIRECTORY_META);
+		outputDir = initDirectory("Output Directory", launchDir, DIRECTORY_OUTPUT);
+		workDir = initDirectory("Working Directory", launchDir, DIRECTORY_WORK);
 
 		try {
 			// copy bin and lib to metaDir. TODO: use symlinks and read additional "mapping"
@@ -78,10 +97,15 @@ public abstract class AbstractTest implements ITest {
 
 	}
 
-	public void initDirectory(String name, File directory) throws IOException {
+	public File initDirectory(String name, File root, String... childs) throws IOException {
+
+		String path = FileUtil.path(root.getAbsolutePath(), FileUtil.path(childs));
+
+		File directory = new File(path).getAbsoluteFile();
 		try {
 			FileUtil.deleteDirectory(directory);
 			FileUtil.createDirectory(directory);
+			return directory;
 		} catch (Exception e) {
 			throw new IOException(name + " '" + directory + "' could not be deleted or created:\n" + e);
 		}
@@ -96,11 +120,11 @@ public abstract class AbstractTest implements ITest {
 	@Override
 	public String getErrorReport() throws Throwable {
 		String result = null;
-		File outFile = new File(metaDir, "std.out");
+		File outFile = new File(metaDir, FILE_STD_OUT);
 		if (outFile.exists()) {
 			result = "Nextflow stdout:\n\n" + FileUtil.readFileAsString(outFile);
 		}
-		File errFile = new File(metaDir, "std.err");
+		File errFile = new File(metaDir, FILE_STD_ERR);
 		if (errFile.exists()) {
 			if (result == null) {
 				result = "";

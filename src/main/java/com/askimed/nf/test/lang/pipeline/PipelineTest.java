@@ -82,11 +82,11 @@ public class PipelineTest extends AbstractTest {
 			System.out.println();
 		}
 
-		File traceFile = new File(metaDir, "trace.csv");
-		File outFile = new File(metaDir, "std.out");
-		File errFile = new File(metaDir, "std.err");
-		File logFile = new File(metaDir, "nextflow.log");
-		File paramsFile = new File(metaDir, "params.json");
+		File traceFile = new File(metaDir, FILE_TRACE);
+		File outFile = new File(metaDir, FILE_STD_OUT);
+		File errFile = new File(metaDir, FILE_STD_ERR);
+		File logFile = new File(metaDir, FILE_NEXTFLOW_LOG);
+		File paramsFile = new File(metaDir, FILE_PARAMS);
 
 		String script = parent.getScript();
 

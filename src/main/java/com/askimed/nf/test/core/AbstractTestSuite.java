@@ -23,10 +23,10 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	private boolean autoSort = true;
 
 	private String options = "";
-	
+
 	private String directory = "";
-	
-	private String homeDirectory = Config.DEFAULT_HOME;
+
+	private File homeDirectory = new File(Config.DEFAULT_HOME);
 
 	private List<String> tags = new Vector<String>();
 
@@ -34,7 +34,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	public void configure(Config config) {
 		autoSort = config.isAutoSort();
 		options = config.getOptions();
-		homeDirectory = config.getWorkDir();
+		homeDirectory = new File(config.getWorkDir());
 	}
 
 	public void name(String name) {
@@ -97,8 +97,8 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	public File getLocalConfig() {
 		return localConfig;
 	}
-	
-	public String getHomeDirectory() {
+
+	public File getHomeDirectory() {
 		return homeDirectory;
 	}
 
@@ -117,7 +117,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	public String getDirectory() {
 		return directory;
 	}
-	
+
 	@Override
 	public List<ITest> getTests() {
 		return tests;
@@ -144,9 +144,9 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	protected String makeAbsolute(String path) {
 		return new File(directory, path).getAbsolutePath();
 	}
-	
+
 	protected boolean isRelative(String path) {
 		return path.startsWith("../") || path.startsWith("./");
 	}
-	
+
 }
