@@ -33,8 +33,6 @@ public class TestContext {
 
 	public ITest test;
 
-	private String name;
-
 	private WorkflowMeta workflow = new WorkflowMeta();
 
 	public TestContext(ITest test) {
@@ -49,10 +47,10 @@ public class TestContext {
 		this.launchDir = test.launchDir.getAbsolutePath();
 		this.workDir = test.workDir.getAbsolutePath();
 		this.outputDir = test.outputDir.getAbsolutePath();
-		if (moduleDir != null) {
+		if (test.moduleDir != null) {
 			this.moduleDir = test.moduleDir.getAbsolutePath();
 		}
-		if (moduleTestDir != null) {
+		if (test.moduleTestDir != null) {
 			this.moduleTestDir = test.moduleTestDir.getAbsolutePath();
 		}
 	}
@@ -70,6 +68,7 @@ public class TestContext {
 	}
 
 	public void evaluateParamsClosure() {
+
 		if (paramsClosure == null) {
 			return;
 		}
@@ -93,14 +92,6 @@ public class TestContext {
 
 	public void loadParams(String filename) throws CompilationFailedException, ClassNotFoundException, IOException {
 		params.load(filename);
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 }

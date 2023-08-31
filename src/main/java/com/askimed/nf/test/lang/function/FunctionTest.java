@@ -40,7 +40,6 @@ public class FunctionTest extends AbstractTest {
 		super(parent);
 		this.parent = parent;
 		context = new FunctionContext(this);
-		context.setName(parent.getFunction());
 	}
 
 	public void name(String name) {

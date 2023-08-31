@@ -45,7 +45,6 @@ public class WorkflowTest extends AbstractTest {
 		this.parent = parent;
 		this.autoSort = parent.isAutoSort();
 		context = new WorkflowContext(this);
-		context.setName(parent.getWorkflow());
 	}
 
 	public void name(String name) {

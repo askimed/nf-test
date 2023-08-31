@@ -29,7 +29,6 @@ public class PipelineTest extends AbstractTest {
 		super(parent);
 		this.parent = parent;
 		context = new PipelineContext(this);
-		context.setName(parent.getName());
 	}
 
 	public void name(String name) {
