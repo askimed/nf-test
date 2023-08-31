@@ -1,6 +1,5 @@
 package com.askimed.nf.test.lang;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.codehaus.groovy.control.CompilationFailedException;
@@ -14,23 +13,23 @@ import groovy.lang.Closure;
 
 public class TestContext {
 
-	private ParamsMap params = new ParamsMap();
+	private ParamsMap params;
 
 	private Closure paramsClosure;
 
-	public File baseDir;
+	public String baseDir;
 
-	public File projectDir;
+	public String projectDir;
 
-	public File launchDir;
+	public String launchDir;
 
-	public File workDir;
+	public String workDir;
 
-	public File outputDir;
-	
-	public File moduleDir;
-	
-	public File moduleTestDir;
+	public String outputDir;
+
+	public String moduleDir;
+
+	public String moduleTestDir;
 
 	public ITest test;
 
@@ -39,25 +38,19 @@ public class TestContext {
 	private WorkflowMeta workflow = new WorkflowMeta();
 
 	public TestContext(ITest test) {
+		params = new ParamsMap(this);
 		this.test = test;
 	}
 
 	public void init(AbstractTest test) {
-		params.setBaseDir(test.baseDir);
-		params.setProjectDir(test.baseDir);
-		params.setLaunchDir(test.launchDir);
-		params.setWorkDir(test.workDir);
-		params.setOutputDir(test.outputDir);
-		params.setModuleDir(test.moduleDir);
-		params.setModuleTestDir(test.moduleTestDir);
 
-		this.baseDir = test.baseDir;
-		this.projectDir = test.baseDir;
-		this.launchDir = test.launchDir;
-		this.workDir = test.workDir;
-		this.outputDir = test.outputDir;
-		this.moduleDir = test.moduleDir;
-		this.moduleTestDir = test.moduleTestDir;
+		this.baseDir = test.baseDir.getAbsolutePath();
+		this.projectDir = test.baseDir.getAbsolutePath();
+		this.launchDir = test.launchDir.getAbsolutePath();
+		this.workDir = test.workDir.getAbsolutePath();
+		this.outputDir = test.outputDir.getAbsolutePath();
+		this.moduleDir = test.moduleDir.getAbsolutePath();
+		this.moduleTestDir = test.moduleTestDir.getAbsolutePath();
 	}
 
 	public ParamsMap getParams() {
@@ -76,10 +69,8 @@ public class TestContext {
 		if (paramsClosure == null) {
 			return;
 		}
-		paramsClosure.setDelegate(params);
-		paramsClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
-		paramsClosure.call();
-		paramsClosure.getMetaClass().getProperties();
+		Closure newClosure = paramsClosure.rehydrate(params, this, this);
+		newClosure.call();
 		params.evaluateNestedClosures();
 
 	}
