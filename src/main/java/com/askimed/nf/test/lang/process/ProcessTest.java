@@ -81,6 +81,8 @@ public class ProcessTest extends AbstractTest {
 	@Override
 	public void execute() throws Throwable {
 
+		super.execute();
+		
 		File script = new File(parent.getScript());
 
 		if (!script.exists()) {

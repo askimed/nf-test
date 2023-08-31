@@ -8,6 +8,8 @@ import com.askimed.nf.test.config.Config;
 
 public abstract class AbstractTestSuite implements ITestSuite {
 
+	private String script = null;
+	
 	private String name;
 
 	private String profile = null;
@@ -29,7 +31,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	private File homeDirectory = new File(Config.DEFAULT_HOME);
 
 	private List<String> tags = new Vector<String>();
-
+	
 	@Override
 	public void configure(Config config) {
 		autoSort = config.isAutoSort();
@@ -37,6 +39,22 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		homeDirectory = new File(config.getWorkDir());
 	}
 
+	public void script(String script) {
+		this.script = script;
+	}
+
+	public String getScript() {
+		if (script != null && isRelative(script)) {
+			return makeAbsolute(script);
+		} else {
+			return script;
+		}
+	}
+	
+	public void setScript(String script) {
+		this.script = script;
+	}
+	
 	public void name(String name) {
 		this.name = name;
 	}

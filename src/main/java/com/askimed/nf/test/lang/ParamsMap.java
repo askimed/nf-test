@@ -30,6 +30,10 @@ public class ParamsMap extends HashMap<String, Object> {
 
 	public String workDir;
 
+	public String moduleDir;
+
+	public String moduleTestDir;
+
 	public void setBaseDir(File baseDir) {
 		this.baseDir = baseDir.getAbsolutePath();
 		put("baseDir", this.baseDir);
@@ -53,6 +57,18 @@ public class ParamsMap extends HashMap<String, Object> {
 	public void setWorkDir(File workDir) {
 		this.workDir = workDir.getAbsolutePath();
 		put("workDir", this.workDir);
+	}
+
+	public void setModuleDir(File moduleDir) {
+		if (moduleDir != null) {
+			this.moduleDir = moduleDir.getAbsolutePath();
+			put("moduleDir", this.moduleDir);
+		}
+	}
+
+	public void setModuleTestDir(File moduleTestDir) {
+		this.moduleTestDir = moduleTestDir.getAbsolutePath();
+		put("moduleTestDir", this.moduleTestDir);
 	}
 
 	public void load(String filename) throws CompilationFailedException, ClassNotFoundException, IOException {
@@ -192,6 +208,10 @@ public class ParamsMap extends HashMap<String, Object> {
 		nestedMap.put("projectDir", projectDir);
 		nestedMap.put("launchDir", launchDir);
 		nestedMap.put("workDir", workDir);
+		if (moduleDir != null) {
+			nestedMap.put("moduleDir", moduleDir);
+		}
+		nestedMap.put("moduleTestDir", moduleTestDir);
 		if (map != null) {
 			nestedMap.putAll(map);
 		}

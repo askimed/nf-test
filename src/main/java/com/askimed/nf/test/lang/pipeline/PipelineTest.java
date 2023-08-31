@@ -66,6 +66,8 @@ public class PipelineTest extends AbstractTest {
 	@Override
 	public void execute() throws Throwable {
 
+		super.execute();
+		
 		context.init(this);
 
 		if (setup != null) {

@@ -80,6 +80,8 @@ public class FunctionTest extends AbstractTest {
 	@Override
 	public void execute() throws Throwable {
 
+		super.execute();
+		
 		if (parent.getScript() != null) {
 
 			File script = new File(parent.getScript());

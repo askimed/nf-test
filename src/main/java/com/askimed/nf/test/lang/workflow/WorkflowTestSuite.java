@@ -9,13 +9,7 @@ import groovy.lang.DelegatesTo;
 
 public class WorkflowTestSuite extends AbstractTestSuite {
 
-	private String script = null;
-
 	private String workflow;
-
-	public void script(String script) {
-		this.script = script;
-	}
 
 	public void workflow(String workflow) {
 		this.workflow = workflow;
@@ -29,22 +23,11 @@ public class WorkflowTestSuite extends AbstractTestSuite {
 		return workflow;
 	}
 
-	public String getScript() {
-		if (script != null && isRelative(script)) {
-			return makeAbsolute(script);
-		} else {
-			return script;
-		}
-	}
-
-	public void setScript(String script) {
-		this.script = script;
-	}
-
 	public void test(String name,
-			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) throws IOException {
+			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure)
+			throws IOException {
 
-		final WorkflowTest test = new WorkflowTest(this);
+		final WorkflowTest test = new WorkflowTest(this);	
 		test.name(name);
 		test.setup(getHomeDirectory());
 		closure.setDelegate(test);

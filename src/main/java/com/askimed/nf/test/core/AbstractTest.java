@@ -25,7 +25,7 @@ public abstract class AbstractTest implements ITest {
 	public static final String FILE_PARAMS = "params.json";
 
 	public static final String FILE_WORKFLOW_JSON = "workflow.json";
-	
+
 	public static final String FILE_FUNCTION_JSON = "function.json";
 
 	public static final String DIRECTORY_WORK = "work";
@@ -43,6 +43,10 @@ public abstract class AbstractTest implements ITest {
 	public File outputDir;
 
 	public File workDir;
+
+	public File moduleDir;
+
+	public File moduleTestDir;
 
 	public File baseDir = new File(System.getProperty("user.dir"));
 
@@ -95,6 +99,16 @@ public abstract class AbstractTest implements ITest {
 			throw new IOException("Directories could not be shared:\n" + e);
 		}
 
+	}
+
+	@Override
+	public void execute() throws Throwable {
+		if (parent.getScript() != null) {
+			moduleDir = new File(parent.getScript()).getAbsoluteFile().getParentFile();
+		}
+		if (parent.getFilename() != null) {
+			moduleTestDir = new File(parent.getDirectory()).getAbsoluteFile();
+		}
 	}
 
 	public File initDirectory(String name, File root, String... childs) throws IOException {

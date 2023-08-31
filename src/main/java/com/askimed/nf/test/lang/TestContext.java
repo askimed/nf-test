@@ -27,6 +27,10 @@ public class TestContext {
 	public File workDir;
 
 	public File outputDir;
+	
+	public File moduleDir;
+	
+	public File moduleTestDir;
 
 	public ITest test;
 
@@ -44,12 +48,16 @@ public class TestContext {
 		params.setLaunchDir(test.launchDir);
 		params.setWorkDir(test.workDir);
 		params.setOutputDir(test.outputDir);
+		params.setModuleDir(test.moduleDir);
+		params.setModuleTestDir(test.moduleTestDir);
 
 		this.baseDir = test.baseDir;
 		this.projectDir = test.baseDir;
 		this.launchDir = test.launchDir;
 		this.workDir = test.workDir;
 		this.outputDir = test.outputDir;
+		this.moduleDir = test.moduleDir;
+		this.moduleTestDir = test.moduleTestDir;
 	}
 
 	public ParamsMap getParams() {
