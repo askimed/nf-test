@@ -38,6 +38,19 @@ When a snapshot test is failing due to an intentional implementation change, you
 nf-test test tests/main.nf.test --update-snapshot
 ```
 
+## Cleaning Obsolete Snapshots
+
+Over time, snapshots can become outdated, leading to inconsistencies in your testing process. To help you manage obsolete snapshots, nf-test generates a list of these obsolete keys.
+This list provides transparency into which snapshots are no longer needed and can be safely removed.
+
+Running your tests with the `--clean-snapshot`or `--wipe-snapshot` option removes the obsolete snapshots from the snapshot file.
+This option is useful when you want to maintain the structure of your snapshot file but remove unused entries.
+It ensures that your snapshot file only contains the snapshots required for your current tests, reducing file bloat and improving test performance.
+
+```
+nf-test test tests/main.nf.test --clean-snapshot
+```
+
 ## More Examples
 
 It is also possible to include multiple objects into one snapshot:
