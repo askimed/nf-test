@@ -1,5 +1,5 @@
 # Snapshots
-:octicons-tag-24: 0.7.0 ·
+:octicons-tag-24: 0.7.0
 
 Snapshots are a very useful tool whenever you want to make sure your output channels or output files not change unexpectedly. This feature is highly inspired by [Jest](https://jestjs.io/).
 
@@ -39,6 +39,8 @@ nf-test test tests/main.nf.test --update-snapshot
 ```
 
 ## Cleaning Obsolete Snapshots
+
+:octicons-tag-24: 0.8.0
 
 Over time, snapshots can become outdated, leading to inconsistencies in your testing process. To help you manage obsolete snapshots, nf-test generates a list of these obsolete keys.
 This list provides transparency into which snapshots are no longer needed and can be safely removed.
