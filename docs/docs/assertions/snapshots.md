@@ -51,6 +51,8 @@ It ensures that your snapshot file only contains the snapshots required for your
 nf-test test tests/main.nf.test --clean-snapshot
 ```
 
+>:bulb: Obsolete snapshots can only be detected when running all tests in a test file simultaneously, and when all tests pass. If you run a single test or if tests are skipped, nf-test cannot detect obsolete snapshots.
+
 ## More Examples
 
 It is also possible to include multiple objects into one snapshot:
