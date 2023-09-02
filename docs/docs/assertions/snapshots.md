@@ -55,7 +55,8 @@ nf-test test tests/main.nf.test --clean-snapshot
 
 >:bulb: Obsolete snapshots can only be detected when running all tests in a test file simultaneously, and when all tests pass. If you run a single test or if tests are skipped, nf-test cannot detect obsolete snapshots.
 
-## More Examples
+
+## Constructing Complex Snapshots
 
 It is also possible to include multiple objects into one snapshot:
 
@@ -86,7 +87,7 @@ By default the snapshot has the same name as the test. You can also store a snap
 assert snapshot(workflow).match("workflow")
 ```
 
-The next example creates a snaphot of two files and saves it under "files".
+The next example creates a snapshot of two files and saves it under "files".
 
 ```Groovy
 assert snapshot(path("${params.outdir}/file1.txt"), path("${params.outdir}/file2.txt")).match("files")
@@ -101,3 +102,56 @@ You can also use helper methods to add objects to snapshots. For example, you ca
 ## File Paths
 
 If nf-test detects a path in the snapshot it automatically replace it by a unique *fingerprint* of the file that ensures the file content is the same. The fingerprint is default the md5 sum.
+
+
+## Snapshot Differences
+
+:octicons-tag-24: 0.8.0
+
+By default, nf-test uses the `diff` tool for comparing snapshots. It employs the following default arguments:
+
+- `-y`: Enables side-by-side comparison mode.
+- `-W 200`: Sets the maximum width for displaying the differences to 200 characters.
+
+These default arguments are applied when no custom settings are specified.
+
+>:bulb: If `diff`is not installed on the system, nf-test will print exepcted and found snapshots without highlighting differences.
+
+
+### Customizing Diff Tool Arguments
+
+Users have the flexibility to customize the arguments passed to the diff tool using an environment variable called `NFT_DIFF_ARGS`. This environment variable allows you to modify the way the diff tool behaves when comparing snapshots.
+
+To customize the arguments, follow these steps:
+
+1. Set the `NFT_DIFF_ARGS` environment variable with your desired arguments.
+
+    ```bash
+    export NFT_DIFF_ARGS="<your_custom_arguments>"
+    ```
+
+2. Run `nf-test` to perform snapshot comparison, and it will utilize the custom arguments specified in `NFT_DIFF_ARGS`.
+
+### Changing the Diff Tool
+
+`nf-test` not only allows you to customize the arguments but also provides the flexibility to change the diff tool itself. This can be achieved by using the environment variable `NFT_DIFF`.
+
+#### Example: Using icdiff
+
+As an example, you can change the diff tool to `icdiff`, which supports features like colors. To switch to `icdiff`, follow these steps:
+
+1. Install [icdiff](https://github.com/jeffkaufman/icdiff)
+
+2. Set the `NFT_DIFF` environment variable to `icdiff` to specify the new diff tool.
+
+    ```bash
+    export NFT_DIFF="icdiff"
+    ```
+
+3. If needed, customize the arguments for `icdiff` using `NFT_DIFF_ARGS` as explained in the previous section
+
+    ```bash
+    export NFT_DIFF_ARGS="-N --cols 200 -L expected -L observed -t"
+    ```
+
+4. Run `nf-test`, and it will use `icdiff` as the diff tool for comparing snapshots.

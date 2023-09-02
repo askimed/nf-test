@@ -3,6 +3,8 @@ package com.askimed.nf.test.lang.extensions;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import com.askimed.nf.test.lang.extensions.util.SnapshotDiffUtil;
+
 import groovy.json.JsonGenerator;
 import groovy.json.JsonOutput;
 
@@ -47,9 +49,9 @@ public class SnapshotFileItem {
 		if (toString().equals(snapshotItem.toString())) {
 			return true;
 		}
-
+		
 		throw new RuntimeException(
-				"Different Snapshot: \nFound:\n" + toString() + "\n\nExpected:\n" + snapshotItem.toString());
+				"Different Snapshot:\n" + SnapshotDiffUtil.getDiff(snapshotItem, this));
 
 	}
 
