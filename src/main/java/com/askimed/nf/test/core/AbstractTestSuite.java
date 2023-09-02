@@ -36,8 +36,6 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	private boolean failedTests = false;
 
 	private List<String> tags = new Vector<String>();
-
-	private List<String> tags = new Vector<String>();
 	
 	@Override
 	public void configure(Config config) {
