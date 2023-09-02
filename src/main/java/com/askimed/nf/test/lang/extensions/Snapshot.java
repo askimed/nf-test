@@ -1,6 +1,6 @@
 package com.askimed.nf.test.lang.extensions;
 
-import java.util.Date;
+import java.io.IOException;
 
 import com.askimed.nf.test.core.ITest;
 
@@ -14,28 +14,29 @@ public class Snapshot {
 
 	public Snapshot(Object actual, ITest test) {
 		this.actual = actual;
-		this.file = SnapshotFile.loadByTestSuite(test.getTestSuite());
+		this.file = test.getTestSuite().getSnapshot();
 		this.test = test;
 	}
 
-	public boolean match() {
+	public boolean match() throws IOException {
 		return match(test.getName());
 	}
 
-	public boolean match(String id) {
+	public boolean match(String id) throws IOException {
 		SnapshotFileItem expected = file.getSnapshot(id);
+		//new snapshot --> create snapshot
 		if (expected == null) {
-			file.updateSnapshot(id, actual);
+			file.createSnapshot(id, actual);
 			file.save();
 			return true;
 		}
 
 		try {
-			return new SnapshotFileItem(new Date(), actual).equals(expected);
+			//compare actual snapshot with expected
+			return new SnapshotFileItem(actual).equals(expected);
 		} catch (Exception e) {
-			// test failes
+			// test failes and flag set --> update snapshot
 			if (test.isUpdateSnapshot()) {
-				// udpate snapshot
 				file.updateSnapshot(id, actual);
 				file.save();
 				return true;
@@ -45,9 +46,9 @@ public class Snapshot {
 		}
 
 	}
-	
+
 	public void view() {
-		
+
 	}
 
 }

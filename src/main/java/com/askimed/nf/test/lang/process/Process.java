@@ -11,12 +11,6 @@ public class Process extends WorkflowMeta {
 
 	private String mapping = "";
 
-	private String name = "process";
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
 	}
@@ -38,11 +32,6 @@ public class Process extends WorkflowMeta {
 
 	public void viewChannels() {
 		out.view();
-	}
-
-	@Override
-	public String toString() {
-		return name;
 	}
 
 }

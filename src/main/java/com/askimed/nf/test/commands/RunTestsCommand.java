@@ -55,6 +55,11 @@ public class RunTestsCommand extends AbstractCommand {
 	@Option(names = { "--update-snapshot",
 			"--updateSnapshot" }, description = "Use this flag to re-record every snapshot that fails during this test run.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean updateSnapshot = false;
+
+	@Option(names = { "--clean-snapshot", "--cleanSnapshot", "--wipe-snapshot",
+			"--wipeSnapshot" }, description = "Removes all obsolete snapshots.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean cleanSnapshot = false;
+
 	@Option(names = {
 			"--lib" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String lib = "";
@@ -148,6 +153,7 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.setDebug(debug);
 			engine.setWorkDir(workDir);
 			engine.setUpdateSnapshot(updateSnapshot);
+			engine.setCleanSnapshot(cleanSnapshot);
 			engine.setLibDir(libDir);
 			engine.setPluginManager(manager);
 
