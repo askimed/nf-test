@@ -3,9 +3,9 @@ package com.askimed.nf.test.lang.process;
 import java.io.IOException;
 
 import com.askimed.nf.test.core.AbstractTestSuite;
+import com.askimed.nf.test.core.ITest;
 
 import groovy.lang.Closure;
-import groovy.lang.DelegatesTo;
 
 public class ProcessTestSuite extends AbstractTestSuite {
 
@@ -23,18 +23,15 @@ public class ProcessTestSuite extends AbstractTestSuite {
 		return process;
 	}
 
-	public void test(String name,
-			@DelegatesTo(value = ProcessTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure)
-			throws IOException {
+	public void test(String name, Closure closure) throws IOException {
+		addTestClosure(name, closure);
+	}
 
-		final ProcessTest test = new ProcessTest(this);	
+	@Override
+	protected ITest getNewTestInstance(String name) {
+		ProcessTest test = new ProcessTest(this);
 		test.name(name);
-		test.setup(getHomeDirectory());
-		closure.setDelegate(test);
-		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
-		closure.call();
-		addTest(test);
-
+		return test;
 	}
 
 }

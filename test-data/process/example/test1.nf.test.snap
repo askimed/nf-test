@@ -5,13 +5,15 @@
                 "stderr": [
                     
                 ],
-                "errorReport": "",
+                "errorReport": null,
                 "exitStatus": 0,
                 "failed": false,
                 "stdout": [
-                    "WARN: Input `set` must define at least two component -- Check process `test`"
+                    "Process channel 0...",
+                    "WARN: Task runtime metrics are not reported when using macOS without a container engine",
+                    "Wrote channel 0 to /Users/lukfor/Development/git/nf-test/.nf-test/tests/f36147d1fb4170e5875898826b94b5d6/meta/output_0.json"
                 ],
-                "errorMessage": "",
+                "errorMessage": null,
                 "trace": {
                     "tasksFailed": 0,
                     "tasksCount": 5,
@@ -28,6 +30,6 @@
                 "5_28.txt:md5,b6713b59c66f67fd6a28e8b09ff4f582"
             ]
         ],
-        "timestamp": "2022-10-13T10:39:36+0000"
+        "timestamp": "2023-09-02T14:52:13.274694"
     }
 }

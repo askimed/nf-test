@@ -3,9 +3,9 @@ package com.askimed.nf.test.lang.workflow;
 import java.io.IOException;
 
 import com.askimed.nf.test.core.AbstractTestSuite;
+import com.askimed.nf.test.core.ITest;
 
 import groovy.lang.Closure;
-import groovy.lang.DelegatesTo;
 
 public class WorkflowTestSuite extends AbstractTestSuite {
 
@@ -23,18 +23,16 @@ public class WorkflowTestSuite extends AbstractTestSuite {
 		return workflow;
 	}
 
-	public void test(String name,
-			@DelegatesTo(value = WorkflowTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure)
-			throws IOException {
-
-		final WorkflowTest test = new WorkflowTest(this);	
-		test.name(name);
-		test.setup(getHomeDirectory());
-		closure.setDelegate(test);
-		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
-		closure.call();
-		addTest(test);
-
+	public void test(String name, Closure closure) throws IOException {
+		addTestClosure(name, closure);
 	}
+
+	@Override
+	protected ITest getNewTestInstance(String name) {
+		WorkflowTest test = new WorkflowTest(this);
+		test.name(name);
+		return test;
+	}
+
 
 }

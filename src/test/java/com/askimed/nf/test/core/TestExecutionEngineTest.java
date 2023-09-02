@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class TestExecutionEngineTest {
 
 	@Test
-	public void executeAllTests() throws Exception {
+	public void executeAllTests() throws Throwable {
 
 		TagQuery query = new TagQuery();
 		List<String> tests = collectTests(query);
@@ -24,7 +24,7 @@ public class TestExecutionEngineTest {
 	}
 
 	@Test
-	public void executeTestByName() throws Exception {
+	public void executeTestByName() throws Throwable {
 
 		TagQuery query = new TagQuery("test 1");
 		List<String> tests = collectTests(query);
@@ -34,7 +34,7 @@ public class TestExecutionEngineTest {
 	}
 
 	@Test
-	public void executeTestSuiteByName() throws Exception {
+	public void executeTestSuiteByName() throws Throwable {
 		{
 			TagQuery query = new TagQuery("suite 1");
 			List<String> tests = collectTests(query);
@@ -53,7 +53,7 @@ public class TestExecutionEngineTest {
 	}
 
 	@Test
-	public void executeTestsByTag() throws Exception {
+	public void executeTestsByTag() throws Throwable {
 		{
 			TagQuery query = new TagQuery("tag2");
 			List<String> tests = collectTests(query);
@@ -69,7 +69,7 @@ public class TestExecutionEngineTest {
 	}
 
 	@Test
-	public void executeTestsByTagAcrossSuites() throws Exception {
+	public void executeTestsByTagAcrossSuites() throws Throwable {
 
 		TagQuery query = new TagQuery("tag5");
 		List<String> tests = collectTests(query);
@@ -79,7 +79,7 @@ public class TestExecutionEngineTest {
 	}
 
 	@Test
-	public void executeTestsBySuiteTag() throws Exception {
+	public void executeTestsBySuiteTag() throws Throwable {
 
 		TagQuery query = new TagQuery("tag1");
 		List<String> tests = collectTests(query);
@@ -89,7 +89,7 @@ public class TestExecutionEngineTest {
 	}
 
 	@Test
-	public void executeTestsByMultipleTags() throws Exception {
+	public void executeTestsByMultipleTags() throws Throwable {
 
 		TagQuery query = new TagQuery("tag3", "tag4");
 		List<String> tests = collectTests(query);
@@ -98,7 +98,7 @@ public class TestExecutionEngineTest {
 		assertTrue(tests.contains("test 2"));
 	}
 
-	protected List<String> collectTests(TagQuery query) throws Exception {
+	protected List<String> collectTests(TagQuery query) throws Throwable {
 		List<File> scripts = new Vector<File>();
 		scripts.add(new File("test-data/suite1.nf.test"));
 		scripts.add(new File("test-data/suite2.nf.test"));

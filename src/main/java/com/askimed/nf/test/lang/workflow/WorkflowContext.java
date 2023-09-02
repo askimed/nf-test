@@ -14,7 +14,7 @@ public class WorkflowContext extends TestContext {
 	public WorkflowContext(ITest test) {
 		super(test);
 	}
-
+	
 	public void workflow(Closure<Object> closure) {
 		workflowClosure = closure;
 	}

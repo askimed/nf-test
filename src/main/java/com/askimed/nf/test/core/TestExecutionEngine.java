@@ -92,7 +92,7 @@ public class TestExecutionEngine {
 		this.pluginManager = pluginManager;
 	}
 
-	protected List<ITestSuite> parse(TagQuery tagQuery) throws Exception {
+	protected List<ITestSuite> parse(TagQuery tagQuery) throws Throwable {
 
 		List<ITestSuite> testSuits = new Vector<ITestSuite>();
 

@@ -86,6 +86,10 @@ public abstract class AbstractTest implements ITest {
 	@Override
 	public void setup(File testDirectory) throws IOException {
 
+		if (testDirectory == null) {
+			throw new IOException("Testcase setup failed: No home directory set");
+		}
+				
 		launchDir = initDirectory("Launch Directory", testDirectory, DIRECTORY_TESTS, getHash());
 		metaDir = initDirectory("Meta Directory", launchDir, DIRECTORY_META);
 		outputDir = initDirectory("Output Directory", launchDir, DIRECTORY_OUTPUT);
@@ -96,7 +100,7 @@ public abstract class AbstractTest implements ITest {
 			// from config file
 			shareDirectories(SHARED_DIRECTORIES, metaDir);
 		} catch (Exception e) {
-			throw new IOException("Directories could not be shared:\n" + e);
+			throw new IOException("Testcase setup failed: Directories could not be shared:\n" + e);
 		}
 
 	}
@@ -150,7 +154,11 @@ public abstract class AbstractTest implements ITest {
 
 	@Override
 	public String getHash() {
-
+		
+		if (parent == null || parent.getFilename() == null || getName() == null || getName().isEmpty()) {
+			throw new RuntimeException("Error generating hash");
+		}
+		
 		return hash(parent.getFilename() + getName());
 
 	}

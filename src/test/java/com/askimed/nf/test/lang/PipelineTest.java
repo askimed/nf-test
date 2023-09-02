@@ -28,25 +28,7 @@ public class PipelineTest {
 	}
 
 	@Test
-	public void testDsl1() throws Exception {
-
-		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl1/test1.nf.test" });
-		assertEquals(0, exitCode);
-
-	}
-
-	@Test
-	public void testMultipleDsl1Scripts() throws Exception {
-
-		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl1/test2.nf.test",
-				"test-data/pipeline/dsl1/test1.nf.test" });
-		assertEquals(1, exitCode);
-	}
-
-	@Test
-	public void testMultipleDsl1ScriptsAndWriteTapOutput() throws Exception {
+	public void testMultipleDsl2ScriptsAndWriteTapOutput() throws Exception {
 
 		String tapOutput = "output.tap";
 
@@ -57,14 +39,14 @@ public class PipelineTest {
 		assertFalse(output.exists());
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl1/test2.nf.test",
-				"test-data/pipeline/dsl1/test1.nf.test", "--tap", tapOutput });
+		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl2/trial.nf.test",
+				"test-data/pipeline/dsl2/trial.fail.nf.test", "--tap", tapOutput });
 		assertEquals(1, exitCode);
 		assertTrue(output.exists());
 	}
 
 	@Test
-	public void testMultipleDsl1ScriptsAndWriteXmlOutput() throws Exception {
+	public void testMultipleDsl2ScriptsAndWriteXmlOutput() throws Exception {
 
 		String xmlOutput = "output.junit.xml";
 
@@ -75,8 +57,8 @@ public class PipelineTest {
 		assertFalse(output.exists());
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl1/test2.nf.test",
-				"test-data/pipeline/dsl1/test1.nf.test", "--junitxml", xmlOutput });
+		int exitCode = app.run(new String[] { "test", "test-data/pipeline/dsl2/trial.nf.test",
+				"test-data/pipeline/dsl2/trial.fail.nf.test", "--junitxml", xmlOutput });
 		assertEquals(1, exitCode);
 		assertTrue(output.exists());
 		assertXmlSchemaValidation("test-data/pipeline/junit_schema.xsd", xmlOutput);
@@ -99,7 +81,7 @@ public class PipelineTest {
 		assertEquals(1, exitCode);
 
 	}
-	
+
 	@Test
 	public void testPipelineThatUsesWorkflowKeywordShouldFail() throws Exception {
 
@@ -108,7 +90,7 @@ public class PipelineTest {
 		assertEquals(1, exitCode);
 
 	}
-	
+
 	@Test
 	public void testPipelineThatUsesLaunchDir() throws Exception {
 
@@ -117,9 +99,10 @@ public class PipelineTest {
 		assertEquals(0, exitCode);
 
 	}
-	
-	// Thanks: https://www.digitalocean.com/community/tutorials/how-to-validate-xml-against-xsd-in-java
-	public static void assertXmlSchemaValidation(String xsdPath, String xmlPath) throws Exception{
+
+	// Thanks:
+	// https://www.digitalocean.com/community/tutorials/how-to-validate-xml-against-xsd-in-java
+	public static void assertXmlSchemaValidation(String xsdPath, String xmlPath) throws Exception {
 		SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 		Schema schema = factory.newSchema(new File(xsdPath));
 		Validator validator = schema.newValidator();

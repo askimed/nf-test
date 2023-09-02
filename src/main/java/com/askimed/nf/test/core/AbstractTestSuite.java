@@ -7,10 +7,12 @@ import java.util.Vector;
 import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.lang.extensions.SnapshotFile;
 
+import groovy.lang.Closure;
+
 public abstract class AbstractTestSuite implements ITestSuite {
 
 	private String script = null;
-	
+
 	private String name;
 
 	private String profile = null;
@@ -36,7 +38,9 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	private boolean failedTests = false;
 
 	private List<String> tags = new Vector<String>();
-	
+
+	private List<NamedClosure> testClosures = new Vector<NamedClosure>();
+
 	@Override
 	public void configure(Config config) {
 		autoSort = config.isAutoSort();
@@ -55,11 +59,33 @@ public abstract class AbstractTestSuite implements ITestSuite {
 			return script;
 		}
 	}
-	
+
+	protected void addTestClosure(String name, Closure closure) {
+		// TODO: check if name is unique!
+
+		testClosures.add(new NamedClosure(name, closure));
+	}
+
+	public void evalualteTestClosures() throws Throwable {
+		for (NamedClosure namedClosure : testClosures) {
+			String testName = namedClosure.name;
+			Closure closure = namedClosure.closure;
+			
+			ITest test = getNewTestInstance(testName);
+			test.setup(getHomeDirectory());
+			closure.setDelegate(test);
+			closure.setResolveStrategy(Closure.DELEGATE_ONLY);
+			closure.call();
+			addTest(test);
+		}
+	}
+
+	protected abstract ITest getNewTestInstance(String name);
+
 	public void setScript(String script) {
 		this.script = script;
 	}
-	
+
 	public void name(String name) {
 		this.name = name;
 	}
@@ -146,7 +172,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		return tests;
 	}
 
-	protected void addTest(ITest test) {
+	private void addTest(ITest test) {
 		tests.add(test);
 	}
 
@@ -203,6 +229,16 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	protected boolean isRelative(String path) {
 		return path.startsWith("../") || path.startsWith("./");
+	}
+
+	class NamedClosure {
+		public String name;
+		public Closure closure;
+
+		public NamedClosure(String name, Closure closure) {
+			this.name = name;
+			this.closure = closure;
+		}
 	}
 
 }

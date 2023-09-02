@@ -38,6 +38,15 @@ public class ProcessTest {
 		assertEquals(0, exitCode);
 
 	}
+	
+	@Test
+	public void testExample() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/example/test1.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
 
 	/*@Test
 	public void testDisableAutoSortConfig() throws Exception {
