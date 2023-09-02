@@ -27,7 +27,7 @@ nextflow_process {
        assert file.text == "lukas forer ${i}\n"
      }
      assert snapshot(
-        workflow, path("${params.outdir}").list()
+        workflow.success, path("${params.outdir}").list()
      ).match("process_test_1")
    }
 
