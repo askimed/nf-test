@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.5">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.6">
     
     
       
@@ -722,6 +722,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#cleaning-obsolete-snapshots" class="md-nav__link">
+    Cleaning Obsolete Snapshots
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#more-examples" class="md-nav__link">
     More Examples
   </a>
@@ -1140,7 +1147,7 @@
 
 
 <h1 id="snapshots">Snapshots</h1>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 6.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Z"/><path d="M2.5 1h8.44a1.5 1.5 0 0 1 1.06.44l10.25 10.25a1.5 1.5 0 0 1 0 2.12l-8.44 8.44a1.5 1.5 0 0 1-2.12 0L1.44 12A1.497 1.497 0 0 1 1 10.94V2.5A1.5 1.5 0 0 1 2.5 1Zm0 1.5v8.44l10.25 10.25 8.44-8.44L10.94 2.5Z"/></svg></span> 0.7.0 ·</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 6.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Z"/><path d="M2.5 1h8.44a1.5 1.5 0 0 1 1.06.44l10.25 10.25a1.5 1.5 0 0 1 0 2.12l-8.44 8.44a1.5 1.5 0 0 1-2.12 0L1.44 12A1.497 1.497 0 0 1 1 10.94V2.5A1.5 1.5 0 0 1 2.5 1Zm0 1.5v8.44l10.25 10.25 8.44-8.44L10.94 2.5Z"/></svg></span> 0.7.0</p>
 <p>Snapshots are a very useful tool whenever you want to make sure your output channels or output files not change unexpectedly. This feature is highly inspired by <a href="https://jestjs.io/">Jest</a>.</p>
 <p>A typical snapshot test case takes a snapshot of the output channels or any other object, then compares it to a reference snapshot file stored alongside the test (<code>*.nf.test.snap</code>). The test will fail, if the two snapshots do not match: either the change is unexpected, or the reference snapshot needs to be updated to the new output of a process, workflow, pipeline or function.</p>
 <h2 id="using-snapshots">Using Snapshots</h2>
@@ -1159,6 +1166,18 @@
 <p>When a snapshot test is failing due to an intentional implementation change, you can use the <code>--update-snapshot</code> flag to re-generate snapshots for all failed tests.</p>
 <div class="highlight"><pre><span></span><code>nf-test test tests/main.nf.test --update-snapshot
 </code></pre></div>
+<h2 id="cleaning-obsolete-snapshots">Cleaning Obsolete Snapshots</h2>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 6.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Z"/><path d="M2.5 1h8.44a1.5 1.5 0 0 1 1.06.44l10.25 10.25a1.5 1.5 0 0 1 0 2.12l-8.44 8.44a1.5 1.5 0 0 1-2.12 0L1.44 12A1.497 1.497 0 0 1 1 10.94V2.5A1.5 1.5 0 0 1 2.5 1Zm0 1.5v8.44l10.25 10.25 8.44-8.44L10.94 2.5Z"/></svg></span> 0.8.0</p>
+<p>Over time, snapshots can become outdated, leading to inconsistencies in your testing process. To help you manage obsolete snapshots, nf-test generates a list of these obsolete keys.
+This list provides transparency into which snapshots are no longer needed and can be safely removed.</p>
+<p>Running your tests with the <code>--clean-snapshot</code>or <code>--wipe-snapshot</code> option removes the obsolete snapshots from the snapshot file.
+This option is useful when you want to maintain the structure of your snapshot file but remove unused entries.
+It ensures that your snapshot file only contains the snapshots required for your current tests, reducing file bloat and improving test performance.</p>
+<div class="highlight"><pre><span></span><code>nf-test test tests/main.nf.test --clean-snapshot
+</code></pre></div>
+<blockquote>
+<p><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4a1.svg" title=":bulb:" /> Obsolete snapshots can only be detected when running all tests in a test file simultaneously, and when all tests pass. If you run a single test or if tests are skipped, nf-test cannot detect obsolete snapshots.</p>
+</blockquote>
 <h2 id="more-examples">More Examples</h2>
 <p>It is also possible to include multiple objects into one snapshot:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">workflow</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">channel1</span><span class="o">,</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">channel2</span><span class="o">).</span><span class="na">match</span><span class="o">()</span>
