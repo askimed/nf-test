@@ -729,8 +729,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#more-examples" class="md-nav__link">
-    More Examples
+  <a href="#constructing-complex-snapshots" class="md-nav__link">
+    Constructing Complex Snapshots
   </a>
   
 </li>
@@ -739,6 +739,46 @@
   <a href="#file-paths" class="md-nav__link">
     File Paths
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snapshot-differences" class="md-nav__link">
+    Snapshot Differences
+  </a>
+  
+    <nav class="md-nav" aria-label="Snapshot Differences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customizing-diff-tool-arguments" class="md-nav__link">
+    Customizing Diff Tool Arguments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changing-the-diff-tool" class="md-nav__link">
+    Changing the Diff Tool
+  </a>
+  
+    <nav class="md-nav" aria-label="Changing the Diff Tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-using-icdiff" class="md-nav__link">
+    Example: Using icdiff
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1178,7 +1218,7 @@ It ensures that your snapshot file only contains the snapshots required for your
 <blockquote>
 <p><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4a1.svg" title=":bulb:" /> Obsolete snapshots can only be detected when running all tests in a test file simultaneously, and when all tests pass. If you run a single test or if tests are skipped, nf-test cannot detect obsolete snapshots.</p>
 </blockquote>
-<h2 id="more-examples">More Examples</h2>
+<h2 id="constructing-complex-snapshots">Constructing Complex Snapshots</h2>
 <p>It is also possible to include multiple objects into one snapshot:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">workflow</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">channel1</span><span class="o">,</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">channel2</span><span class="o">).</span><span class="na">match</span><span class="o">()</span>
 </code></pre></div>
@@ -1196,7 +1236,7 @@ It ensures that your snapshot file only contains the snapshots required for your
 <p>By default the snapshot has the same name as the test. You can also store a snapshot under a user defined name. This enables you to use multiple snapshots in one single test and to separate them in a logical way. In the following example a workflow snapshot is created, stored under the name "workflow".</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">workflow</span><span class="o">).</span><span class="na">match</span><span class="o">(</span><span class="s2">&quot;workflow&quot;</span><span class="o">)</span>
 </code></pre></div>
-<p>The next example creates a snaphot of two files and saves it under "files".</p>
+<p>The next example creates a snapshot of two files and saves it under "files".</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;${params.outdir}/file1.txt&quot;</span><span class="o">),</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;${params.outdir}/file2.txt&quot;</span><span class="o">)).</span><span class="na">match</span><span class="o">(</span><span class="s2">&quot;files&quot;</span><span class="o">)</span>
 </code></pre></div>
 <p>You can also use helper methods to add objects to snapshots. For example, you can use the <code>list()</code>method to add all files of a folder to a snapshot:</p>
@@ -1204,6 +1244,52 @@ It ensures that your snapshot file only contains the snapshots required for your
 </code></pre></div>
 <h2 id="file-paths">File Paths</h2>
 <p>If nf-test detects a path in the snapshot it automatically replace it by a unique <em>fingerprint</em> of the file that ensures the file content is the same. The fingerprint is default the md5 sum.</p>
+<h2 id="snapshot-differences">Snapshot Differences</h2>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 6.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Z"/><path d="M2.5 1h8.44a1.5 1.5 0 0 1 1.06.44l10.25 10.25a1.5 1.5 0 0 1 0 2.12l-8.44 8.44a1.5 1.5 0 0 1-2.12 0L1.44 12A1.497 1.497 0 0 1 1 10.94V2.5A1.5 1.5 0 0 1 2.5 1Zm0 1.5v8.44l10.25 10.25 8.44-8.44L10.94 2.5Z"/></svg></span> 0.8.0</p>
+<p>By default, nf-test uses the <code>diff</code> tool for comparing snapshots. It employs the following default arguments:</p>
+<ul>
+<li><code>-y</code>: Enables side-by-side comparison mode.</li>
+<li><code>-W 200</code>: Sets the maximum width for displaying the differences to 200 characters.</li>
+</ul>
+<p>These default arguments are applied when no custom settings are specified.</p>
+<blockquote>
+<p><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4a1.svg" title=":bulb:" /> If <code>diff</code>is not installed on the system, nf-test will print exepcted and found snapshots without highlighting differences.</p>
+</blockquote>
+<h3 id="customizing-diff-tool-arguments">Customizing Diff Tool Arguments</h3>
+<p>Users have the flexibility to customize the arguments passed to the diff tool using an environment variable called <code>NFT_DIFF_ARGS</code>. This environment variable allows you to modify the way the diff tool behaves when comparing snapshots.</p>
+<p>To customize the arguments, follow these steps:</p>
+<ol>
+<li>
+<p>Set the <code>NFT_DIFF_ARGS</code> environment variable with your desired arguments.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NFT_DIFF_ARGS</span><span class="o">=</span><span class="s2">&quot;&lt;your_custom_arguments&gt;&quot;</span>
+</code></pre></div>
+</li>
+<li>
+<p>Run <code>nf-test</code> to perform snapshot comparison, and it will utilize the custom arguments specified in <code>NFT_DIFF_ARGS</code>.</p>
+</li>
+</ol>
+<h3 id="changing-the-diff-tool">Changing the Diff Tool</h3>
+<p><code>nf-test</code> not only allows you to customize the arguments but also provides the flexibility to change the diff tool itself. This can be achieved by using the environment variable <code>NFT_DIFF</code>.</p>
+<h4 id="example-using-icdiff">Example: Using icdiff</h4>
+<p>As an example, you can change the diff tool to <code>icdiff</code>, which supports features like colors. To switch to <code>icdiff</code>, follow these steps:</p>
+<ol>
+<li>
+<p>Install <a href="https://github.com/jeffkaufman/icdiff">icdiff</a></p>
+</li>
+<li>
+<p>Set the <code>NFT_DIFF</code> environment variable to <code>icdiff</code> to specify the new diff tool.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NFT_DIFF</span><span class="o">=</span><span class="s2">&quot;icdiff&quot;</span>
+</code></pre></div>
+</li>
+<li>
+<p>If needed, customize the arguments for <code>icdiff</code> using <code>NFT_DIFF_ARGS</code> as explained in the previous section</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NFT_DIFF_ARGS</span><span class="o">=</span><span class="s2">&quot;-N --cols 200 -L expected -L observed -t&quot;</span>
+</code></pre></div>
+</li>
+<li>
+<p>Run <code>nf-test</code>, and it will use <code>icdiff</code> as the diff tool for comparing snapshots.</p>
+</li>
+</ol>
 
 
 
