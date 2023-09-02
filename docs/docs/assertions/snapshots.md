@@ -56,7 +56,7 @@ nf-test test tests/main.nf.test --clean-snapshot
 >:bulb: Obsolete snapshots can only be detected when running all tests in a test file simultaneously, and when all tests pass. If you run a single test or if tests are skipped, nf-test cannot detect obsolete snapshots.
 
 
-## More Examples
+## Constructing Complex Snapshots
 
 It is also possible to include multiple objects into one snapshot:
 
@@ -87,7 +87,7 @@ By default the snapshot has the same name as the test. You can also store a snap
 assert snapshot(workflow).match("workflow")
 ```
 
-The next example creates a snaphot of two files and saves it under "files".
+The next example creates a snapshot of two files and saves it under "files".
 
 ```Groovy
 assert snapshot(path("${params.outdir}/file1.txt"), path("${params.outdir}/file2.txt")).match("files")
@@ -105,6 +105,8 @@ If nf-test detects a path in the snapshot it automatically replace it by a uniqu
 
 
 ## Snapshot Differences
+
+:octicons-tag-24: 0.8.0
 
 By default, nf-test uses the `diff` tool for comparing snapshots. It employs the following default arguments:
 
