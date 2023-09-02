@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import com.askimed.nf.test.config.Config;
+import com.askimed.nf.test.lang.extensions.SnapshotFile;
 
 public interface ITestSuite extends ITaggable {
 
@@ -22,5 +23,15 @@ public interface ITestSuite extends ITaggable {
 	public String getDirectory();
 
 	public void configure(Config config);
+	
+	public boolean hasSkippedTests();
+	
+	public void setFailedTests(boolean b);
+	
+	public boolean hasFailedTests();
+	
+	public SnapshotFile getSnapshot();
+	
+	public boolean hasSnapshotLoaded();
 
 }

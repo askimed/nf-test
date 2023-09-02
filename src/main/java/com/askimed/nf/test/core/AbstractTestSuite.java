@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.askimed.nf.test.config.Config;
+import com.askimed.nf.test.lang.extensions.SnapshotFile;
 
 public abstract class AbstractTestSuite implements ITestSuite {
 
@@ -29,6 +30,12 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	private String directory = "";
 
 	private File homeDirectory = new File(Config.DEFAULT_HOME);
+
+	private SnapshotFile snapshotFile;
+
+	private boolean failedTests = false;
+
+	private List<String> tags = new Vector<String>();
 
 	private List<String> tags = new Vector<String>();
 	
@@ -157,6 +164,39 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	@Override
 	public ITaggable getParent() {
 		return null;
+	}
+
+	@Override
+	public boolean hasSkippedTests() {
+		for (ITest test : getTests()) {
+			if (test.isSkipped()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public SnapshotFile getSnapshot() {
+		if (snapshotFile == null) {
+			snapshotFile = SnapshotFile.loadByTestSuite(this);
+		}
+		return snapshotFile;
+	}
+
+	@Override
+	public boolean hasSnapshotLoaded() {
+		return (snapshotFile != null);
+	}
+
+	@Override
+	public void setFailedTests(boolean failedTests) {
+		this.failedTests = failedTests;
+	}
+
+	@Override
+	public boolean hasFailedTests() {
+		return failedTests;
 	}
 
 	protected String makeAbsolute(String path) {

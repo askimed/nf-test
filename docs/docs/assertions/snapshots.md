@@ -1,5 +1,5 @@
 # Snapshots
-:octicons-tag-24: 0.7.0 ·
+:octicons-tag-24: 0.7.0
 
 Snapshots are a very useful tool whenever you want to make sure your output channels or output files not change unexpectedly. This feature is highly inspired by [Jest](https://jestjs.io/).
 
@@ -37,6 +37,23 @@ When a snapshot test is failing due to an intentional implementation change, you
 ```
 nf-test test tests/main.nf.test --update-snapshot
 ```
+
+## Cleaning Obsolete Snapshots
+
+:octicons-tag-24: 0.8.0
+
+Over time, snapshots can become outdated, leading to inconsistencies in your testing process. To help you manage obsolete snapshots, nf-test generates a list of these obsolete keys.
+This list provides transparency into which snapshots are no longer needed and can be safely removed.
+
+Running your tests with the `--clean-snapshot`or `--wipe-snapshot` option removes the obsolete snapshots from the snapshot file.
+This option is useful when you want to maintain the structure of your snapshot file but remove unused entries.
+It ensures that your snapshot file only contains the snapshots required for your current tests, reducing file bloat and improving test performance.
+
+```
+nf-test test tests/main.nf.test --clean-snapshot
+```
+
+>:bulb: Obsolete snapshots can only be detected when running all tests in a test file simultaneously, and when all tests pass. If you run a single test or if tests are skipped, nf-test cannot detect obsolete snapshots.
 
 ## More Examples
 

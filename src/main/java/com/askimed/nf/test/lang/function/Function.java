@@ -13,12 +13,6 @@ public class Function extends WorkflowMeta {
 
 	private String mapping = "";
 
-	private String name = "function";
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
 	}
@@ -33,11 +27,6 @@ public class Function extends WorkflowMeta {
 
 	public void setResult(Object result) {
 		this.result = result;
-	}
-
-	@Override
-	public String toString() {
-		return name;
 	}
 
 	public void loadResult(File folder) {

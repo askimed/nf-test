@@ -38,6 +38,15 @@ public class FunctionTest {
 	}
 
 	@Test
+	public void testScriptWithSnapshot() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/function/default/functions.snapshot.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+
+	@Test
 	public void testScriptWihtMultipleFunctions() throws Exception {
 
 		App app = new App();
@@ -45,15 +54,14 @@ public class FunctionTest {
 		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testGroovyScript() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/function/utils/Utils.groovy.test" ,"--debug"});
+		int exitCode = app.run(new String[] { "test", "test-data/function/utils/Utils.groovy.test", "--debug" });
 		assertEquals(0, exitCode);
 
 	}
-
 
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import com.askimed.nf.test.lang.TestSuiteBuilder;
+import com.askimed.nf.test.lang.extensions.SnapshotFile;
 import com.askimed.nf.test.plugins.PluginManager;
 import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
@@ -32,6 +33,8 @@ public class TestExecutionEngine {
 	private boolean withTrace = true;
 
 	private boolean updateSnapshot = false;
+
+	private boolean cleanSnapshot = false;
 
 	private String libDir = "";
 
@@ -67,6 +70,10 @@ public class TestExecutionEngine {
 			System.out.println("Warning: every snapshot that fails during this test run is re-record.");
 		}
 		this.updateSnapshot = updateSnapshot;
+	}
+
+	public void setCleanSnapshot(boolean cleanSnapshot) {
+		this.cleanSnapshot = cleanSnapshot;
 	}
 
 	public void setTagQuery(TagQuery tagQuery) {
@@ -192,12 +199,21 @@ public class TestExecutionEngine {
 					result.setThrowable(e);
 					result.setErrorReport(test.getErrorReport());
 					failed = true;
+					testSuite.setFailedTests(true);
 
 				}
 				test.cleanup();
 				result.setEndTime(System.currentTimeMillis());
 				listener.executionFinished(test, result);
 
+			}
+
+			// Remove obsolete snapshots when no test was skipped and no test failed.
+			if (cleanSnapshot && !testSuite.hasSkippedTests() && !testSuite.hasFailedTests()
+					&& testSuite.hasSnapshotLoaded()) {
+				SnapshotFile snapshot = testSuite.getSnapshot();
+				snapshot.removeObsoleteSnapshots();
+				snapshot.save();
 			}
 
 			listener.testSuiteExecutionFinished(testSuite);
