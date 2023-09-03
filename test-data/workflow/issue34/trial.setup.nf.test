@@ -6,7 +6,7 @@ nextflow_workflow {
 
     test("test_passing_file_1") {
     
-    	def filename = "${baseDir}/r9_file.txt";
+    	def filename = "${launchDir}/r9_file.txt";
     
         setup(){
 	        def r1Writer = (new File(filename)).newWriter()

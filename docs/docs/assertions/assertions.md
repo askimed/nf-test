@@ -38,11 +38,6 @@ process.out.outputCh = [
 ]
 ``` 
 
-`nf-test` cannot guarantee the order of nextflow channels that contain alternative object types, such as maps. A warning message appears in the console in such cases to highlight the potential issue. To test these channels, the `contains` and `assertContainsInAnyOrder` methods described below can be used
-```
-Warning: Cannot sort channel, order not deterministic. Unsupported objects types:
-```
-
 ## Using `with`
 
 This assertions...

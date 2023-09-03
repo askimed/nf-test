@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.codehaus.groovy.control.CompilationFailedException;
 
+import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.core.ITest;
 import com.askimed.nf.test.lang.extensions.Snapshot;
 import com.askimed.nf.test.lang.workflow.Workflow;
@@ -12,29 +13,46 @@ import groovy.lang.Closure;
 
 public class TestContext {
 
-	private ParamsMap params = new ParamsMap();
+	private ParamsMap params;
 
 	private Closure paramsClosure;
 
-	public String baseDir = "nf-test";
+	public String baseDir;
 
-	public String outputDir = "nf-test";
+	public String projectDir;
+
+	public String launchDir;
+
+	public String workDir;
+
+	public String outputDir;
+
+	public String moduleDir;
+
+	public String moduleTestDir;
 
 	public ITest test;
-
-	private String name;
 
 	private WorkflowMeta workflow = new WorkflowMeta();
 
 	public TestContext(ITest test) {
+		params = new ParamsMap(this);
 		this.test = test;
 	}
 
-	public void init(String baseDir, String outputDir) {
-		params.setBaseDir(baseDir);
-		params.setOutputDir(outputDir);
-		this.baseDir = baseDir;
-		this.outputDir = outputDir;
+	public void init(AbstractTest test) {
+
+		this.baseDir = test.baseDir.getAbsolutePath();
+		this.projectDir = test.baseDir.getAbsolutePath();
+		this.launchDir = test.launchDir.getAbsolutePath();
+		this.workDir = test.workDir.getAbsolutePath();
+		this.outputDir = test.outputDir.getAbsolutePath();
+		if (test.moduleDir != null) {
+			this.moduleDir = test.moduleDir.getAbsolutePath();
+		}
+		if (test.moduleTestDir != null) {
+			this.moduleTestDir = test.moduleTestDir.getAbsolutePath();
+		}
 	}
 
 	public ParamsMap getParams() {
@@ -50,13 +68,12 @@ public class TestContext {
 	}
 
 	public void evaluateParamsClosure() {
+
 		if (paramsClosure == null) {
 			return;
 		}
-		paramsClosure.setDelegate(params);
-		paramsClosure.setResolveStrategy(Closure.DELEGATE_FIRST);
-		paramsClosure.call();
-		paramsClosure.getMetaClass().getProperties();
+		Closure newClosure = paramsClosure.rehydrate(params, this, this);
+		newClosure.call();
 		params.evaluateNestedClosures();
 
 	}
@@ -75,14 +92,6 @@ public class TestContext {
 
 	public void loadParams(String filename) throws CompilationFailedException, ClassNotFoundException, IOException {
 		params.load(filename);
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 }

@@ -16,6 +16,8 @@ public class Config {
 
 	public static final String DEFAULT_NEXTFLOW_CONFIG = "tests/nextflow.config";
 
+	public static final String DEFAULT_HOME = ".nf-test";
+
 	private String workDir = ".nf-test";
 
 	private String testsDir = "tests";

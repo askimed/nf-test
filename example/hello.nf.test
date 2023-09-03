@@ -5,8 +5,14 @@ nextflow_pipeline {
 
   test("hello world example should start 4 processes") {
     expect {
-      assert workflow.success
-      assert snapshot(workflow).match()
+      with(workflow) {
+        assert success
+        assert trace.tasks().size() == 4
+        assert "Ciao world!" in stdout
+        assert "Bonjour world!" in stdout
+        assert "Hello world!" in stdout
+        assert "Hola world!" in stdout
+      }
     }
   }
 

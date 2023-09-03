@@ -7,7 +7,11 @@ import java.util.Vector;
 import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.lang.extensions.SnapshotFile;
 
+import groovy.lang.Closure;
+
 public abstract class AbstractTestSuite implements ITestSuite {
+
+	private String script = null;
 
 	private String name;
 
@@ -24,8 +28,10 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	private boolean autoSort = true;
 
 	private String options = "";
-	
+
 	private String directory = "";
+
+	private File homeDirectory = new File(Config.DEFAULT_HOME);
 
 	private SnapshotFile snapshotFile;
 
@@ -33,10 +39,51 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	private List<String> tags = new Vector<String>();
 
+	private List<NamedClosure> testClosures = new Vector<NamedClosure>();
+
 	@Override
 	public void configure(Config config) {
 		autoSort = config.isAutoSort();
 		options = config.getOptions();
+		homeDirectory = new File(config.getWorkDir());
+	}
+
+	public void script(String script) {
+		this.script = script;
+	}
+
+	public String getScript() {
+		if (script != null && isRelative(script)) {
+			return makeAbsolute(script);
+		} else {
+			return script;
+		}
+	}
+
+	protected void addTestClosure(String name, Closure closure) {
+		// TODO: check if name is unique!
+
+		testClosures.add(new NamedClosure(name, closure));
+	}
+
+	public void evalualteTestClosures() throws Throwable {
+		for (NamedClosure namedClosure : testClosures) {
+			String testName = namedClosure.name;
+			Closure closure = namedClosure.closure;
+			
+			ITest test = getNewTestInstance(testName);
+			test.setup(getHomeDirectory());
+			closure.setDelegate(test);
+			closure.setResolveStrategy(Closure.DELEGATE_ONLY);
+			closure.call();
+			addTest(test);
+		}
+	}
+
+	protected abstract ITest getNewTestInstance(String name);
+
+	public void setScript(String script) {
+		this.script = script;
 	}
 
 	public void name(String name) {
@@ -100,6 +147,10 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		return localConfig;
 	}
 
+	public File getHomeDirectory() {
+		return homeDirectory;
+	}
+
 	@Override
 	public void setFilename(String filename) {
 		this.filename = filename;
@@ -115,15 +166,14 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	public String getDirectory() {
 		return directory;
 	}
-	
+
 	@Override
 	public List<ITest> getTests() {
 		return tests;
 	}
 
-	protected void addTest(ITest test) {
+	private void addTest(ITest test) {
 		tests.add(test);
-		test.setTestSuite(this);
 	}
 
 	public void tag(String tag) {
@@ -176,9 +226,19 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	protected String makeAbsolute(String path) {
 		return new File(directory, path).getAbsolutePath();
 	}
-	
+
 	protected boolean isRelative(String path) {
 		return path.startsWith("../") || path.startsWith("./");
 	}
-	
+
+	class NamedClosure {
+		public String name;
+		public Closure closure;
+
+		public NamedClosure(String name, Closure closure) {
+			this.name = name;
+			this.closure = closure;
+		}
+	}
+
 }

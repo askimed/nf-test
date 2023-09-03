@@ -1,61 +1,19 @@
-# Params and Global Variables
+# Global Variables
 
-## Params
+The following variables are available and can be used in `setup`, `when`, `then` and `cleanup` closures.
 
-The `params` block is optional and is a simple map that can be used to overwrite Nextflow's input `params`. The `params` block is located in the `when` block of a testcase. You can set params manually:
+|Name|Description| Example |
+|---|---|---|
+|`baseDir` or<br/>`projectDir`| The directory where the `nf-test.config` script is located. | `mypipeline`|
+|`moduleDir`| The directory where the module script is located  | `mypipeline/modules/mymodule` |
+|`moduleTestDir`| The directory where the test script is located  | `mypipeline/tests/modules/mymodule` |
+|`launchDir`| The directory where the test is run. | `mypipeline/.nf-test/tests/<test_hash>` |
+|`metaDir`| The directory where all meta are located (e.g. `mock.nf`).| `mypipeline/.nf-test/tests/<test_hash>/meta` |
+|`workDir`| The directory where tasks temporary files are created.| `mypipeline/.nf-test/tests/<test_hash>/work` |
+|`outputDir`| An output directory in the `$launchDir` that can be used to store output files. The variable contains the absolute path. If you need a relative outpu directory see [`launchDir` example](#launchdir). | `mypipeline/.nf-test/tests/<test_hash>/output` |
+|`params`| Dictionary like object holding all parameters. | |
 
-```Groovy
-when {
-    params {
-        outdir = "output"
-    }
-}
-```
-
-It is also possible to set nested params using the same syntax as in your Nextflow script:
-
-```Groovy
-when {
-    params {
-        output {
-          dir = "output"
-        }
-    }
-}
-```
-
-In addition, you can load the `params` from a JSON file:
-
-```Groovy
-when {
-    params {
-        load("$baseDir/tests/params.json")
-    }
-}
-```
-
-or from a YAML file:
-
-```Groovy
-when {
-    params {
-        load("$baseDir/tests/params.yaml")
-    }
-}
-```
-
-nf-test allows to combine both techniques and therefor it is possible to overwrite one or more `params` from the json file:
-
-```Groovy
-when {
-    params {
-        load("$baseDir/tests/params.json")
-        outputDir = "new/output/path"
-    }
-}
-```
-
-## Global Variables
+## Examples
 
 ### `outputDir`
 
@@ -77,4 +35,23 @@ process {
     file1 = file("$baseDir/tests/input/file123.gz")
     """
 }
+```
+
+### `launchDir`
+
+This variable points to the directory where the test is executed. This can be used get access to results that are created in an relative output directory:
+
+```Groovy
+when {
+    params {
+        outdir = "results"
+    }
+}
+```
+
+```Groovy
+then {
+    assert path("$launchDir/results").exists()
+}
+
 ```

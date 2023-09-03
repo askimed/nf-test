@@ -1,0 +1,21 @@
+nextflow_pipeline {
+
+    name "Test workflow"
+    script "test-data/pipeline/dsl2/trial.nf"
+
+    test("Should run with failures") {
+        when {
+            params {
+                output = "$outputDir"
+                input  = "a,b"
+            }
+        }
+
+        then {
+            //check if test case succeeded
+            assert workflow.success
+            //check should fail
+            assert workflow.trace.tasks().size() == 4
+        }
+    }
+}

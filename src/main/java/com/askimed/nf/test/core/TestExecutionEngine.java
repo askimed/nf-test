@@ -26,8 +26,6 @@ public class TestExecutionEngine {
 
 	private String profile = null;
 
-	private File workDir = null;
-
 	private File configFile = null;
 
 	private File baseDir = new File(System.getProperty("user.dir"));
@@ -58,10 +56,6 @@ public class TestExecutionEngine {
 
 	public void setConfigFile(File configFile) {
 		this.configFile = configFile;
-	}
-
-	public void setWorkDir(File workDir) {
-		this.workDir = workDir;
 	}
 
 	public void setWithTrace(boolean withTrace) {
@@ -98,7 +92,7 @@ public class TestExecutionEngine {
 		this.pluginManager = pluginManager;
 	}
 
-	protected List<ITestSuite> parse(TagQuery tagQuery) throws Exception {
+	protected List<ITestSuite> parse(TagQuery tagQuery) throws Throwable {
 
 		List<ITestSuite> testSuits = new Vector<ITestSuite>();
 
@@ -186,7 +180,6 @@ public class TestExecutionEngine {
 				}
 				listener.executionStarted(test);
 				TestExecutionResult result = new TestExecutionResult(test);
-				test.setup(workDir);
 				test.setWithTrace(withTrace);
 				test.setUpdateSnapshot(updateSnapshot);
 				try {

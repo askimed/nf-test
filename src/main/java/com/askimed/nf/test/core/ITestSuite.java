@@ -33,5 +33,7 @@ public interface ITestSuite extends ITaggable {
 	public SnapshotFile getSnapshot();
 	
 	public boolean hasSnapshotLoaded();
+	
+	public void evalualteTestClosures() throws Throwable;
 
 }

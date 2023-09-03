@@ -31,7 +31,9 @@ public class NextflowCommand {
 
 	private File err;
 
-	private File work;
+	private File workDir;
+
+	private File launchDir;
 
 	private boolean silent = true;
 
@@ -110,12 +112,20 @@ public class NextflowCommand {
 		return log;
 	}
 
-	public void setWork(File work) {
-		this.work = work;
+	public void setWorkDir(File workDir) {
+		this.workDir = workDir;
 	}
 
-	public File getWork() {
-		return work;
+	public File getWorkDir() {
+		return launchDir;
+	}
+
+	public void setLaunchDir(File launchDir) {
+		this.launchDir = launchDir;
+	}
+
+	public File getLaunchDir() {
+		return launchDir;
 	}
 
 	public void setParamsFile(File paramsFile) {
@@ -171,14 +181,17 @@ public class NextflowCommand {
 			args.add("-with-trace");
 			args.add(trace.getAbsolutePath());
 		}
-		if (work != null) {
+		if (workDir != null) {
 			args.add("-w");
-			args.add(work.getAbsolutePath());
+			args.add(workDir.getAbsolutePath());
 		}
 
 		args.addAll(parseOptions(options));
 
 		Command nextflow = new Command(binary);
+		if (launchDir != null) {
+			nextflow.setDirectory(launchDir.getAbsolutePath());
+		}
 		nextflow.setParams(args);
 		nextflow.setSilent(true);
 		if (out != null) {

@@ -41,22 +41,7 @@ public class GenerateTestsCommandTest {
 	}
 
 	@Test
-	public void testGeneratePipelineDsl1Test() throws Exception {
-
-		FileUtil.deleteDirectory(new File("tests"));
-		App app = new App();
-		int exitCode = app.run(new String[] { "generate", "pipeline", "test-data/pipeline/dsl1/test1.nf" });
-		assertEquals(0, exitCode);
-
-		File testFile = new File("tests/test-data/pipeline/dsl1/test1.nf.test");
-		assertTrue(testFile.exists());
-		ITestSuite testSuite = TestSuiteBuilder.parse(testFile);
-		assertEquals(1, testSuite.getTests().size());
-		assertTrue(testSuite instanceof PipelineTestSuite);
-	}
-
-	@Test
-	public void testGeneratePipelineDsl2Test() throws Exception {
+	public void testGeneratePipelineDsl2Test() throws Throwable {
 
 		FileUtil.deleteDirectory(new File("tests"));
 		App app = new App();
@@ -71,7 +56,7 @@ public class GenerateTestsCommandTest {
 	}
 
 	@Test
-	public void testGenerateProcessTest() throws Exception {
+	public void testGenerateProcessTest() throws Throwable {
 
 		FileUtil.deleteDirectory(new File("tests"));
 		App app = new App();
@@ -87,7 +72,7 @@ public class GenerateTestsCommandTest {
 	}
 	
 	@Test
-	public void testGenerateProcessMultiTest() throws Exception {
+	public void testGenerateProcessMultiTest() throws Throwable {
 
 		FileUtil.deleteDirectory(new File("tests"));
 		App app = new App();
@@ -104,7 +89,7 @@ public class GenerateTestsCommandTest {
 	}
 	
 	@Test
-	public void testGenerateFunctionTest() throws Exception {
+	public void testGenerateFunctionTest() throws Throwable {
 
 		FileUtil.deleteDirectory(new File("tests"));
 		App app = new App();
@@ -120,7 +105,7 @@ public class GenerateTestsCommandTest {
 	}
 	
 	@Test
-	public void testGenerateWorkflowTest() throws Exception {
+	public void testGenerateWorkflowTest() throws Throwable {
 
 		FileUtil.deleteDirectory(new File("tests"));
 		App app = new App();

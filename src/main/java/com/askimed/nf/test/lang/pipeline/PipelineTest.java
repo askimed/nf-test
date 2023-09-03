@@ -29,7 +29,6 @@ public class PipelineTest extends AbstractTest {
 		super(parent);
 		this.parent = parent;
 		context = new PipelineContext(this);
-		context.setName(parent.getName());
 	}
 
 	public void name(String name) {
@@ -66,7 +65,9 @@ public class PipelineTest extends AbstractTest {
 	@Override
 	public void execute() throws Throwable {
 
-		context.init(baseDir, outputDir.getAbsolutePath());
+		super.execute();
+		
+		context.init(this);
 
 		if (setup != null) {
 			setup.execute(context);
@@ -82,14 +83,25 @@ public class PipelineTest extends AbstractTest {
 			System.out.println();
 		}
 
-		File traceFile = new File(metaDir, "trace.csv");
-		File outFile = new File(metaDir, "std.out");
-		File errFile = new File(metaDir, "std.err");
-		File logFile = new File(metaDir, "nextflow.log");
-		File paramsFile = new File(metaDir, "params.json");
+		File traceFile = new File(metaDir, FILE_TRACE);
+		File outFile = new File(metaDir, FILE_STD_OUT);
+		File errFile = new File(metaDir, FILE_STD_ERR);
+		File logFile = new File(metaDir, FILE_NEXTFLOW_LOG);
+		File paramsFile = new File(metaDir, FILE_PARAMS);
 
+		String script = parent.getScript();
+
+		if (!script.startsWith("/") && !script.startsWith("./")) {
+			script = new File(script).getAbsolutePath();
+		}
+		
+		//file not found. try as github location
+		if (!new File(script).exists()) {
+			script = parent.getScript();
+		}
+		
 		NextflowCommand nextflow = new NextflowCommand();
-		nextflow.setScript(parent.getScript());
+		nextflow.setScript(script);
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
 		nextflow.addConfig(parent.getGlobalConfigFile());
@@ -102,7 +114,8 @@ public class PipelineTest extends AbstractTest {
 		nextflow.setErr(errFile);
 		nextflow.setSilent(!isDebug());
 		nextflow.setLog(logFile);
-		nextflow.setWork(workDir);
+		nextflow.setLaunchDir(launchDir);
+		nextflow.setWorkDir(workDir);
 		nextflow.setParamsFile(paramsFile);
 		nextflow.setOptions(getOptions());
 

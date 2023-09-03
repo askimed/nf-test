@@ -46,7 +46,6 @@ workflow {
 
 def serializeChannel(name, channel, jsonOutput) {
     def _name = name
-    println "Process channel \${_name}..."
     def list = [ ]
     channel.subscribe(
         onNext: {
@@ -57,7 +56,6 @@ def serializeChannel(name, channel, jsonOutput) {
               map[_name] = list
               def filename = "\${params.nf_test_output}/output_\${_name}.json"
               new File(filename).text = jsonOutput.toJson(map)		  		
-              println "Wrote channel \${_name} to \${filename}"  	
         } 
     )
 }

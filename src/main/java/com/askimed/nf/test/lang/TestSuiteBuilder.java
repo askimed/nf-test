@@ -73,15 +73,15 @@ public class TestSuiteBuilder {
 		closure.call();
 	}
 
-	public static ITestSuite parse(File script) throws Exception {
+	public static ITestSuite parse(File script) throws Throwable {
 		return parse(script, "", null);
 	}
 
-	public static ITestSuite parse(File script, PluginManager pluginManager) throws Exception {
+	public static ITestSuite parse(File script, PluginManager pluginManager) throws Throwable {
 		return parse(script, "", pluginManager);
 	}
 
-	public static ITestSuite parse(File script, String libDir, PluginManager pluginManager) throws Exception {
+	public static ITestSuite parse(File script, String libDir, PluginManager pluginManager) throws Throwable {
 
 		ImportCustomizer customizer = new ImportCustomizer();
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_pipeline");
@@ -105,7 +105,6 @@ public class TestSuiteBuilder {
 		compilerConfiguration.addCompilationCustomizers(customizer);
 
 		GroovyShell shell = new GroovyShell(classLoader, compilerConfiguration);
-
 		Object object = shell.evaluate(script);
 
 		if (!(object instanceof ITestSuite)) {
@@ -114,7 +113,9 @@ public class TestSuiteBuilder {
 
 		ITestSuite testSuite = (ITestSuite) object;
 		testSuite.setFilename(script.getAbsolutePath());
-
+		testSuite.evalualteTestClosures();
+		
+		
 		return testSuite;
 	}
 

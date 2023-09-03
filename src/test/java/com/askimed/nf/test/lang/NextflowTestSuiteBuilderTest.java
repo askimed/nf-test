@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 public class NextflowTestSuiteBuilderTest {
 
 	@Test
-	public void testParse() throws Exception {
-		File file = new File("test-data/pipeline/dsl1/test1.nf.test");
-		assertEquals(5, TestSuiteBuilder.parse(file).getTests().size());
+	public void testParse() throws Throwable {
+		File file = new File("test-data/workflow/libs/hello.nf.test");
+		assertEquals(4, TestSuiteBuilder.parse(file).getTests().size());
 	}
 	
 }

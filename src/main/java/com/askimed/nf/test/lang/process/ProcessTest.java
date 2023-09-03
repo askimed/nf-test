@@ -81,13 +81,15 @@ public class ProcessTest extends AbstractTest {
 	@Override
 	public void execute() throws Throwable {
 
+		super.execute();
+		
 		File script = new File(parent.getScript());
 
 		if (!script.exists()) {
 			throw new Exception("Script '" + script.getAbsolutePath() + "' not found.");
 		}
 
-		context.init(baseDir, outputDir.getAbsolutePath());
+		context.init(this);
 
 		if (setup != null) {
 			setup.execute(context);
@@ -101,7 +103,7 @@ public class ProcessTest extends AbstractTest {
 		context.evaluateProcessClosure();
 
 		// Create workflow mock
-		File workflow = new File(metaDir, "mock.nf");
+		File workflow = new File(metaDir, FILE_MOCK);
 		writeWorkflowMock(workflow);
 
 		context.getParams().put("nf_test_output", metaDir.getAbsolutePath());
@@ -110,11 +112,11 @@ public class ProcessTest extends AbstractTest {
 			System.out.println();
 		}
 
-		File traceFile = new File(metaDir, "trace.csv");
-		File outFile = new File(metaDir, "std.out");
-		File errFile = new File(metaDir, "std.err");
-		File logFile = new File(metaDir, "nextflow.log");
-		File paramsFile = new File(metaDir, "params.json");
+		File traceFile = new File(metaDir, FILE_TRACE);
+		File outFile = new File(metaDir, FILE_STD_OUT);
+		File errFile = new File(metaDir, FILE_STD_ERR);
+		File logFile = new File(metaDir, FILE_NEXTFLOW_LOG);
+		File paramsFile = new File(metaDir, FILE_PARAMS);
 
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(workflow.getAbsolutePath());
@@ -130,7 +132,8 @@ public class ProcessTest extends AbstractTest {
 		nextflow.setErr(errFile);
 		nextflow.setSilent(!isDebug());
 		nextflow.setLog(logFile);
-		nextflow.setWork(workDir);
+		nextflow.setLaunchDir(launchDir);
+		nextflow.setWorkDir(workDir);
 		nextflow.setParamsFile(paramsFile);
 		nextflow.setOptions(getOptions());
 

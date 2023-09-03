@@ -7,7 +7,7 @@ nextflow_workflow {
     test("test_passing_file_1") {
         when {
             params {
-                someFile = "${baseDir}/r9_file.txt"
+                someFile = "${launchDir}/r9_file.txt"
             }
             workflow {
                 """

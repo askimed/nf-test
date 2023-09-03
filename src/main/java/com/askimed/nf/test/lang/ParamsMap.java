@@ -1,7 +1,6 @@
 package com.askimed.nf.test.lang;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -12,7 +11,6 @@ import org.codehaus.groovy.control.CompilationFailedException;
 
 import groovy.json.JsonSlurper;
 import groovy.lang.Closure;
-import groovy.lang.Writable;
 import groovy.text.SimpleTemplateEngine;
 import groovy.yaml.YamlSlurper;
 
@@ -20,26 +18,10 @@ public class ParamsMap extends HashMap<String, Object> {
 
 	private static final long serialVersionUID = 1L;
 
-	public String baseDir = "";
+	private TestContext context;
 
-	public String outputDir = "";
-
-	public void setBaseDir(String baseDir) {
-		this.baseDir = baseDir;
-		put("baseDir", baseDir);
-	}
-
-	public void setOutputDir(String outputDir) {
-		this.outputDir = outputDir;
-		put("outputDir", outputDir);
-	}
-
-	public String getBaseDir() {
-		return baseDir;
-	}
-
-	public String getOutputDir() {
-		return outputDir;
+	public ParamsMap(TestContext context) {
+		this.context = context;
 	}
 
 	public void load(String filename) throws CompilationFailedException, ClassNotFoundException, IOException {
@@ -64,78 +46,40 @@ public class ParamsMap extends HashMap<String, Object> {
 		}
 	}
 
+	private String readText(File file) throws IOException, CompilationFailedException, ClassNotFoundException {
+
+		Map<String, String> binding = new HashMap<String, String>();
+		binding.put("baseDir", context.baseDir);
+		binding.put("launchDir", context.launchDir);
+		binding.put("moduleDir", context.moduleDir);
+		binding.put("moduleTestDir", context.moduleTestDir);
+		binding.put("outputDir", context.outputDir);
+		binding.put("projectDir", context.projectDir);
+
+		SimpleTemplateEngine engine = new SimpleTemplateEngine();
+		String text = engine.createTemplate(file).make(binding).toString();
+
+		return text;
+	}
+
 	public void loadFromJsonFile(File file) throws CompilationFailedException, ClassNotFoundException, IOException {
 
 		JsonSlurper jsonSlurper = new JsonSlurper();
-		Map<String, Object> map = (Map<String, Object>) jsonSlurper.parse(file);
-		map.putAll(this);
-
-		loadFromMap(map);
+		Map<String, Object> map = (Map<String, Object>) jsonSlurper.parseText(readText(file));
+		putAll(map);
 
 	}
 
 	public void loadFromYamlFile(File file) throws CompilationFailedException, ClassNotFoundException, IOException {
 
 		YamlSlurper yamlSlurper = new YamlSlurper();
-		Map<String, Object> map = (Map<String, Object>) yamlSlurper.parse(new FileReader(file));
-		map.putAll(this);
-
-		loadFromMap(map);
-
-	}
-
-	public synchronized void loadFromMap(Map<String, Object> map)
-			throws CompilationFailedException, ClassNotFoundException, IOException {
-
-		evaluteTemplates(map);
+		Map<String, Object> map = (Map<String, Object>) yamlSlurper.parseText(readText(file));
 		putAll(map);
 
 	}
 
-	protected synchronized void evaluteTemplates(Map<String, Object> map)
-			throws CompilationFailedException, ClassNotFoundException, IOException {
-
-		SimpleTemplateEngine engine = new SimpleTemplateEngine();
-
-		Queue<Map<String, Object>> queue = new LinkedList<Map<String, Object>>();
-		queue.add(map);
-
-		while (queue.size() > 0) {
-
-			Map<String, Object> item = queue.remove(); // Pop Item
-
-			for (String key : item.keySet()) {
-
-				Object value = item.get(key);
-
-				if (value instanceof String) {
-
-					String template = value.toString();
-					Map<String, Object> binding = new HashMap<String, Object>(map);
-					Writable evaluatedTemplate = engine.createTemplate(template).make(binding);
-					item.put(key, evaluatedTemplate.toString());
-
-				} else if (value instanceof Map) {
-
-					Map<String, Object> nestedMap = createNestedMap((Map<String, Object>) value);
-					queue.add(nestedMap); // Add to queue instead of recurse
-					item.put(key, nestedMap);
-
-				} else {
-
-					item.put(key, value);
-
-				}
-			}
-
-		}
-
-	}
-
 	public void evaluateNestedClosures() {
-
 		evaluateNestedClosures(this);
-
 	}
 
 	protected void evaluateNestedClosures(Map<String, Object> map) {
@@ -153,11 +97,13 @@ public class ParamsMap extends HashMap<String, Object> {
 				if (!(value instanceof Closure))
 					continue;
 
-				Map<String, Object> nestedMap = createNestedMap();
+				Map<String, Object> nestedMap = new HashMap<String, Object>();
 				Closure closure = (Closure) value;
-				closure.setDelegate(nestedMap);
-				closure.setResolveStrategy(Closure.DELEGATE_FIRST);
-				closure.call();
+
+				// use context as new owner and this object
+				Closure newClosure = closure.rehydrate(nestedMap, context, context);
+				newClosure.call();
+
 				item.put(key, nestedMap);
 
 				queue.add(nestedMap); // Instead of recursion
@@ -166,20 +112,6 @@ public class ParamsMap extends HashMap<String, Object> {
 
 		}
 
-	}
-
-	protected Map<String, Object> createNestedMap() {
-		return createNestedMap(null);
-	}
-
-	protected Map<String, Object> createNestedMap(Map<String, Object> map) {
-		Map<String, Object> nestedMap = new HashMap<String, Object>();
-		nestedMap.put("baseDir", baseDir);
-		nestedMap.put("outputDir", outputDir);
-		if (map != null) {
-			nestedMap.putAll(map);
-		}
-		return nestedMap;
 	}
 
 }
