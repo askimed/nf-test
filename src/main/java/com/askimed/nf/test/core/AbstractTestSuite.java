@@ -230,6 +230,11 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	protected boolean isRelative(String path) {
 		return path.startsWith("../") || path.startsWith("./");
 	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 
 	class NamedClosure {
 		public String name;

@@ -11,3 +11,4 @@ test_mock.nf
 /.nf-test/
 site
 /tests
+/.nf-test.log
