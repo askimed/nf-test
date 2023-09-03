@@ -9,22 +9,22 @@
       
       
       
-        <link rel="prev" href="../nextflow_function/">
+        <link rel="prev" href="../params/">
       
       
         <link rel="next" href="../../running-tests/">
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.6">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.7">
     
     
       
-        <title>Params and Global Variables - nf-test</title>
+        <title>Global Variables - nf-test</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.0e669242.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.046329b4.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.85d0ee34.min.css">
@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#params-and-global-variables" class="md-skip">
+        <a href="#global-variables" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Params and Global Variables
+              Global Variables
             
           </span>
         </div>
@@ -538,6 +538,26 @@
                 
   
   
+  
+    <li class="md-nav__item">
+      <a href="../params/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Params Dictionary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -553,7 +573,7 @@
           
   
   <span class="md-ellipsis">
-    Params and Global Variables
+    Global Variables
   </span>
   
 
@@ -564,7 +584,7 @@
         
   
   <span class="md-ellipsis">
-    Params and Global Variables
+    Global Variables
   </span>
   
 
@@ -586,18 +606,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#params" class="md-nav__link">
-    Params
+  <a href="#examples" class="md-nav__link">
+    Examples
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#global-variables" class="md-nav__link">
-    Global Variables
-  </a>
-  
-    <nav class="md-nav" aria-label="Global Variables">
+    <nav class="md-nav" aria-label="Examples">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -610,6 +623,13 @@
           <li class="md-nav__item">
   <a href="#basedir" class="md-nav__link">
     baseDir
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launchdir" class="md-nav__link">
+    launchDir
   </a>
   
 </li>
@@ -838,7 +858,7 @@
             
   
   <span class="md-ellipsis">
-    Command line Interface (CLI)
+    Command Line Interface (CLI)
   </span>
   
 
@@ -848,7 +868,7 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Command line Interface (CLI)
+            Command Line Interface (CLI)
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -1145,47 +1165,60 @@
   
 
 
-<h1 id="params-and-global-variables">Params and Global Variables</h1>
-<h2 id="params">Params</h2>
-<p>The <code>params</code> block is optional and is a simple map that can be used to overwrite Nextflow's input <code>params</code>. The <code>params</code> block is located in the <code>when</code> block of a testcase. You can set params manually:</p>
-<div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;output&quot;</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-<p>It is also possible to set nested params using the same syntax as in your Nextflow script:</p>
-<div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">output</span><span class="w"> </span><span class="o">{</span>
-<span class="w">          </span><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;output&quot;</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-<p>In addition, you can load the <code>params</code> from a JSON file:</p>
-<div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">&quot;$baseDir/tests/params.json&quot;</span><span class="o">)</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-<p>or from a YAML file:</p>
-<div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">&quot;$baseDir/tests/params.yaml&quot;</span><span class="o">)</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-<p>nf-test allows to combine both techniques and therefor it is possible to overwrite one or more <code>params</code> from the json file:</p>
-<div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">&quot;$baseDir/tests/params.json&quot;</span><span class="o">)</span>
-<span class="w">        </span><span class="n">outputDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;new/output/path&quot;</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-<h2 id="global-variables">Global Variables</h2>
+<h1 id="global-variables">Global Variables</h1>
+<p>The following variables are available and can be used in <code>setup</code>, <code>when</code>, <code>then</code> and <code>cleanup</code> closures.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>baseDir</code> or<br/><code>projectDir</code></td>
+<td>The directory where the <code>nf-test.config</code> script is located.</td>
+<td><code>mypipeline</code></td>
+</tr>
+<tr>
+<td><code>moduleDir</code></td>
+<td>The directory where the module script is located</td>
+<td><code>mypipeline/modules/mymodule</code></td>
+</tr>
+<tr>
+<td><code>moduleTestDir</code></td>
+<td>The directory where the test script is located</td>
+<td><code>mypipeline/tests/modules/mymodule</code></td>
+</tr>
+<tr>
+<td><code>launchDir</code></td>
+<td>The directory where the test is run.</td>
+<td><code>mypipeline/.nf-test/tests/&lt;test_hash&gt;</code></td>
+</tr>
+<tr>
+<td><code>metaDir</code></td>
+<td>The directory where all meta are located (e.g. <code>mock.nf</code>).</td>
+<td><code>mypipeline/.nf-test/tests/&lt;test_hash&gt;/meta</code></td>
+</tr>
+<tr>
+<td><code>workDir</code></td>
+<td>The directory where tasks temporary files are created.</td>
+<td><code>mypipeline/.nf-test/tests/&lt;test_hash&gt;/work</code></td>
+</tr>
+<tr>
+<td><code>outputDir</code></td>
+<td>An output directory in the <code>$launchDir</code> that can be used to store output files. The variable contains the absolute path. If you need a relative outpu directory see <a href="#launchdir"><code>launchDir</code> example</a>.</td>
+<td><code>mypipeline/.nf-test/tests/&lt;test_hash&gt;/output</code></td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td>Dictionary like object holding all parameters.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples</h2>
 <h3 id="outputdir"><code>outputDir</code></h3>
 <p>This variable points to the directory within the temporary test directory (<code>.nf-test/tests/&lt;test-dir&gt;/output/</code>). The variable can be set under params:</p>
 <div class="highlight"><pre><span></span><code><span class="n">params</span><span class="w"> </span><span class="o">{</span>
@@ -1198,6 +1231,18 @@
 <span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    file1 = file(&quot;$baseDir/tests/input/file123.gz&quot;)</span>
 <span class="s2">    &quot;&quot;&quot;</span>
+<span class="o">}</span>
+</code></pre></div>
+<h3 id="launchdir"><code>launchDir</code></h3>
+<p>This variable points to the directory where the test is executed. This can be used get access to results that are created in an relative output directory:</p>
+<div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;results&quot;</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">then</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;$launchDir/results&quot;</span><span class="o">).</span><span class="na">exists</span><span class="o">()</span>
 <span class="o">}</span>
 </code></pre></div>
 
@@ -1223,7 +1268,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../nextflow_function/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Function Testing" rel="prev">
+          <a href="../params/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Params Dictionary" rel="prev">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -1233,7 +1278,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Function Testing
+                Params Dictionary
               </div>
             </div>
           </a>
@@ -1286,7 +1331,7 @@
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       

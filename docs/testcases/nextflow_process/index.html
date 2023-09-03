@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.6">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.7">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.0e669242.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.046329b4.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.85d0ee34.min.css">
@@ -567,6 +567,26 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+    <nav class="md-nav" aria-label="Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nextflow-script" class="md-nav__link">
+    Nextflow script
+  </a>
+  
+</li>
+        
           <li class="md-nav__item">
   <a href="#nf-test-script" class="md-nav__link">
     nf-test script
@@ -621,11 +641,31 @@
   
   
     <li class="md-nav__item">
+      <a href="../params/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Params Dictionary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../global_variables/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Params and Global Variables
+    Global Variables
   </span>
   
 
@@ -845,7 +885,7 @@
             
   
   <span class="md-ellipsis">
-    Command line Interface (CLI)
+    Command Line Interface (CLI)
   </span>
   
 
@@ -855,7 +895,7 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Command line Interface (CLI)
+            Command Line Interface (CLI)
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -1205,15 +1245,11 @@
 
 <span class="c1">// first element is &quot;hello&quot;</span>
 <span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span>
-<span class="err">````</span>
-
-<span class="err">##</span><span class="w"> </span><span class="n">Example</span>
-
-<span class="err">###</span><span class="w"> </span><span class="n">Nextflow</span><span class="w"> </span><span class="n">script</span>
-<span class="n">Create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="err">`</span><span class="n">say_hello</span><span class="o">.</span><span class="na">nf</span><span class="err">`</span><span class="o">.</span>
-
-<span class="err">```</span><span class="n">Groovy</span>
-<span class="err">#</span><span class="o">!</span><span class="s">/usr/</span><span class="n">bin</span><span class="o">/</span><span class="n">env</span><span class="w"> </span><span class="n">nextflow</span>
+</code></pre></div>
+<h2 id="example">Example</h2>
+<h3 id="nextflow-script">Nextflow script</h3>
+<p>Create a new file and name it <code>say_hello.nf</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#!/usr/bin/env nextflow</span>
 <span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span>
 
 <span class="n">process</span><span class="w"> </span><span class="n">SAY_HELLO</span><span class="w"> </span><span class="o">{</span>
@@ -1356,7 +1392,7 @@ nf-test test say_hello.nf.test
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       
