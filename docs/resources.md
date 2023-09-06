@@ -15,6 +15,8 @@ This page collects videos and blog posts about nf-test created by the community.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/p8wFyMhmCsg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
+Slides to follow along can be found **[here](https://hackmd.io/@speri/SJVrM7uHh#/)**.
+
 The presentation was recorded as part of the Workflows Community Meetup - All Things Groovy at the Wellcome Genome Campus.
 
 ---
