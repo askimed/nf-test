@@ -124,6 +124,10 @@ public class FunctionTest extends AbstractTest {
 		nextflow.setScript(workflow.getAbsolutePath());
 		nextflow.setParams(context.getParams());
 		nextflow.setProfile(parent.getProfile());
+		File projectConfig = new File("nextflow.config");
+		if (projectConfig.exists()) {
+			nextflow.addConfig(projectConfig);	
+		}		
 		nextflow.addConfig(parent.getGlobalConfigFile());
 		nextflow.addConfig(parent.getLocalConfig());
 		nextflow.addConfig(getConfig());
