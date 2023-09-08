@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.askimed.nf.test.lang.TestSuiteBuilder;
 import com.askimed.nf.test.lang.extensions.SnapshotFile;
 import com.askimed.nf.test.plugins.PluginManager;
@@ -13,6 +16,7 @@ import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
 import com.askimed.nf.test.util.OutputFormat;
+import com.github.javaparser.utils.Log;
 
 import groovy.json.JsonOutput;
 
@@ -42,6 +46,8 @@ public class TestExecutionEngine {
 
 	private TagQuery tagQuery = new TagQuery();
 
+	private static Logger log = LoggerFactory.getLogger(TestExecutionEngine.class);
+	
 	public void setScripts(List<File> scripts) {
 		this.scripts = scripts;
 	}
@@ -157,8 +163,13 @@ public class TestExecutionEngine {
 
 		listener.setDebug(debug);
 
+		int totalTests = 0;
+		int failedTests = 0;
+		
+		log.info("Started test plan");
+		
 		listener.testPlanExecutionStarted();
-
+		
 		boolean failed = false;
 		for (ITestSuite testSuite : testSuits) {
 
@@ -170,14 +181,21 @@ public class TestExecutionEngine {
 			if (configFile != null) {
 				testSuite.setGlobalConfigFile(configFile);
 			}
+			
+			log.info("Running testsuite '{}' from file '{}'.", testSuite, testSuite.getFilename());
 
 			listener.testSuiteExecutionStarted(testSuite);
 
 			for (ITest test : testSuite.getTests()) {
 				if (test.isSkipped()) {
+					log.info("Test '{}' skipped.", test);				
 					listener.executionSkipped(test, "");
 					continue;
 				}
+				
+				log.info("Run test '{}'. type: {}", test, test.getClass().getName());
+				totalTests++;
+				
 				listener.executionStarted(test);
 				TestExecutionResult result = new TestExecutionResult(test);
 				test.setWithTrace(withTrace);
@@ -200,26 +218,37 @@ public class TestExecutionEngine {
 					result.setErrorReport(test.getErrorReport());
 					failed = true;
 					testSuite.setFailedTests(true);
+					failedTests++;
 
 				}
 				test.cleanup();
 				result.setEndTime(System.currentTimeMillis());
+				
+				log.info("Test '{}' finished. status: {}", result.getTest(), result.getStatus(), result.getThrowable());
+				
 				listener.executionFinished(test, result);
 
 			}
-
+			
 			// Remove obsolete snapshots when no test was skipped and no test failed.
 			if (cleanSnapshot && !testSuite.hasSkippedTests() && !testSuite.hasFailedTests()
 					&& testSuite.hasSnapshotLoaded()) {
+				log.info("Clean up obsolete snapshots");
 				SnapshotFile snapshot = testSuite.getSnapshot();
 				snapshot.removeObsoleteSnapshots();
 				snapshot.save();
 			}
 
+			log.info("Testsuite '{}' finished. snapshot file: {}, skipped tests: {}, failed tests: {}",
+					testSuite, testSuite.hasSnapshotLoaded(), testSuite.hasSkippedTests(), testSuite.hasFailedTests());
+
+			
 			listener.testSuiteExecutionFinished(testSuite);
 
 		}
 
+		log.info("Executed {} tests. {} tests failed. Done!", totalTests, failedTests);
+		
 		listener.testPlanExecutionFinished();
 
 		return (failed) ? 1 : 0;

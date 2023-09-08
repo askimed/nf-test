@@ -1,0 +1,34 @@
+{
+    "hello world example should start 4 processes": {
+        "content": [
+            {
+                "stderr": [
+                    
+                ],
+                "errorReport": "",
+                "exitStatus": 0,
+                "failed": false,
+                "stdout": [
+                    "WARN: Task runtime metrics are not reported when using macOS without a container engine",
+                    "Hola world!",
+                    "",
+                    "Ciao world!",
+                    "",
+                    "Hello world!",
+                    "",
+                    "Bonjour world!",
+                    ""
+                ],
+                "errorMessage": "",
+                "trace": {
+                    "tasksFailed": 0,
+                    "tasksCount": 4,
+                    "tasksSucceeded": 4
+                },
+                "name": "workflow",
+                "success": true
+            }
+        ],
+        "timestamp": "2023-09-03T11:00:53.244626"
+    }
+}

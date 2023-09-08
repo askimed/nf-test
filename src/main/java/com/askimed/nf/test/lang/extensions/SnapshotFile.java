@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.askimed.nf.test.core.ITestSuite;
 import com.askimed.nf.test.lang.extensions.util.PathConverter;
 
@@ -28,7 +31,9 @@ public class SnapshotFile {
 	private Set<String> updatedSnapshots = new HashSet<String>();
 
 	private boolean removedSnapshots = false;
-	
+
+	private static Logger log = LoggerFactory.getLogger(SnapshotFile.class);
+
 	public static SnapshotFile loadByTestSuite(ITestSuite suite) {
 		String filename = createFilename(suite);
 		return new SnapshotFile(filename);
@@ -46,6 +51,7 @@ public class SnapshotFile {
 		this.filename = filename;
 		File file = new File(filename);
 		if (!file.exists()) {
+			log.debug("Init new snapshot file '{}'", filename);
 			return;
 		}
 		JsonSlurper jsonSlurper = new JsonSlurper();
@@ -57,7 +63,7 @@ public class SnapshotFile {
 			SnapshotFileItem item = new SnapshotFileItem(timestamp, content);
 			snapshots.put(id, item);
 		}
-
+		log.debug("Load snapshots from file '{}'", filename);
 	}
 
 	public SnapshotFileItem getSnapshot(String id) {
@@ -72,11 +78,13 @@ public class SnapshotFile {
 		createdSnapshots.add(id);
 		activeSnapshots.add(id);
 		snapshots.put(id, new SnapshotFileItem(object));
+		log.debug("Created snapshot '{}'", id);
 	}
 
 	public void updateSnapshot(String id, Object object) {
 		updatedSnapshots.add(id);
 		snapshots.put(id, new SnapshotFileItem(object));
+		log.debug("Updated snapshot '{}'", id);
 	}
 
 	public Set<String> getCreatedSnapshots() {
@@ -99,16 +107,17 @@ public class SnapshotFile {
 
 	public void removeObsoleteSnapshots() {
 		removeSnapshots(getObsoleteSnapshots());
-		removedSnapshots = true; 
+		removedSnapshots = true;
 	}
 
 	public boolean hasRemovedSnapsshots() {
 		return removedSnapshots;
 	}
-	
+
 	private void removeSnapshots(Set<String> obsoleteSnapshots) {
 		for (String snapshot : obsoleteSnapshots) {
 			snapshots.remove(snapshot);
+			log.debug("Removed snapshot '{}'", snapshot);
 		}
 	}
 
@@ -121,6 +130,7 @@ public class SnapshotFile {
 		writer = new FileWriter(file);
 		writer.append(prettyJson);
 		writer.close();
+		log.debug("Wrote snapshots to file '{}'", filename);
 	}
 
 	protected static String createFilename(ITestSuite suite) {
@@ -132,6 +142,5 @@ public class SnapshotFile {
 				.addConverter(new PathConverter()).build();
 		return jsonGenerator;
 	}
-
 
 }

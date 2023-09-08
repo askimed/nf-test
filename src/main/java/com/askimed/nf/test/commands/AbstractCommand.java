@@ -1,10 +1,15 @@
 package com.askimed.nf.test.commands;
 
+import java.util.Arrays;
 import java.util.concurrent.Callable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.askimed.nf.test.App;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.Emoji;
+import com.askimed.nf.test.util.LoggerUtil;
 
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Help.Visibility;
@@ -15,8 +20,19 @@ public abstract class AbstractCommand implements Callable<Integer> {
 			"--silent" }, description = "Hide header and program version", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean silent = false;
 
+	@Option(names = {
+			"--log" }, description = "Filename for log file", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String logFilename = App.LOG_FILENAME;
+
+	private static Logger log = LoggerFactory.getLogger(App.class);
+
 	@Override
 	public Integer call() throws Exception {
+
+		LoggerUtil.init(App.PACKAGE, logFilename, App.LOG_LEVEL);
+
+		log.info(App.NAME + " " + App.VERSION);
+		log.info("Arguments: " + Arrays.toString(App.args));
 
 		if (!silent) {
 			printHeader();

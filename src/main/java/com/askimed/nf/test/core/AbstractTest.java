@@ -254,5 +254,10 @@ public abstract class AbstractTest implements ITest {
 	public boolean isUpdateSnapshot() {
 		return updateSnapshot;
 	}
+	
+	@Override
+	public String toString() {
+		return getHash().substring(0, 8) + ": " + getName();
+	}
 
 }

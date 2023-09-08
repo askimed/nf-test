@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Vector;
 import java.util.function.Consumer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.askimed.nf.test.App;
 import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.core.AnsiTestExecutionListener;
 import com.askimed.nf.test.core.GroupTestExecutionListener;
@@ -72,6 +76,8 @@ public class RunTestsCommand extends AbstractCommand {
 			"--tag" }, split = ",", description = "Execute only tests with this tag", required = false, showDefaultValue = Visibility.ALWAYS)
 	private List<String> tags = new Vector<String>();
 
+	private static Logger log = LoggerFactory.getLogger(RunTestsCommand.class);
+
 	@Override
 	public Integer execute() throws Exception {
 
@@ -110,6 +116,7 @@ public class RunTestsCommand extends AbstractCommand {
 				} else {
 					TestSuiteBuilder.setConfig(null);
 					System.out.println(AnsiColors.yellow("Warning: This pipeline has no nf-test config file."));
+					log.warn("No nf-test config file found.");
 				}
 
 				scripts = pathsToScripts(testPaths);
@@ -117,6 +124,7 @@ public class RunTestsCommand extends AbstractCommand {
 			} catch (Exception e) {
 
 				System.out.println(AnsiColors.red("Error: Syntax errors in nf-test config file: " + e));
+				log.error("Parsing config file failed", e);
 				if (debug) {
 					e.printStackTrace();
 				}
@@ -127,7 +135,10 @@ public class RunTestsCommand extends AbstractCommand {
 			if (scripts.size() == 0) {
 				System.out.println(AnsiColors
 						.red("Error: No tests or test directories containing scripts that end with *.test provided."));
+				log.error("No tests ot directories found containing test files.");
 				return 2;
+			} else {
+				log.info("Detected {} test files.", scripts.size());
 			}
 
 			loadPlugins(manager, plugins);
@@ -171,6 +182,7 @@ public class RunTestsCommand extends AbstractCommand {
 		} catch (Throwable e) {
 
 			System.out.println(AnsiColors.red("Error: " + e));
+			log.error("Running tests failed.", e);
 
 			if (debug) {
 				e.printStackTrace();
