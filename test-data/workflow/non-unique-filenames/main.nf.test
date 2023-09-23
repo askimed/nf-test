@@ -1,0 +1,21 @@
+nextflow_workflow {
+
+    name "Test duplicate filenames in one channel"
+    script "./main.nf"
+    workflow "DUPLICATE_FILENAMES"
+
+    test("Should run without failures") {
+        when {
+            workflow {
+                """
+                input[0] = Channel.of(1..50)
+                """
+            }
+        }
+
+        then {
+            assert workflow.success
+ 			assert snapshot(workflow.out).match()
+        }
+    }
+}

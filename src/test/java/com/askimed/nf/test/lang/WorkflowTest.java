@@ -115,4 +115,13 @@ public class WorkflowTest {
 
 	}
 
+	@Test
+	public void testWorkflowNonUniqueFilenames() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/non-unique-filenames/main.nf.test"});
+		assertEquals(0, exitCode);
+
+	}
+	
 }

@@ -1,10 +1,11 @@
 package com.askimed.nf.test.lang.channels;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
 
+import com.askimed.nf.test.lang.extensions.PathExtension;
 import com.askimed.nf.test.util.AnsiColors;
 
 public class ChannelItemComparator implements Comparator<Object> {
@@ -74,14 +75,30 @@ public class ChannelItemComparator implements Comparator<Object> {
 
 	@SuppressWarnings({ "rawtypes" })
 	private int compareMaps(Map a, Map b) {
-		// since we converted all nested maps to treemaps, toString returns keys sorted in deterministic order.
+		// since we converted all nested maps to treemaps, toString returns keys sorted
+		// in deterministic order.
 		return compareStrings(a.toString(), b.toString());
 	}
 
 	public int comparePaths(String a, String b) {
-		String name1 = new File(a).getName();
-		String name2 = new File(b).getName();
-		return name1.compareTo(name2);
+		// sort path by filename
+		Path path1 = Path.of(a);
+		Path path2 = Path.of(b);
+		String name1 = path1.getFileName().toString();
+		String name2 = path2.getFileName().toString();
+		int result = name1.compareTo(name2);
+		if (result != 0) {
+			return result;
+		}
+		// filenames are equal -> sort by hash to get deterministic order
+		try {
+			String hash1 = PathExtension.getMd5(path1);
+			String hash2 = PathExtension.getMd5(path2);
+			return hash1.compareTo(hash2);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	public int compareStrings(String a, String b) {
