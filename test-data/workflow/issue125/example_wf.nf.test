@@ -1,0 +1,50 @@
+
+nextflow_workflow {
+
+    name "Test workflow"
+    script "./example_wf.nf"
+    workflow "PipeWf"
+
+    // This example worked correctly in 0.7.3 but fails in 0.8.0
+    test("Output will not exist in default outputDir") {
+
+        when {
+
+            params {
+                outputDir = "$outputDir"
+                localOutputDir = "example_output"
+            }
+            workflow {
+                """
+                input[0] = Channel.of([params.outputDir,params.localOutputDir])
+                """
+            }
+        }
+
+        then {
+              assert workflow.success
+              assert path("${outputDir}/exampleProc/example_output").exists()
+            }
+    }
+
+    test("Output will exist in default outputDir") {
+
+        when {
+
+            params {
+                outDir = "$outputDir"
+                localOutputDir = "example_output"
+            }
+            workflow {
+                """
+                input[0] = Channel.of([params.outDir,params.localOutputDir])
+                """
+            }
+        }
+
+        then {
+              assert workflow.success
+              assert path("${outputDir}/exampleProc/example_output").exists()
+            }
+    }
+}

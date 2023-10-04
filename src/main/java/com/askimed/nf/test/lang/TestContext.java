@@ -83,7 +83,7 @@ public class TestContext {
 	}
 
 	public void setWorkflow(Workflow workflow) {
-		this.workflow = workflow;
+		throw new RuntimeException("Variable 'workflow' is read only");
 	}
 
 	public Snapshot snapshot(Object... object) {
@@ -92,6 +92,37 @@ public class TestContext {
 
 	public void loadParams(String filename) throws CompilationFailedException, ClassNotFoundException, IOException {
 		params.load(filename);
+	}
+
+	public void setOutputDir(String outputDir) {
+		// The 'outputDir' variable is read-only. If an update occurs within the
+		// 'params' closure, update the 'outputDir' key in the hashmap instead of
+		// modifying the variable itself. This fixes issue 125.
+		params.put("outputDir", outputDir);
+	}
+
+	public void setBaseDir(String baseDir) {
+		throw new RuntimeException("Variable 'baseDir' is read only");
+	}
+
+	public void setLaunchDir(String launchDir) {
+		throw new RuntimeException("Variable 'launchDir' is read only");
+	}
+
+	public void setModuleDir(String moduleDir) {
+		throw new RuntimeException("Variable 'moduleDir' is read only");
+	}
+
+	public void setModuleTestDir(String moduleTestDir) {
+		throw new RuntimeException("Variable 'moduleTestDir' is read only");
+	}
+
+	public void setProjectDir(String projectDir) {
+		throw new RuntimeException("Variable 'projectDir' is read only");
+	}
+
+	public void setWorkDir(String workDir) {
+		throw new RuntimeException("Variable 'workDir' is read only");
 	}
 
 }
