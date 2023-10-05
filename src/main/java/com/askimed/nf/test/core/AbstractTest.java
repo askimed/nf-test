@@ -76,7 +76,14 @@ public abstract class AbstractTest implements ITest {
 	}
 
 	public void config(String config) {
-		this.config = new File(config);
+		if (config == null) {
+			return;
+		}
+		if (parent.isRelative(config)) {
+			this.config = new File(parent.makeAbsolute(config));
+		} else {
+			this.config = new File(config);
+		}
 	}
 
 	public File getConfig() {
@@ -89,7 +96,7 @@ public abstract class AbstractTest implements ITest {
 		if (testDirectory == null) {
 			throw new IOException("Testcase setup failed: No home directory set");
 		}
-				
+
 		launchDir = initDirectory("Launch Directory", testDirectory, DIRECTORY_TESTS, getHash());
 		metaDir = initDirectory("Meta Directory", launchDir, DIRECTORY_META);
 		outputDir = initDirectory("Output Directory", launchDir, DIRECTORY_OUTPUT);
@@ -154,11 +161,11 @@ public abstract class AbstractTest implements ITest {
 
 	@Override
 	public String getHash() {
-		
+
 		if (parent == null || parent.getFilename() == null || getName() == null || getName().isEmpty()) {
 			throw new RuntimeException("Error generating hash");
 		}
-		
+
 		return hash(parent.getFilename() + getName());
 
 	}
@@ -254,7 +261,7 @@ public abstract class AbstractTest implements ITest {
 	public boolean isUpdateSnapshot() {
 		return updateSnapshot;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getHash().substring(0, 8) + ": " + getName();

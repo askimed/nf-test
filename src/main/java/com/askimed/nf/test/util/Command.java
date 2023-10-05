@@ -14,8 +14,6 @@ public class Command {
 
 	private String directory = null;
 
-	private StringBuffer stdout = new StringBuffer();
-
 	private String stdoutFileName = null;
 
 	private String stderrFileName = null;
@@ -63,6 +61,8 @@ public class Command {
 		try {
 
 			ProcessBuilder builder = new ProcessBuilder(command);
+			// ensure it works on MacOS
+			builder.environment().put("PATH", builder.environment().get("PATH") + ":" + "/usr/local/bin/");
 			if (directory != null) {
 				builder.directory(new File(directory));
 			}
@@ -125,10 +125,6 @@ public class Command {
 			}
 		}
 		return result;
-	}
-
-	public String getStdOut() {
-		return stdout.toString();
 	}
 
 	public String getName() {

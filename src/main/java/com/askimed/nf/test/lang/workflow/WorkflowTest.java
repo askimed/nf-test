@@ -9,6 +9,7 @@ import java.util.Map;
 import org.codehaus.groovy.control.CompilationFailedException;
 
 import com.askimed.nf.test.core.AbstractTest;
+import com.askimed.nf.test.lang.Dependency;
 import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.lang.pipeline.PipelineTest;
 import com.askimed.nf.test.nextflow.NextflowCommand;
@@ -104,6 +105,10 @@ public class WorkflowTest extends AbstractTest {
 		
 		context.init(this);
 
+		if (parent.getSetup() != null) {
+			parent.getSetup().execute(context);
+		}
+		
 		if (setup != null) {
 			setup.execute(context);
 		}
@@ -184,11 +189,28 @@ public class WorkflowTest extends AbstractTest {
 			script = new File(script).getAbsolutePath();
 		}
 
+		// update dependency paths
+		for (Dependency dependency : context.getDependencies()) {
+			String _script = dependency.getScript();
+			if (_script == null) {
+				dependency.setScript(script);
+			} else {
+				if (parent.isRelative(_script)) {
+					_script = parent.makeAbsolute(_script);
+				}
+				if (!_script.startsWith("/") && !_script.startsWith("./")) {
+					_script = new File(_script).getAbsolutePath();
+				}
+				dependency.setScript(_script);
+			}
+		}
+		
 		String name = workflow != null ? workflow : parent.getWorkflow();
 
 		Map<Object, Object> binding = new HashMap<Object, Object>();
 		binding.put("workflow", name);
 		binding.put("script", script);
+		binding.put("dependencies", context.getDependencies());
 
 		// Get body of when closure
 		binding.put("mapping", context.getWorkflow().getMapping());

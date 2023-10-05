@@ -19,7 +19,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	private File globalConfig = null;
 
-	private File localConfig = null;
+	private String localConfig = null;
 
 	private List<ITest> tests = new Vector<ITest>();
 
@@ -53,7 +53,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	}
 
 	public String getScript() {
-		if (script != null && isRelative(script)) {
+		if (isRelative(script)) {
 			return makeAbsolute(script);
 		} else {
 			return script;
@@ -70,7 +70,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		for (NamedClosure namedClosure : testClosures) {
 			String testName = namedClosure.name;
 			Closure closure = namedClosure.closure;
-			
+
 			ITest test = getNewTestInstance(testName);
 			test.setup(getHomeDirectory());
 			closure.setDelegate(test);
@@ -95,7 +95,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	}
 
 	public void config(String config) {
-		this.localConfig = new File(config);
+		this.localConfig = config;
 	}
 
 	public void setName(String name) {
@@ -139,12 +139,15 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		return globalConfig;
 	}
 
-	public void setLocalConfig(File localConfig) {
-		this.localConfig = localConfig;
-	}
-
 	public File getLocalConfig() {
-		return localConfig;
+		if (localConfig == null) {
+			return null;
+		}
+		if (isRelative(localConfig)) {
+			return new File(makeAbsolute(localConfig));
+		} else {
+			return new File(localConfig);
+		}
 	}
 
 	public File getHomeDirectory() {
@@ -223,14 +226,17 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		return failedTests;
 	}
 
-	protected String makeAbsolute(String path) {
+	public String makeAbsolute(String path) {
 		return new File(directory, path).getAbsolutePath();
 	}
 
-	protected boolean isRelative(String path) {
+	public boolean isRelative(String path) {
+		if (path == null) {
+			return false;
+		}
 		return path.startsWith("../") || path.startsWith("./");
 	}
-	
+
 	@Override
 	public String toString() {
 		return name;
