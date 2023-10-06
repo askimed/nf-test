@@ -1,20 +1,25 @@
 package com.askimed.nf.test.lang;
 
+import java.beans.Transient;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 
 import org.codehaus.groovy.control.CompilationFailedException;
+import org.codehaus.groovy.runtime.InvokerHelper;
 
 import groovy.json.JsonSlurper;
 import groovy.lang.Closure;
+import groovy.lang.GroovyObject;
+import groovy.lang.MetaClass;
 import groovy.text.SimpleTemplateEngine;
 import groovy.yaml.YamlSlurper;
 
-public class ParamsMap extends HashMap<String, Object> {
+public class ParamsMap extends HashMap<String, Object> implements GroovyObject {
 
 	private static final long serialVersionUID = 1L;
 
@@ -97,7 +102,7 @@ public class ParamsMap extends HashMap<String, Object> {
 				if (!(value instanceof Closure))
 					continue;
 
-				Map<String, Object> nestedMap = new HashMap<String, Object>();
+				ParamsMap nestedMap = new ParamsMap(context);
 				Closure closure = (Closure) value;
 
 				// use context as new owner and this object
@@ -112,6 +117,33 @@ public class ParamsMap extends HashMap<String, Object> {
 
 		}
 
+	}
+
+	// never persist the MetaClass
+	private transient MetaClass metaClass = getDefaultMetaClass();
+
+	@Override
+	@Transient
+	public MetaClass getMetaClass() {
+		return this.metaClass;
+	}
+
+	@Override
+	public void setMetaClass(/* @Nullable */ final MetaClass metaClass) {
+		this.metaClass = Optional.ofNullable(metaClass).orElseGet(this::getDefaultMetaClass);
+	}
+
+	private MetaClass getDefaultMetaClass() {
+		return InvokerHelper.getMetaClass(this.getClass());
+	}
+
+	public Object invokeMethod(String var1, Object var2) {
+		try {
+			return this.getMetaClass().invokeMethod(this, var1, var2);
+		} catch (groovy.lang.MissingMethodException e) {
+			put(var1, ((Object[]) var2)[0]);
+			return null;
+		}
 	}
 
 }
