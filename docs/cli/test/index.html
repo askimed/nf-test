@@ -924,8 +924,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#-debug" class="md-nav__link">
-    --debug
+  <a href="#-verbose" class="md-nav__link">
+    --verbose
   </a>
   
 </li>
@@ -954,6 +954,13 @@
           <li class="md-nav__item">
   <a href="#-junitxml-filename" class="md-nav__link">
     --junitxml &lt;filename&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-debug" class="md-nav__link">
+    --debug
   </a>
   
 </li>
@@ -1226,8 +1233,8 @@
 <h3 id="optional-arguments">Optional Arguments</h3>
 <h4 id="-profile-nextflow_profile"><code>--profile &lt;NEXTFLOW_PROFILE&gt;</code></h4>
 <p>To run your test using a specific Nextflow profile, you can use the <code>--profile</code> argument. <a href="/docs/configuration/#managing-profiles">Learn more</a>.</p>
-<h4 id="-debug"><code>--debug</code></h4>
-<p>The debug parameter prints out all available output channels which can be accessed in the <code>then</code> clause.</p>
+<h4 id="-verbose"><code>--verbose</code></h4>
+<p>Prints out the Nextflow output during test runs.</p>
 <h4 id="-without-trace"><code>--without-trace</code></h4>
 <p>The Linux tool <code>procps</code> is required to run Nextflow tracing. In case your container does not support this tool, you can also run nf-test without tracing. Please note that the <code>workflow.trace</code> are not available when running it with this flag.</p>
 <h4 id="-tag-tag"><code>--tag &lt;tag&gt;</code></h4>
@@ -1236,6 +1243,8 @@
 <p>Writes test results in <a href="https://testanything.org">TAP format</a> to file.</p>
 <h4 id="-junitxml-filename"><code>--junitxml &lt;filename&gt;</code></h4>
 <p>Writes test results in <a href="https://junit.org/">JUnit XML format</a> to file, which conforms to <a href="https://github.com/junit-team/junit5/blob/242f3b3ef84cfd96c9de26992588812a68cdef8b/platform-tests/src/test/resources/jenkins-junit.xsd">the standard schema</a>.</p>
+<h4 id="-debug"><code>--debug</code></h4>
+<p>The debug parameter prints out debugging messages and all available output channels which can be accessed in the <code>then</code> clause.</p>
 <h2 id="examples">Examples</h2>
 <ul>
 <li>Run all test scripts that can be found in the <code>testDir</code> defined in the <code>nf-test.config</code> file in the current working directory:</li>
