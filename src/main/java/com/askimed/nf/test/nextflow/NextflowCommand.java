@@ -8,7 +8,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,7 +35,7 @@ public class NextflowCommand {
 
 	private File launchDir;
 
-	private boolean silent = true;
+	private boolean debug = false;
 
 	private File trace = null;
 
@@ -47,6 +46,8 @@ public class NextflowCommand {
 	private Map<String, Object> params;
 
 	private String options = "";
+
+	private static boolean verbose = false;
 
 	public static String ERROR = "Nextflow Binary not found. Please check if Nextflow is in a directory accessible by your $PATH variable or set $NEXTFLOW_HOME.";
 
@@ -86,8 +87,12 @@ public class NextflowCommand {
 		this.params = params;
 	}
 
-	public void setSilent(boolean silent) {
-		this.silent = silent;
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+
+	public static void setVerbose(boolean verbose) {
+		NextflowCommand.verbose = verbose;
 	}
 
 	public void setTrace(File trace) {
@@ -168,7 +173,9 @@ public class NextflowCommand {
 		writeParamsJson(params, paramsFile);
 
 		List<String> args = new Vector<String>();
-		args.add("-quiet");
+		if (!verbose) {
+			args.add("-quiet");
+		}
 		if (log != null) {
 			args.add("-log");
 			args.add(log.getAbsolutePath());
@@ -203,25 +210,29 @@ public class NextflowCommand {
 			nextflow.setDirectory(launchDir.getAbsolutePath());
 		}
 		nextflow.setParams(args);
-		nextflow.setSilent(true);
+		if (verbose) {
+			System.out.println("");
+		}
+		nextflow.setSilent(!verbose);
 		if (out != null) {
 			nextflow.saveStdOut(out.getAbsolutePath());
 		}
 		if (err != null) {
 			nextflow.saveStdErr(err.getAbsolutePath());
 		}
-		if (!silent) {
-			System.out.println();
-			System.out.println("    Nextflow:");
-			System.out.println("       Profiles: " + profiles);
-			System.out.println("       Configs: " + configs);
-			System.out.println("       Command: " + nextflow.getExecutedCommand());
+		if (debug) {
+			//System.out.println();
+			System.out.println("    Profiles: " + profiles);
+			System.out.println("    Configs: " + configs);
+			System.out.println("    Command: " + nextflow.getExecutedCommand());
 		}
 
 		int result = nextflow.execute();
-
-		if (!silent) {
+		if (debug) {
 			printDebugInfo();
+		}
+		if (verbose || debug) {
+			System.out.print("    ");
 		}
 		return result;
 

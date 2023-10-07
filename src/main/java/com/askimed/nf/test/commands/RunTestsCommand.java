@@ -22,6 +22,7 @@ import com.askimed.nf.test.core.TestExecutionEngine;
 import com.askimed.nf.test.core.reports.TapTestReportWriter;
 import com.askimed.nf.test.core.reports.XmlReportWriter;
 import com.askimed.nf.test.lang.TestSuiteBuilder;
+import com.askimed.nf.test.nextflow.NextflowCommand;
 import com.askimed.nf.test.plugins.PluginManager;
 import com.askimed.nf.test.util.AnsiColors;
 
@@ -37,8 +38,12 @@ public class RunTestsCommand extends AbstractCommand {
 	private List<File> testPaths = new ArrayList<File>();
 
 	@Option(names = {
-			"--debug" }, description = "Show Nextflow output", required = false, showDefaultValue = Visibility.ALWAYS)
+			"--debug" }, description = "Show debugging infos and dump channels", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean debug = false;
+
+	@Option(names = {
+			"--verbose" }, description = "Show Nextflow output", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean verbose = false;
 
 	@Option(names = {
 			"--profile" }, description = "Profile to execute all tests", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -155,6 +160,8 @@ public class RunTestsCommand extends AbstractCommand {
 				listener.addListener(new XmlReportWriter(junitXml));
 			}
 
+			NextflowCommand.setVerbose(verbose);
+			
 			TagQuery tagQuery = new TagQuery(tags);
 
 			TestExecutionEngine engine = new TestExecutionEngine();

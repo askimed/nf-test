@@ -66,7 +66,7 @@ public class PipelineTest extends AbstractTest {
 	public void execute() throws Throwable {
 
 		super.execute();
-		
+
 		context.init(this);
 
 		if (setup != null) {
@@ -94,21 +94,21 @@ public class PipelineTest extends AbstractTest {
 		if (!script.startsWith("/") && !script.startsWith("./")) {
 			script = new File(script).getAbsolutePath();
 		}
-		
-		//file not found. try as github location
+
+		// file not found. try as github location
 		if (!new File(script).exists()) {
 			script = parent.getScript();
 		}
-		
+
 		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(script);
 		nextflow.setParams(context.getParams());
-		for (String profile: parent.getProfiles()) {
+		for (String profile : parent.getProfiles()) {
 			nextflow.addProfile(profile);
 		}
 		File projectConfig = new File("nextflow.config");
 		if (projectConfig.exists()) {
-			nextflow.addConfig(projectConfig);	
+			nextflow.addConfig(projectConfig);
 		}
 		nextflow.addConfig(parent.getGlobalConfigFile());
 		nextflow.addConfig(parent.getLocalConfig());
@@ -118,7 +118,7 @@ public class PipelineTest extends AbstractTest {
 		}
 		nextflow.setOut(outFile);
 		nextflow.setErr(errFile);
-		nextflow.setSilent(!isDebug());
+		nextflow.setDebug(isDebug());
 		nextflow.setLog(logFile);
 		nextflow.setLaunchDir(launchDir);
 		nextflow.setWorkDir(workDir);

@@ -48,7 +48,7 @@ public class CommandStreamHandler implements Runnable {
 			while ((size = is.read(buffer)) > 0) {
 				if (!silent) {
 					String line = new String(buffer, 0, size);
-					System.out.println(line);
+					System.out.print("    > " + line);
 				}
 				if (save) {
 					writer.write(buffer, 0, size);
