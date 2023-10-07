@@ -68,6 +68,11 @@ public class RunTestsCommand extends AbstractCommand {
 			"--lib" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String lib = "";
 
+	@Option(names = { "--config",
+			"-c" }, description = "nf-test.config filename", required = false, showDefaultValue = Visibility.ALWAYS)
+
+	private String configFilename = Config.FILENAME;
+
 	@Option(names = {
 			"--plugins" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String plugins = null;
@@ -86,17 +91,14 @@ public class RunTestsCommand extends AbstractCommand {
 
 		try {
 
-			String defaultProfile = null;
 			File defaultConfigFile = null;
 			String libDir = lib;
 			boolean defaultWithTrace = true;
 			try {
-
-				File configFile = new File(Config.FILENAME);
+				File configFile = new File(configFilename);
 				if (configFile.exists()) {
 
 					Config config = Config.parse(configFile);
-					defaultProfile = config.getProfile();
 					defaultConfigFile = config.getConfigFile();
 					defaultWithTrace = config.isWithTrace();
 					if (!libDir.isEmpty()) {
@@ -164,12 +166,7 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.setCleanSnapshot(cleanSnapshot);
 			engine.setLibDir(libDir);
 			engine.setPluginManager(manager);
-
-			if (profile != null) {
-				engine.setProfile(profile);
-			} else {
-				engine.setProfile(defaultProfile);
-			}
+			engine.addProfile(profile);
 			if (withoutTrace) {
 				engine.setWithTrace(false);
 			} else {

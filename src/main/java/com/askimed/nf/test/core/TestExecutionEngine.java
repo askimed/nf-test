@@ -28,7 +28,7 @@ public class TestExecutionEngine {
 
 	private boolean debug = false;
 
-	private String profile = null;
+	private List<String> profiles = new Vector<String>();
 
 	private File configFile = null;
 
@@ -47,7 +47,7 @@ public class TestExecutionEngine {
 	private TagQuery tagQuery = new TagQuery();
 
 	private static Logger log = LoggerFactory.getLogger(TestExecutionEngine.class);
-	
+
 	public void setScripts(List<File> scripts) {
 		this.scripts = scripts;
 	}
@@ -56,8 +56,11 @@ public class TestExecutionEngine {
 		this.debug = debug;
 	}
 
-	public void setProfile(String profile) {
-		this.profile = profile;
+	public void addProfile(String profile) {
+		if (profile == null) {
+			return;
+		}
+		this.profiles.add(profile);
 	}
 
 	public void setConfigFile(File configFile) {
@@ -165,37 +168,37 @@ public class TestExecutionEngine {
 
 		int totalTests = 0;
 		int failedTests = 0;
-		
+
 		log.info("Started test plan");
-		
+
 		listener.testPlanExecutionStarted();
-		
+
 		boolean failed = false;
 		for (ITestSuite testSuite : testSuits) {
 
-			// override profile from CLI
-			if (profile != null) {
-				testSuite.setProfile(profile);
+			for (String profile : profiles) {
+				testSuite.addProfile(profile);
 			}
 
 			if (configFile != null) {
+				// TODO: addConfig as list
 				testSuite.setGlobalConfigFile(configFile);
 			}
-			
+
 			log.info("Running testsuite '{}' from file '{}'.", testSuite, testSuite.getFilename());
 
 			listener.testSuiteExecutionStarted(testSuite);
 
 			for (ITest test : testSuite.getTests()) {
 				if (test.isSkipped()) {
-					log.info("Test '{}' skipped.", test);				
+					log.info("Test '{}' skipped.", test);
 					listener.executionSkipped(test, "");
 					continue;
 				}
-				
+
 				log.info("Run test '{}'. type: {}", test, test.getClass().getName());
 				totalTests++;
-				
+
 				listener.executionStarted(test);
 				TestExecutionResult result = new TestExecutionResult(test);
 				test.setWithTrace(withTrace);
@@ -223,13 +226,13 @@ public class TestExecutionEngine {
 				}
 				test.cleanup();
 				result.setEndTime(System.currentTimeMillis());
-				
+
 				log.info("Test '{}' finished. status: {}", result.getTest(), result.getStatus(), result.getThrowable());
-				
+
 				listener.executionFinished(test, result);
 
 			}
-			
+
 			// Remove obsolete snapshots when no test was skipped and no test failed.
 			if (cleanSnapshot && !testSuite.hasSkippedTests() && !testSuite.hasFailedTests()
 					&& testSuite.hasSnapshotLoaded()) {
@@ -239,16 +242,15 @@ public class TestExecutionEngine {
 				snapshot.save();
 			}
 
-			log.info("Testsuite '{}' finished. snapshot file: {}, skipped tests: {}, failed tests: {}",
-					testSuite, testSuite.hasSnapshotLoaded(), testSuite.hasSkippedTests(), testSuite.hasFailedTests());
+			log.info("Testsuite '{}' finished. snapshot file: {}, skipped tests: {}, failed tests: {}", testSuite,
+					testSuite.hasSnapshotLoaded(), testSuite.hasSkippedTests(), testSuite.hasFailedTests());
 
-			
 			listener.testSuiteExecutionFinished(testSuite);
 
 		}
 
 		log.info("Executed {} tests. {} tests failed. Done!", totalTests, failedTests);
-		
+
 		listener.testPlanExecutionFinished();
 
 		return (failed) ? 1 : 0;

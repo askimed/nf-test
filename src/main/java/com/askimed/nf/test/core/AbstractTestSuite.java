@@ -15,7 +15,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	private String name;
 
-	private String profile = null;
+	private List<String> profiles = new Vector<String>();;
 
 	private File globalConfig = null;
 
@@ -46,6 +46,9 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		autoSort = config.isAutoSort();
 		options = config.getOptions();
 		homeDirectory = new File(config.getWorkDir());
+		if (config.getProfile() != null) {
+			addProfile(config.getProfile());
+		}
 	}
 
 	public void script(String script) {
@@ -91,7 +94,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	}
 
 	public void profile(String profile) {
-		this.profile = profile;
+		this.profiles.add(profile);
 	}
 
 	public void config(String config) {
@@ -106,12 +109,12 @@ public abstract class AbstractTestSuite implements ITestSuite {
 		return name;
 	}
 
-	public void setProfile(String profile) {
-		this.profile = profile;
+	public void addProfile(String profile) {
+		this.profiles.add(profile);
 	}
 
-	public String getProfile() {
-		return profile;
+	public List<String> getProfiles() {
+		return profiles;
 	}
 
 	public void autoSort(boolean autoSort) {
