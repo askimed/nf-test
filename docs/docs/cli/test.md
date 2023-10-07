@@ -12,9 +12,9 @@ nf-test test [<NEXTFLOW_FILES>|<SCRIPT_FOLDERS>]
 
 To run your test using a specific Nextflow profile, you can use the `--profile` argument. [Learn more](/docs/configuration/#managing-profiles).
 
-#### `--debug`
+#### `--verbose`
 
-The debug parameter prints out all available output channels which can be accessed in the `then` clause.
+Prints out the Nextflow output during test runs.
 
 #### `--without-trace`
 
@@ -31,6 +31,10 @@ Writes test results in [TAP format](https://testanything.org) to file.
 #### `--junitxml <filename>`
 
 Writes test results in [JUnit XML format](https://junit.org/) to file, which conforms to [the standard schema](https://github.com/junit-team/junit5/blob/242f3b3ef84cfd96c9de26992588812a68cdef8b/platform-tests/src/test/resources/jenkins-junit.xsd).
+
+#### `--debug`
+
+The debug parameter prints out debugging messages and all available output channels which can be accessed in the `then` clause.
 
 ## Examples
 

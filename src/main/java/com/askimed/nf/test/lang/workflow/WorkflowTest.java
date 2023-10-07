@@ -153,7 +153,7 @@ public class WorkflowTest extends AbstractTest {
 		}
 		nextflow.setOut(outFile);
 		nextflow.setErr(errFile);
-		nextflow.setSilent(!isDebug());
+		nextflow.setDebug(isDebug());
 		nextflow.setLog(logFile);
 		nextflow.setLaunchDir(launchDir);
 		nextflow.setWorkDir(workDir);
