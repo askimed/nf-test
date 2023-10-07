@@ -19,8 +19,8 @@ public class ProcessTest {
 
 	static {
 
-		 AnsiColors.disable();
-		 AnsiText.disable();
+		AnsiColors.disable();
+		AnsiText.disable();
 
 	}
 
@@ -38,7 +38,7 @@ public class ProcessTest {
 		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testExample() throws Exception {
 
@@ -48,18 +48,19 @@ public class ProcessTest {
 
 	}
 
-	/*@Test
-	public void testDisableAutoSortConfig() throws Exception {
+	/*
+	 * @Test public void testDisableAutoSortConfig() throws Exception {
+	 * 
+	 * Files.copy(Paths.get("test-data", "autosort.nf.test"),
+	 * Paths.get("nf-test.config"));
+	 * 
+	 * App app = new App(); int exitCode = app.run(new String[] { "test",
+	 * "test-data/process/autosort/test_process.nf.test" }); // Fails, because
+	 * expects sorted channels assertEquals(1, exitCode);
+	 * 
+	 * }
+	 */
 
-		Files.copy(Paths.get("test-data", "autosort.nf.test"), Paths.get("nf-test.config"));
-
-		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/process/autosort/test_process.nf.test" });
-		// Fails, because expects sorted channels
-		assertEquals(1, exitCode);
-
-	}*/
-	
 	@Test
 	public void testDisableAutoSortTestSuite() throws Exception {
 
@@ -69,7 +70,7 @@ public class ProcessTest {
 		assertEquals(1, exitCode);
 
 	}
-	
+
 	@Test
 	public void testDisableAutoSortTestSuiteAndOverwrite() throws Exception {
 
@@ -96,7 +97,7 @@ public class ProcessTest {
 		assertEquals(1, exitCode);
 
 	}
-	
+
 	@Test
 	public void testMissingScript() throws Exception {
 
@@ -178,7 +179,7 @@ public class ProcessTest {
 		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testLoadGzip() throws Exception {
 
@@ -187,7 +188,7 @@ public class ProcessTest {
 		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testLoadGzipWithModuleDir() throws Exception {
 
@@ -196,7 +197,7 @@ public class ProcessTest {
 		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testScriptWithRelativePath() throws Exception {
 
@@ -205,14 +206,63 @@ public class ProcessTest {
 		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testScriptWithRelativePathInSubfolder() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/process/default/tests/test_process_relative.nf.test" });
+		int exitCode = app
+				.run(new String[] { "test", "test-data/process/default/tests/test_process_relative.nf.test" });
 		assertEquals(0, exitCode);
 
 	}
-	
+
+	@Test
+	public void testProfiles() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/profiles/hello.a.nf.test" });
+		assertEquals(0, exitCode);
+
+		app = new App();
+		exitCode = app
+				.run(new String[] { "test", "test-data/process/profiles/hello.a.nf.test", "--profile", "profile_b" });
+		assertEquals(1, exitCode);
+
+	}
+
+	@Test
+	public void testProfilesOverwrite() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/profiles/hello.b.nf.test" });
+		assertEquals(1, exitCode);
+
+		app = new App();
+		exitCode = app
+				.run(new String[] { "test", "test-data/process/profiles/hello.b.nf.test", "--profile", "profile_b" });
+		assertEquals(0, exitCode);
+
+	}
+
+	@Test
+	public void testProfilesOverwriteInConfig() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/profiles/hello.a.nf.test", "--config",
+				"test-data/process/profiles/nf-test.config" });
+		assertEquals(0, exitCode);
+
+		app = new App();
+		exitCode = app.run(new String[] { "test", "test-data/process/profiles/hello.c.nf.test", "--config",
+				"test-data/process/profiles/nf-test.config", "--profile", "profile_b" });
+		assertEquals(1, exitCode);
+
+		app = new App();
+		exitCode = app.run(new String[] { "test", "test-data/process/profiles/hello.b.nf.test", "--config",
+				"test-data/process/profiles/nf-test.config", "--profile", "profile_b" });
+		assertEquals(0, exitCode);
+
+	}
+
 }

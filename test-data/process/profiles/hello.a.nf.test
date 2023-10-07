@@ -1,0 +1,27 @@
+nextflow_process {
+
+  name "Test process HELLO"
+
+  script "./hello.nf"
+  process "HELLO"
+  config "test-data/process/profiles/nextflow.config"
+  profile "profile_a"
+
+  test("Should create 5 files") {
+
+    when {
+      process {
+        """
+        input[0] = params.name
+        """
+      }
+    }
+
+    then {
+      assert process.success
+      assert "Hello profile_a!" in workflow.stdout
+    }
+
+  }
+
+}

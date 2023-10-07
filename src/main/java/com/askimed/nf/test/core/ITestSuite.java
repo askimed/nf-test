@@ -12,7 +12,7 @@ public interface ITestSuite extends ITaggable {
 
 	public String getName();
 
-	public void setProfile(String profile);
+	public void addProfile(String profile);
 
 	public void setGlobalConfigFile(File config);
 

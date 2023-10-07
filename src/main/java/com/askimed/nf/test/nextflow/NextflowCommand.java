@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,7 +24,7 @@ public class NextflowCommand {
 
 	private String script;
 
-	private String profile;
+	private List<String> profiles = new Vector<String>();
 
 	private List<File> configs = new Vector<File>();
 
@@ -61,8 +62,17 @@ public class NextflowCommand {
 		this.script = script;
 	}
 
-	public void setProfile(String profile) {
-		this.profile = profile;
+	public void addProfile(String profile) {
+		if (profile == null) {
+			return;
+		}
+		if (!profile.startsWith("+")) {
+			this.profiles.clear();
+		}
+		String[] tiles = profile.split(",");
+		for (String tile : tiles) {
+			this.profiles.add(tile.replace("+", "").trim());
+		}
 	}
 
 	public void addConfig(File config) {
@@ -173,9 +183,9 @@ public class NextflowCommand {
 		args.add(paramsFile.getAbsolutePath());
 		args.add("-ansi-log");
 		args.add("false");
-		if (profile != null) {
+		if (!profiles.isEmpty()) {
 			args.add("-profile");
-			args.add(profile);
+			args.add(String.join(",", profiles));
 		}
 		if (trace != null) {
 			args.add("-with-trace");
@@ -202,8 +212,10 @@ public class NextflowCommand {
 		}
 		if (!silent) {
 			System.out.println();
-			System.out.println("    Nextflow Command:");
-			System.out.println("      " + nextflow.getExecutedCommand());
+			System.out.println("    Nextflow:");
+			System.out.println("       Profiles: " + profiles);
+			System.out.println("       Configs: " + configs);
+			System.out.println("       Command: " + nextflow.getExecutedCommand());
 		}
 
 		int result = nextflow.execute();
