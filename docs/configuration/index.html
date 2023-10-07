@@ -967,13 +967,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setup-test-profile" class="md-nav__link">
-    Setup test profile
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#nf-testconfig" class="md-nav__link">
     nf-test.config
   </a>
@@ -991,6 +984,40 @@
   <a href="#configuration-for-tests" class="md-nav__link">
     Configuration for tests
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#managing-profiles" class="md-nav__link">
+    Managing Profiles
+  </a>
+  
+    <nav class="md-nav" aria-label="Managing Profiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-profile-usage" class="md-nav__link">
+    Basic Profile Usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-profiles-with" class="md-nav__link">
+    Combining Profiles with "+"
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-priority-order" class="md-nav__link">
+    Profile Priority Order
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1171,26 +1198,68 @@
 
 
 <h1 id="configuration">Configuration</h1>
-<h2 id="setup-test-profile">Setup test profile</h2>
-<p>To run your test using a specific Nextflow profile, you can use the <code>--profile</code> argument on the command line or define a default profile in <code>nf-test.config</code>.</p>
 <h2 id="nf-testconfig"><code>nf-test.config</code></h2>
-<p>This config file contains settings for nf-test.</p>
+<p>The <code>nf-test.config</code> file is a configuration file used to customize settings and behavior for <code>nf-test</code>. This file must be located in the root of your project, and it is automatically loaded when you run <code>nf-test test</code>. Below are the parameters that can be adapted:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>testsDir</code></td>
+<td>Location for storing all nf-test cases (test scripts). If you want all test files to be in the same directory as the script itself, you can set the testDir to <code>.</code></td>
+<td><code>"tests"</code></td>
+</tr>
+<tr>
+<td><code>workDir</code></td>
+<td>Directory for storing temporary files and working directories for each test. This directory should be added to <code>.gitignore</code>.</td>
+<td><code>".nf-test"</code></td>
+</tr>
+<tr>
+<td><code>configFile</code></td>
+<td>Location of an optional <code>nextflow.config</code> file specifically used for executing tests. <a href="#testsnextflowconfig">Learn more</a>.</td>
+<td><code>"tests/nextflow.config"</code></td>
+</tr>
+<tr>
+<td><code>libDir</code></td>
+<td>Location of a library folder that is automatically added to the classpath during testing to include additional libraries or resources needed for test cases.</td>
+<td><code>"tests/lib"</code></td>
+</tr>
+<tr>
+<td><code>profile</code></td>
+<td>Default profile to use for running tests defined in the Nextflow configuration. See <a href="#managing-profiles">Learn more</a>.</td>
+<td><code>"docker"</code></td>
+</tr>
+<tr>
+<td><code>withTrace</code></td>
+<td>Enable or disable tracing options during testing. Disable tracing if your containers don't include the <code>procps</code> tool.</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>autoSort</code></td>
+<td>Enable or disable sorted channels by default when running tests.</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>options</code></td>
+<td>Custom Nextflow command-line options to be applied when running tests. For example <code>"-dump-channels -stub-run"</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Here's an example of what an <code>nf-test.config</code> file could look like:</p>
 <div class="highlight"><pre><span></span><code><span class="n">config</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="c1">// location for all nf-tests</span>
 <span class="w">    </span><span class="n">testsDir</span><span class="w"> </span><span class="s2">&quot;tests&quot;</span>
-<span class="w">    </span><span class="c1">// nf-test directory including temporary files for each test</span>
 <span class="w">    </span><span class="n">workDir</span><span class="w"> </span><span class="s2">&quot;.nf-test&quot;</span>
-<span class="w">    </span><span class="c1">// location of an optional nextflow.config file specific for executing tests</span>
 <span class="w">    </span><span class="n">configFile</span><span class="w"> </span><span class="s2">&quot;tests/nextflow.config&quot;</span>
-<span class="w">    </span><span class="c1">// location of library folder that is added automatically to the classpath</span>
-<span class="w">    </span><span class="n">libDir</span><span class="w"> </span><span class="s2">&quot;tests/lib&quot;</span><span class="w">    </span>
-<span class="w">    </span><span class="c1">// run all test with the defined docker profile from the main nextflow.config</span>
+<span class="w">    </span><span class="n">libDir</span><span class="w"> </span><span class="s2">&quot;tests/lib&quot;</span>
 <span class="w">    </span><span class="n">profile</span><span class="w"> </span><span class="s2">&quot;docker&quot;</span>
-<span class="w">    </span><span class="c1">// disable tracing options in case container does not include `procps` Linux tool.</span>
 <span class="w">    </span><span class="n">withTrace</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">    </span><span class="c1">//disable sorted channels</span>
 <span class="w">    </span><span class="n">autoSort</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">    </span><span class="c1">// add Nextflow options</span>
 <span class="w">    </span><span class="n">options</span><span class="w"> </span><span class="s2">&quot;-dump-channels -stub-run&quot;</span>
 <span class="o">}</span>
 </code></pre></div>
@@ -1202,7 +1271,7 @@
 <span class="o">}</span>
 </code></pre></div>
 <h2 id="configuration-for-tests">Configuration for tests</h2>
-<p>nf-test allows to set an additional configuration for a testsuite:</p>
+<p>nf-test allows to set and overwrite the <code>config</code>, <code>autoSort</code> and <code>options</code> properties for a specific testsuite:</p>
 <div class="highlight"><pre><span></span><code>nextflow_process {
 
     name &quot;Test Process...&quot;
@@ -1215,7 +1284,7 @@
 
 }
 </code></pre></div>
-<p>It is also possible to overwrite the <code>config</code>, <code>autoSort</code> or Nextflow properties (e.g. <code>options "-dump-channels"</code>) for a specific test. Depending on the used Nextflow option, also add the <code>--debug</code> nf-test option on the command-line to see the addtional output.  </p>
+<p>It is also possible to overwrite these properties for specific test. Depending on the used Nextflow option, also add the <code>--debug</code> nf-test option on the command-line to see the addtional output.</p>
 <div class="highlight"><pre><span></span><code>nextflow_process {
 
    test(&quot;my test&quot;) {
@@ -1229,6 +1298,26 @@
 
 }
 </code></pre></div>
+<h2 id="managing-profiles">Managing Profiles</h2>
+<p>Profiles in <code>nf-test</code> provide a convenient way to configure and customize Nextflow executions for your test cases. To run your test using a specific Nextflow profile, you can use the <code>--profile</code> argument on the command line or define a default profile in <code>nf-test.config</code>.</p>
+<h3 id="basic-profile-usage">Basic Profile Usage</h3>
+<p>By default, <code>nf-test</code> reads the profile configuration from <code>nf-test.config</code>. If you've defined a profile called <code>A</code> in <code>nf-test.config</code>, running <code>nf-test --profile B</code> will start Nextflow with only the <code>B</code> profile. It replaces any existing profiles.</p>
+<h3 id="combining-profiles-with">Combining Profiles with "+"</h3>
+<p>To combine profiles, you can use the <code>+</code> prefix. For example, running <code>nf-test --profile +B</code> will start Nextflow with both <code>A</code> and <code>B</code> profiles, resulting in <code>-profile A,B</code>. This allows you to extend the existing configuration with additional profiles.</p>
+<h3 id="profile-priority-order">Profile Priority Order</h3>
+<p>Profiles are evaluated in a specific order, ensuring predictable behavior:</p>
+<ol>
+<li>
+<p><strong>Profile in nf-test.config:</strong> The first profile considered is the one defined in <code>nf-test.config</code>.</p>
+</li>
+<li>
+<p><strong>Profile Defined in Testcase:</strong> If you specify a profile within a testcase, it takes precedence over the one in <code>nf-test.config</code>.</p>
+</li>
+<li>
+<p><strong>Profile Defined on the Command Line (CLI):</strong> Finally, any profiles provided directly through the CLI have the highest priority and override/extends previously defined profiles.</p>
+</li>
+</ol>
+<p>By understanding this profile evaluation order, you can effectively configure Nextflow executions for your test cases in a flexible and organized manner.</p>
 
 
 
