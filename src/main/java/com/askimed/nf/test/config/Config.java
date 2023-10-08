@@ -1,8 +1,6 @@
 package com.askimed.nf.test.config;
 
 import java.io.File;
-import java.util.List;
-import java.util.Vector;
 
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;

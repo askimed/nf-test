@@ -145,3 +145,28 @@ In this example:
 
 - The `symlink` directive creates a symlink named "original_data.txt" in the `meta` directory pointing to the file located at "data/original_data.txt."
 - The `copy` directive copies the "config.yml" file from the "resources" directory to the `meta` directory.
+
+### Testsuite
+
+Furthermore, it is also possible to stage files that are specific to a single testsuite:
+
+```
+nextflow_workflow {
+
+    name "Test workflow HELLO_WORKFLOW"
+
+    script "./hello.nf"
+    workflow "HELLO_WORKFLOW"
+
+    stage {
+        symlink "test-assets/test.txt"
+    }
+
+    test("Should print out test file") {
+        expect {
+            assert workflow.success
+        }
+    }
+
+}
+```

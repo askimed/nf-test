@@ -111,6 +111,7 @@ public abstract class AbstractTest implements ITest {
 				log.debug("Stage {} user provided files...", config.getStageBuilder().getPaths().size());
 				shareDirectories(config.getStageBuilder().getPaths(), metaDir);
 			}
+			shareDirectories(parent.getStageBuilder().getPaths(), metaDir);
 		} catch (Exception e) {
 			throw new IOException("Testcase setup failed: Directories could not be shared:\n" + e);
 		}
@@ -247,7 +248,7 @@ public abstract class AbstractTest implements ITest {
 	public boolean isWithTrace() {
 		return withTrace;
 	}
-	
+
 	protected void shareDirectories(List<FileStaging> directories, File stageDir) throws IOException {
 		for (FileStaging directory : directories) {
 			String metaDirectory = FileUtil.path(stageDir.getAbsolutePath(), directory.getPath());

@@ -1,0 +1,15 @@
+nextflow_workflow {
+
+  name "Test workflow HELLO_WORKFLOW"
+
+  script "./hello.nf"
+  workflow "HELLO_WORKFLOW"
+
+  test("Should print out test file") {
+    expect {
+      assert workflow.success
+    }
+
+  }
+
+}

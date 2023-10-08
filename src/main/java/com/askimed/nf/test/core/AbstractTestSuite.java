@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.askimed.nf.test.config.Config;
+import com.askimed.nf.test.config.StageBuilder;
 import com.askimed.nf.test.lang.extensions.SnapshotFile;
 
 import groovy.lang.Closure;
@@ -40,6 +41,8 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	private List<String> tags = new Vector<String>();
 
 	private List<NamedClosure> testClosures = new Vector<NamedClosure>();
+
+	private StageBuilder stageBuilder = new StageBuilder();
 
 	private Config config;
 
@@ -135,6 +138,16 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	public String getOptions() {
 		return options;
+	}
+
+	public void stage(Closure closure) {
+		closure.setDelegate(stageBuilder);
+		closure.setResolveStrategy(Closure.DELEGATE_ONLY);
+		closure.call();
+	}
+
+	public StageBuilder getStageBuilder() {
+		return stageBuilder;
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class WorkflowTest {
 		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testWorkflowWithRelativePath() throws Exception {
 
@@ -43,15 +43,15 @@ public class WorkflowTest {
 		assertEquals(0, exitCode);
 
 	}
-  
+
 	@Test
-  public void testWorkflowUnamedOutputs() throws Exception {
+	public void testWorkflowUnamedOutputs() throws Exception {
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/workflow/unnamed/trial.unnamed.nf.test" });
 		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testWorkflowAndSnapshot() throws Exception {
 
@@ -60,7 +60,7 @@ public class WorkflowTest {
 		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testWorkflowWithNoOutputs() throws Exception {
 
@@ -83,35 +83,37 @@ public class WorkflowTest {
 	public void testLibs() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/workflow/libs/hello.nf.test", "--lib", "lib" ,"--debug"});
+		int exitCode = app
+				.run(new String[] { "test", "test-data/workflow/libs/hello.nf.test", "--lib", "lib", "--debug" });
 		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testParamsIssue34() throws Exception {
 
-	  App app = new App();
-	  int exitCode = app.run(new String[] { "test", "test-data/workflow/issue34/trial.nf.test"});
-	  assertEquals(0, exitCode);
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/issue34/trial.nf.test" });
+		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testParamsIssue34Setup() throws Exception {
 
-	  App app = new App();
-	  int exitCode = app.run(new String[] { "test", "test-data/workflow/issue34/trial.setup.nf.test"});
-	  assertEquals(0, exitCode);
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/issue34/trial.setup.nf.test" });
+		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testHangingWorkflowIssue57() throws Exception {
 
-	  App app = new App();
-	  int exitCode = app.run(new String[] { "test", "test-data/workflow/hanging/meaningless_workflow.nf.test","--debug"});
-	  assertEquals(0, exitCode);
+		App app = new App();
+		int exitCode = app
+				.run(new String[] { "test", "test-data/workflow/hanging/meaningless_workflow.nf.test", "--debug" });
+		assertEquals(0, exitCode);
 
 	}
 
@@ -119,55 +121,66 @@ public class WorkflowTest {
 	public void testWorkflowNonUniqueFilenames() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/workflow/non-unique-filenames/main.nf.test"});
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/non-unique-filenames/main.nf.test" });
 		assertEquals(0, exitCode);
 
 	}
-	
-	
+
 	@Test
 	public void testIssue125() throws Exception {
 
-	  App app = new App();
-	  int exitCode = app.run(new String[] { "test", "test-data/workflow/issue125/example_wf.nf.test"});
-	  assertEquals(0, exitCode);
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/issue125/example_wf.nf.test" });
+		assertEquals(0, exitCode);
 
 	}
-	
-	
+
 	@Test
 	public void testStagingWithoutMapping() throws Exception {
 
-	  App app = new App();
-	  int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test"});
-	  assertEquals(1, exitCode);
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test" });
+		assertEquals(1, exitCode);
 
 	}
-	
+
 	@Test
 	public void testStagingWitMappingFolder() throws Exception {
 
-	  App app = new App();
-	  int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test", "--config", "test-data/workflow/staging/nf-test.folder.config","--debug"});
-	  assertEquals(0, exitCode);
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test", "--config",
+				"test-data/workflow/staging/nf-test.folder.config", "--debug" });
+		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testStagingWitMappingFile() throws Exception {
 
-	  App app = new App();
-	  int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test", "--config", "test-data/workflow/staging/nf-test.file.config"});
-	  assertEquals(0, exitCode);
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test", "--config",
+				"test-data/workflow/staging/nf-test.file.config" });
+		assertEquals(0, exitCode);
 
 	}
-	
+
 	@Test
 	public void testStagingWitMappingFileAndMode() throws Exception {
 
-	  App app = new App();
-	  int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test", "--config", "test-data/workflow/staging/nf-test.file.mode.config"});
-	  assertEquals(0, exitCode);
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test", "--config",
+				"test-data/workflow/staging/nf-test.file.mode.config" });
+		assertEquals(0, exitCode);
 
 	}
+
+	@Test
+	public void testStagingInTestsuite() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello-stage.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+
 }
