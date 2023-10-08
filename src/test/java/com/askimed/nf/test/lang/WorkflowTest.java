@@ -133,4 +133,41 @@ public class WorkflowTest {
 	  assertEquals(0, exitCode);
 
 	}
+	
+	
+	@Test
+	public void testStagingWithoutMapping() throws Exception {
+
+	  App app = new App();
+	  int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test"});
+	  assertEquals(1, exitCode);
+
+	}
+	
+	@Test
+	public void testStagingWitMappingFolder() throws Exception {
+
+	  App app = new App();
+	  int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test", "--config", "test-data/workflow/staging/nf-test.folder.config","--debug"});
+	  assertEquals(0, exitCode);
+
+	}
+	
+	@Test
+	public void testStagingWitMappingFile() throws Exception {
+
+	  App app = new App();
+	  int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test", "--config", "test-data/workflow/staging/nf-test.file.config"});
+	  assertEquals(0, exitCode);
+
+	}
+	
+	@Test
+	public void testStagingWitMappingFileAndMode() throws Exception {
+
+	  App app = new App();
+	  int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test", "--config", "test-data/workflow/staging/nf-test.file.mode.config"});
+	  assertEquals(0, exitCode);
+
+	}
 }

@@ -2,9 +2,11 @@ package com.askimed.nf.test.core;
 
 import java.io.File;
 
+import com.askimed.nf.test.config.Config;
+
 public interface ITest extends ITaggable {
 
-	public void setup(File homeDirectory) throws Throwable;
+	public void setup(Config config, File homeDirectory) throws Throwable;
 
 	public void execute() throws Throwable;
 

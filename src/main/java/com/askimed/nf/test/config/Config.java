@@ -1,6 +1,8 @@
 package com.askimed.nf.test.config;
 
 import java.io.File;
+import java.util.List;
+import java.util.Vector;
 
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
@@ -35,6 +37,8 @@ public class Config {
 	private PluginManager pluginManager = new PluginManager(PluginManager.FORCE_UPDATE);
 
 	private String configFile = DEFAULT_NEXTFLOW_CONFIG;
+
+	private StageBuilder stageBuilder = new StageBuilder();
 
 	public void testsDir(String testsDir) {
 		this.testsDir = testsDir;
@@ -110,6 +114,16 @@ public class Config {
 
 	public String getLibDir() {
 		return libDir;
+	}
+
+	public void stage(Closure closure) {
+		closure.setDelegate(stageBuilder);
+		closure.setResolveStrategy(Closure.DELEGATE_ONLY);		
+		closure.call();
+	}
+
+	public StageBuilder getStageBuilder() {
+		return stageBuilder;
 	}
 
 	public void configFile(String config) {

@@ -41,8 +41,11 @@ public abstract class AbstractTestSuite implements ITestSuite {
 
 	private List<NamedClosure> testClosures = new Vector<NamedClosure>();
 
+	private Config config;
+
 	@Override
 	public void configure(Config config) {
+		this.config = config;
 		autoSort = config.isAutoSort();
 		options = config.getOptions();
 		homeDirectory = new File(config.getWorkDir());
@@ -70,12 +73,13 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	}
 
 	public void evalualteTestClosures() throws Throwable {
+
 		for (NamedClosure namedClosure : testClosures) {
 			String testName = namedClosure.name;
 			Closure closure = namedClosure.closure;
-			
+
 			ITest test = getNewTestInstance(testName);
-			test.setup(getHomeDirectory());
+			test.setup(config, getHomeDirectory());
 			closure.setDelegate(test);
 			closure.setResolveStrategy(Closure.DELEGATE_ONLY);
 			closure.call();
@@ -233,7 +237,7 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	protected boolean isRelative(String path) {
 		return path.startsWith("../") || path.startsWith("./");
 	}
-	
+
 	@Override
 	public String toString() {
 		return name;

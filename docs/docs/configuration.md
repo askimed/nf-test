@@ -99,3 +99,49 @@ Profiles are evaluated in a specific order, ensuring predictable behavior:
 3. **Profile Defined on the Command Line (CLI):** Finally, any profiles provided directly through the CLI have the highest priority and override/extends previously defined profiles.
 
 By understanding this profile evaluation order, you can effectively configure Nextflow executions for your test cases in a flexible and organized manner.
+
+## File Staging
+
+The `stage` section of the `nf-test.config` file is used to define files that are needed by Nextflow in the test environment (`meta` directory). Additionally, the directories `lib`, `bin`, and `assets` are automatically staged.
+
+### Supported Directives
+
+#### `symlink`
+
+This directive is used to create symbolic links (symlinks) in the test environment. Symlinks are pointers to files or directories and can be useful for creating references to data files or directories required for the test. The syntax for the `symlink` directive is as follows:
+
+```
+symlink "source_path"
+```
+
+`source_path`: The path to the source file or directory that you want to symlink.
+
+#### `copy`
+
+This directive is used to copy files or directories into the test environment. It allows you to duplicate files from a specified source to a location within the test environment. The syntax for the `copy` directive is as follows:
+
+```
+copy "source_path"
+```
+
+`source_path`: The path to the source file or directory that you want to copy.
+
+### Example Usage
+
+Here's an example of how to use the `stage` section in an `nf-test.config` file:
+
+```groovy
+config {
+    ...
+    stage {
+        symlink "data/original_data.txt"
+        copy "resources/config.yml"
+    }
+    ...
+}
+```
+
+In this example:
+
+- The `symlink` directive creates a symlink named "original_data.txt" in the `meta` directory pointing to the file located at "data/original_data.txt."
+- The `copy` directive copies the "config.yml" file from the "resources" directory to the `meta` directory.
