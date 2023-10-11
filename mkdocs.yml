@@ -4,16 +4,16 @@ copyright: "&copy; 2021 - 2023 Lukas Forer and Sebastian Schönherr"
 theme:
   name: material
   features:
-      - content.tooltips
-      #- navigation.expand
-      - navigation.footer
-      - navigation.tabs
-      #- navigation.tabs.sticky
-      - search.highlight
-      - search.share
-      - search.suggest
-      - toc.integrate
-      - content.tabs.link
+    - content.tooltips
+    #- navigation.expand
+    - navigation.footer
+    - navigation.tabs
+    #- navigation.tabs.sticky
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.integrate
+    - content.tabs.link
   font:
     text: Segoe UI
 
@@ -36,44 +36,44 @@ nav:
   - Home: index.md
   - Installation: installation.md
   - Documentation:
-    - Getting Started: docs/getting-started.md
-    - Writing Tests:
-      - Pipeline Testing: docs/testcases/nextflow_pipeline.md
-      - Workflow Testing: docs/testcases/nextflow_workflow.md
-      - Process Testing: docs/testcases/nextflow_process.md
-      - Function Testing: docs/testcases/nextflow_function.md
-      - Params Dictionary: docs/testcases/params.md
-      - Global Variables: docs/testcases/global_variables.md      
-    - Running Tests: docs/running-tests.md
-    - Writing Assertions:
-      - Power Assertions: docs/assertions/assertions.md
-      - Files: docs/assertions/files.md
-      - Snapshots: docs/assertions/snapshots.md
-      - Regular Expressions: docs/assertions/regular-expressions.md
-      - FASTA Files: docs/assertions/fasta.md
-      - Using Third-Party Libraries: docs/assertions/libraries.md
-    - Command Line Interface (CLI):
-      - init: docs/cli/init.md
-      - generate: docs/cli/generate.md
-      - test: docs/cli/test.md
-      - list: docs/cli/list.md
-      - clean: docs/cli/clean.md
-    - Configuration: docs/configuration.md
-    - Plugins:
-      - Available Plugins: https://code.askimed.com/nf-test-plugins
-      - Using Plugins: docs/plugins/using-plugins.md
-      - Developing Plugins: docs/plugins/developing-plugins.md
+      - Getting Started: docs/getting-started.md
+      - Writing Tests:
+          - Pipeline Testing: docs/testcases/nextflow_pipeline.md
+          - Workflow Testing: docs/testcases/nextflow_workflow.md
+          - Process Testing: docs/testcases/nextflow_process.md
+          - Function Testing: docs/testcases/nextflow_function.md
+          - Params Dictionary: docs/testcases/params.md
+          - Setup Method: docs/testcases/setup.md
+          - Global Variables: docs/testcases/global_variables.md
+      - Running Tests: docs/running-tests.md
+      - Writing Assertions:
+          - Power Assertions: docs/assertions/assertions.md
+          - Files: docs/assertions/files.md
+          - Snapshots: docs/assertions/snapshots.md
+          - Regular Expressions: docs/assertions/regular-expressions.md
+          - FASTA Files: docs/assertions/fasta.md
+          - Using Third-Party Libraries: docs/assertions/libraries.md
+      - Command Line Interface (CLI):
+          - init: docs/cli/init.md
+          - generate: docs/cli/generate.md
+          - test: docs/cli/test.md
+          - list: docs/cli/list.md
+          - clean: docs/cli/clean.md
+      - Configuration: docs/configuration.md
+      - Plugins:
+          - Available Plugins: https://code.askimed.com/nf-test-plugins
+          - Using Plugins: docs/plugins/using-plugins.md
+          - Developing Plugins: docs/plugins/developing-plugins.md
   - Resources: resources.md
   - About: about.md
-
 
 markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.tabbed:
-      alternate_style: true 
+      alternate_style: true
   - attr_list
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg 
+      emoji_generator: !!python/name:materialx.emoji.to_svg
