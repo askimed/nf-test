@@ -36,6 +36,8 @@ public class Config {
 
 	private String configFile = DEFAULT_NEXTFLOW_CONFIG;
 
+	private StageBuilder stageBuilder = new StageBuilder();
+
 	public void testsDir(String testsDir) {
 		this.testsDir = testsDir;
 	}
@@ -110,6 +112,16 @@ public class Config {
 
 	public String getLibDir() {
 		return libDir;
+	}
+
+	public void stage(Closure closure) {
+		closure.setDelegate(stageBuilder);
+		closure.setResolveStrategy(Closure.DELEGATE_ONLY);		
+		closure.call();
+	}
+
+	public StageBuilder getStageBuilder() {
+		return stageBuilder;
 	}
 
 	public void configFile(String config) {
