@@ -4,13 +4,17 @@ import java.io.IOException;
 
 import com.askimed.nf.test.core.AbstractTestSuite;
 import com.askimed.nf.test.core.ITest;
+import com.askimed.nf.test.lang.TestCode;
 
 import groovy.lang.Closure;
+import groovy.lang.DelegatesTo;
 
 public class ProcessTestSuite extends AbstractTestSuite {
 
 	private String process;
 
+	private TestCode setup;
+	
 	public void process(String process) {
 		this.process = process;
 	}
@@ -27,6 +31,14 @@ public class ProcessTestSuite extends AbstractTestSuite {
 		addTestClosure(name, closure);
 	}
 
+	public void setup(@DelegatesTo(value = ProcessTest.class, strategy = Closure.DELEGATE_ONLY) final Closure closure) {
+		setup = new TestCode(closure);
+	}
+	
+	public TestCode getSetup() {
+		return setup;
+	}
+	
 	@Override
 	protected ITest getNewTestInstance(String name) {
 		ProcessTest test = new ProcessTest(this);

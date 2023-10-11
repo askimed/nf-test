@@ -6,12 +6,12 @@ nextflow.enable.dsl=2
 // comes from nf-test to store json files
 params.nf_test_output  = ""
 
-// process mapping
-def input = []
-${mapping}
-//----
+// include dependencies
+<% for (dependency in dependencies) { %>
+include { ${dependency.name} } from '${dependency.script}'
+<% } %>
 
-// include test process
+// include test workflow
 include { ${workflow} } from '${script}'
 
 // define custom rules for JSON that will be generated.
@@ -23,6 +23,20 @@ def jsonOutput =
 
 
 workflow {
+
+    // run dependencies
+    <% for (dependency in dependencies) { %>
+    {
+        def input = []
+        ${dependency.mapping}
+        ${dependency.name}(*input)
+    }
+    <% } %>
+
+    // workflow mapping
+    def input = []
+    ${mapping}
+    //----
 
     //run workflow
     ${workflow}(*input)

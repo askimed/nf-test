@@ -216,7 +216,24 @@ public class ProcessTest {
 		assertEquals(0, exitCode);
 
 	}
+	
+	@Test
+	public void testDependencies() throws Exception {
 
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/dependencies/process_data.nf.test" });
+  
+  }
+  
+  @Test
+	public void testDependenciesAbricate() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/abricate/summary/tests/main.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+  
 	@Test
 	public void testProfiles() throws Exception {
 
@@ -244,7 +261,7 @@ public class ProcessTest {
 		assertEquals(0, exitCode);
 
 	}
-
+	
 	@Test
 	public void testProfilesOverwriteInConfig() throws Exception {
 

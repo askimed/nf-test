@@ -1,0 +1,10 @@
+{
+    "Should use process GENERATE_DATA to generate input data": {
+        "content": [
+            [
+                "output.txt:md5,cf78c141ba07d58cba270f3ccc5ee358"
+            ]
+        ],
+        "timestamp": "2023-10-05T12:41:15.52647"
+    }
+}

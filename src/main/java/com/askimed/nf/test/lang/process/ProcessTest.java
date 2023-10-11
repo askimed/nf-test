@@ -9,6 +9,7 @@ import java.util.Map;
 import org.codehaus.groovy.control.CompilationFailedException;
 
 import com.askimed.nf.test.core.AbstractTest;
+import com.askimed.nf.test.lang.Dependency;
 import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.nextflow.NextflowCommand;
 import com.askimed.nf.test.util.AnsiText;
@@ -82,7 +83,7 @@ public class ProcessTest extends AbstractTest {
 	public void execute() throws Throwable {
 
 		super.execute();
-		
+
 		File script = new File(parent.getScript());
 
 		if (!script.exists()) {
@@ -91,6 +92,10 @@ public class ProcessTest extends AbstractTest {
 
 		context.init(this);
 
+		if (parent.getSetup() != null) {
+			parent.getSetup().execute(context);
+		}
+		
 		if (setup != null) {
 			setup.execute(context);
 		}
@@ -126,8 +131,8 @@ public class ProcessTest extends AbstractTest {
 		}
 		File projectConfig = new File("nextflow.config");
 		if (projectConfig.exists()) {
-			nextflow.addConfig(projectConfig);	
-		}		
+			nextflow.addConfig(projectConfig);
+		}
 		nextflow.addConfig(parent.getGlobalConfigFile());
 		nextflow.addConfig(parent.getLocalConfig());
 		nextflow.addConfig(getConfig());
@@ -179,9 +184,26 @@ public class ProcessTest extends AbstractTest {
 			script = new File(script).getAbsolutePath();
 		}
 
+		// update dependency paths
+		for (Dependency dependency : context.getDependencies()) {
+			String _script = dependency.getScript();
+			if (_script == null) {
+				dependency.setScript(script);
+			} else {
+				if (parent.isRelative(_script)) {
+					_script = parent.makeAbsolute(_script);
+				}
+				if (!_script.startsWith("/") && !_script.startsWith("./")) {
+					_script = new File(_script).getAbsolutePath();
+				}
+				dependency.setScript(_script);
+			}
+		}
+
 		Map<Object, Object> binding = new HashMap<Object, Object>();
 		binding.put("process", parent.getProcess());
 		binding.put("script", script);
+		binding.put("dependencies", context.getDependencies());
 
 		// Get body of when closure
 		binding.put("mapping", context.getProcess().getMapping());

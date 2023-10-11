@@ -84,7 +84,14 @@ public abstract class AbstractTest implements ITest {
 	}
 
 	public void config(String config) {
-		this.config = new File(config);
+		if (config == null) {
+			return;
+		}
+		if (parent.isRelative(config)) {
+			this.config = new File(parent.makeAbsolute(config));
+		} else {
+			this.config = new File(config);
+		}
 	}
 
 	public File getConfig() {
