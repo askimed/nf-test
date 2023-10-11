@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.bd3936ea.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6a10b989.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
@@ -1021,6 +1021,60 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#file-staging" class="md-nav__link">
+    File Staging
+  </a>
+  
+    <nav class="md-nav" aria-label="File Staging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-directives" class="md-nav__link">
+    Supported Directives
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported Directives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symlink" class="md-nav__link">
+    symlink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copy" class="md-nav__link">
+    copy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-usage" class="md-nav__link">
+    Example Usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testsuite" class="md-nav__link">
+    Testsuite
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1318,6 +1372,56 @@
 </li>
 </ol>
 <p>By understanding this profile evaluation order, you can effectively configure Nextflow executions for your test cases in a flexible and organized manner.</p>
+<h2 id="file-staging">File Staging</h2>
+<p>The <code>stage</code> section of the <code>nf-test.config</code> file is used to define files that are needed by Nextflow in the test environment (<code>meta</code> directory). Additionally, the directories <code>lib</code>, <code>bin</code>, and <code>assets</code> are automatically staged.</p>
+<h3 id="supported-directives">Supported Directives</h3>
+<h4 id="symlink"><code>symlink</code></h4>
+<p>This directive is used to create symbolic links (symlinks) in the test environment. Symlinks are pointers to files or directories and can be useful for creating references to data files or directories required for the test. The syntax for the <code>symlink</code> directive is as follows:</p>
+<div class="highlight"><pre><span></span><code>symlink &quot;source_path&quot;
+</code></pre></div>
+<p><code>source_path</code>: The path to the source file or directory that you want to symlink.</p>
+<h4 id="copy"><code>copy</code></h4>
+<p>This directive is used to copy files or directories into the test environment. It allows you to duplicate files from a specified source to a location within the test environment. The syntax for the <code>copy</code> directive is as follows:</p>
+<div class="highlight"><pre><span></span><code>copy &quot;source_path&quot;
+</code></pre></div>
+<p><code>source_path</code>: The path to the source file or directory that you want to copy.</p>
+<h3 id="example-usage">Example Usage</h3>
+<p>Here's an example of how to use the <code>stage</code> section in an <code>nf-test.config</code> file:</p>
+<div class="highlight"><pre><span></span><code><span class="n">config</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="w">    </span><span class="n">stage</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">symlink</span><span class="w"> </span><span class="s2">&quot;data/original_data.txt&quot;</span>
+<span class="w">        </span><span class="n">copy</span><span class="w"> </span><span class="s2">&quot;resources/config.yml&quot;</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>In this example:</p>
+<ul>
+<li>The <code>symlink</code> directive creates a symlink named "original_data.txt" in the <code>meta</code> directory pointing to the file located at "data/original_data.txt."</li>
+<li>The <code>copy</code> directive copies the "config.yml" file from the "resources" directory to the <code>meta</code> directory.</li>
+</ul>
+<h3 id="testsuite">Testsuite</h3>
+<p>Furthermore, it is also possible to stage files that are specific to a single testsuite:</p>
+<div class="highlight"><pre><span></span><code>nextflow_workflow {
+
+    name &quot;Test workflow HELLO_WORKFLOW&quot;
+
+    script &quot;./hello.nf&quot;
+    workflow &quot;HELLO_WORKFLOW&quot;
+
+    stage {
+        symlink &quot;test-assets/test.txt&quot;
+    }
+
+    test(&quot;Should print out test file&quot;) {
+        expect {
+            assert workflow.success
+        }
+    }
+
+}
+</code></pre></div>
 
 
 
@@ -1405,7 +1509,7 @@
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.94c44541.min.js"></script>
+      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       
