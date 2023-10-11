@@ -38,6 +38,10 @@ run("WorkflowName") {
 }
 ```
 
+!!! warning
+
+    Please keep in mind that changes in procsses or workflows, which are executed in the setup method, can result in a failed test run.
+
 ## Example Usage
 
 ### 1. Local Setup Method
