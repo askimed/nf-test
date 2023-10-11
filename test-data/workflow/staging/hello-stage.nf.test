@@ -1,0 +1,19 @@
+nextflow_workflow {
+
+  name "Test workflow HELLO_WORKFLOW"
+
+  script "./hello.nf"
+  workflow "HELLO_WORKFLOW"
+
+  stage {
+    symlink "test-assets/test.txt"
+  }
+
+  test("Should print out test file") {
+    expect {
+      assert workflow.success
+    }
+
+  }
+
+}

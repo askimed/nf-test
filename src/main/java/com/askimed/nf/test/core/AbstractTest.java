@@ -8,6 +8,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Vector;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.askimed.nf.test.config.Config;
+import com.askimed.nf.test.config.FileStaging;
 import com.askimed.nf.test.util.FileUtil;
 
 public abstract class AbstractTest implements ITest {
@@ -54,7 +59,8 @@ public abstract class AbstractTest implements ITest {
 
 	public boolean skipped = false;
 
-	public static String[] SHARED_DIRECTORIES = { "bin", "lib", "assets" };
+	public static FileStaging[] SHARED_DIRECTORIES = { new FileStaging("bin"), new FileStaging("lib"),
+			new FileStaging("assets") };
 
 	protected File config = null;
 
@@ -70,6 +76,8 @@ public abstract class AbstractTest implements ITest {
 
 	private String options;
 
+	private static Logger log = LoggerFactory.getLogger(AbstractTest.class);
+
 	public AbstractTest(AbstractTestSuite parent) {
 		this.parent = parent;
 		options = parent.getOptions();
@@ -84,21 +92,26 @@ public abstract class AbstractTest implements ITest {
 	}
 
 	@Override
-	public void setup(File testDirectory) throws IOException {
+	public void setup(Config config, File testDirectory) throws IOException {
 
 		if (testDirectory == null) {
 			throw new IOException("Testcase setup failed: No home directory set");
 		}
-				
+
 		launchDir = initDirectory("Launch Directory", testDirectory, DIRECTORY_TESTS, getHash());
 		metaDir = initDirectory("Meta Directory", launchDir, DIRECTORY_META);
 		outputDir = initDirectory("Output Directory", launchDir, DIRECTORY_OUTPUT);
 		workDir = initDirectory("Working Directory", launchDir, DIRECTORY_WORK);
 
 		try {
-			// copy bin and lib to metaDir. TODO: use symlinks and read additional "mapping"
-			// from config file
+			// copy bin, assets and lib to metaDir
 			shareDirectories(SHARED_DIRECTORIES, metaDir);
+			if (config != null) {
+				// copy user defined staging directories
+				log.debug("Stage {} user provided files...", config.getStageBuilder().getPaths().size());
+				shareDirectories(config.getStageBuilder().getPaths(), metaDir);
+			}
+			shareDirectories(parent.getStageBuilder().getPaths(), metaDir);
 		} catch (Exception e) {
 			throw new IOException("Testcase setup failed: Directories could not be shared:\n" + e);
 		}
@@ -154,11 +167,11 @@ public abstract class AbstractTest implements ITest {
 
 	@Override
 	public String getHash() {
-		
+
 		if (parent == null || parent.getFilename() == null || getName() == null || getName().isEmpty()) {
 			throw new RuntimeException("Error generating hash");
 		}
-		
+
 		return hash(parent.getFilename() + getName());
 
 	}
@@ -236,13 +249,17 @@ public abstract class AbstractTest implements ITest {
 		return withTrace;
 	}
 
-	protected void shareDirectories(String[] directories, File metaDir) throws IOException {
-		for (String directory : directories) {
-			File localDirectory = new File(directory);
-			if (localDirectory.exists()) {
-				String metaDirectory = FileUtil.path(metaDir.getAbsolutePath(), directory);
-				FileUtil.copyDirectory(localDirectory.getAbsolutePath(), metaDirectory);
-			}
+	protected void shareDirectories(List<FileStaging> directories, File stageDir) throws IOException {
+		for (FileStaging directory : directories) {
+			String metaDirectory = FileUtil.path(stageDir.getAbsolutePath(), directory.getPath());
+			directory.stage(metaDirectory);
+		}
+	}
+
+	protected void shareDirectories(FileStaging[] directories, File stageDir) throws IOException {
+		for (FileStaging directory : directories) {
+			String metaDirectory = FileUtil.path(stageDir.getAbsolutePath(), directory.getPath());
+			directory.stage(metaDirectory);
 		}
 	}
 
@@ -254,7 +271,7 @@ public abstract class AbstractTest implements ITest {
 	public boolean isUpdateSnapshot() {
 		return updateSnapshot;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getHash().substring(0, 8) + ": " + getName();

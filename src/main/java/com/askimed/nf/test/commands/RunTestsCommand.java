@@ -102,7 +102,7 @@ public class RunTestsCommand extends AbstractCommand {
 			try {
 				File configFile = new File(configFilename);
 				if (configFile.exists()) {
-
+					log.info("Load config from file {}...", configFile.getAbsolutePath());
 					Config config = Config.parse(configFile);
 					defaultConfigFile = config.getConfigFile();
 					defaultWithTrace = config.isWithTrace();
