@@ -31,9 +31,9 @@ public class InitCommand extends AbstractCommand {
 
 			if (nextflowConfigFile.exists()) {
 				System.out.println(AnsiColors.yellow("Skipped:" + Config.DEFAULT_NEXTFLOW_CONFIG + " is already setup for this project."));
+			} else {
+			        InitTemplates.createNextflowConfig(nextflowConfigFile);
 			}
-			
-			InitTemplates.createNextflowConfig(nextflowConfigFile);
 
 			System.out.println(
 					AnsiColors.green("Project configured.") + " Configuration is stored in " + Config.FILENAME);
