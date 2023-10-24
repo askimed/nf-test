@@ -120,7 +120,7 @@ nextflow_process {
             assert process.success
             assert process.trace.tasks().size() == 2
 
-            with(process.out.trial_out_ch) {
+            with(process.out.verbiage_ch2) {
                 assert size() == 2
                 assert path(get(0)).readLines().size() == 1
                 assert path(get(1)).readLines().size() == 1
