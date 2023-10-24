@@ -43,7 +43,7 @@ nf-test generate pipeline main.nf
 ```
 
 
-Create a test case for each functio in file `functions.nf`:
+Create a test case for each function in file `functions.nf`:
 
 ```
 nf-test generate function functions.nf
