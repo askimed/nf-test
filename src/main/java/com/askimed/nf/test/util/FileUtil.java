@@ -115,6 +115,8 @@ public class FileUtil {
 				md.update(buffer, 0, read);
 				read = gzis.read(buffer);
 			}
+			gzis.close();
+			fis.close();
 		// for other files, calculate md5 hash directly from file
 		} else {
 			md.update(Files.readAllBytes(self));
