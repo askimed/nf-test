@@ -9,6 +9,26 @@ This page collects videos and blog posts about nf-test created by the community.
 
 ---
 
+### :fontawesome-brands-youtube:{ style="color: #EE0F0F" } nf-core/bytesize: Converting pytest modules to nf-test
+
+**Adam Talbot** & **Sateesh Peri** do a live demo of converting nf-core DSL2 modules pytests to nf-test
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MuwluoKFnwM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+The presentation was recored as part of the [nf-core/bytesize](https://nf-co.re/events/2023/bytesize_converting_pytest_modules_to_nf-test) series.
+
+---
+
+### :fontawesome-brands-youtube:{ style="color: #EE0F0F" } nf-test: a simple but powerful testing framework for Nextflow pipelines
+
+**Lukas Forer** provides an overview of nf-test, its evolution over time and up-coming features.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1ysRNIs8M_s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+The presentation was recorded as part of the [2023 Nextflow Summit in Barcelona](https://summit.nextflow.io/barcelona/speakers/lukas-forer/).
+
+---
+
 ### :fontawesome-brands-youtube:{ style="color: #EE0F0F" } nf-test, a simple test framework specifically tailored for Nextflow pipelines
 
 **Sateesh Peri** does a hands-on exploration of nf-test, a simple test framework specifically tailored for Nextflow pipelines.
