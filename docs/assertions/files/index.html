@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.8">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.35e1ed30.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.4b4a2bd9.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.356b1318.min.css">
@@ -1222,8 +1222,10 @@
 <h1 id="files">Files</h1>
 <h2 id="md5-checksum">md5 Checksum</h2>
 <p>nf-test extends <code>path</code> by a <code>md5</code> property that can be used to compare the file content with an expected checksum:</p>
-<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;64debea5017a035ddc67c0b51fa84b16&quot;</span>
+<p><div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">out_ch</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;64debea5017a035ddc67c0b51fa84b16&quot;</span>
 </code></pre></div>
+Note that for gzip compressed files, the <code>md5</code> property is calculated after gunzipping the file contents, whereas for other filetypes the <code>md5</code> property is directly
+calculated on the file itself.</p>
 <h2 id="json-files">JSON Files</h2>
 <p>nf-test supports comparison of JSON files and keys within JSON files.
 To assert that two JSON files contain the same keys and values:
@@ -1352,7 +1354,7 @@ Individual keys can also be asserted:</p>
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.aecac24b.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.81fa17fe.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       
