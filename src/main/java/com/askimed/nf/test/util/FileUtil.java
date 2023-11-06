@@ -105,7 +105,23 @@ public class FileUtil {
 	public static String getMd5(Path self) throws IOException, NoSuchAlgorithmException {
 		Formatter fm = new Formatter();
 		MessageDigest md = MessageDigest.getInstance("MD5");
-		md.update(Files.readAllBytes(self));
+		// for .gz files, calculate md5 hash on decompressed content
+		if (self.toString().endsWith(".gz")) {
+			FileInputStream fis = new FileInputStream(self.toString());
+			GZIPInputStream gzis = new GZIPInputStream(fis);
+			byte[] buffer = new byte[4096];
+			int read = gzis.read(buffer);
+			while ( read >= 0) {
+				md.update(buffer, 0, read);
+				read = gzis.read(buffer);
+			}
+			gzis.close();
+			fis.close();
+		// for other files, calculate md5 hash directly from file
+		} else {
+			md.update(Files.readAllBytes(self));
+	
+		}
 		byte[] md5sum = md.digest();
 		for (byte b : md5sum) {
 			fm.format("%02x", b);
