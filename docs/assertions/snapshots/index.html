@@ -1250,6 +1250,9 @@
 <p>You can also create a snapshot of all output channels of a process:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">).</span><span class="na">match</span><span class="o">()</span>
 </code></pre></div>
+<p>Or a specific check on a file:</p>
+<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">path</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">))).</span><span class="na">match</span><span class="o">()</span>
+</code></pre></div>
 <p>Even the result of a function can be used:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">function</span><span class="o">.</span><span class="na">result</span><span class="o">).</span><span class="na">match</span><span class="o">()</span>
 </code></pre></div>
