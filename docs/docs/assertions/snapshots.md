@@ -23,7 +23,7 @@ assert snapshot(process.out).match()
 Or a specific check on a file:
 
 ```Groovy
-assert snapshot(path(process.out.get(0)).md5).match()
+assert snapshot(path(process.out.get(0))).match()
 ```
 
 Even the result of a function can be used:
