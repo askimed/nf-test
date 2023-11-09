@@ -20,6 +20,12 @@ You can also create a snapshot of all output channels of a process:
 assert snapshot(process.out).match()
 ```
 
+Or a specific check on a file:
+
+```Groovy
+assert snapshot(path(process.out.get(0)).md5).match()
+```
+
 Even the result of a function can be used:
 
 ```Groovy
