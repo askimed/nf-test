@@ -10,7 +10,7 @@ nf-test test [<NEXTFLOW_FILES>|<SCRIPT_FOLDERS>]
 
 #### `--profile <NEXTFLOW_PROFILE>`
 
-To run your test using a specific Nextflow profile, you can use the `--profile` argument. [Learn more](/docs/configuration/#managing-profiles).
+To run your test using a specific Nextflow profile, you can use the `--profile` argument. [Learn more](/docs/docs/configuration#managing-profiles).
 
 #### `--verbose`
 

@@ -1,6 +1,6 @@
 # Getting started
 
-This guide helps you to understand the concepts of nf-test and to write your first test cases. Before you start, please check if you have [installed](installation.md) nf-test properly on your computer. Also, this guide assumes that you have a basic knowledge of Groovy and unit testing. The [Groovy documentation](http://groovy-lang.org/documentation.html) is the best place to learn its syntax.
+This guide helps you to understand the concepts of nf-test and to write your first test cases. Before you start, please check if you have [installed](/docs/installation.md) nf-test properly on your computer. Also, this guide assumes that you have a basic knowledge of Groovy and unit testing. The [Groovy documentation](http://groovy-lang.org/documentation.html) is the best place to learn its syntax.
 
 ## Let's get started
 To show the power of nf-test, we adapted a recently published [proof of concept Nextflow pipeline](https://github.com/GoekeLab/bioinformatics-workflows/tree/master/nextflow). We adapted the pipeline to the new DSL2 syntax using modules. First, open the terminal and clone our test pipeline:
