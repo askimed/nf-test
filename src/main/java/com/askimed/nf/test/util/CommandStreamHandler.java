@@ -37,7 +37,7 @@ public class CommandStreamHandler implements Runnable {
 			boolean save = (filename != null && !filename.isEmpty());
 			FileOutputStream writer = null;
 
-			byte[] buffer = new byte[200];
+			byte[] buffer = new byte[1024];
 
 			if (save) {
 				writer = new FileOutputStream(filename);
@@ -47,8 +47,11 @@ public class CommandStreamHandler implements Runnable {
 
 			while ((size = is.read(buffer)) > 0) {
 				if (!silent) {
-					String line = new String(buffer, 0, size);
-					System.out.print("    > " + line);
+					String[] lines = new String(buffer, 0, size).split("\n");
+					for(int i = 0; i < lines.length; i++) {
+					    System.out.println("    > " + lines[i]);
+					}
+
 				}
 				if (save) {
 					writer.write(buffer, 0, size);
