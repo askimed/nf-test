@@ -30,11 +30,11 @@ public class CommandStreamHandlerTest {
 
         // capture stdout
         PrintStream stdout = System.out;
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
         ByteArrayInputStream is = new ByteArrayInputStream(commandOutput.getBytes());
-        CommandStreamHandler handler = new CommandStreamHandler((InputStream) is);
+        CommandStreamHandler handler = new CommandStreamHandler(is);
         handler.run();
 
         // stop capturing stdout
