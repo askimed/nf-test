@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 
 public class CommandStreamHandlerTest {
 
-	@Test
-	public void testCommandStreamHandler() {
+    @Test
+    public void testCommandStreamHandler() {
         // output snippet taken from nextflow run nf-core/rnaseq -revision 3.4
         String commandOutput =
             "------------------------------------------------------\n"
@@ -28,17 +28,17 @@ public class CommandStreamHandlerTest {
           + "  https://github.com/nf-core/rnaseq/blob/master/CITATIONS.md\n"
           + "------------------------------------------------------\n";
 
-		// capture stdout
-		PrintStream stdout = System.out;
-		final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        // capture stdout
+        PrintStream stdout = System.out;
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
         ByteArrayInputStream is = new ByteArrayInputStream(commandOutput.getBytes());
-		CommandStreamHandler handler = new CommandStreamHandler((InputStream) is);
-		handler.run();
+        CommandStreamHandler handler = new CommandStreamHandler((InputStream) is);
+        handler.run();
 
-		// stop capturing stdout
-		System.setOut(stdout);
+        // stop capturing stdout
+        System.setOut(stdout);
 
         String expectedOutput =
             "    > ------------------------------------------------------\n"
@@ -54,9 +54,9 @@ public class CommandStreamHandlerTest {
           + "    >   https://github.com/nf-core/rnaseq/blob/master/CITATIONS.md\n"
           + "    > ------------------------------------------------------\n";
 
-		assertEquals(
-		    expectedOutput,
-		    out.toString()
-		);
-	}
+        assertEquals(
+            expectedOutput,
+            out.toString()
+        );
+    }
 }
