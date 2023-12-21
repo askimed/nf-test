@@ -13,11 +13,7 @@ public class CommandStreamHandlerTest {
 
 	@Test
 	public void testCommandStreamHandler() {
-		// capture stdout
-		PrintStream stdout = System.out;
-		final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-
+        // output snippet taken from nextflow run nf-core/rnaseq -revision 3.4
         String commandOutput =
             "------------------------------------------------------\n"
           + "If you use nf-core/rnaseq for your analysis please cite:\n"
@@ -32,9 +28,17 @@ public class CommandStreamHandlerTest {
           + "  https://github.com/nf-core/rnaseq/blob/master/CITATIONS.md\n"
           + "------------------------------------------------------\n";
 
+		// capture stdout
+		PrintStream stdout = System.out;
+		final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
         ByteArrayInputStream is = new ByteArrayInputStream(commandOutput.getBytes());
 		CommandStreamHandler handler = new CommandStreamHandler((InputStream) is);
 		handler.run();
+
+		// stop capturing stdout
+		System.setOut(stdout);
 
         String expectedOutput =
             "    > ------------------------------------------------------\n"
@@ -54,7 +58,5 @@ public class CommandStreamHandlerTest {
 		    expectedOutput,
 		    out.toString()
 		);
-
-		System.setOut(stdout);
 	}
 }
