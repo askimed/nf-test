@@ -12,14 +12,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CommandStreamHandlerTest {
-    ByteArrayOutputStream out;
-    PrintStream stdout;
+    final ByteArrayOutputStream capturedOut = new ByteArrayOutputStream();
+    final PrintStream stdout = System.out;
 
     @BeforeEach
     public void captureStandardOut() {
-        stdout = System.out;
-        out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setOut(new PrintStream(capturedOut));
     }
 
     @Test
@@ -59,12 +57,13 @@ public class CommandStreamHandlerTest {
 
         assertEquals(
             expectedOutput,
-            out.toString()
+            capturedOut.toString()
         );
     }
 
     @AfterEach
     public void resetStandardOut() {
         System.setOut(stdout);
+        capturedOut.reset();
     }
 }
