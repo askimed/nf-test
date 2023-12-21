@@ -13,7 +13,7 @@ public class CommandStreamHandlerTest {
 
     @Test
     public void testCommandStreamHandler() {
-        // output snippet taken from nextflow run nf-core/rnaseq -revision 3.4
+        // output snippet taken from `nextflow run nf-core/rnaseq -revision 3.4`
         String commandOutput =
             "------------------------------------------------------\n"
           + "If you use nf-core/rnaseq for your analysis please cite:\n"
