@@ -7,9 +7,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.InputStream;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CommandStreamHandlerTest {
+    ByteArrayOutputStream out;
+    PrintStream stdout;
+
+    @BeforeEach
+    public void captureStandardOut() {
+        stdout = System.out;
+        out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+    }
 
     @Test
     public void testCommandStreamHandler() {
@@ -28,17 +39,9 @@ public class CommandStreamHandlerTest {
           + "  https://github.com/nf-core/rnaseq/blob/master/CITATIONS.md\n"
           + "------------------------------------------------------\n";
 
-        // capture stdout
-        PrintStream stdout = System.out;
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-
         ByteArrayInputStream is = new ByteArrayInputStream(commandOutput.getBytes());
         CommandStreamHandler handler = new CommandStreamHandler(is);
         handler.run();
-
-        // stop capturing stdout
-        System.setOut(stdout);
 
         String expectedOutput =
             "    > ------------------------------------------------------\n"
@@ -58,5 +61,10 @@ public class CommandStreamHandlerTest {
             expectedOutput,
             out.toString()
         );
+    }
+
+    @AfterEach
+    public void resetStandardOut() {
+        System.setOut(stdout);
     }
 }
