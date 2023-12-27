@@ -1369,7 +1369,7 @@ nf-test<span class="w"> </span>generate<span class="w"> </span>process<span clas
 <span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">        // Use transcriptome.fa as a first input paramter for our process</span>
-<span class="s2">        input[0] = file(&quot;test_data/transcriptome.fa&quot;)</span>
+<span class="s2">        input[0] = file(&quot;${projectDir}/test_data/transcriptome.fa&quot;)</span>
 <span class="s2">        &quot;&quot;&quot;</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
@@ -1412,7 +1412,7 @@ nf-test<span class="w"> </span>generate<span class="w"> </span>process<span clas
 <span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
 <span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                input[0] = file(&quot;test_data/transcriptome.fa&quot;)</span>
+<span class="s2">                input[0] = file(&quot;${projectDir}/test_data/transcriptome.fa&quot;)</span>
 <span class="s2">                &quot;&quot;&quot;</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
