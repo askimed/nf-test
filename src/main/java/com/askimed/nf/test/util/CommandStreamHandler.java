@@ -1,23 +1,21 @@
 package com.askimed.nf.test.util;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public class CommandStreamHandler implements Runnable {
 
-	private InputStream is;
+	private BufferedReader is;
 
 	private boolean silent = false;
 
 	private String filename = null;
 
 	public CommandStreamHandler(InputStream is) {
-		this.is = is;
+		this.is = new BufferedReader(new InputStreamReader(is));
 	}
 
 	public CommandStreamHandler(InputStream is, String filename) {
-		this.is = is;
+		this.is = new BufferedReader(new InputStreamReader(is));
 		this.filename = filename;
 	}
 
@@ -35,23 +33,22 @@ public class CommandStreamHandler implements Runnable {
 		try {
 
 			boolean save = (filename != null && !filename.isEmpty());
-			FileOutputStream writer = null;
+			BufferedWriter writer = null;
 
 			byte[] buffer = new byte[200];
 
 			if (save) {
-				writer = new FileOutputStream(filename);
+				writer = new BufferedWriter(new FileWriter(filename));
 			}
 
-			int size = 0;
-
-			while ((size = is.read(buffer)) > 0) {
+			String line = null;
+			while ((line = is.readLine()) != null) {
 				if (!silent) {
-					String line = new String(buffer, 0, size);
-					System.out.print("    > " + line);
+					System.out.println("    > " + line);
 				}
 				if (save) {
-					writer.write(buffer, 0, size);
+					writer.write(line);
+					writer.newLine();
 				}
 			}
 
