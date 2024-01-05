@@ -99,7 +99,7 @@ when {
     process {
         """
         // Use transcriptome.fa as a first input paramter for our process
-        input[0] = file("test_data/transcriptome.fa")
+        input[0] = file("${projectDir}/test_data/transcriptome.fa")
         """
     }
 }
@@ -155,7 +155,7 @@ nextflow_process {
         when {
             process {
                 """
-                input[0] = file("test_data/transcriptome.fa")
+                input[0] = file("${projectDir}/test_data/transcriptome.fa")
                 """
             }
         }
