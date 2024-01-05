@@ -107,9 +107,9 @@ public abstract class AbstractTest implements ITest {
 		outputDir = initDirectory("Output Directory", launchDir, DIRECTORY_OUTPUT);
 		workDir = initDirectory("Working Directory", launchDir, DIRECTORY_WORK);
 		FileStaging[] sharedDirectories = new FileStaging[]{
-				new FileStaging("bin", config.getStageMode()),
-				new FileStaging("lib",  config.getStageMode()),
-				new FileStaging("assets", config.getStageMode())
+				new FileStaging("bin", config != null ? config.getStageMode() : FileStaging.MODE_COPY),
+				new FileStaging("lib",  config != null ? config.getStageMode() : FileStaging.MODE_COPY),
+				new FileStaging("assets", config != null ? config.getStageMode() : FileStaging.MODE_COPY)
 		};
 		try {
 			// copy bin, assets and lib to metaDir
