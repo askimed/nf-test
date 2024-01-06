@@ -1323,7 +1323,7 @@ It ensures that your snapshot file only contains the snapshots required for your
 <div class="highlight"><pre><span></span><code>nf-test test tests/main.nf.test --clean-snapshot
 </code></pre></div>
 <blockquote>
-<p><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4a1.svg" title=":bulb:" /> Obsolete snapshots can only be detected when running all tests in a test file simultaneously, and when all tests pass. If you run a single test or if tests are skipped, nf-test cannot detect obsolete snapshots.</p>
+<p><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4a1.svg" title=":bulb:" /> Obsolete snapshots can only be detected when running all tests in a test file simultaneously, and when all tests pass. If you run a single test or if tests are skipped, nf-test cannot detect obsolete snapshots.</p>
 </blockquote>
 <h2 id="constructing-complex-snapshots">Constructing Complex Snapshots</h2>
 <p>It is also possible to include multiple objects into one snapshot:</p>
@@ -1360,7 +1360,7 @@ It ensures that your snapshot file only contains the snapshots required for your
 </ul>
 <p>These default arguments are applied when no custom settings are specified.</p>
 <blockquote>
-<p><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4a1.svg" title=":bulb:" /> If <code>diff</code>is not installed on the system, nf-test will print exepcted and found snapshots without highlighting differences.</p>
+<p><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4a1.svg" title=":bulb:" /> If <code>diff</code>is not installed on the system, nf-test will print exepcted and found snapshots without highlighting differences.</p>
 </blockquote>
 <h3 id="customizing-diff-tool-arguments">Customizing Diff Tool Arguments</h3>
 <p>Users have the flexibility to customize the arguments passed to the diff tool using an environment variable called <code>NFT_DIFF_ARGS</code>. This environment variable allows you to modify the way the diff tool behaves when comparing snapshots.</p>
