@@ -59,9 +59,6 @@ public abstract class AbstractTest implements ITest {
 
 	public boolean skipped = false;
 
-	public static FileStaging[] SHARED_DIRECTORIES = { new FileStaging("bin"), new FileStaging("lib"),
-			new FileStaging("assets") };
-
 	protected File config = null;
 
 	private boolean updateSnapshot = false;
@@ -109,10 +106,14 @@ public abstract class AbstractTest implements ITest {
 		metaDir = initDirectory("Meta Directory", launchDir, DIRECTORY_META);
 		outputDir = initDirectory("Output Directory", launchDir, DIRECTORY_OUTPUT);
 		workDir = initDirectory("Working Directory", launchDir, DIRECTORY_WORK);
-
+		FileStaging[] sharedDirectories = new FileStaging[]{
+				new FileStaging("bin", config != null ? config.getStageMode() : FileStaging.MODE_COPY),
+				new FileStaging("lib",  config != null ? config.getStageMode() : FileStaging.MODE_COPY),
+				new FileStaging("assets", config != null ? config.getStageMode() : FileStaging.MODE_COPY)
+		};
 		try {
 			// copy bin, assets and lib to metaDir
-			shareDirectories(SHARED_DIRECTORIES, metaDir);
+			shareDirectories(sharedDirectories, metaDir);
 			if (config != null) {
 				// copy user defined staging directories
 				log.debug("Stage {} user provided files...", config.getStageBuilder().getPaths().size());
