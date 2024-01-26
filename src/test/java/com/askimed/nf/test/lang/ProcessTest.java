@@ -34,7 +34,7 @@ public class ProcessTest {
 	public void testScriptSucces() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/process/default/test_process_success.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/process/default/test_process.nf.test" });
 		assertEquals(0, exitCode);
 
 	}
@@ -148,7 +148,7 @@ public class ProcessTest {
 	public void testBinFolder() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/process/bin-folder/test_process_success.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/process/bin-folder/test_process.nf.test" });
 		assertEquals(0, exitCode);
 
 	}
@@ -221,9 +221,17 @@ public class ProcessTest {
 	public void testDependencies() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/process/dependencies/process_data.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/process/dependencies/process_data.nf.test", "--verbose" });
   
-  }
+  	}
+
+	@Test
+	public void testDependenciesWithAlias() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/dependencies/process_data_alias.nf.test", "--verbose" });
+
+	}
   
   @Test
 	public void testDependenciesAbricate() throws Exception {

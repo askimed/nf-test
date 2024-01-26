@@ -8,7 +8,7 @@ params.nf_test_output  = ""
 
 // include dependencies
 <% for (dependency in dependencies) { %>
-include { ${dependency.name} } from '${dependency.script}'
+include { ${dependency.name} ${dependency.hasAlias() ? " as " + dependency.alias : "" } } from '${dependency.script}'
 <% } %>
 
 // include test process
@@ -29,7 +29,7 @@ workflow {
     {
         def input = []
         ${dependency.mapping}
-        ${dependency.name}(*input)
+        ${dependency.hasAlias() ? dependency.alias : dependency.name}(*input)
     }
     <% } %>
 

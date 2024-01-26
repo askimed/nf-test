@@ -1,0 +1,36 @@
+nextflow_process {
+
+    name "Test process data"
+
+    script "./process_data.nf"
+    process "PROCESS_DATA"
+
+    test("Should use process GENERATE_DATA with alias PROCESS_ALIAS to generate input data") {
+
+        setup {
+            run("GENERATE_DATA", alias: "LUKAS") {
+                script "./generate_data.nf"
+                process {
+                    """
+                    input[0] = "nf-core"
+                    """
+                }
+            }
+        }
+
+        when {
+            process {
+                """
+                input[0] = "lukas"
+                input[1] = LUKAS.out.results
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert snapshot(process.out.results).match()
+        }
+    }
+
+}
