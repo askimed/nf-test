@@ -17,11 +17,12 @@ public class WorkflowTestSuite extends AbstractTestSuite {
 	private TestCode setup;
 
 	public void workflow(String workflow) {
-		this.workflow = workflow;
+		setWorkflow(workflow);
 	}
 
 	public void setWorkflow(String workflow) {
 		this.workflow = workflow;
+		tag(workflow);
 	}
 
 	public String getWorkflow() {
