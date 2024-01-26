@@ -34,7 +34,7 @@ public class ProcessTest {
 	public void testScriptSucces() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/process/default/test_process.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/process/default/test_process_success.nf.test" });
 		assertEquals(0, exitCode);
 
 	}
@@ -139,7 +139,7 @@ public class ProcessTest {
 
 		App app = new App();
 		int exitCode = app
-				.run(new String[] { "test", "test-data/process/path-util/test_process_success.nf.test", "--update-snapshot" });
+				.run(new String[] { "test", "test-data/process/path-util/test_process.nf.test", "--update-snapshot" });
 		assertEquals(0, exitCode);
 
 	}
