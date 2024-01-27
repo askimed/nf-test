@@ -1,0 +1,28 @@
+nextflow_process {
+
+  name "Test process xy"
+
+  script "./process.nf"
+  process "TEST_PROCESS"
+
+  test("Should succeed because two unique snapshots") {
+
+    when {
+      process {
+        """
+        input[0] = "Lukas"
+        """
+      }
+    }
+
+    then {
+      assert process.success
+      assert process.out.my_output_files
+      assert process.out.my_output_files.size() == 1
+      assert snapshot(process.out.my_output_files).match()
+      assert snapshot(process.out.my_output_files).match("lukas")
+    }
+
+  }
+
+}

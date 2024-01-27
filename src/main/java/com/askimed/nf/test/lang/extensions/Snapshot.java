@@ -28,6 +28,13 @@ public class Snapshot {
 	}
 
 	public boolean match(String id) throws IOException {
+
+		//check if match with this id was already called. --> duplicate snapshots.
+		if (file.getActiveSnapshots().contains(id)) {
+			throw new RuntimeException("A snapshot with id '" + id + "' already exists. " +
+					"Snapshot ids have to be unique, and a test can only have one unnamed snapshot.");
+		}
+
 		SnapshotFileItem expected = file.getSnapshot(id);
 		// new snapshot --> create snapshot
 		if (expected == null) {
