@@ -12,15 +12,16 @@ public class FunctionTestSuite extends AbstractTestSuite {
 	private String function;
 
 	public void function(String function) {
-		this.function = function;
-	}
-
-	public String getFunction() {
-		return function;
+		setFunction(function);
 	}
 
 	public void setFunction(String function) {
 		this.function = function;
+		tag(function);
+	}
+
+	public String getFunction() {
+		return function;
 	}
 
 	public void test(String name, Closure closure) throws IOException {

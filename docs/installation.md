@@ -41,7 +41,7 @@ Nextflow Runtime:
 
 ```
 
-Now you are ready to write your [first testcase](getting-started.md).
+Now you are ready to write your [first testcase](docs/getting-started.md).
 
 ### Install a specific version
 

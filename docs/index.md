@@ -116,7 +116,7 @@ nf-test enables you to test all components of your data science pipeline: from e
     }
     ```
 
-:material-arrow-right: Learn more about [pipeline tests](docs/testcases/nextflow_pipeline), [workflow tests](docs/testcases/nextflow_workflow), [process tests](docs/testcases/nextflow_process) and [function tests](docs/testcases/nextflow_function) in the documentation.
+:material-arrow-right: Learn more about [pipeline tests](docs/testcases/nextflow_pipeline.md), [workflow tests](docs/testcases/nextflow_workflow.md), [process tests](docs/testcases/nextflow_process.md) and [function tests](docs/testcases/nextflow_function.md) in the documentation.
 
 ---
 
@@ -124,15 +124,15 @@ nf-test enables you to test all components of your data science pipeline: from e
 
 nf-test supports **snapshot testing** and automatically **generates a baseline set of unit tests** to safeguard against regressions caused by changes.</br>nf-test captures a snapshot of output channels or any other objects and subsequently compares them to reference snapshot files stored alongside the tests. If the two snapshots do not match, the test will fail
 
-:material-arrow-right: [Learn more](docs/assertions/snapshots)
+:material-arrow-right: [Learn more](docs/assertions/snapshots.md)
 
 ---
 
 ## :material-power-plug-outline: Highly extendable
 
-nf-test supports the **inclusion of third-party libraries** (e.g., jar files) or functions from Groovy files. This can be done to either extend its functionality or to prevent code duplication, thus maintaining simplicity in the logic of test cases. Given that many assertions are specific to use cases, nf-test incorporates a **plugin system** that allows for the extension of existing classes with custom methods. For example [FASTA file support](docs/assertions/fasta).
+nf-test supports the **inclusion of third-party libraries** (e.g., jar files) or functions from Groovy files. This can be done to either extend its functionality or to prevent code duplication, thus maintaining simplicity in the logic of test cases. Given that many assertions are specific to use cases, nf-test incorporates a **plugin system** that allows for the extension of existing classes with custom methods. For example [FASTA file support](docs/assertions/fasta.md).
 
-:material-arrow-right: [Learn more](docs/assertions/libraries)
+:material-arrow-right: [Learn more](docs/assertions/libraries.md)
 
 ---
 
