@@ -38,6 +38,8 @@ public class Config {
 
 	private StageBuilder stageBuilder = new StageBuilder();
 
+	private String stageMode = FileStaging.MODE_COPY;
+
 	public void testsDir(String testsDir) {
 		this.testsDir = testsDir;
 	}
@@ -112,6 +114,18 @@ public class Config {
 
 	public String getLibDir() {
 		return libDir;
+	}
+
+	public void setStageMode(String stageMode) {
+		this.stageMode = stageMode;
+	}
+
+	public String getStageMode() {
+		return stageMode;
+	}
+
+	public void stageMode(String stageMode) {
+		this.stageMode = stageMode;
 	}
 
 	public void stage(Closure closure) {
