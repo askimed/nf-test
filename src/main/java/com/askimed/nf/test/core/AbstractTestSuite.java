@@ -200,6 +200,9 @@ public abstract class AbstractTestSuite implements ITestSuite {
 	}
 
 	public void tag(String tag) {
+		if (tags.contains(tag)) {
+			return;
+		}
 		tags.add(tag);
 	}
 
