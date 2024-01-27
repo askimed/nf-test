@@ -3,6 +3,7 @@ package com.askimed.nf.test.commands;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 
+import com.askimed.nf.test.nextflow.NextflowCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,7 @@ public abstract class AbstractCommand implements Callable<Integer> {
 
 		log.info(App.NAME + " " + App.VERSION);
 		log.info("Arguments: " + Arrays.toString(App.args));
+		log.info("Nextflow Version: " + NextflowCommand.getVersion());
 
 		if (!silent) {
 			printHeader();
@@ -48,7 +50,7 @@ public abstract class AbstractCommand implements Callable<Integer> {
 		System.out.println();
 		System.out.println(Emoji.ROCKET + AnsiText.bold(" " + App.NAME + " " + App.VERSION));
 		System.out.println("https://code.askimed.com/nf-test");
-		System.out.println("(c) 2021 - 2023 Lukas Forer and Sebastian Schoenherr");
+		System.out.println("(c) 2021 - 2024 Lukas Forer and Sebastian Schoenherr");
 		System.out.println();
 
 	}

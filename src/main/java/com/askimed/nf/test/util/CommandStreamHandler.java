@@ -10,6 +10,8 @@ public class CommandStreamHandler implements Runnable {
 
 	private String filename = null;
 
+	private StringBuffer memory;
+
 	public CommandStreamHandler(InputStream is) {
 		this.is = new BufferedReader(new InputStreamReader(is));
 	}
@@ -21,6 +23,10 @@ public class CommandStreamHandler implements Runnable {
 
 	public void setSilent(boolean silent) {
 		this.silent = silent;
+	}
+
+	public void setStringBuffer(StringBuffer memory) {
+		this.memory = memory;
 	}
 
 	public void setFilename(String filename) {
@@ -43,6 +49,9 @@ public class CommandStreamHandler implements Runnable {
 
 			String line = null;
 			while ((line = is.readLine()) != null) {
+				if (memory != null) {
+					memory.append(line).append("\n");
+				}
 				if (!silent) {
 					System.out.println("    > " + line);
 				}
