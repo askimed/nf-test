@@ -61,6 +61,9 @@ public class SnapshotFile {
 			String timestamp = object.get("timestamp").toString();
 			Object content = object.get("content");
 			SnapshotFileItem item = new SnapshotFileItem(timestamp, content);
+			if (object.containsKey("meta")) {
+				item.setMeta((Map<String, Object>) object.get("meta"));
+			}
 			snapshots.put(id, item);
 		}
 		log.debug("Load snapshots from file '{}'", filename);

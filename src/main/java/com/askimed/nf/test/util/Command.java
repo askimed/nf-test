@@ -18,6 +18,10 @@ public class Command {
 
 	private String stderrFileName = null;
 
+	private StringBuffer stdout;
+
+	private StringBuffer stderr;
+
 	public Command(String cmd, String... params) {
 		this.cmd = cmd;
 		this.params = params;
@@ -37,6 +41,15 @@ public class Command {
 			this.params[i] = params.get(i);
 		}
 	}
+
+	public void writeStdout(StringBuffer stdout) {
+		this.stdout = stdout;
+	}
+
+	public void writeStderr(StringBuffer stderr) {
+		this.stderr = stderr;
+	}
+
 
 	public void saveStdOut(String filename) {
 		this.stdoutFileName = filename;
@@ -69,10 +82,12 @@ public class Command {
 
 			Process process = builder.start();
 			CommandStreamHandler handler = new CommandStreamHandler(process.getInputStream(), stdoutFileName);
+			handler.setStringBuffer(stdout);
 			handler.setSilent(silent);
 			Thread inputStreamHandler = new Thread(handler);
 
 			CommandStreamHandler handler2 = new CommandStreamHandler(process.getErrorStream(), stderrFileName);
+			handler.setStringBuffer(stderr);
 			handler2.setSilent(silent);
 			Thread errorStreamHandler = new Thread(handler2);
 
