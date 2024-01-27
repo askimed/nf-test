@@ -21,7 +21,7 @@ include { ${include} } from '${script}'
 def jsonOutput =
     new JsonGenerator.Options()
         .excludeNulls()  // Do not include fields with value null..
-        .addConverter(Path) { value -> value.toString() } // Custom converter for Path. Only filename
+        .addConverter(Path) { value -> value.toAbsolutePath().toString() } // Custom converter for Path. Only filename
         .build()
 
 
