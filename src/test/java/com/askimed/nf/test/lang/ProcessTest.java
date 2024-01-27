@@ -290,4 +290,20 @@ public class ProcessTest {
 
 	}
 
+	@Test
+	public void testUniquenessSnapshots() throws Exception {
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/unique.nf.test" });
+		assertEquals(0, exitCode);
+	}
+
+	@Test
+	public void testNotUniquenessOfSnapshots() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/not-unique.nf.test" });
+		assertEquals(1, exitCode);
+
+	}
+
 }

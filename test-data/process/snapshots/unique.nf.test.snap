@@ -1,0 +1,18 @@
+{
+    "Should succeed because two unique snapshots": {
+        "content": [
+            [
+                "output.txt:md5,286d2f149346ef78d42276aaf0f32693"
+            ]
+        ],
+        "timestamp": "2024-01-27T13:02:28.820175"
+    },
+    "lukas": {
+        "content": [
+            [
+                "output.txt:md5,286d2f149346ef78d42276aaf0f32693"
+            ]
+        ],
+        "timestamp": "2024-01-27T13:02:28.826437"
+    }
+}

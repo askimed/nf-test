@@ -285,6 +285,10 @@ public class TestExecutionEngine {
 		case raw:
 			printTestsAsList(testSuits);
 			break;
+		case CSV:
+		case csv:
+			printTestsAsCsv(testSuits);
+			break;
 		default:
 			printTestsPretty(testSuits);
 			break;
@@ -326,6 +330,10 @@ public class TestExecutionEngine {
 		case json:
 			printTagsAsJson(tags);
 			break;
+		case CSV:
+		case csv:
+			printTagsAsCsv(tags);
+			break;
 		default:
 			printTagsPretty(tags);
 			break;
@@ -357,6 +365,18 @@ public class TestExecutionEngine {
 		}
 	}
 
+	private void printTestsAsCsv(List<ITestSuite> testSuits) {
+		List<String> tests = new Vector<String>();
+		int index = 0;
+		for (ITestSuite testSuite : testSuits) {
+			for (ITest test : testSuite.getTests()) {
+				tests.add(scripts.get(index).getAbsolutePath() + "@" + test.getHash().substring(0, 8));
+			}
+			index++;
+		}
+		System.out.println(String.join(",", tests));
+	}
+
 	private void printTestsPretty(List<ITestSuite> testSuits) {
 		int index = 0;
 		int count = 0;
@@ -383,6 +403,10 @@ public class TestExecutionEngine {
 
 	private void printTagsAsJson(Set<String> tags) {
 		System.out.println(JsonOutput.toJson(tags));
+	}
+
+	private void printTagsAsCsv(Set<String> tags) {
+		System.out.println(String.join(",", tags));
 	}
 
 	private void printTagsPretty(Set<String> tags) {

@@ -16,11 +16,12 @@ public class ProcessTestSuite extends AbstractTestSuite {
 	private TestCode setup;
 	
 	public void process(String process) {
-		this.process = process;
+		setProcess(process);
 	}
 
 	public void setProcess(String process) {
 		this.process = process;
+		tag(process);
 	}
 
 	public String getProcess() {
