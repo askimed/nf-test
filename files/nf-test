@@ -15,6 +15,28 @@ update() {
   fi
 }
 
+# nf-test uses the same logic as Nextflow to ensure to pick up the same jvm.
+# https://github.com/nextflow-io/nextflow/blob/master/nextflow#L263
+if [[ "$NXF_JAVA_HOME" ]]; then
+  JAVA_HOME="$NXF_JAVA_HOME"
+  unset JAVA_CMD
+fi
+# Determine the Java command to use to start the JVM.
+if [ ! -x "$JAVA_CMD" ] ; then
+    if [ -d "$JAVA_HOME" ] ; then
+        if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
+            # IBM's JDK on AIX uses strange locations for the executables
+            JAVA_CMD="$JAVA_HOME/jre/sh/java"
+        else
+            JAVA_CMD="$JAVA_HOME/bin/java"
+        fi
+    elif [ -x /usr/libexec/java_home ]; then
+        JAVA_CMD="$(/usr/libexec/java_home -v 1.8+)/bin/java"
+    else
+        JAVA_CMD="$(which java)" || JAVA_CMD=java
+    fi
+fi
+
 if test -f "${FOLDER}/${APP_JAR}"; then
   FILE_PATH_JAR=${FOLDER}/${APP_JAR}
 else

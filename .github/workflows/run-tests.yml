@@ -4,22 +4,24 @@ on: [push, pull_request]
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        java: [ '11', '17', '21' ]
+        nextflow: ['latest-edge', 'latest-stable' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install JDK 11
+      - name: Install JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: ${{ matrix.java }}
 
-      - name: Install Nextflow v22.10.4
-        run: |
-          export NXF_VER=22.10.4;curl -s https://get.nextflow.io | bash
-          sudo mv nextflow /usr/local/bin/
+      - name: Setup Nextflow ${{ matrix.nextflow }}
+        uses: nf-core/setup-nextflow@v1
+        with:
+          version: "${{ matrix.nextflow }}"
 
       - name: Test
         run: mvn install
