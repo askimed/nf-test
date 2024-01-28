@@ -810,6 +810,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#compressed-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compressed Snapshots
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#file-paths" class="md-nav__link">
     <span class="md-ellipsis">
       File Paths
@@ -1348,6 +1357,10 @@ It ensures that your snapshot file only contains the snapshots required for your
 </code></pre></div>
 <p>You can also use helper methods to add objects to snapshots. For example, you can use the <code>list()</code>method to add all files of a folder to a snapshot:</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">workflow</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">outdir</span><span class="o">).</span><span class="na">list</span><span class="o">()).</span><span class="na">match</span><span class="o">()</span>
+</code></pre></div>
+<h2 id="compressed-snapshots">Compressed Snapshots</h2>
+<p>If you add complex objects to snapshots with large content, you could use the <code>md5()</code> function to store the hashsum instead of the content in the snapshot file:</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">hugeObject</span><span class="o">).</span><span class="na">md5</span><span class="o">().</span><span class="na">match</span><span class="o">()</span>
 </code></pre></div>
 <h2 id="file-paths">File Paths</h2>
 <p>If nf-test detects a path in the snapshot it automatically replace it by a unique <em>fingerprint</em> of the file that ensures the file content is the same. The fingerprint is default the md5 sum.</p>
