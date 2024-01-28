@@ -298,4 +298,13 @@ public class ProcessTest {
 
 	}
 
+	@Test
+	public void testMd5Snapshots() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/md5.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+
 }
