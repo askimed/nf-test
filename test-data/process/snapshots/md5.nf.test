@@ -1,0 +1,36 @@
+nextflow_process {
+
+  name "Test process xy"
+
+  script "./process.nf"
+  process "TEST_PROCESS"
+
+  test("Should succeed because two unique snapshots") {
+
+    when {
+      process {
+        """
+        input[0] = "Lukas"
+        """
+      }
+    }
+
+    then {
+
+      def content = [
+        object1: "lukas",
+        object2: 27,
+        object3: [
+            a: "lll",
+            b: [1,2,3,4,5,6]
+        ]
+      ]
+
+      assert process.success
+      assert snapshot(content).match()
+      assert snapshot(content).md5().match("lukas")
+    }
+
+  }
+
+}
