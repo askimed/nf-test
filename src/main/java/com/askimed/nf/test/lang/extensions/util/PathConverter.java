@@ -38,11 +38,8 @@ public class PathConverter implements Converter {
 				} else {
 					return serializeDirectory(path);
 				}
-				// return path.getFileName() + ":base64," + FileUtil.encodeBase64(path);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return value;
+				throw new RuntimeException("Snapshot generation failed: " + e.getMessage());
 			}
 		}
 		return value;
