@@ -105,6 +105,14 @@ You can also use helper methods to add objects to snapshots. For example, you ca
  assert snapshot(workflow, path(params.outdir).list()).match()
 ```
 
+## Compressed Snapshots
+
+If you add complex objects to snapshots with large content, you could use the `md5()` function to store the hashsum instead of the content in the snapshot file:
+
+```Groovy
+ assert snapshot(hugeObject).md5().match()
+```
+
 ## File Paths
 
 If nf-test detects a path in the snapshot it automatically replace it by a unique *fingerprint* of the file that ensures the file content is the same. The fingerprint is default the md5 sum.

@@ -1,11 +1,11 @@
 package com.askimed.nf.test.lang.extensions;
 
-import java.io.IOException;
-
+import com.askimed.nf.test.core.ITest;
+import com.askimed.nf.test.util.ObjectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.askimed.nf.test.core.ITest;
+import java.io.IOException;
 
 public class Snapshot {
 
@@ -25,6 +25,11 @@ public class Snapshot {
 
 	public boolean match() throws IOException {
 		return match(test.getName());
+	}
+
+	public Snapshot md5() {
+		actual = ObjectUtil.getMd5(actual);
+		return this;
 	}
 
 	public boolean match(String id) throws IOException {
