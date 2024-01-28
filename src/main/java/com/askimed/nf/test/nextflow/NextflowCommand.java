@@ -296,6 +296,48 @@ public class NextflowCommand {
 
 	}
 
+	private static String version = null;
+
+	public static String getVersion(){
+		if (version == null){
+			try {
+				version = new NextflowCommand().parseVersion();
+			} catch (Exception e){
+				version = "unknown";
+			}
+		}
+		return version;
+	}
+
+	public String parseVersion() throws IOException {
+
+		if (binary == null) {
+			throw new IOException(ERROR);
+		}
+
+		List<String> args = new Vector<String>();
+		args.add("-version");
+
+		Command nextflow = new Command(binary);
+		nextflow.setParams(args);
+		nextflow.setSilent(true);
+		StringBuffer output = new StringBuffer();
+		nextflow.writeStderr(output);
+		nextflow.execute();
+		String versionPattern = "version (\\d+\\.\\d+\\.\\d+)";
+		Pattern pattern = Pattern.compile(versionPattern);
+		Matcher matcher = pattern.matcher(output);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		} else {
+			return "unknown";
+		}
+
+	}
+
+
+
 	protected void writeParamsJson(Map<String, Object> params, File paramsFile) throws IOException {
 
 		BufferedWriter writer = new BufferedWriter(new FileWriter(paramsFile));

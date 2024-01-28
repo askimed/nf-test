@@ -2,9 +2,13 @@ package com.askimed.nf.test.lang.extensions;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.askimed.nf.test.App;
 import com.askimed.nf.test.lang.extensions.util.SnapshotDiffUtil;
 
+import com.askimed.nf.test.nextflow.NextflowCommand;
 import groovy.json.JsonGenerator;
 import groovy.json.JsonOutput;
 
@@ -14,16 +18,19 @@ public class SnapshotFileItem {
 
 	private String timestamp;
 
+	private Map<String, Object> meta = new HashMap<>();
+
 	public static DateTimeFormatter TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
 
 	public SnapshotFileItem(Object content) {
-		this.timestamp = createTimestamp();
-		this.content = content;
+		this(SnapshotFileItem.createTimestamp(), content);
 	}
 
 	public SnapshotFileItem(String timestamp, Object content) {
 		this.timestamp = timestamp;
 		this.content = content;
+		this.meta.put(App.NAME, App.VERSION);
+		this.meta.put("nextflow", NextflowCommand.getVersion());
 	}
 
 	public Object getContent() {
@@ -32,6 +39,14 @@ public class SnapshotFileItem {
 
 	public String getTimestamp() {
 		return timestamp;
+	}
+
+	public Map<String, Object> getMeta() {
+		return meta;
+	}
+
+	public void setMeta(Map<String, Object> meta) {
+		this.meta = meta;
 	}
 
 	@Override
@@ -55,7 +70,7 @@ public class SnapshotFileItem {
 
 	}
 
-	protected String createTimestamp() {
+	public static String createTimestamp() {
 		return DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now());
 	}
 
