@@ -660,6 +660,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#3-aliasing-of-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Aliasing of Dependencies
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1266,6 +1275,14 @@
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
+<p>If you need to run the same process multiple times, you can set the alias of the process:</p>
+<div class="highlight"><pre><span></span><code><span class="n">run</span><span class="o">(</span><span class="s2">&quot;GENERATE_DATA&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">&quot;MY_PROCESS&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;./generate_data.nf&quot;</span>
+<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">       </span><span class="o">...</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Please keep in mind that changes in procsses or workflows, which are executed in the setup method, can result in a failed test run.</p>
@@ -1370,6 +1387,61 @@
 <span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">).</span><span class="na">match</span><span class="o">()</span>
 <span class="w">        </span><span class="o">}</span>
 <span class="w">    </span><span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div>
+<h3 id="3-aliasing-of-dependencies">3. Aliasing of Dependencies</h3>
+<p>In this example, the process <code>UNTAR</code> is used multiple times in the setup method:</p>
+<div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span>
+
+<span class="w">    </span><span class="o">...</span>
+
+<span class="w">    </span><span class="n">setup</span><span class="w"> </span><span class="o">{</span>
+
+<span class="w">        </span><span class="n">run</span><span class="o">(</span><span class="s2">&quot;UNTAR&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">&quot;UNTAR1&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;modules/nf-core/untar/main.nf&quot;</span>
+<span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            input[0] = Channel.fromList(...)</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="o">}</span>
+
+<span class="w">        </span><span class="n">run</span><span class="o">(</span><span class="s2">&quot;UNTAR&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">&quot;UNTAR2&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;modules/nf-core/untar/main.nf&quot;</span>
+<span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            input[0] = Channel.fromList(...)</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="o">}</span>
+
+<span class="w">        </span><span class="n">run</span><span class="o">(</span><span class="s2">&quot;UNTAR&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">&quot;UNTAR3&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;modules/nf-core/untar/main.nf&quot;</span>
+<span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            input[0] = Channel.fromList(...)</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Test with three different inputs&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                input[0] = UNTAR1.out.untar.map{ it[1] }</span>
+<span class="s2">                input[1] = UNTAR2.out.untar.map{ it[1] }</span>
+<span class="s2">                input[2] = UNTAR3.out.untar.map{ it[1] }</span>
+<span class="s2">                &quot;&quot;&quot;</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="o">}</span>
+
+<span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="o">...</span>
+<span class="w">        </span><span class="o">}</span>
+
+<span class="w"> </span><span class="o">}</span>
 
 <span class="o">}</span>
 </code></pre></div>
