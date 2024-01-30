@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 
 import groovy.lang.Writable;
+import org.apache.tools.ant.taskdefs.Input;
 
 public class FileUtil {
 
@@ -107,18 +108,23 @@ public class FileUtil {
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		// for .gz files, calculate md5 hash on decompressed content
 		if (self.toString().endsWith(".gz")) {
-			FileInputStream fis = new FileInputStream(self.toString());
-			GZIPInputStream gzis = new GZIPInputStream(fis);
+
+			if (!isGzipFile(self.toFile())) {
+				throw new RuntimeException("File " + self + " is not a valid gzip file.");
+			}
+
+			InputStream is = new FileInputStream(self.toFile());
+			GZIPInputStream gzis = new GZIPInputStream(is);
 			byte[] buffer = new byte[4096];
 			int read = gzis.read(buffer);
 			while ( read >= 0) {
 				md.update(buffer, 0, read);
 				read = gzis.read(buffer);
 			}
+			is.close();
 			gzis.close();
-			fis.close();
-		// for other files, calculate md5 hash directly from file
 		} else {
+			// for other files, calculate md5 hash directly from file
 			md.update(Files.readAllBytes(self));
 	
 		}
@@ -129,6 +135,21 @@ public class FileUtil {
 		String result = fm.out().toString();
 		fm.close();
 		return result;
+	}
+
+	private static boolean isGzipFile(File file) {
+		try {
+			// we need a pushbackstream to look ahead
+			PushbackInputStream pb = new PushbackInputStream(new FileInputStream(file), 2);
+			byte[] signature = new byte[2];
+			pb.read(signature); // read the signature
+			pb.unread(signature); // push back the signature to the stream
+			// check if matches standard gzip magic number
+			pb.close();
+			return (signature[0] == (byte) 0x1f && signature[1] == (byte) 0x8b);
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public static Path[] list(Path self) {
