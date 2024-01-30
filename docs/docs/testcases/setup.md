@@ -38,6 +38,17 @@ run("WorkflowName") {
 }
 ```
 
+If you need to run the same process multiple times, you can set the alias of the process:
+
+```groovy
+run("GENERATE_DATA", alias: "MY_PROCESS") {
+    script "./generate_data.nf"
+    process {
+       ...
+    }
+}
+```
+
 !!! warning
 
     Please keep in mind that changes in procsses or workflows, which are executed in the setup method, can result in a failed test run.
@@ -150,6 +161,64 @@ nextflow_process {
             assert snapshot(process.out).match()
         }
     }
+
+}
+```
+### 3. Aliasing of Dependencies
+
+In this example, the process `UNTAR` is used multiple times in the setup method:
+
+```groovy
+nextflow_process {
+
+    ...
+
+    setup {
+
+        run("UNTAR", alias: "UNTAR1") {
+            script "modules/nf-core/untar/main.nf"
+            process {
+            """
+            input[0] = Channel.fromList(...)
+            """
+            }
+        }
+
+        run("UNTAR", alias: "UNTAR2") {
+            script "modules/nf-core/untar/main.nf"
+            process {
+            """
+            input[0] = Channel.fromList(...)
+            """
+            }
+        }
+
+        run("UNTAR", alias: "UNTAR3") {
+            script "modules/nf-core/untar/main.nf"
+            process {
+            """
+            input[0] = Channel.fromList(...)
+            """
+            }
+        }
+    }
+
+	test("Test with three different inputs") {
+        when {
+            process {
+                """
+                input[0] = UNTAR1.out.untar.map{ it[1] }
+                input[1] = UNTAR2.out.untar.map{ it[1] }
+                input[2] = UNTAR3.out.untar.map{ it[1] }
+                """
+            }
+        }
+
+        then {
+            ...
+        }
+
+ }
 
 }
 ```
