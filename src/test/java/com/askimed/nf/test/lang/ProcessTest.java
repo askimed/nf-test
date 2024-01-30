@@ -315,4 +315,22 @@ public class ProcessTest {
 
 	}
 
+	@Test
+	public void testMd5ValidGzip() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/gzip-success.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+
+	@Test
+	public void testMd5InvalidGzip() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/gzip-fail.nf.test" });
+		assertEquals(1, exitCode);
+
+	}
+
 }
