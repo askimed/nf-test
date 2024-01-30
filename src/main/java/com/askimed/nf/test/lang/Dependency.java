@@ -2,16 +2,25 @@ package com.askimed.nf.test.lang;
 
 import groovy.lang.Closure;
 
+import java.util.Map;
+
 public class Dependency {
 
 	private String script;
 
 	private String name;
 
+	private String alias;
+
 	private String mapping;
 
-	public Dependency(String name, Closure closure) {
+	public static final String ATTRIBUTE_ALIAS = "alias";
+
+	public Dependency(String name, Map<String, Object> attributes, Closure closure) {
 		this.name = name;
+		if (attributes.containsKey(ATTRIBUTE_ALIAS)) {
+			this.alias = attributes.get(ATTRIBUTE_ALIAS).toString();
+		}
 		closure.setDelegate(this);
 		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
 		closure.call();
@@ -52,6 +61,18 @@ public class Dependency {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+	public boolean hasAlias() {
+		return alias != null;
 	}
 
 	public String getMapping() {
