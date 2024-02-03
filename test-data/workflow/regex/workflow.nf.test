@@ -1,0 +1,27 @@
+nextflow_workflow {
+
+    name "Test workflow"
+    script "./workflow.nf"
+    workflow "PipeWf"
+
+    test("Output will exist in default outputDir") {
+
+        when {
+
+            params {
+                outDir = "$outputDir"
+                load("test-data/workflow/regex/params.yaml")
+            }
+            workflow {
+                """
+                input[0] = Channel.of([params.outDir,params.localOutputDir])
+                """
+            }
+        }
+
+        then {
+              assert workflow.success
+              assert path("${outputDir}/exampleProc/example_output").exists()
+            }
+    }
+}

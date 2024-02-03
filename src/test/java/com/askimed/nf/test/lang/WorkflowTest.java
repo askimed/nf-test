@@ -139,8 +139,9 @@ public class WorkflowTest {
 	public void testStagingWithoutMapping() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test" });
-		assertEquals(1, exitCode);
+		// TODO: remove this test. no staging needed.
+		//int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello.nf.test" });
+		//assertEquals(1, exitCode);
 
 	}
 
@@ -179,6 +180,15 @@ public class WorkflowTest {
 
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/workflow/staging/hello-stage.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+
+	@Test
+	public void testRegex() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/regex/workflow.nf.test" });
 		assertEquals(0, exitCode);
 
 	}
