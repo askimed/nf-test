@@ -57,6 +57,8 @@ public abstract class AbstractTest implements ITest {
 
 	public File projectDir = new File(System.getProperty("user.dir"));
 
+	public File mockFile;
+
 	public boolean skipped = false;
 
 	protected File config = null;
@@ -111,7 +113,7 @@ public abstract class AbstractTest implements ITest {
 				new FileStaging("lib",  config != null ? config.getStageMode() : FileStaging.MODE_COPY),
 				new FileStaging("assets", config != null ? config.getStageMode() : FileStaging.MODE_COPY)
 		};
-		try {
+	/*	try {
 			// copy bin, assets and lib to metaDir
 			shareDirectories(sharedDirectories, metaDir);
 			if (config != null) {
@@ -122,7 +124,10 @@ public abstract class AbstractTest implements ITest {
 			shareDirectories(parent.getStageBuilder().getPaths(), metaDir);
 		} catch (Exception e) {
 			throw new IOException("Testcase setup failed: Directories could not be shared:\n" + e);
-		}
+		}*/
+
+		mockFile = new File( ".nf-test-" + getHash() + ".nf");
+		mockFile.deleteOnExit();
 
 	}
 
@@ -153,7 +158,7 @@ public abstract class AbstractTest implements ITest {
 
 	@Override
 	public void cleanup() {
-		// FileUtil.deleteDirectory(metaDir);
+
 	}
 
 	@Override
