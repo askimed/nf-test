@@ -28,29 +28,30 @@
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<junit.version>5.9.1</junit.version>
+		<junit.version>5.10.1</junit.version>
+		<groovy.version>4.0.18</groovy.version>
 		<additionalparam>-Xdoclint:none</additionalparam>
 	</properties>
 
 	<dependencies>
 
 		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
+			<groupId>org.apache.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
-			<version>3.0.19</version>
+			<version>${groovy.version}</version>
 			<type>pom</type>
 		</dependency>
 
 		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
+			<groupId>org.apache.groovy</groupId>
 			<artifactId>groovy-nio</artifactId>
-			<version>3.0.19</version>
+			<version>${groovy.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
+			<groupId>org.apache.groovy</groupId>
 			<artifactId>groovy-yaml</artifactId>
-			<version>3.0.19</version>
+			<version>${groovy.version}</version>
 		</dependency>
 
 		<dependency>
