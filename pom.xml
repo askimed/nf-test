@@ -118,6 +118,20 @@
 		    <version>1.4.11</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/io.nextflow/nf-commons -->
+		<dependency>
+			<groupId>io.nextflow</groupId>
+			<artifactId>nf-commons</artifactId>
+			<version>24.01.0-edge</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.nextflow/nf-httpfs -->
+		<dependency>
+			<groupId>io.nextflow</groupId>
+			<artifactId>nf-httpfs</artifactId>
+			<version>24.01.0-edge</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

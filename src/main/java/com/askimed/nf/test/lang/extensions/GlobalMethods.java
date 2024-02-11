@@ -8,6 +8,7 @@ import java.util.List;
 import groovy.lang.Closure;
 import junit.framework.AssertionFailedError;
 
+import nextflow.file.FileHelper;
 import org.codehaus.groovy.runtime.powerassert.PowerAssertionError;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,7 +21,7 @@ public class GlobalMethods {
 	}
 
 	public static Path path(String filename) {
-		return Paths.get(filename);
+		return FileHelper.asPath(filename);
 	}
 	
 	public static void with(Object context, Closure closure) {
