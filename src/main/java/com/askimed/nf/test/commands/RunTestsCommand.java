@@ -71,14 +71,17 @@ public class RunTestsCommand extends AbstractCommand {
 			"--updateSnapshot" }, description = "Use this flag to re-record every snapshot that fails during this test run.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean updateSnapshot = false;
 
-	@Option(names = { "--related-tests", "--relatedTests", "--RelatedTests" }, description = "Finds all related tests for the provided .nf or nf.test dependencies.", required = false, showDefaultValue = Visibility.ALWAYS)
+	@Option(names = { "--related-tests", "--relatedTests", "--RelatedTests" }, description = "Finds all related tests for the provided .nf or nf.test files.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean findRelatedTests = false;
+
+	@Option(names = { "--coverage"}, description = "Print simple coverage calculation.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean coverage = false;
 
 	@Option(names = { "--dry-run", "--dryRun" }, description = "Execute most of test discovery but stop before running any of the testcases.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean dryRun = false;
 
 	@Option(names = {
-			"--graph" }, description = "Export dependency graph", required = false, showDefaultValue = Visibility.ALWAYS)
+			"--graph" }, description = "Export dependency graph as dot file", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String graph = null;
 
 	@Option(names = { "--clean-snapshot", "--cleanSnapshot", "--wipe-snapshot",
@@ -155,9 +158,23 @@ public class RunTestsCommand extends AbstractCommand {
 						DependencyExporter.generateDotFile(resolver, graph);
 					}
 					scripts = resolver.findRelatedTestsByFile(testPaths);
-					System.out.println("Found " + scripts.size() + " related .nf-test dependencies");
+					System.out.println("Found " + scripts.size() + " related test(s)");
+					if (scripts.isEmpty()) {
+						System.out.println(AnsiColors.green("Nothing to do."));
+						return 0;
+					}
+
+					if (coverage) {
+						DependencyResolver.Coverage coverage = resolver.getConverage(testPaths);
+						System.out.println();
+						System.out.println("Coverage: " + coverage.getCoveredItems() + "/" + coverage.getItems().size() + " (" + coverage.getCoveredItems() / (float) coverage.getItems().size() * 100 + "%)");
+						for (DependencyResolver.CoverageItem item : coverage.getItems()) {
+							System.out.println("  - " + (item.isCovered() ? AnsiColors.green(item.getFile().getAbsolutePath()) : AnsiColors.red(item.getFile().getAbsolutePath())));
+						}
+						System.out.println();
+					}
 				} else {
-					//TODO: replace with resolver.findAllTests()
+					//TODO: replace with resolver.findAllTests() in order to use coverage function
 
 					scripts = pathsToScripts(testPaths);
 				}
@@ -180,13 +197,6 @@ public class RunTestsCommand extends AbstractCommand {
 				return 2;
 			} else {
 				log.info("Detected {} test files.", scripts.size());
-			}
-
-			if (dryRun) {
-				for (File file: scripts) {
-					System.out.println(file.getAbsolutePath());
-				}
-				return 0;
 			}
 
 			loadPlugins(manager, plugins);
@@ -220,6 +230,7 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.setLibDir(libDir);
 			engine.setPluginManager(manager);
 			engine.addProfile(profile);
+			engine.setDryRun(dryRun);
 			if (withoutTrace) {
 				engine.setWithTrace(false);
 			} else {
@@ -227,6 +238,11 @@ public class RunTestsCommand extends AbstractCommand {
 			}
 
 			engine.setConfigFile(defaultConfigFile);
+
+			if (dryRun) {
+				System.out.println(AnsiColors.yellow("Dry run mode activated: tests are not executed, just listed."));
+			}
+
 			return engine.execute();
 
 		} catch (Throwable e) {

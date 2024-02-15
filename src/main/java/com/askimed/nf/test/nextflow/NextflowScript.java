@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
 
 import com.askimed.nf.test.lang.dependencies.IMetaFile;
 import com.askimed.nf.test.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NextflowScript implements IMetaFile {
 
@@ -27,6 +29,8 @@ public class NextflowScript implements IMetaFile {
 	private List<String> functions = new Vector<String>();
 
 	private Set<String> dependencies = new HashSet<String>();
+
+	private static Logger log = LoggerFactory.getLogger(NextflowScript.class);
 
 	public NextflowScript(File file) {
 		this.file = file;
@@ -148,7 +152,7 @@ public class NextflowScript implements IMetaFile {
 				path = Paths.get(dependency);
 			}
 			if (!path.toFile().exists()){
-				System.out.println("Warning: Module " + file.getAbsolutePath() + ": Dependency '" + path.toAbsolutePath() + "' not found." );
+				log.warn("Module " + file.getAbsolutePath() + ": Dependency '" + path.toAbsolutePath() + "' not found." );
 
 				continue;
 			}

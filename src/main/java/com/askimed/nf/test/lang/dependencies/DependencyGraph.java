@@ -80,6 +80,11 @@ public class DependencyGraph {
         return null;
     }
 
+    public Node getNode(String filename) {
+        return nodes.get(filename);
+    }
+
+
     public List<IMetaFile> getFiles() {
         List<IMetaFile> files = new Vector<IMetaFile>();
         for (Node node: nodes.values()){

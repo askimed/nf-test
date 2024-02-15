@@ -46,6 +46,8 @@ public class TestExecutionEngine {
 
 	private TagQuery tagQuery = new TagQuery();
 
+	private boolean dryRun = false;
+
 	private static Logger log = LoggerFactory.getLogger(TestExecutionEngine.class);
 
 	public void setScripts(List<File> scripts) {
@@ -211,7 +213,9 @@ public class TestExecutionEngine {
 					}
 
 					result.setStartTime(System.currentTimeMillis());
-					test.execute();
+					if (!dryRun) {
+						test.execute();
+					}
 					result.setStatus(TestExecutionResultStatus.PASSED);
 
 				} catch (Throwable e) {
@@ -415,4 +419,7 @@ public class TestExecutionEngine {
 		}
 	}
 
+	public void setDryRun(boolean dryRun) {
+		this.dryRun = dryRun;
+	}
 }

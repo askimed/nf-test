@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -89,6 +90,7 @@ public class DependencyResolver {
         }
 
         // the file is a source file
+
         List<IMetaFile> dependencies = graph.getDependencies(metaFile.getFilename());
         for (IMetaFile dependency: dependencies) {
             File dependencyFile = new File(dependency.getFilename());
@@ -123,6 +125,11 @@ public class DependencyResolver {
             public void accept(Path path) {
 
                 if (path.toString().contains(".nf-test")) {
+                    return;
+                }
+
+                //TODO: exclude folders ".nf-tests", "tests".. read from config file
+                if (path.toString().startsWith(baseDir.getAbsolutePath() + "/tests")) {
                     return;
                 }
 
@@ -168,6 +175,36 @@ public class DependencyResolver {
 
             coverage.add(new File(node.getMetaFile().getFilename()),
                     node.hasDependencyOfType(IMetaFile.MetaFileType.TEST_FILE));
+
+        }
+
+        long time1 = System.currentTimeMillis();
+
+        log.info("Calculated coverage for {} files in {} sec", graph.size(), (time1 - time0) / 1000.0);
+
+        return coverage;
+    }
+
+    public Coverage getConverage(List<File> files){
+
+        long time0 = System.currentTimeMillis();
+
+        Coverage coverage = new Coverage();
+        for (File file: files){
+
+            DependencyGraph.Node node = graph.getNode(file.getAbsolutePath());
+            coverage.add(new File(node.getMetaFile().getFilename()),
+                    node.hasDependencyOfType(IMetaFile.MetaFileType.TEST_FILE));
+
+            for (DependencyGraph.Node dependency: node.getDependencies()) {
+
+                if (dependency.getMetaFile().getType() != IMetaFile.MetaFileType.SOURCE_FILE) {
+                    continue;
+                }
+
+                coverage.add(new File(dependency.getMetaFile().getFilename()),
+                        dependency.hasDependencyOfType(IMetaFile.MetaFileType.TEST_FILE));
+            }
 
         }
 
