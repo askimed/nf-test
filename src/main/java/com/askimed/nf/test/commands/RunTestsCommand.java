@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.Vector;
 import java.util.function.Consumer;
 
+import com.askimed.nf.test.core.reports.CsvReportWriter;
+import com.askimed.nf.test.lang.dependencies.DependencyExporter;
+import com.askimed.nf.test.lang.dependencies.DependencyResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.askimed.nf.test.App;
 import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.core.AnsiTestExecutionListener;
 import com.askimed.nf.test.core.GroupTestExecutionListener;
@@ -34,7 +36,7 @@ import picocli.CommandLine.Parameters;
 @Command(name = "test")
 public class RunTestsCommand extends AbstractCommand {
 
-	@Parameters(description = "test files")
+	@Parameters(description = "test dependencies")
 	private List<File> testPaths = new ArrayList<File>();
 
 	@Option(names = {
@@ -58,12 +60,26 @@ public class RunTestsCommand extends AbstractCommand {
 	private String tap = null;
 
 	@Option(names = {
-			"--junitxml" }, description = "Write test results in Junit Xml Format", required = false, showDefaultValue = Visibility.ALWAYS)
+			"--junitxml" }, description = "Write test results in Junit Xml format", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String junitXml = null;
+
+	@Option(names = {
+			"--csv" }, description = "Write test results in csv format", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String csv = null;
 
 	@Option(names = { "--update-snapshot",
 			"--updateSnapshot" }, description = "Use this flag to re-record every snapshot that fails during this test run.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean updateSnapshot = false;
+
+	@Option(names = { "--related-tests", "--relatedTests", "--RelatedTests" }, description = "Finds all related tests for the provided .nf or nf.test dependencies.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean findRelatedTests = false;
+
+	@Option(names = { "--dry-run", "--dryRun" }, description = "Execute most of test discovery but stop before running any of the testcases.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean dryRun = false;
+
+	@Option(names = {
+			"--graph" }, description = "Export dependency graph", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String graph = null;
 
 	@Option(names = { "--clean-snapshot", "--cleanSnapshot", "--wipe-snapshot",
 			"--wipeSnapshot" }, description = "Removes all obsolete snapshots.", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -126,7 +142,25 @@ public class RunTestsCommand extends AbstractCommand {
 					log.warn("No nf-test config file found.");
 				}
 
-				scripts = pathsToScripts(testPaths);
+				if (findRelatedTests) {
+					if (!configFile.exists()) {
+						System.out.println(AnsiColors
+								.red("To find related tests a nf-test config file has to be present."));
+						return 2;
+					}
+					//TODO: check testsPath empty in project mode.
+					DependencyResolver resolver = new DependencyResolver(new File(new File("").getAbsolutePath()));
+					resolver.buildGraph();
+					if (graph != null) {
+						DependencyExporter.generateDotFile(resolver, graph);
+					}
+					scripts = resolver.findRelatedTestsByFile(testPaths);
+					System.out.println("Found " + scripts.size() + " related .nf-test dependencies");
+				} else {
+					//TODO: replace with resolver.findAllTests()
+
+					scripts = pathsToScripts(testPaths);
+				}
 
 			} catch (Exception e) {
 
@@ -148,6 +182,13 @@ public class RunTestsCommand extends AbstractCommand {
 				log.info("Detected {} test files.", scripts.size());
 			}
 
+			if (dryRun) {
+				for (File file: scripts) {
+					System.out.println(file.getAbsolutePath());
+				}
+				return 0;
+			}
+
 			loadPlugins(manager, plugins);
 
 			GroupTestExecutionListener listener = new GroupTestExecutionListener();
@@ -160,8 +201,13 @@ public class RunTestsCommand extends AbstractCommand {
 				listener.addListener(new XmlReportWriter(junitXml));
 			}
 
+			if (csv != null) {
+				listener.addListener(new CsvReportWriter(csv));
+			}
+
 			NextflowCommand.setVerbose(verbose);
-			
+
+			//TODO: remove tagQuery from engine. add to resolver?
 			TagQuery tagQuery = new TagQuery(tags);
 
 			TestExecutionEngine engine = new TestExecutionEngine();
