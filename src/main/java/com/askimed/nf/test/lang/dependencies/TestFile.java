@@ -49,7 +49,7 @@ public class TestFile implements  IMetaFile {
     }
 
     public static boolean accepts(Path path) {
-        return path.getFileName().toString().endsWith(".nf.test");
+        return path.getFileName().toString().endsWith(".nf.test") || path.getFileName().toString().endsWith(".groovy.test");
     }
 
     @Override

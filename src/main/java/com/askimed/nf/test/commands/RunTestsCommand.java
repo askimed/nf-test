@@ -110,6 +110,7 @@ public class RunTestsCommand extends AbstractCommand {
 	public Integer execute() throws Exception {
 
 		List<File> scripts = new ArrayList<File>();
+		Config config = null;
 		PluginManager manager = new PluginManager(false);
 
 		try {
@@ -118,7 +119,6 @@ public class RunTestsCommand extends AbstractCommand {
 			String libDir = lib;
 			boolean defaultWithTrace = true;
 			try {
-				Config config = null;
 				File configFile = new File(configFilename);
 				if (configFile.exists()) {
 					log.info("Load config from file {}...", configFile.getAbsolutePath());
@@ -145,36 +145,6 @@ public class RunTestsCommand extends AbstractCommand {
 					log.warn("No nf-test config file found.");
 				}
 
-				if (findRelatedTests) {
-					if (config == null) {
-						System.out.println(AnsiColors
-								.red("To find related tests a nf-test config file has to be present."));
-						return 2;
-					}
-
-					List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
-
-					DependencyResolver resolver = new DependencyResolver(new File(new File("").getAbsolutePath()));
-					resolver.buildGraph(config.getIgnore());
-					if (graph != null) {
-						DependencyExporter.generateDotFile(resolver, graph);
-					}
-					scripts = resolver.findRelatedTestsByFiles(testPaths);
-					System.out.println("Found " + scripts.size() + " related test(s)");
-					if (scripts.isEmpty()) {
-						System.out.println(AnsiColors.green("Nothing to do."));
-						return 0;
-					}
-
-					if (coverage) {
-						new Coverage(resolver).getByFiles(testPaths).print();
-					}
-				} else {
-					//TODO: replace with resolver.findAllTests() in order to use coverage function
-
-					scripts = pathsToScripts(testPaths);
-				}
-
 			} catch (Exception e) {
 
 				System.out.println(AnsiColors.red("Error: Syntax errors in nf-test config file: " + e));
@@ -185,6 +155,42 @@ public class RunTestsCommand extends AbstractCommand {
 				return 2;
 
 			}
+
+			List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
+
+			DependencyResolver resolver = new DependencyResolver(new File(new File("").getAbsolutePath()));
+
+			if (findRelatedTests) {
+				if (config == null) {
+					System.out.println(AnsiColors
+							.red("To find related tests a nf-test config file has to be present."));
+					return 2;
+				}
+				resolver.buildGraph(config.getIgnore());
+				scripts = resolver.findRelatedTestsByFiles(testPaths);
+				System.out.println("Found " + scripts.size() + " related test(s)");
+				if (scripts.isEmpty()) {
+					System.out.println(AnsiColors.green("Nothing to do."));
+					return 0;
+				}
+
+			} else {
+				if (config != null) {
+					resolver.buildGraph(config.getIgnore());
+				} else {
+					resolver.buildGraph();
+				}
+				scripts = resolver.findTestsByFiles(testPaths);
+			}
+
+			if (coverage) {
+				new Coverage(resolver).getByFiles(testPaths).print();
+			}
+
+			if (graph != null) {
+				DependencyExporter.generateDotFile(resolver, graph);
+			}
+
 
 			if (scripts.size() == 0) {
 				System.out.println(AnsiColors

@@ -103,7 +103,7 @@ public class ProcessTest {
 
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/process/default/wrong-filename.nf.test" });
-		assertEquals(1, exitCode);
+		assertEquals(2, exitCode);
 
 	}
 
@@ -301,7 +301,7 @@ public class ProcessTest {
 	public void testNotUniquenessOfSnapshots() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/not-unique.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/no-unique.nf.test" });
 		assertEquals(1, exitCode);
 
 	}

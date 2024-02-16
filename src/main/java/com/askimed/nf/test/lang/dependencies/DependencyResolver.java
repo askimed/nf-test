@@ -33,9 +33,9 @@ public class DependencyResolver {
         return graph;
     }
 
-    public Set<File> findAllTests() throws Exception {
+    public List<File> findAllTests() throws Exception {
 
-        Set<File> results = new HashSet<File>();
+        List<File> results = new Vector<File>();
         for (IMetaFile metaFile: graph.getFiles()) {
             if (metaFile.getType() == IMetaFile.MetaFileType.TEST_FILE) {
                 results.add(new File(metaFile.getFilename()));
@@ -46,6 +46,30 @@ public class DependencyResolver {
 
         return results;
     }
+
+    public List<File> findTestsByFiles(List<File> files) throws Exception {
+
+        List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
+        for (File file: files) {
+            ignorePatterns.add(fileToPathMatcher(file));
+        }
+
+        List<File> results = new Vector<File>();
+        for (IMetaFile metaFile: graph.getFiles()) {
+            if (metaFile.getType() == IMetaFile.MetaFileType.TEST_FILE) {
+
+                File file = new File(metaFile.getFilename());
+                if (matches(file.toPath(), ignorePatterns)) {
+                    results.add(file);
+                }
+            }
+        }
+
+        log.info("Found {} tests.", results.size());
+
+        return results;
+    }
+
 
     public List<File> findRelatedTestsByFiles(List<File> files) throws Exception {
         File[] array = new File[files.size()];
@@ -111,9 +135,11 @@ public class DependencyResolver {
     public void buildGraph(List<String> ignoreGlobs) throws Exception {
 
         List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
-        ignorePatterns.add(globToPathMatcher(".nf-test/**"));
+        ignorePatterns.add(fileToPathMatcher(".nf-test/**"));
+        ignorePatterns.add(fileToPathMatcher("src/**"));
+        ignorePatterns.add(fileToPathMatcher("target/**"));
         for (String ignoreGlob: ignoreGlobs) {
-            ignorePatterns.add(globToPathMatcher(ignoreGlob));
+            ignorePatterns.add(fileToPathMatcher(ignoreGlob));
         }
 
         if (!baseDir.exists()) {
@@ -131,8 +157,8 @@ public class DependencyResolver {
             @Override
             public void accept(Path path) {
 
-                if (isIgnored(path)) {
-                    log.warn("Ignored file " + path);
+                if (matches(path, ignorePatterns)) {
+                    //log.warn("Ignored file " + path);
                     return;
                 }
 
@@ -156,17 +182,6 @@ public class DependencyResolver {
                 }
             }
 
-            public boolean isIgnored(Path path) {
-                PathMatcher pathMatcher;
-                for (PathMatcher pattern : ignorePatterns) {
-                    pathMatcher = pattern;
-                    if (pathMatcher.matches(path)) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
         });
 
         graph.connectDependencies();
@@ -177,8 +192,31 @@ public class DependencyResolver {
 
     }
 
-    public PathMatcher globToPathMatcher(String glob) {
+    public PathMatcher fileToPathMatcher(String glob) {
         return FileSystems.getDefault().getPathMatcher("glob:" + baseDir.getAbsolutePath() + "/" + glob);
+    }
+
+    public PathMatcher fileToPathMatcher(File file) {
+
+        String pattern = "";
+        if (file.isDirectory()) {
+            pattern = "glob:" + file.getAbsolutePath() + "/**/";
+        } else {
+            pattern = "glob:" + file.getAbsolutePath();
+        }
+
+        return FileSystems.getDefault().getPathMatcher(pattern);
+    }
+
+    public boolean matches(Path path, List<PathMatcher> ignorePatterns) {
+        PathMatcher pathMatcher;
+        for (PathMatcher pattern : ignorePatterns) {
+            pathMatcher = pattern;
+            if (pathMatcher.matches(path)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
