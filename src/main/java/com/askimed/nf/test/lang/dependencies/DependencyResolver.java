@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileVisitOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,21 +47,21 @@ public class DependencyResolver {
         return results;
     }
 
-    public List<File> findRelatedTestsByFile(List<File> files) throws Exception {
+    public List<File> findRelatedTestsByFiles(List<File> files) throws Exception {
         File[] array = new File[files.size()];
         for (int i = 0 ; i < array.length; i++) {
             array[i] = new File(files.get(i).getAbsolutePath());
         }
-        return new Vector<File>(findRelatedTestsByFile(array));
+        return new Vector<File>(findRelatedTestsByFiles(array));
     }
 
-    public List<File> findRelatedTestsByFile(File ... files) throws Exception {
+    public List<File> findRelatedTestsByFiles(File ... files) throws Exception {
 
         Set<File> results = new HashSet<File>();
 
         long time0 = System.currentTimeMillis();
         for (File file: files) {
-            results.addAll(_findRelatedTestsByFile(file.getAbsoluteFile()));
+            results.addAll(findRelatedTestsByFile(file.getAbsoluteFile()));
         }
         long time1 = System.currentTimeMillis();
         log.info("Found {} tests for file {} in {} sec", results.size(), files, (time1 - time0) / 1000.0);
@@ -72,7 +69,7 @@ public class DependencyResolver {
         return new Vector<File>(results);
     }
 
-    public Set<File> _findRelatedTestsByFile(File file) throws Exception {
+    private Set<File> findRelatedTestsByFile(File file) throws Exception {
 
         Set<File> results = new HashSet<File>();
 
@@ -99,16 +96,26 @@ public class DependencyResolver {
                 results.add(dependencyFile);
             } else {
                 // if a source file -> find related tests in a recursive way
-                results.addAll(_findRelatedTestsByFile(dependencyFile));
+                results.addAll(findRelatedTestsByFile(dependencyFile));
             }
         }
 
         return results;
     }
 
-    //TODO: own class.
+
     public void buildGraph() throws Exception {
-        //TODO: add type: all, tests, ...
+        buildGraph(new Vector<String>());
+    }
+
+    public void buildGraph(List<String> ignoreGlobs) throws Exception {
+
+        List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
+        ignorePatterns.add(globToPathMatcher(".nf-test/**"));
+        for (String ignoreGlob: ignoreGlobs) {
+            ignorePatterns.add(globToPathMatcher(ignoreGlob));
+        }
+
         if (!baseDir.exists()) {
             throw new Exception("Test directory '" + baseDir.getAbsolutePath() + "' not found.");
         }
@@ -124,18 +131,15 @@ public class DependencyResolver {
             @Override
             public void accept(Path path) {
 
-                if (path.toString().contains(".nf-test")) {
-                    return;
-                }
-
-                //TODO: exclude folders ".nf-tests", "tests".. read from config file
-                if (path.toString().startsWith(baseDir.getAbsolutePath() + "/tests")) {
+                if (isIgnored(path)) {
+                    log.warn("Ignored file " + path);
                     return;
                 }
 
                 if (!Files.isRegularFile(path)) {
                     return;
                 }
+
                 IMetaFile file = null;
                 if (TestFile.accepts(path)) {
                     file = new TestFile(baseDir, path.toFile());
@@ -152,6 +156,17 @@ public class DependencyResolver {
                 }
             }
 
+            public boolean isIgnored(Path path) {
+                PathMatcher pathMatcher;
+                for (PathMatcher pattern : ignorePatterns) {
+                    pathMatcher = pattern;
+                    if (pathMatcher.matches(path)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
         });
 
         graph.connectDependencies();
@@ -162,101 +177,8 @@ public class DependencyResolver {
 
     }
 
-
-    public Coverage getConverage(){
-
-        long time0 = System.currentTimeMillis();
-
-        Coverage coverage = new Coverage();
-        for (DependencyGraph.Node node: graph.getNodes()){
-            if (node.getMetaFile().getType() != IMetaFile.MetaFileType.SOURCE_FILE) {
-                continue;
-            }
-
-            coverage.add(new File(node.getMetaFile().getFilename()),
-                    node.hasDependencyOfType(IMetaFile.MetaFileType.TEST_FILE));
-
-        }
-
-        long time1 = System.currentTimeMillis();
-
-        log.info("Calculated coverage for {} files in {} sec", graph.size(), (time1 - time0) / 1000.0);
-
-        return coverage;
-    }
-
-    public Coverage getConverage(List<File> files){
-
-        long time0 = System.currentTimeMillis();
-
-        Coverage coverage = new Coverage();
-        for (File file: files){
-
-            DependencyGraph.Node node = graph.getNode(file.getAbsolutePath());
-            coverage.add(new File(node.getMetaFile().getFilename()),
-                    node.hasDependencyOfType(IMetaFile.MetaFileType.TEST_FILE));
-
-            for (DependencyGraph.Node dependency: node.getDependencies()) {
-
-                if (dependency.getMetaFile().getType() != IMetaFile.MetaFileType.SOURCE_FILE) {
-                    continue;
-                }
-
-                coverage.add(new File(dependency.getMetaFile().getFilename()),
-                        dependency.hasDependencyOfType(IMetaFile.MetaFileType.TEST_FILE));
-            }
-
-        }
-
-        long time1 = System.currentTimeMillis();
-
-        log.info("Calculated coverage for {} files in {} sec", graph.size(), (time1 - time0) / 1000.0);
-
-        return coverage;
-    }
-
-
-    public static class Coverage {
-
-        private int coveredItems = 0;
-
-        private List<CoverageItem> items = new Vector<CoverageItem>();
-
-        public List<CoverageItem> getItems() {
-            return items;
-        }
-
-        public int getCoveredItems() {
-            return coveredItems;
-        }
-
-        public void add(File file, boolean covered) {
-            items.add(new CoverageItem(file, covered));
-            if (covered) {
-                coveredItems++;
-            }
-        }
-
-    }
-
-    public static class CoverageItem {
-
-        private File file;
-
-        private boolean covered = false;
-
-        public CoverageItem(File file, boolean covered) {
-            this.file = file;
-            this.covered = covered;
-        }
-
-        public File getFile() {
-            return file;
-        }
-
-        public boolean isCovered() {
-            return covered;
-        }
+    public PathMatcher globToPathMatcher(String glob) {
+        return FileSystems.getDefault().getPathMatcher("glob:" + baseDir.getAbsolutePath() + "/" + glob);
     }
 
 }

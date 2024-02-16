@@ -1,6 +1,8 @@
 package com.askimed.nf.test.config;
 
 import java.io.File;
+import java.util.List;
+import java.util.Vector;
 
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
@@ -39,6 +41,8 @@ public class Config {
 	private StageBuilder stageBuilder = new StageBuilder();
 
 	private String stageMode = FileStaging.MODE_COPY;
+
+	private List<String> ignore = new Vector<String>();
 
 	public void testsDir(String testsDir) {
 		this.testsDir = testsDir;
@@ -126,6 +130,22 @@ public class Config {
 
 	public void stageMode(String stageMode) {
 		this.stageMode = stageMode;
+	}
+
+	public void setIgnore(List<String> ignore) {
+		this.ignore = ignore;
+	}
+
+	public List<String> getIgnore() {
+		return ignore;
+	}
+
+	public void ignore(List<String> ignores) {
+		this.ignore.addAll(ignores);
+	}
+
+	public void ignore(String ignore) {
+		this.ignore.add(ignore);
 	}
 
 	public void stage(Closure closure) {

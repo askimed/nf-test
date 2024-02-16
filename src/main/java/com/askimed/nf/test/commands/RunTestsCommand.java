@@ -2,15 +2,14 @@ package com.askimed.nf.test.commands;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.function.Consumer;
 
 import com.askimed.nf.test.core.reports.CsvReportWriter;
+import com.askimed.nf.test.lang.dependencies.Coverage;
 import com.askimed.nf.test.lang.dependencies.DependencyExporter;
 import com.askimed.nf.test.lang.dependencies.DependencyResolver;
 import org.slf4j.Logger;
@@ -71,7 +70,7 @@ public class RunTestsCommand extends AbstractCommand {
 			"--updateSnapshot" }, description = "Use this flag to re-record every snapshot that fails during this test run.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean updateSnapshot = false;
 
-	@Option(names = { "--related-tests", "--relatedTests", "--RelatedTests" }, description = "Finds all related tests for the provided .nf or nf.test files.", required = false, showDefaultValue = Visibility.ALWAYS)
+	@Option(names = { "--related-tests", "--relatedTests"}, description = "Finds all related tests for the provided .nf or nf.test files.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean findRelatedTests = false;
 
 	@Option(names = { "--coverage"}, description = "Print simple coverage calculation.", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -119,10 +118,11 @@ public class RunTestsCommand extends AbstractCommand {
 			String libDir = lib;
 			boolean defaultWithTrace = true;
 			try {
+				Config config = null;
 				File configFile = new File(configFilename);
 				if (configFile.exists()) {
 					log.info("Load config from file {}...", configFile.getAbsolutePath());
-					Config config = Config.parse(configFile);
+					config = Config.parse(configFile);
 					defaultConfigFile = config.getConfigFile();
 					defaultWithTrace = config.isWithTrace();
 					if (!libDir.isEmpty()) {
@@ -146,18 +146,20 @@ public class RunTestsCommand extends AbstractCommand {
 				}
 
 				if (findRelatedTests) {
-					if (!configFile.exists()) {
+					if (config == null) {
 						System.out.println(AnsiColors
 								.red("To find related tests a nf-test config file has to be present."));
 						return 2;
 					}
-					//TODO: check testsPath empty in project mode.
+
+					List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
+
 					DependencyResolver resolver = new DependencyResolver(new File(new File("").getAbsolutePath()));
-					resolver.buildGraph();
+					resolver.buildGraph(config.getIgnore());
 					if (graph != null) {
 						DependencyExporter.generateDotFile(resolver, graph);
 					}
-					scripts = resolver.findRelatedTestsByFile(testPaths);
+					scripts = resolver.findRelatedTestsByFiles(testPaths);
 					System.out.println("Found " + scripts.size() + " related test(s)");
 					if (scripts.isEmpty()) {
 						System.out.println(AnsiColors.green("Nothing to do."));
@@ -165,13 +167,7 @@ public class RunTestsCommand extends AbstractCommand {
 					}
 
 					if (coverage) {
-						DependencyResolver.Coverage coverage = resolver.getConverage(testPaths);
-						System.out.println();
-						System.out.println("Coverage: " + coverage.getCoveredItems() + "/" + coverage.getItems().size() + " (" + coverage.getCoveredItems() / (float) coverage.getItems().size() * 100 + "%)");
-						for (DependencyResolver.CoverageItem item : coverage.getItems()) {
-							System.out.println("  - " + (item.isCovered() ? AnsiColors.green(item.getFile().getAbsolutePath()) : AnsiColors.red(item.getFile().getAbsolutePath())));
-						}
-						System.out.println();
+						new Coverage(resolver).getByFiles(testPaths).print();
 					}
 				} else {
 					//TODO: replace with resolver.findAllTests() in order to use coverage function
@@ -201,19 +197,7 @@ public class RunTestsCommand extends AbstractCommand {
 
 			loadPlugins(manager, plugins);
 
-			GroupTestExecutionListener listener = new GroupTestExecutionListener();
-			listener.addListener(new AnsiTestExecutionListener());
-			if (tap != null) {
-				listener.addListener(new TapTestReportWriter(tap));
-			}
-
-			if (junitXml != null) {
-				listener.addListener(new XmlReportWriter(junitXml));
-			}
-
-			if (csv != null) {
-				listener.addListener(new CsvReportWriter(csv));
-			}
+			GroupTestExecutionListener listener = setupExecutionListeners();
 
 			NextflowCommand.setVerbose(verbose);
 
@@ -258,6 +242,23 @@ public class RunTestsCommand extends AbstractCommand {
 
 		}
 
+	}
+
+	private GroupTestExecutionListener setupExecutionListeners() throws IOException {
+		GroupTestExecutionListener listener = new GroupTestExecutionListener();
+		listener.addListener(new AnsiTestExecutionListener());
+		if (tap != null) {
+			listener.addListener(new TapTestReportWriter(tap));
+		}
+
+		if (junitXml != null) {
+			listener.addListener(new XmlReportWriter(junitXml));
+		}
+
+		if (csv != null) {
+			listener.addListener(new CsvReportWriter(csv));
+		}
+		return listener;
 	}
 
 	private void loadPlugins(PluginManager manager, String plugins) throws IOException {
