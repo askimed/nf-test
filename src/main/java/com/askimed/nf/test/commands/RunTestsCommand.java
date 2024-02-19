@@ -173,6 +173,9 @@ public class RunTestsCommand extends AbstractCommand {
 					System.out.println(AnsiColors.green("Nothing to do."));
 					return 0;
 				}
+				if (coverage) {
+					new Coverage(resolver).getByFiles(testPaths).print();
+				}
 
 			} else {
 				if (config != null) {
@@ -181,10 +184,9 @@ public class RunTestsCommand extends AbstractCommand {
 					resolver.buildGraph();
 				}
 				scripts = resolver.findTestsByFiles(testPaths);
-			}
-
-			if (coverage) {
-				new Coverage(resolver).getByFiles(testPaths).print();
+				if (coverage) {
+					new Coverage(resolver).getAll().print();
+				}
 			}
 
 			if (graph != null) {
@@ -207,7 +209,7 @@ public class RunTestsCommand extends AbstractCommand {
 
 			NextflowCommand.setVerbose(verbose);
 
-			//TODO: remove tagQuery from engine. add to resolver?
+			//TODO: remove tagQuery from engine. add to resolver? Add simple caching and store to file (hash, tags, name, type, process, ...)
 			TagQuery tagQuery = new TagQuery(tags);
 
 			TestExecutionEngine engine = new TestExecutionEngine();
