@@ -111,7 +111,6 @@ public class DependencyResolver {
         }
 
         // the file is a source file
-
         List<IMetaFile> dependencies = graph.getDependencies(metaFile.getFilename());
         for (IMetaFile dependency: dependencies) {
             File dependencyFile = new File(dependency.getFilename());

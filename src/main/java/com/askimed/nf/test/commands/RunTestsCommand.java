@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.function.Consumer;
 
+import com.askimed.nf.test.core.*;
 import com.askimed.nf.test.core.reports.CsvReportWriter;
 import com.askimed.nf.test.lang.dependencies.Coverage;
 import com.askimed.nf.test.lang.dependencies.DependencyExporter;
@@ -16,10 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.askimed.nf.test.config.Config;
-import com.askimed.nf.test.core.AnsiTestExecutionListener;
-import com.askimed.nf.test.core.GroupTestExecutionListener;
-import com.askimed.nf.test.core.TagQuery;
-import com.askimed.nf.test.core.TestExecutionEngine;
 import com.askimed.nf.test.core.reports.TapTestReportWriter;
 import com.askimed.nf.test.core.reports.XmlReportWriter;
 import com.askimed.nf.test.lang.TestSuiteBuilder;
@@ -131,7 +128,7 @@ public class RunTestsCommand extends AbstractCommand {
 					libDir += config.getLibDir();
 					manager = config.getPluginManager();
 
-					if (testPaths.size() == 0) {
+					if (testPaths.isEmpty()) {
 						File folder = new File(config.getTestsDir());
 						testPaths.add(folder);
 						System.out.println("Found " + testPaths.size() + " files in test directory.");
@@ -194,7 +191,7 @@ public class RunTestsCommand extends AbstractCommand {
 			}
 
 
-			if (scripts.size() == 0) {
+			if (scripts.isEmpty()) {
 				System.out.println(AnsiColors
 						.red("Error: No tests or test directories containing scripts that end with *.test provided."));
 				log.error("No tests ot directories found containing test files.");
@@ -209,18 +206,19 @@ public class RunTestsCommand extends AbstractCommand {
 
 			NextflowCommand.setVerbose(verbose);
 
-			//TODO: remove tagQuery from engine. add to resolver? Add simple caching and store to file (hash, tags, name, type, process, ...)
-			TagQuery tagQuery = new TagQuery(tags);
+			Environment environment = new Environment();
+			environment.setLibDir(libDir);
+			environment.setPluginManager(manager);
+
+			TestSuiteResolver testSuiteResolver = new TestSuiteResolver(environment);
+			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, new TagQuery(tags));
 
 			TestExecutionEngine engine = new TestExecutionEngine();
 			engine.setListener(listener);
-			engine.setScripts(scripts);
-			engine.setTagQuery(tagQuery);
+			engine.setTestSuites(testSuits);
 			engine.setDebug(debug);
 			engine.setUpdateSnapshot(updateSnapshot);
 			engine.setCleanSnapshot(cleanSnapshot);
-			engine.setLibDir(libDir);
-			engine.setPluginManager(manager);
 			engine.addProfile(profile);
 			engine.setDryRun(dryRun);
 			if (withoutTrace) {

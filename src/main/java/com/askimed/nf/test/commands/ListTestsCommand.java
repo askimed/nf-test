@@ -1,14 +1,17 @@
 package com.askimed.nf.test.commands;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import com.askimed.nf.test.config.Config;
-import com.askimed.nf.test.core.TestExecutionEngine;
+import com.askimed.nf.test.core.*;
+import com.askimed.nf.test.lang.dependencies.DependencyResolver;
 import com.askimed.nf.test.util.AnsiColors;
+import com.askimed.nf.test.util.AnsiText;
+import com.askimed.nf.test.util.FileUtil;
 import com.askimed.nf.test.util.OutputFormat;
 
+import groovy.json.JsonOutput;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Help.Visibility;
 import picocli.CommandLine.Option;
@@ -37,15 +40,17 @@ public class ListTestsCommand extends AbstractCommand {
 
 		try {
 
+			Config config = null;
+
 			try {
 
 				File configFile = new File(Config.FILENAME);
 
 				if (configFile.exists()) {
 
-					Config config = Config.parse(configFile);
+					config = Config.parse(configFile);
 
-					if (testPaths.size() == 0) {
+					if (testPaths.isEmpty()) {
 						File folder = new File(config.getTestsDir());
 						testPaths.add(folder);
 					}
@@ -64,19 +69,35 @@ public class ListTestsCommand extends AbstractCommand {
 
 			}
 
-			List<File> scripts = RunTestsCommand.pathsToScripts(testPaths);
+			DependencyResolver resolver = new DependencyResolver(new File(new File("").getAbsolutePath()));
+			if (config != null) {
+				resolver.buildGraph(config.getIgnore());
+			} else {
+				resolver.buildGraph();
+			}
 
-			if (scripts.size() == 0) {
+			List<File> scripts = resolver.findTestsByFiles(testPaths);
+
+			if (scripts.isEmpty()) {
 				System.out.println(AnsiColors.red("Error: No tests provided and no test directory set."));
 				return 2;
 			}
 
-			TestExecutionEngine engine = new TestExecutionEngine();
-			engine.setScripts(scripts);
+			Environment environment = new Environment();
+
+			TestSuiteResolver testSuiteResolver = new TestSuiteResolver(environment);
+			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts);
+
+			if (testSuits.isEmpty()) {
+				System.out.println(AnsiColors.red("Error: no valid tests found."));
+				System.out.println();
+				return 1;
+			}
+
 			if (tags) {
-				return engine.listTags(format);
+				return listTags(testSuits, format);
 			} else {
-				return engine.listTests(format);
+				return listTests(testSuits, format);
 			}
 
 		} catch (Throwable e) {
@@ -87,6 +108,125 @@ public class ListTestsCommand extends AbstractCommand {
 
 		}
 
+	}
+
+
+	public int listTests(List<ITestSuite> testSuits, OutputFormat format) throws Throwable {
+
+		switch (format) {
+			case JSON:
+			case json:
+				printTestsAsJson(testSuits);
+				break;
+			case RAW:
+			case raw:
+				printTestsAsList(testSuits);
+				break;
+			case CSV:
+			case csv:
+				printTestsAsCsv(testSuits);
+				break;
+			default:
+				printTestsPretty(testSuits);
+				break;
+		}
+
+		return 0;
+
+	}
+
+	public int listTags(List<ITestSuite> testSuits, OutputFormat format) throws Throwable {
+
+		Set<String> tags = new HashSet<String>();
+		for (ITestSuite testSuite : testSuits) {
+			tags.addAll(testSuite.getTags());
+			for (ITest test : testSuite.getTests()) {
+				tags.addAll(test.getTags());
+			}
+		}
+
+		switch (format) {
+			case JSON:
+			case json:
+				printTagsAsJson(tags);
+				break;
+			case CSV:
+			case csv:
+				printTagsAsCsv(tags);
+				break;
+			default:
+				printTagsPretty(tags);
+				break;
+		}
+
+		return 0;
+
+	}
+
+	private void printTestsAsJson(List<ITestSuite> testSuits) {
+		List<String> tests = new Vector<String>();
+		for (ITestSuite testSuite : testSuits) {
+			for (ITest test : testSuite.getTests()) {
+				tests.add(new File(testSuite.getFilename()).getAbsolutePath() + "@" + test.getHash().substring(0, 8));
+			}
+		}
+		System.out.println(JsonOutput.toJson(tests));
+	}
+
+	private void printTestsAsList(List<ITestSuite> testSuits) {
+		for (ITestSuite testSuite : testSuits) {
+			for (ITest test : testSuite.getTests()) {
+				System.out.println(new File(testSuite.getFilename()).getAbsolutePath() + "@" + test.getHash().substring(0, 8));
+			}
+		}
+	}
+
+	private void printTestsAsCsv(List<ITestSuite> testSuits) {
+		List<String> tests = new Vector<String>();
+		for (ITestSuite testSuite : testSuits) {
+			for (ITest test : testSuite.getTests()) {
+				tests.add(new File(testSuite.getFilename()).getAbsolutePath() + "@" + test.getHash().substring(0, 8));
+			}
+		}
+		System.out.println(String.join(",", tests));
+	}
+
+	private void printTestsPretty(List<ITestSuite> testSuits) {
+		int count = 0;
+
+		File baseDir = new File("");
+
+		for (ITestSuite testSuite : testSuits) {
+
+			System.out.println();
+			System.out.println("[" + FileUtil.makeRelative(baseDir, new File(testSuite.getFilename())) + "] "
+					+ AnsiText.bold(testSuite.getName()));
+			System.out.println();
+
+			for (ITest test : testSuite.getTests()) {
+				System.out.println(AnsiText.padding("[" + FileUtil.makeRelative(baseDir, new File(testSuite.getFilename())) + "@"
+						+ test.getHash().substring(0, 8) + "] " + AnsiText.bold(test.getName()), 2));
+				count++;
+			}
+		}
+
+		System.out.println();
+		System.out.println("Found " + count + " tests.");
+		System.out.println();
+	}
+
+	private void printTagsAsJson(Set<String> tags) {
+		System.out.println(JsonOutput.toJson(tags));
+	}
+
+	private void printTagsAsCsv(Set<String> tags) {
+		System.out.println(String.join(",", tags));
+	}
+
+	private void printTagsPretty(Set<String> tags) {
+		for (String tag : tags) {
+			System.out.println(tag);
+		}
 	}
 
 }
