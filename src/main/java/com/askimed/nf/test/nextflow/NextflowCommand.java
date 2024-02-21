@@ -322,7 +322,7 @@ public class NextflowCommand {
 		nextflow.setParams(args);
 		nextflow.setSilent(true);
 		StringBuffer output = new StringBuffer();
-		nextflow.writeStderr(output);
+		nextflow.writeStdout(output);
 		nextflow.execute();
 		String versionPattern = "version (\\d+\\.\\d+\\.\\d+)";
 		Pattern pattern = Pattern.compile(versionPattern);

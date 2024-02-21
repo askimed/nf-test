@@ -13,6 +13,8 @@ import com.askimed.nf.test.core.reports.CsvReportWriter;
 import com.askimed.nf.test.lang.dependencies.Coverage;
 import com.askimed.nf.test.lang.dependencies.DependencyExporter;
 import com.askimed.nf.test.lang.dependencies.DependencyResolver;
+import com.askimed.nf.test.util.AnsiText;
+import com.askimed.nf.test.util.GitCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,6 +71,12 @@ public class RunTestsCommand extends AbstractCommand {
 
 	@Option(names = { "--related-tests", "--relatedTests"}, description = "Finds all related tests for the provided .nf or nf.test files.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean findRelatedTests = false;
+
+	@Option(names = { "--only-changed", "--onlyChanged"}, description = "Runs tests only for those files which are modified in the current git repository", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean onlyChanged = false;
+
+	@Option(names = { "--changed-since", "--changedSince"}, description = "Runs tests related to the changes since the provided branch or commit hash", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String changedSince = null;
 
 	@Option(names = { "--coverage"}, description = "Print simple coverage calculation.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean coverage = false;
@@ -131,7 +139,6 @@ public class RunTestsCommand extends AbstractCommand {
 					if (testPaths.isEmpty()) {
 						File folder = new File(config.getTestsDir());
 						testPaths.add(folder);
-						System.out.println("Found " + testPaths.size() + " files in test directory.");
 					}
 
 					TestSuiteBuilder.setConfig(config);
@@ -153,16 +160,40 @@ public class RunTestsCommand extends AbstractCommand {
 
 			}
 
-			List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
+			if ((onlyChanged || findRelatedTests || changedSince != null) && config == null) {
+				System.out.println(AnsiColors.red("To find related tests a nf-test config file has to be present."));
+				return 2;
+			}
 
-			DependencyResolver resolver = new DependencyResolver(new File(new File("").getAbsolutePath()));
+			List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
+			File baseDir = new File(new File("").getAbsolutePath());
+			DependencyResolver resolver = new DependencyResolver(baseDir);
+
+			if (onlyChanged || changedSince != null) {
+
+				GitCommand git = new GitCommand();
+				List<File> changedFiles = null;
+
+				if (onlyChanged) {
+					changedFiles = git.findChanges(baseDir);
+				}else if(changedSince != null) {
+					changedFiles = git.findChangesSince(baseDir, changedSince);
+				}
+
+				if (changedFiles.isEmpty()) {
+					System.out.println(AnsiColors.green("Nothing to do."));
+					return 0;
+				} else {
+					System.out.println("Detected " + changedFiles.size() + " changed files");
+					AnsiText.printBulletList(changedFiles);
+				}
+
+				testPaths = changedFiles;
+				findRelatedTests = true;
+			}
 
 			if (findRelatedTests) {
-				if (config == null) {
-					System.out.println(AnsiColors
-							.red("To find related tests a nf-test config file has to be present."));
-					return 2;
-				}
+
 				resolver.buildGraph(config.getIgnore());
 				scripts = resolver.findRelatedTestsByFiles(testPaths);
 				System.out.println("Found " + scripts.size() + " related test(s)");
@@ -170,6 +201,9 @@ public class RunTestsCommand extends AbstractCommand {
 					System.out.println(AnsiColors.green("Nothing to do."));
 					return 0;
 				}
+
+				AnsiText.printBulletList(scripts);
+
 				if (coverage) {
 					new Coverage(resolver).getByFiles(testPaths).print();
 				}

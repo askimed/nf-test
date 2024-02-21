@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class DependencyResolver {
@@ -129,6 +126,12 @@ public class DependencyResolver {
 
     public void buildGraph() throws Exception {
         buildGraph(new Vector<String>());
+    }
+
+    public void buildGraph(String ... ignoreGlobs) throws Exception {
+        List<String> list = new Vector<>();
+        Collections.addAll(list, ignoreGlobs);
+        buildGraph(list);
     }
 
     public void buildGraph(List<String> ignoreGlobs) throws Exception {
