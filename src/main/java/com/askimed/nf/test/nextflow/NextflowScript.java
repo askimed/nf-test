@@ -138,22 +138,22 @@ public class NextflowScript implements IMetaFile {
 		Pattern pattern = Pattern.compile(regex,  Pattern.MULTILINE);
 		Matcher matcher = pattern.matcher(content);
 		while (matcher.find()) {
-			Path path = null;
 			String dependency = matcher.group(2).trim();
-			if (dependency.startsWith("/")) {
+			if (dependency.startsWith("/") || dependency.startsWith("plugin/")) {
 				continue;
 			}
-			if (!dependency.endsWith(".nf")){
-				dependency += ".nf";
+
+			Path path = resolve(file, dependency);
+			if (path.toFile().isDirectory()) {
+				path = resolve(file, dependency + "/main.nf");
 			}
-			if (dependency.startsWith("./") || dependency.startsWith("../")) {
-				path = Paths.get(file.getParentFile().getAbsolutePath()).resolve(dependency);
-			} else {
-				path = Paths.get(dependency);
+
+			if (!path.toFile().exists()){
+				path = resolve(file, dependency + ".nf");
 			}
+
 			if (!path.toFile().exists()){
 				log.warn("Module " + file.getAbsolutePath() + ": Dependency '" + path.toAbsolutePath() + "' not found." );
-
 				continue;
 			}
 			dependencies.add(path.normalize().toFile().getAbsolutePath());
@@ -161,6 +161,14 @@ public class NextflowScript implements IMetaFile {
 
 		return dependencies;
 
+	}
+
+	protected static Path resolve(File file, String dependency) {
+		if (dependency.startsWith("./") || dependency.startsWith("../")) {
+			return Paths.get(file.getParentFile().getAbsolutePath()).resolve(dependency);
+		} else {
+			return Paths.get(dependency);
+		}
 	}
 
 	public static boolean accepts(Path path) {
