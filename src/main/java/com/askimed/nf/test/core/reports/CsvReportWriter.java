@@ -22,11 +22,15 @@ public class CsvReportWriter extends AbstractTestReportWriter {
 	public void writeToFile(List<TestSuiteExecutionResult> testSuites) throws IOException {
 
 		String[] header = new String[]{
+				"filename",
 				"testsuite",
 				"type",
 				"test",
 				"result",
-				"time"
+				"start",
+				"end",
+				"time",
+
 		};
 
 		CSVWriter writer = new CSVWriter(new FileWriter(new File(filename)));
@@ -37,10 +41,13 @@ public class CsvReportWriter extends AbstractTestReportWriter {
 			for (TestExecutionResult test : testSuite.getTests()) {
 
 				String[] line = new String[]{
+						testSuite.getTestSuite().getFilename(),
 						testSuite.getTestSuite().getName(),
-						testSuite.getTestSuite().getClass().toString(),
+						testSuite.getTestSuite().getClass().getSimpleName(),
 						test.getTest().getName(),
 						test.getStatus().toString(),
+						test.getStartTime() + "",
+						test.getEndTime() + "",
 						test.getExecutionTimeInSecs() + ""
 				};
 

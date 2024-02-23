@@ -46,9 +46,9 @@ public class DependencyResolver {
 
     public List<File> findTestsByFiles(List<File> files) throws Exception {
 
-        List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
+        List<PathMatcher> patterns = new Vector<PathMatcher>();
         for (File file: files) {
-            ignorePatterns.add(fileToPathMatcher(file));
+            patterns.add(fileToPathMatcher(file));
         }
 
         List<File> results = new Vector<File>();
@@ -56,7 +56,7 @@ public class DependencyResolver {
             if (metaFile.getType() == IMetaFile.MetaFileType.TEST_FILE) {
 
                 File file = new File(metaFile.getFilename());
-                if (matches(file.toPath(), ignorePatterns)) {
+                if (matches(file.toPath(), patterns)) {
                     results.add(file);
                 }
             }
@@ -202,11 +202,11 @@ public class DependencyResolver {
 
         String pattern = "";
         if (file.isDirectory()) {
-            pattern = "glob:" + file.getAbsolutePath() + "/**/";
+            pattern = "glob:" + file.toPath().toAbsolutePath().normalize() + "/**/*";
         } else {
-            pattern = "glob:" + file.getAbsolutePath();
+            pattern = "glob:" + file.toPath().toAbsolutePath().normalize();
         }
-
+System.out.println("Pattern: " + pattern);
         return FileSystems.getDefault().getPathMatcher(pattern);
     }
 
