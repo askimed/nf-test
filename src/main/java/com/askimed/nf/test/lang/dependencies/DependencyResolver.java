@@ -16,6 +16,8 @@ public class DependencyResolver {
 
     private DependencyGraph graph = new DependencyGraph();
 
+    private boolean followingDependencies = false;
+
     private static Logger log = LoggerFactory.getLogger(DependencyResolver.class);
 
     public DependencyResolver(File baseDir) {
@@ -28,6 +30,10 @@ public class DependencyResolver {
 
     public DependencyGraph getGraph() {
         return graph;
+    }
+
+    public void setFollowingDependencies(boolean followingDependencies) {
+        this.followingDependencies = followingDependencies;
     }
 
     public List<File> findAllTests() throws Exception {
@@ -82,7 +88,7 @@ public class DependencyResolver {
 
         long time0 = System.currentTimeMillis();
         for (File file: files) {
-            results.addAll(findRelatedTestsByFile(file.getAbsoluteFile()));
+            results.addAll(findRelatedTestsByFile(file.getAbsoluteFile(), followingDependencies));
         }
         long time1 = System.currentTimeMillis();
         log.info("Found {} tests for file {} in {} sec", results.size(), files, (time1 - time0) / 1000.0);
@@ -90,7 +96,7 @@ public class DependencyResolver {
         return new Vector<File>(results);
     }
 
-    private Set<File> findRelatedTestsByFile(File file) throws Exception {
+    private Set<File> findRelatedTestsByFile(File file, boolean followingDependencies) throws Exception {
 
         Set<File> results = new HashSet<File>();
 
@@ -111,12 +117,25 @@ public class DependencyResolver {
         List<IMetaFile> dependencies = graph.getDependencies(metaFile.getFilename());
         for (IMetaFile dependency: dependencies) {
             File dependencyFile = new File(dependency.getFilename());
+
             if (dependency.getType() == IMetaFile.MetaFileType.TEST_FILE) {
                 // is a test file --> return
                 results.add(dependencyFile);
             } else {
-                // if a source file -> find related tests in a recursive way
-                results.addAll(findRelatedTestsByFile(dependencyFile));
+                // if a source file
+                DependencyGraph.Node node = graph.getNode(dependency.getFilename());
+                //TODO: add && !followingDependencies
+                if (node.hasDependencyOfType(IMetaFile.MetaFileType.TEST_FILE) && !followingDependencies) {
+                    //has a test --> add all test and then stop
+                    for (DependencyGraph.Node dependencyOfDependency: node.getDependencies()) {
+                        if (dependencyOfDependency.getMetaFile().getType() == IMetaFile.MetaFileType.TEST_FILE) {
+                            results.add(new File(dependencyOfDependency.getFilename()));
+                        }
+                    }
+                } else {
+                     //has no tests --> find related tests in a recursive way
+                    results.addAll(findRelatedTestsByFile(dependencyFile, followingDependencies));
+                }
             }
         }
 

@@ -72,6 +72,9 @@ public class RunTestsCommand extends AbstractCommand {
 	@Option(names = { "--related-tests", "--relatedTests"}, description = "Finds all related tests for the provided .nf or nf.test files.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean findRelatedTests = false;
 
+	@Option(names = { "--follow-dependencies", "--followDependencies"}, description = "Follows all dependencies when related-tests is set.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean followDependencies = false;
+
 	@Option(names = { "--only-changed", "--onlyChanged"}, description = "Runs tests only for those files which are modified in the current git repository", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean onlyChanged = false;
 
@@ -168,6 +171,7 @@ public class RunTestsCommand extends AbstractCommand {
 			List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
 			File baseDir = new File(new File("").getAbsolutePath());
 			DependencyResolver resolver = new DependencyResolver(baseDir);
+			resolver.setFollowingDependencies(followDependencies);
 
 			if (onlyChanged || changedSince != null) {
 
