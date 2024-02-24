@@ -70,15 +70,21 @@ public class GitCommand {
     }
 
     public List<File> findChangesSince(File directory, String commit) throws IOException {
-        return findChangesSince(directory.getAbsolutePath(), commit);
-
+        return findChangesBetween(directory.getAbsolutePath(), commit, "HEAD");
+    }
+    public List<File> findChangesSince(String directory, String commit) throws IOException {
+        return findChangesBetween(directory, commit, "HEAD");
     }
 
-    public List<File> findChangesSince(String directory, String commit) throws IOException {
+    public List<File> findChangesBetween(File directory, String from, String to) throws IOException {
+       return  findChangesBetween(directory.getAbsolutePath(), from, to);
+    }
+
+    public List<File> findChangesBetween(String directory, String from, String to) throws IOException {
         List<String> args = new Vector<String>();
         args.add("diff");
         args.add("--name-only");
-        args.add(commit + "...HEAD");
+        args.add(from + "..." + to);
         args.add("--");
 
         //TODO: jest adds also findChanges to list.
