@@ -34,6 +34,8 @@ import picocli.CommandLine.Parameters;
 @Command(name = "test")
 public class RunTestsCommand extends AbstractCommand {
 
+	private static final String SHARD_STRATEGY_ROUND_ROBIN = "round-robin";
+
 	@Parameters(description = "test dependencies")
 	private List<File> testPaths = new ArrayList<File>();
 
@@ -97,6 +99,14 @@ public class RunTestsCommand extends AbstractCommand {
 	@Option(names = { "--clean-snapshot", "--cleanSnapshot", "--wipe-snapshot",
 			"--wipeSnapshot" }, description = "Removes all obsolete snapshots.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean cleanSnapshot = false;
+
+	@Option(names = {
+			"--shard" }, description = "Split into arbitrary chunks. Format: i/n. Example: 2/5 executes the second chunk of five.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String shard = null;
+
+	@Option(names = {
+			"--shard-strategy" }, description = "Strategy to build shards. Values: round-robin or none.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String shardStrategy = SHARD_STRATEGY_ROUND_ROBIN;
 
 	@Option(names = {
 			"--lib" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -255,6 +265,15 @@ public class RunTestsCommand extends AbstractCommand {
 
 			TestSuiteResolver testSuiteResolver = new TestSuiteResolver(environment);
 			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, new TagQuery(tags));
+
+			testSuits.sort(TestSuiteSorter.getDefault());
+			if (shard != null) {
+				if (shardStrategy.equalsIgnoreCase(SHARD_STRATEGY_ROUND_ROBIN)){
+					testSuits = TestSuiteSharder.shardWithRoundRobin(testSuits, shard);
+				} else {
+					testSuits = TestSuiteSharder.shard(testSuits, shard);
+				}
+			}
 
 			TestExecutionEngine engine = new TestExecutionEngine();
 			engine.setListener(listener);
