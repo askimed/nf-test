@@ -221,11 +221,10 @@ public class DependencyResolver {
 
         String pattern = "";
         if (file.isDirectory()) {
-            pattern = "glob:" + file.toPath().toAbsolutePath().normalize() + "/**/*";
+            pattern = "glob:" + file.toPath().toAbsolutePath().normalize() + "/**";
         } else {
             pattern = "glob:" + file.toPath().toAbsolutePath().normalize();
         }
-System.out.println("Pattern: " + pattern);
         return FileSystems.getDefault().getPathMatcher(pattern);
     }
 
