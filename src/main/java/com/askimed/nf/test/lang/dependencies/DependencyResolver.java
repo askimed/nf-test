@@ -191,7 +191,9 @@ public class DependencyResolver {
                 if (TestFile.accepts(path)) {
                     file = new TestFile(baseDir, path.toFile());
                 } else if (NextflowScript.accepts(path)) {
-                    file= new NextflowScript(path.toFile());
+                    file = new NextflowScript(path.toFile());
+                } else if (SnapshotFile.accepts(path)) {
+                   file = new SnapshotFile(path.toFile());
                 }
                 if (file != null) {
                     try {

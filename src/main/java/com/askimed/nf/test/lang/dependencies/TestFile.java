@@ -31,6 +31,12 @@ public class TestFile implements  IMetaFile {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(script);
 
+        File snapshot = new File(file.getAbsolutePath() + ".snap");
+        if (snapshot.exists()){
+            dependencies.add(snapshot.getAbsolutePath());
+        }
+
+
         while (matcher.find()) {
             String dependency = matcher.group(1).trim();
             Path path = null;
