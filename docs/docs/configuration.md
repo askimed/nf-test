@@ -5,7 +5,7 @@
 The `nf-test.config` file is a configuration file used to customize settings and behavior for `nf-test`. This file must be located in the root of your project, and it is automatically loaded when you run `nf-test test`. Below are the parameters that can be adapted:
 
 | Parameter    | Description                                                                                                                                                        | Default Value             |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------- |
+| ------------ |--------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------|
 | `testsDir`   | Location for storing all nf-test cases (test scripts). If you want all test files to be in the same directory as the script itself, you can set the testDir to `.` | `"tests"`                 |
 | `workDir`    | Directory for storing temporary files and working directories for each test. This directory should be added to `.gitignore`.                                       | `".nf-test"`              |
 | `configFile` | Location of an optional `nextflow.config` file specifically used for executing tests. [Learn more](#testsnextflowconfig).                                          | `"tests/nextflow.config"` |
@@ -14,6 +14,7 @@ The `nf-test.config` file is a configuration file used to customize settings and
 | `withTrace`  | Enable or disable tracing options during testing. Disable tracing if your containers don't include the `procps` tool.                                              | `true`                    |
 | `autoSort`   | Enable or disable sorted channels by default when running tests.                                                                                                   | `true`                    |
 | `options`    | Custom Nextflow command-line options to be applied when running tests. For example `"-dump-channels -stub-run"`                                                    |                           |
+ | `ignore`    | List of filenames or patterns that should be ignored when building the dependency graph. For example: `ignore ['folder/**/*.nf', 'modules/module.nf']`             | ``                        |
 
 Here's an example of what an `nf-test.config` file could look like:
 
