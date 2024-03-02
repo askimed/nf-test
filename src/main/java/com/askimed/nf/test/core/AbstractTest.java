@@ -278,7 +278,6 @@ public abstract class AbstractTest implements ITest {
 		this.updateSnapshot = updateSnapshot;
 	}
 
-	@Override
 	public boolean isUpdateSnapshot() {
 		return updateSnapshot;
 	}
