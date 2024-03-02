@@ -46,6 +46,11 @@ Writes test results in [JUnit XML format](https://junit.org/) to file, which con
 
 Writes test results in csv file.
 
+#### `--ci`
+
+By default,nf-test automatically stores a new snapshot. When CI mode is activated, nf-test will fail the test instead of storing the snapshot automatically.
+
+
 ### Optimizing Test Execution
 
 #### `--related-tests <files>`

@@ -71,7 +71,10 @@ public class RunTestsCommand extends AbstractCommand {
 			"--updateSnapshot" }, description = "Use this flag to re-record every snapshot that fails during this test run.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean updateSnapshot = false;
 
-	@Option(names = { "--related-tests", "--relatedTests"}, description = "Finds all related tests for the provided .nf or nf.test files.", required = false, showDefaultValue = Visibility.ALWAYS)
+	@Option(names = { "--ci" }, description = "Activates CI mode. Instead of automatically storing a new snapshot as per usual, it will now fail the test.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean ciMode = false;
+
+	@Option(names = { "--related-tests", "--relatedTests"}, description = "Finds and executes all related tests for the provided .nf or nf.test files.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean findRelatedTests = false;
 
 	@Option(names = { "--follow-dependencies", "--followDependencies"}, description = "Follows all dependencies when related-tests is set.", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -281,6 +284,7 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.setDebug(debug);
 			engine.setUpdateSnapshot(updateSnapshot);
 			engine.setCleanSnapshot(cleanSnapshot);
+			engine.setCIMode(ciMode);
 			engine.addProfile(profile);
 			engine.setDryRun(dryRun);
 			if (withoutTrace) {
