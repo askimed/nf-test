@@ -76,7 +76,7 @@ public class TestExecutionEngine {
 	}
 
 	public void setCIMode(boolean ciMode) {
-		if (updateSnapshot) {
+		if (ciMode) {
 			System.out.println("nf-test runs in CI mode.");
 		}
 		this.ciMode = ciMode;
