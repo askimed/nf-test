@@ -95,17 +95,26 @@ public abstract class AbstractTest implements ITest {
 		return config;
 	}
 
-	@Override
-	public void setup(Config config, File testDirectory) throws IOException {
+	public void defineDirectories(File testDirectory) throws IOException {
 
 		if (testDirectory == null) {
 			throw new IOException("Testcase setup failed: No home directory set");
 		}
 
-		launchDir = initDirectory("Launch Directory", testDirectory, DIRECTORY_TESTS, getHash());
-		metaDir = initDirectory("Meta Directory", launchDir, DIRECTORY_META);
-		outputDir = initDirectory("Output Directory", launchDir, DIRECTORY_OUTPUT);
-		workDir = initDirectory("Working Directory", launchDir, DIRECTORY_WORK);
+		launchDir = constructDirectory(testDirectory, DIRECTORY_TESTS, getHash());
+		metaDir = constructDirectory(launchDir, DIRECTORY_META);
+		outputDir = constructDirectory(launchDir, DIRECTORY_OUTPUT);
+		workDir = constructDirectory(launchDir, DIRECTORY_WORK);
+
+	}
+
+	@Override
+	public void setup(Config config) throws IOException {
+
+		initDirectory("Launch Directory", launchDir);
+		initDirectory("Meta Directory", metaDir);
+		initDirectory("Output Directory", outputDir);
+		initDirectory("Working Directory", workDir);
 		FileStaging[] sharedDirectories = new FileStaging[]{
 				new FileStaging("bin", config != null ? config.getStageMode() : FileStaging.MODE_COPY),
 				new FileStaging("lib",  config != null ? config.getStageMode() : FileStaging.MODE_COPY),
@@ -136,15 +145,17 @@ public abstract class AbstractTest implements ITest {
 		}
 	}
 
-	public File initDirectory(String name, File root, String... childs) throws IOException {
-
+	public File constructDirectory(File root, String... childs) {
 		String path = FileUtil.path(root.getAbsolutePath(), FileUtil.path(childs));
-
 		File directory = new File(path).getAbsoluteFile();
+		return directory;
+	}
+
+	public void initDirectory(String name, File directory) throws IOException {
+
 		try {
 			FileUtil.deleteDirectory(directory);
 			FileUtil.createDirectory(directory);
-			return directory;
 		} catch (Exception e) {
 			throw new IOException(name + " '" + directory + "' could not be deleted or created:\n" + e);
 		}
