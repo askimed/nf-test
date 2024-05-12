@@ -199,6 +199,8 @@ public class TestExecutionEngine {
 				log.info("Run test '{}'. type: {}", test, test.getClass().getName());
 				totalTests++;
 
+				testSuite.setupTest(test);
+
 				listener.executionStarted(test);
 				TestExecutionResult result = new TestExecutionResult(test);
 				test.setWithTrace(withTrace);
