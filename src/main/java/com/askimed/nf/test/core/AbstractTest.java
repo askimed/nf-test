@@ -2,17 +2,14 @@ package com.askimed.nf.test.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Vector;
 
+import com.askimed.nf.test.util.HashUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.askimed.nf.test.config.Config;
-import com.askimed.nf.test.config.FileStaging;
 import com.askimed.nf.test.util.FileUtil;
 
 public abstract class AbstractTest implements ITest {
@@ -56,6 +53,8 @@ public abstract class AbstractTest implements ITest {
 	public File baseDir = new File(System.getProperty("user.dir"));
 
 	public File projectDir = new File(System.getProperty("user.dir"));
+
+	public File mockFile;
 
 	public boolean skipped = false;
 
@@ -106,33 +105,16 @@ public abstract class AbstractTest implements ITest {
 		outputDir = constructDirectory(launchDir, DIRECTORY_OUTPUT);
 		workDir = constructDirectory(launchDir, DIRECTORY_WORK);
 
+		mockFile = new File( ".nf-test-" + getHash() + ".nf");
+		mockFile.deleteOnExit();
 	}
 
 	@Override
 	public void setup(Config config) throws IOException {
-
-		initDirectory("Launch Directory", launchDir);
-		initDirectory("Meta Directory", metaDir);
-		initDirectory("Output Directory", outputDir);
-		initDirectory("Working Directory", workDir);
-		FileStaging[] sharedDirectories = new FileStaging[]{
-				new FileStaging("bin", config != null ? config.getStageMode() : FileStaging.MODE_COPY),
-				new FileStaging("lib",  config != null ? config.getStageMode() : FileStaging.MODE_COPY),
-				new FileStaging("assets", config != null ? config.getStageMode() : FileStaging.MODE_COPY)
-		};
-		try {
-			// copy bin, assets and lib to metaDir
-			shareDirectories(sharedDirectories, metaDir);
-			if (config != null) {
-				// copy user defined staging directories
-				log.debug("Stage {} user provided files...", config.getStageBuilder().getPaths().size());
-				shareDirectories(config.getStageBuilder().getPaths(), metaDir);
-			}
-			shareDirectories(parent.getStageBuilder().getPaths(), metaDir);
-		} catch (Exception e) {
-			throw new IOException("Testcase setup failed: Directories could not be shared:\n" + e);
-		}
-
+		setupDirectory("Launch Directory", launchDir);
+		setupDirectory("Meta Directory", metaDir);
+		setupDirectory("Output Directory", outputDir);
+		setupDirectory("Working Directory", workDir);
 	}
 
 	@Override
@@ -145,13 +127,13 @@ public abstract class AbstractTest implements ITest {
 		}
 	}
 
-	public File constructDirectory(File root, String... childs) {
+	private File constructDirectory(File root, String... childs) {
 		String path = FileUtil.path(root.getAbsolutePath(), FileUtil.path(childs));
 		File directory = new File(path).getAbsoluteFile();
 		return directory;
 	}
 
-	public void initDirectory(String name, File directory) throws IOException {
+	private void setupDirectory(String name, File directory) throws IOException {
 
 		try {
 			FileUtil.deleteDirectory(directory);
@@ -164,7 +146,7 @@ public abstract class AbstractTest implements ITest {
 
 	@Override
 	public void cleanup() {
-		// FileUtil.deleteDirectory(metaDir);
+
 	}
 
 	@Override
@@ -191,23 +173,8 @@ public abstract class AbstractTest implements ITest {
 			throw new RuntimeException("Error generating hash");
 		}
 
-		return hash(parent.getFilename() + getName());
+		return HashUtil.getMd5(parent.getFilename() + getName());
 
-	}
-
-	private String hash(String value) {
-
-		MessageDigest md;
-		try {
-			md = MessageDigest.getInstance("MD5");
-			md.update(value.getBytes());
-			byte[] md5sum = md.digest();
-			BigInteger bigInt = new BigInteger(1, md5sum);
-			return bigInt.toString(16);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			return "??";
-		}
 	}
 
 	public void tag(String tag) {
@@ -266,20 +233,6 @@ public abstract class AbstractTest implements ITest {
 
 	public boolean isWithTrace() {
 		return withTrace;
-	}
-
-	protected void shareDirectories(List<FileStaging> directories, File stageDir) throws IOException {
-		for (FileStaging directory : directories) {
-			String metaDirectory = FileUtil.path(stageDir.getAbsolutePath(), directory.getPath());
-			directory.stage(metaDirectory);
-		}
-	}
-
-	protected void shareDirectories(FileStaging[] directories, File stageDir) throws IOException {
-		for (FileStaging directory : directories) {
-			String metaDirectory = FileUtil.path(stageDir.getAbsolutePath(), directory.getPath());
-			directory.stage(metaDirectory);
-		}
 	}
 
 	@Override

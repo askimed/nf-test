@@ -109,8 +109,10 @@ public class FunctionTest extends AbstractTest {
 		}
 
 		// Create workflow mock
-		File workflow = new File(metaDir, FILE_MOCK);
-		writeWorkflowMock(workflow);
+		writeWorkflowMock(mockFile);
+
+		 // Copy mock file in meta folder for debugging
+		FileUtil.copy(mockFile, new File(metaDir, FILE_MOCK));
 
 		context.getParams().put("nf_test_output", metaDir.getAbsolutePath());
 
@@ -121,7 +123,7 @@ public class FunctionTest extends AbstractTest {
 		File paramsFile = new File(metaDir, FILE_PARAMS);
 
 		NextflowCommand nextflow = new NextflowCommand();
-		nextflow.setScript(workflow.getAbsolutePath());
+		nextflow.setScript(mockFile.getAbsolutePath());
 		nextflow.setParams(context.getParams());
 		for (String profile: parent.getProfiles()) {
 			nextflow.addProfile(profile);
