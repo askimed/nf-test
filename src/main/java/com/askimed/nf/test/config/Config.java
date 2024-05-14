@@ -3,7 +3,11 @@ package com.askimed.nf.test.config;
 import java.io.File;
 import java.util.List;
 import java.util.Vector;
+import java.util.Map;
 
+import com.askimed.nf.test.App;
+import com.askimed.nf.test.nextflow.NextflowCommand;
+import com.askimed.nf.test.util.Version;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
@@ -19,6 +23,8 @@ public class Config {
 	public static final String DEFAULT_NEXTFLOW_CONFIG = "tests/nextflow.config";
 
 	public static final String DEFAULT_HOME = ".nf-test";
+
+	public static final String KEY_NF_TEST_VERSION = "nf-test";
 
 	private String workDir = ".nf-test";
 
@@ -43,6 +49,8 @@ public class Config {
 	private String stageMode = FileStaging.MODE_COPY;
 
 	private List<String> ignore = new Vector<String>();
+  
+	private Map<String, Object> requires = null;
 
 	public void testsDir(String testsDir) {
 		this.testsDir = testsDir;
@@ -58,6 +66,18 @@ public class Config {
 
 	public String getWorkDir() {
 		return workDir;
+	}
+
+	public void requires(Map<String, Object> requires) {
+		setRequires(requires);
+	}
+
+	public void setRequires(Map<String, Object> requires) {
+		this.requires = requires;
+	}
+
+	public Map<String, Object> getRequires() {
+		return requires;
 	}
 
 	public void profile(String profile) {
@@ -211,6 +231,17 @@ public class Config {
 
 		Object object = shell.evaluate(script);
 		Config config = (Config) object;
+
+		// no requirements
+		if (config.getRequires() == null ){
+			return config;
+		}
+
+		// check nf-test version
+		String appVersion = config.getRequires().getOrDefault(KEY_NF_TEST_VERSION, App.VERSION).toString();
+		if (Version.compare(appVersion, App.VERSION) >= 1) {
+			throw new Exception("nf-test " + appVersion + " or above is required to run this project");
+		}
 
 		return config;
 	}
