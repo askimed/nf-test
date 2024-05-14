@@ -1457,6 +1457,10 @@
 </ol>
 <p>By understanding this profile evaluation order, you can effectively configure Nextflow executions for your test cases in a flexible and organized manner.</p>
 <h2 id="file-staging">File Staging</h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>File Staging is obsolete since version &gt;= 0.9.0.</p>
+</div>
 <p>The <code>stage</code> section of the <code>nf-test.config</code> file is used to define files that are needed by Nextflow in the test environment (<code>meta</code> directory). Additionally, the directories <code>lib</code>, <code>bin</code>, and <code>assets</code> are automatically staged.</p>
 <h3 id="supported-directives">Supported Directives</h3>
 <h4 id="symlink"><code>symlink</code></h4>
