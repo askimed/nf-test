@@ -102,6 +102,10 @@ By understanding this profile evaluation order, you can effectively configure Ne
 
 ## File Staging
 
+!!! warning
+
+    File Staging is obsolete since version >= 0.9.0.
+
 The `stage` section of the `nf-test.config` file is used to define files that are needed by Nextflow in the test environment (`meta` directory). Additionally, the directories `lib`, `bin`, and `assets` are automatically staged.
 
 ### Supported Directives
