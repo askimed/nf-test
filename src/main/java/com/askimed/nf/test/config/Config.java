@@ -219,8 +219,8 @@ public class Config {
 
 		// check nf-test version
 		String appVersion = config.getRequires().getOrDefault(KEY_NF_TEST_VERSION, App.VERSION).toString();
-		if (Version.compare(appVersion, App.VERSION) > 1) {
-			throw new Exception("Error. nf-test " + appVersion + " or above is required to run this project");
+		if (Version.compare(appVersion, App.VERSION) >= 1) {
+			throw new Exception("nf-test " + appVersion + " or above is required to run this project");
 		}
 
 		return config;

@@ -283,6 +283,23 @@ public class ProcessTest {
 	}
 
 	@Test
+	public void testRequires() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/profiles/hello.a.nf.test", "--config",
+				"test-data/process/requires/nf-test-0.1.0.config" });
+		assertEquals(0, exitCode);
+
+		app = new App();
+		exitCode = app.run(new String[] { "test", "test-data/process/profiles/hello.a.nf.test", "--config",
+				"test-data/process/requires/nf-test-100.0.0.config" });
+		assertEquals(2, exitCode);
+
+
+	}
+
+
+	@Test
 	public void testUniquenessSnapshots() throws Exception {
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/unique.nf.test" });
