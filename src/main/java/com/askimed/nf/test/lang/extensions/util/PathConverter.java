@@ -26,6 +26,11 @@ public class PathConverter implements Converter {
 			if (!path.toFile().exists()) {
 				throw new RuntimeException("Path " + path.toString() + " not found.");
 			}
+		} else if (value instanceof File) {
+			path = ((File) value).toPath();
+			if (!path.toFile().exists()) {
+				throw new RuntimeException("Path " + path.toString() + " not found.");
+			}
 		} else {
 			path = new File(value.toString()).toPath();
 

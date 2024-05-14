@@ -82,13 +82,18 @@ public abstract class AbstractTestSuite implements ITestSuite {
 			Closure closure = namedClosure.closure;
 
 			ITest test = getNewTestInstance(testName);
-			test.setup(config, getHomeDirectory());
+			test.defineDirectories(getHomeDirectory());
 			closure.setDelegate(test);
 			closure.setResolveStrategy(Closure.DELEGATE_ONLY);
 			closure.call();
 			addTest(test);
 		}
 	}
+
+	public void setupTest(ITest test) throws Throwable {
+		test.setup(config);
+	}
+
 
 	protected abstract ITest getNewTestInstance(String name);
 

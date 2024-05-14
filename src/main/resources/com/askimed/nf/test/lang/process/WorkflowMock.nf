@@ -8,7 +8,7 @@ params.nf_test_output  = ""
 
 // include dependencies
 <% for (dependency in dependencies) { %>
-include { ${dependency.name} } from '${dependency.script}'
+include { ${dependency.name} ${dependency.hasAlias() ? " as " + dependency.alias : "" } } from '${dependency.script}'
 <% } %>
 
 // include test process
@@ -18,7 +18,7 @@ include { ${process} } from '${script}'
 def jsonOutput =
     new JsonGenerator.Options()
         .excludeNulls()  // Do not include fields with value null..
-        .addConverter(Path) { value -> value.toString() } // Custom converter for Path. Only filename
+        .addConverter(Path) { value -> value.toAbsolutePath().toString() } // Custom converter for Path. Only filename
         .build()
 
 
@@ -29,7 +29,7 @@ workflow {
     {
         def input = []
         ${dependency.mapping}
-        ${dependency.name}(*input)
+        ${dependency.hasAlias() ? dependency.alias : dependency.name}(*input)
     }
     <% } %>
 

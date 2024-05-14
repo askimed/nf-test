@@ -1,0 +1,26 @@
+{
+    "Should succeed because two unique snapshots": {
+        "content": [
+            {
+                "object1": "lukas",
+                "object2": 27,
+                "object3": {
+                    "a": "lll",
+                    "b": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                }
+            }
+        ],
+        "timestamp": "2024-01-28T11:41:29.018819"
+    },
+    "lukas": {
+        "content": "a54d97026c5ed6e6a57ccd3a3f5a3cbc",
+        "timestamp": "2024-01-28T11:41:29.025981"
+    }
+}

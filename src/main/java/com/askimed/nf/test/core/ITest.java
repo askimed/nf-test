@@ -6,7 +6,9 @@ import com.askimed.nf.test.config.Config;
 
 public interface ITest extends ITaggable {
 
-	public void setup(Config config, File homeDirectory) throws Throwable;
+	public void defineDirectories(File testDirectory) throws Throwable;
+
+	public void setup(Config config) throws Throwable;
 
 	public void execute() throws Throwable;
 

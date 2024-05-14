@@ -1,6 +1,8 @@
 package com.askimed.nf.test.lang.process;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import com.askimed.nf.test.core.ITest;
@@ -50,9 +52,13 @@ public class ProcessContext extends TestContext {
 
 	}
 
-	public void run(String process, Closure closure) {		
-		Dependency dependency = new Dependency(process, closure);		
+	public void run(Map<String, Object> attributes, String process, Closure closure) {
+		Dependency dependency = new Dependency(process, attributes, closure);
 		dependencies.add(dependency);
+	}
+
+	public void run(String process, Closure closure) {
+		run(new LinkedHashMap<String, Object>(), process, closure);
 	}
 
 	public List<Dependency> getDependencies() {
