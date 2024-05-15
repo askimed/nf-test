@@ -16,6 +16,8 @@ public class DependencyResolver {
 
     private DependencyGraph graph = new DependencyGraph();
 
+    private List<PathMatcher> triggerPatterns = new Vector<PathMatcher>();
+
     private boolean followingDependencies = false;
 
     private static Logger log = LoggerFactory.getLogger(DependencyResolver.class);
@@ -89,6 +91,13 @@ public class DependencyResolver {
 
     public List<File> findRelatedTestsByFiles(File ... files) throws Exception {
 
+        for (File file: files) {
+            if (matches2(file.toPath(), triggerPatterns)) {
+                log.info("File " + file.getAbsolutePath() + " triggers full test run.");
+                return findAllTests();
+            }
+        }
+
         Set<File> results = new HashSet<File>();
 
         long time0 = System.currentTimeMillis();
@@ -149,16 +158,20 @@ public class DependencyResolver {
 
 
     public void buildGraph() throws Exception {
-        buildGraph(new Vector<String>());
+        buildGraph(new Vector<String>(), new Vector<String>());
     }
 
     public void buildGraph(String ... ignoreGlobs) throws Exception {
         List<String> list = new Vector<>();
         Collections.addAll(list, ignoreGlobs);
-        buildGraph(list);
+        buildGraph(list, new Vector<>());
     }
 
-    public void buildGraph(List<String> ignoreGlobs) throws Exception {
+    public void buildGraph(List<String> ignoreGlobs, List<String> triggerPatterns) throws Exception {
+
+        for (String glob: triggerPatterns) {
+            this.triggerPatterns.add(pathMatcher("glob:" + baseDir.getAbsolutePath() + "/" + glob));
+        }
 
         List<TestFilePattern> ignorePatterns = new Vector<TestFilePattern>();
         ignorePatterns.add(fileToPathMatcher(".nf-test/**"));
@@ -230,6 +243,7 @@ public class DependencyResolver {
 
 
     public PathMatcher pathMatcher(String pattern) {
+        System.out.println(pattern);
         return FileSystems.getDefault().getPathMatcher(pattern);
     }
 
@@ -242,5 +256,16 @@ public class DependencyResolver {
         }
         return null;
     }
+
+    public boolean matches2(Path path, List<PathMatcher> ignorePatterns) {
+        PathMatcher pathMatcher;
+        for (PathMatcher pattern : ignorePatterns) {
+            if (pattern.matches(path)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
