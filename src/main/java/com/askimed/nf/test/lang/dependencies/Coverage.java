@@ -43,7 +43,8 @@ public class Coverage {
     }
 
     public Coverage getAll(){
-
+        items.clear();
+        coveredItems=0;
         long time0 = System.currentTimeMillis();
 
         for (DependencyGraph.Node node: graph.getNodes()){
@@ -64,7 +65,8 @@ public class Coverage {
     }
 
     public Coverage getByFiles(List<File> files){
-
+        items.clear();
+        coveredItems=0;
         long time0 = System.currentTimeMillis();
 
         for (File file: files){

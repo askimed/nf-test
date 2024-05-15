@@ -92,7 +92,7 @@ public class DependencyResolver {
     public List<File> findRelatedTestsByFiles(File ... files) throws Exception {
 
         for (File file: files) {
-            if (matches2(file.toPath(), triggerPatterns)) {
+            if (matches2(file.getAbsoluteFile().toPath(), triggerPatterns)) {
                 log.info("File " + file.getAbsolutePath() + " triggers full test run.");
                 return findAllTests();
             }
