@@ -1,7 +1,5 @@
 package com.askimed.nf.test.lang;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +12,8 @@ import com.askimed.nf.test.App;
 import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ProcessTest {
 
@@ -329,6 +329,33 @@ public class ProcessTest {
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/md5.nf.test" });
 		assertEquals(0, exitCode);
+
+	}
+
+	@Test
+	public void testSnapshotsInCiMode() throws Exception {
+
+		File snapshot = new File("test-data/process/snapshots/ci-mode.nf.test.snap");
+
+		snapshot.delete();
+
+		assertFalse(snapshot.exists());
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/ci-mode.nf.test" });
+		assertEquals(0, exitCode);
+
+		assertTrue(snapshot.exists());
+
+		snapshot.delete();
+
+		assertFalse(snapshot.exists());
+
+		app = new App();
+		exitCode = app.run(new String[] { "test", "test-data/process/snapshots/ci-mode.nf.test", "--ci" });
+		assertEquals(1, exitCode);
+
+		assertFalse(snapshot.exists());
 
 	}
 

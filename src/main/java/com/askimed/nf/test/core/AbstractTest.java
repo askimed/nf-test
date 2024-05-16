@@ -253,7 +253,7 @@ public abstract class AbstractTest implements ITest {
 
 	@Override
 	public boolean isCIMode() {
-		return false;
+		return ciMode;
 	}
 
 	@Override
