@@ -71,7 +71,7 @@ public class ListTestsCommand extends AbstractCommand {
 
 			DependencyResolver resolver = new DependencyResolver(new File(new File("").getAbsolutePath()));
 			if (config != null) {
-				resolver.buildGraph(config.getIgnore());
+				resolver.buildGraph(config.getIgnore(), config.getTriggers());
 			} else {
 				resolver.buildGraph();
 			}

@@ -9,6 +9,22 @@ This page collects videos and blog posts about nf-test created by the community.
 
 ---
 
+### :material-tooltip-text:{ style="color: #337ab7" } Training Module: Hello nf-test
+
+This training modules introduces nf-test in a simple and easy to follow-along hello-nextflow style aimed for beginners.
+
+[hello nf-test training module](https://training.nextflow.io/hello_nextflow/05_hello_nf-test/)
+
+---
+
+### :material-tooltip-text:{ style="color: #337ab7" } Blog post: Leveraging nf-test for enhanced quality control in nf-core
+
+Reproducibility is an important attribute of all good science. This is specially true in the realm of bioinformatics, where software is hopefully being constantly updated, and pipelines are ideally being maintained. This blog post covers nf-test in the nf-core context.
+
+[Read blog post](https://nextflow.io/blog/2024/nf-test-in-nf-core.html)
+
+---
+
 ### :fontawesome-brands-youtube:{ style="color: #EE0F0F" } nf-core/bytesize: Converting pytest modules to nf-test
 
 **Adam Talbot** & **Sateesh Peri** do a live demo of converting nf-core DSL2 modules pytests to nf-test

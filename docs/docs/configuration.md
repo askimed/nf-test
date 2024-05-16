@@ -5,7 +5,7 @@
 The `nf-test.config` file is a configuration file used to customize settings and behavior for `nf-test`. This file must be located in the root of your project, and it is automatically loaded when you run `nf-test test`. Below are the parameters that can be adapted:
 
 | Parameter    | Description                                                                                                                                                        | Default Value             |
-| ------------ |--------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------|
+|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------------------- |
 | `testsDir`   | Location for storing all nf-test cases (test scripts). If you want all test files to be in the same directory as the script itself, you can set the testDir to `.` | `"tests"`                 |
 | `workDir`    | Directory for storing temporary files and working directories for each test. This directory should be added to `.gitignore`.                                       | `".nf-test"`              |
 | `configFile` | Location of an optional `nextflow.config` file specifically used for executing tests. [Learn more](#testsnextflowconfig).                                          | `"tests/nextflow.config"` |
@@ -14,7 +14,9 @@ The `nf-test.config` file is a configuration file used to customize settings and
 | `withTrace`  | Enable or disable tracing options during testing. Disable tracing if your containers don't include the `procps` tool.                                              | `true`                    |
 | `autoSort`   | Enable or disable sorted channels by default when running tests.                                                                                                   | `true`                    |
 | `options`    | Custom Nextflow command-line options to be applied when running tests. For example `"-dump-channels -stub-run"`                                                    |                           |
- | `ignore`    | List of filenames or patterns that should be ignored when building the dependency graph. For example: `ignore ['folder/**/*.nf', 'modules/module.nf']`             | ``                        |
+| `ignore`     | List of filenames or patterns that should be ignored when building the dependency graph. For example: `ignore 'folder/**/*.nf', 'modules/module.nf'`               | ``                        |
+| `triggers`   | List of filenames or patterns that should be trigger a full test run. For example: `triggers 'nextflow.config', 'test-data/**/*'`                                  | ``                        |
+| `requires`   | Can be used to specify the minimum required version of nf-test. Requires nf-test > 0.9.0                                                                           | ``                        |
 
 Here's an example of what an `nf-test.config` file could look like:
 
@@ -28,6 +30,17 @@ config {
     withTrace false
     autoSort false
     options "-dump-channels -stub-run"
+}
+```
+
+The `requires` keyword can be used to specify the minimum required version of nf-test.
+For instance, to ensure the use of at least nf-test version 0.9.0, define it as follows:
+
+```groovy
+config {
+    requires (
+        "nf-test": "0.9.0"
+    )
 }
 ```
 
@@ -102,6 +115,10 @@ Profiles are evaluated in a specific order, ensuring predictable behavior:
 By understanding this profile evaluation order, you can effectively configure Nextflow executions for your test cases in a flexible and organized manner.
 
 ## File Staging
+
+!!! warning
+
+    File Staging is obsolete since version >= 0.9.0.
 
 The `stage` section of the `nf-test.config` file is used to define files that are needed by Nextflow in the test environment (`meta` directory). Additionally, the directories `lib`, `bin`, and `assets` are automatically staged.
 

@@ -216,7 +216,7 @@ public class RunTestsCommand extends AbstractCommand {
 
 			if (findRelatedTests) {
 
-				resolver.buildGraph(config.getIgnore());
+				resolver.buildGraph(config.getIgnore(), config.getTriggers());
 				scripts = resolver.findRelatedTestsByFiles(testPaths);
 				System.out.println("Found " + scripts.size() + " related test(s)");
 				if (scripts.isEmpty()) {
@@ -232,7 +232,7 @@ public class RunTestsCommand extends AbstractCommand {
 
 			} else {
 				if (config != null) {
-					resolver.buildGraph(config.getIgnore());
+					resolver.buildGraph(config.getIgnore(), config.getTriggers());
 				} else {
 					resolver.buildGraph();
 				}

@@ -36,4 +36,6 @@ public interface ITestSuite extends ITaggable {
 	
 	public void evalualteTestClosures() throws Throwable;
 
+	public void setupTest(ITest test) throws Throwable;
+
 }
