@@ -38,6 +38,8 @@ public class TestExecutionEngine {
 
 	private boolean updateSnapshot = false;
 
+	private boolean ciMode = false;
+
 	private boolean cleanSnapshot = false;
 
 	private boolean dryRun = false;
@@ -71,6 +73,13 @@ public class TestExecutionEngine {
 			System.out.println("Warning: every snapshot that fails during this test run is re-record.");
 		}
 		this.updateSnapshot = updateSnapshot;
+	}
+
+	public void setCIMode(boolean ciMode) {
+		if (ciMode) {
+			System.out.println("nf-test runs in CI mode.");
+		}
+		this.ciMode = ciMode;
 	}
 
 	public void setCleanSnapshot(boolean cleanSnapshot) {
@@ -143,6 +152,7 @@ public class TestExecutionEngine {
 				TestExecutionResult result = new TestExecutionResult(test);
 				test.setWithTrace(withTrace);
 				test.setUpdateSnapshot(updateSnapshot);
+				test.setCIMode(ciMode);
 				try {
 
 					// override debug flag from CLI

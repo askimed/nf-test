@@ -62,6 +62,8 @@ public abstract class AbstractTest implements ITest {
 
 	private boolean updateSnapshot = false;
 
+	private boolean ciMode = false;
+
 	private boolean debug = false;
 
 	private boolean withTrace = true;
@@ -242,6 +244,16 @@ public abstract class AbstractTest implements ITest {
 
 	public boolean isUpdateSnapshot() {
 		return updateSnapshot;
+	}
+
+	@Override
+	public void setCIMode(boolean ciMode) {
+		this.ciMode = ciMode;
+	}
+
+	@Override
+	public boolean isCIMode() {
+		return false;
 	}
 
 	@Override

@@ -34,4 +34,8 @@ public interface ITest extends ITaggable {
 
 	public boolean isUpdateSnapshot();
 
+	public void setCIMode(boolean ciMode);
+
+	public boolean isCIMode();
+
 }
