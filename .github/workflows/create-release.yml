@@ -25,6 +25,8 @@ jobs:
 
       - name: Build
         run: mvn install
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: ncipollo/release-action@v1
         with:

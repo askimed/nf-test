@@ -87,7 +87,7 @@ public class Command {
 			Thread inputStreamHandler = new Thread(handler);
 
 			CommandStreamHandler handler2 = new CommandStreamHandler(process.getErrorStream(), stderrFileName);
-			handler.setStringBuffer(stderr);
+			handler2.setStringBuffer(stderr);
 			handler2.setSilent(silent);
 			Thread errorStreamHandler = new Thread(handler2);
 

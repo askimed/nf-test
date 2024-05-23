@@ -1,7 +1,7 @@
 package com.askimed.nf.test.config;
 
 import java.io.File;
-import java.util.Map;
+import java.util.*;
 
 import com.askimed.nf.test.App;
 import com.askimed.nf.test.nextflow.NextflowCommand;
@@ -46,7 +46,11 @@ public class Config {
 
 	private String stageMode = FileStaging.MODE_COPY;
 
+	private List<String> ignore = new Vector<String>();
+  
 	private Map<String, Object> requires = null;
+
+	private List<String> triggers = new Vector<String>();
 
 	public void testsDir(String testsDir) {
 		this.testsDir = testsDir;
@@ -146,6 +150,50 @@ public class Config {
 
 	public void stageMode(String stageMode) {
 		this.stageMode = stageMode;
+	}
+
+	public void setIgnore(List<String> ignore) {
+		this.ignore = ignore;
+	}
+
+	public List<String> getIgnore() {
+		return ignore;
+	}
+
+	public void ignore(List<Object> ignores) {
+		for (Object ignore: ignores) {
+			this.ignore.add(ignore.toString());
+		}
+	}
+
+	public void ignore(String ignore) {
+		this.ignore.add(ignore);
+	}
+
+	public void ignore(String ... ignore) {
+		this.ignore.addAll(Arrays.asList(ignore));
+	}
+
+	public void setTriggers(List<String> triggers) {
+		this.triggers = triggers;
+	}
+
+	public List<String> getTriggers() {
+		return triggers;
+	}
+
+	public void triggers(List<Object> triggers) {
+		for (Object trigger: triggers) {
+			this.triggers.add(trigger.toString());
+		}
+	}
+
+	public void triggers(String ... triggers) {
+		this.triggers.addAll(Arrays.asList(triggers));
+	}
+
+	public void trigger(String trigger) {
+		this.triggers.add(trigger);
 	}
 
 	public void stage(Closure closure) {

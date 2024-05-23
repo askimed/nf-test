@@ -65,6 +65,7 @@ nav:
           - Available Plugins: https://code.askimed.com/nf-test-plugins
           - Using Plugins: docs/plugins/using-plugins.md
           - Developing Plugins: docs/plugins/developing-plugins.md
+  - Tutorials: tutorials.md
   - Resources: resources.md
   - About: about.md
 

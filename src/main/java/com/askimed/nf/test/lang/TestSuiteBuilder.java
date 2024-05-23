@@ -2,6 +2,7 @@ package com.askimed.nf.test.lang;
 
 import java.io.File;
 
+import com.askimed.nf.test.core.Environment;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
@@ -74,14 +75,10 @@ public class TestSuiteBuilder {
 	}
 
 	public static ITestSuite parse(File script) throws Throwable {
-		return parse(script, "", null);
+		return parse(script, new Environment());
 	}
 
-	public static ITestSuite parse(File script, PluginManager pluginManager) throws Throwable {
-		return parse(script, "", pluginManager);
-	}
-
-	public static ITestSuite parse(File script, String libDir, PluginManager pluginManager) throws Throwable {
+	public static ITestSuite parse(File script, Environment environment) throws Throwable {
 
 		ImportCustomizer customizer = new ImportCustomizer();
 		customizer.addStaticImport("com.askimed.nf.test.lang.TestSuiteBuilder", "nextflow_pipeline");
@@ -91,15 +88,15 @@ public class TestSuiteBuilder {
 		customizer.addStaticStars("com.askimed.nf.test.lang.extensions.GlobalMethods");
 
 		ClassLoader classLoader = TestSuiteBuilder.class.getClassLoader();
-		if (pluginManager != null) {
-			for (String staticImport : pluginManager.getStaticImports()) {
+		if (environment.getPluginManager() != null) {
+			for (String staticImport : environment.getPluginManager().getStaticImports()) {
 				customizer.addStaticStars(staticImport);
 			}
-			classLoader = pluginManager.getClassLoader();
+			classLoader = environment.getPluginManager().getClassLoader();
 		}
 
 		CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
-		String classpath = script.getAbsoluteFile().getParentFile().getAbsolutePath() + "/lib:" + libDir;
+		String classpath = script.getAbsoluteFile().getParentFile().getAbsolutePath() + "/lib:" + environment.getLibDir();
 		compilerConfiguration.setClasspath(classpath);
 
 		compilerConfiguration.addCompilationCustomizers(customizer);

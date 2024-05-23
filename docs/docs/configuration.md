@@ -14,8 +14,9 @@ The `nf-test.config` file is a configuration file used to customize settings and
 | `withTrace`  | Enable or disable tracing options during testing. Disable tracing if your containers don't include the `procps` tool.                                              | `true`                    |
 | `autoSort`   | Enable or disable sorted channels by default when running tests.                                                                                                   | `true`                    |
 | `options`    | Custom Nextflow command-line options to be applied when running tests. For example `"-dump-channels -stub-run"`                                                    |                           |
-| `requires`   | Can be used to specify the minimum required version of nf-test. Requires nf-test > 0.9.0                                                                           |                           |
-
+| `ignore`     | List of filenames or patterns that should be ignored when building the dependency graph. For example: `ignore 'folder/**/*.nf', 'modules/module.nf'`               | ``                        |
+| `triggers`   | List of filenames or patterns that should be trigger a full test run. For example: `triggers 'nextflow.config', 'test-data/**/*'`                                  | ``                        |
+| `requires`   | Can be used to specify the minimum required version of nf-test. Requires nf-test > 0.9.0                                                                           | ``                        |
 
 Here's an example of what an `nf-test.config` file could look like:
 

@@ -2,23 +2,23 @@ package com.askimed.nf.test.commands;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.function.Consumer;
 
+import com.askimed.nf.test.core.*;
+import com.askimed.nf.test.core.reports.CsvReportWriter;
+import com.askimed.nf.test.lang.dependencies.Coverage;
+import com.askimed.nf.test.lang.dependencies.DependencyExporter;
+import com.askimed.nf.test.lang.dependencies.DependencyResolver;
+import com.askimed.nf.test.util.AnsiText;
+import com.askimed.nf.test.util.GitCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.askimed.nf.test.App;
 import com.askimed.nf.test.config.Config;
-import com.askimed.nf.test.core.AnsiTestExecutionListener;
-import com.askimed.nf.test.core.GroupTestExecutionListener;
-import com.askimed.nf.test.core.TagQuery;
-import com.askimed.nf.test.core.TestExecutionEngine;
 import com.askimed.nf.test.core.reports.TapTestReportWriter;
 import com.askimed.nf.test.core.reports.XmlReportWriter;
 import com.askimed.nf.test.lang.TestSuiteBuilder;
@@ -34,7 +34,9 @@ import picocli.CommandLine.Parameters;
 @Command(name = "test")
 public class RunTestsCommand extends AbstractCommand {
 
-	@Parameters(description = "test files")
+	private static final String SHARD_STRATEGY_ROUND_ROBIN = "round-robin";
+
+	@Parameters(description = "test dependencies")
 	private List<File> testPaths = new ArrayList<File>();
 
 	@Option(names = {
@@ -58,16 +60,56 @@ public class RunTestsCommand extends AbstractCommand {
 	private String tap = null;
 
 	@Option(names = {
-			"--junitxml" }, description = "Write test results in Junit Xml Format", required = false, showDefaultValue = Visibility.ALWAYS)
+			"--junitxml" }, description = "Write test results in Junit Xml format", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String junitXml = null;
+
+	@Option(names = {
+			"--csv" }, description = "Write test results in csv format", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String csv = null;
 
 	@Option(names = { "--update-snapshot",
 			"--updateSnapshot" }, description = "Use this flag to re-record every snapshot that fails during this test run.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean updateSnapshot = false;
 
+	@Option(names = { "--ci" }, description = "Activates CI mode. Instead of automatically storing a new snapshot as per usual, it will now fail the test.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean ciMode = false;
+
+	@Option(names = { "--related-tests", "--relatedTests"}, description = "Finds and executes all related tests for the provided .nf or nf.test files.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean findRelatedTests = false;
+
+	@Option(names = { "--follow-dependencies", "--followDependencies"}, description = "Follows all dependencies when related-tests is set.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean followDependencies = false;
+
+	@Option(names = { "--only-changed", "--onlyChanged"}, description = "Runs tests only for those files which are modified in the current git repository", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean onlyChanged = false;
+
+	@Option(names = { "--changed-since", "--changedSince"}, description = "Runs tests related to the changes since the provided branch or commit hash", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String changedSince = null;
+
+	@Option(names = { "--changed-until", "--changdUntil"}, description = "Runs tests related to the changes until the provided branch or commit hash", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String changedUntil = null;
+
+	@Option(names = { "--coverage"}, description = "Print simple coverage calculation.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean coverage = false;
+
+	@Option(names = { "--dry-run", "--dryRun" }, description = "Execute most of test discovery but stop before running any of the testcases.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private boolean dryRun = false;
+
+	@Option(names = {
+			"--graph" }, description = "Export dependency graph as dot file", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String graph = null;
+
 	@Option(names = { "--clean-snapshot", "--cleanSnapshot", "--wipe-snapshot",
 			"--wipeSnapshot" }, description = "Removes all obsolete snapshots.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean cleanSnapshot = false;
+
+	@Option(names = {
+			"--shard" }, description = "Split into arbitrary chunks. Format: i/n. Example: 2/5 executes the second chunk of five.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String shard = null;
+
+	@Option(names = {
+			"--shard-strategy" }, description = "Strategy to build shards. Values: round-robin or none.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String shardStrategy = SHARD_STRATEGY_ROUND_ROBIN;
 
 	@Option(names = {
 			"--lib" }, description = "Library extension path", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -92,6 +134,7 @@ public class RunTestsCommand extends AbstractCommand {
 	public Integer execute() throws Exception {
 
 		List<File> scripts = new ArrayList<File>();
+		Config config = null;
 		PluginManager manager = new PluginManager(false);
 
 		try {
@@ -103,7 +146,7 @@ public class RunTestsCommand extends AbstractCommand {
 				File configFile = new File(configFilename);
 				if (configFile.exists()) {
 					log.info("Load config from file {}...", configFile.getAbsolutePath());
-					Config config = Config.parse(configFile);
+					config = Config.parse(configFile);
 					defaultConfigFile = config.getConfigFile();
 					defaultWithTrace = config.isWithTrace();
 					if (!libDir.isEmpty()) {
@@ -112,10 +155,9 @@ public class RunTestsCommand extends AbstractCommand {
 					libDir += config.getLibDir();
 					manager = config.getPluginManager();
 
-					if (testPaths.size() == 0) {
+					if (testPaths.isEmpty()) {
 						File folder = new File(config.getTestsDir());
 						testPaths.add(folder);
-						System.out.println("Found " + testPaths.size() + " files in test directory.");
 					}
 
 					TestSuiteBuilder.setConfig(config);
@@ -125,8 +167,6 @@ public class RunTestsCommand extends AbstractCommand {
 					System.out.println(AnsiColors.yellow("Warning: This pipeline has no nf-test config file."));
 					log.warn("No nf-test config file found.");
 				}
-
-				scripts = pathsToScripts(testPaths);
 
 			} catch (Exception e) {
 
@@ -139,7 +179,75 @@ public class RunTestsCommand extends AbstractCommand {
 
 			}
 
-			if (scripts.size() == 0) {
+			if ((onlyChanged || findRelatedTests || changedSince != null) && config == null) {
+				System.out.println(AnsiColors.red("To find related tests a nf-test config file has to be present."));
+				return 2;
+			}
+
+			List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
+			File baseDir = new File(new File("").getAbsolutePath());
+			DependencyResolver resolver = new DependencyResolver(baseDir);
+			resolver.setFollowingDependencies(followDependencies);
+
+			if (onlyChanged || changedSince != null) {
+
+				GitCommand git = new GitCommand();
+				List<File> changedFiles = null;
+
+				if (onlyChanged) {
+					changedFiles = git.findChanges(baseDir);
+				}else if(changedSince != null && changedUntil == null) {
+					changedFiles = git.findChangesSince(baseDir, changedSince);
+				} else if(changedSince != null && changedUntil != null) {
+						changedFiles = git.findChangesBetween(baseDir, changedSince, changedUntil);
+				}
+
+				if (changedFiles.isEmpty()) {
+					System.out.println(AnsiColors.green("Nothing to do."));
+					return 0;
+				} else {
+					System.out.println("Detected " + changedFiles.size() + " changed files");
+					AnsiText.printBulletList(changedFiles);
+				}
+
+				testPaths = changedFiles;
+				findRelatedTests = true;
+			}
+
+			if (findRelatedTests) {
+
+				resolver.buildGraph(config.getIgnore(), config.getTriggers());
+				scripts = resolver.findRelatedTestsByFiles(testPaths);
+				System.out.println("Found " + scripts.size() + " related test(s)");
+				if (scripts.isEmpty()) {
+					System.out.println(AnsiColors.green("Nothing to do."));
+					return 0;
+				}
+
+				AnsiText.printBulletList(scripts);
+
+				if (coverage) {
+					new Coverage(resolver).getByFiles(testPaths).print();
+				}
+
+			} else {
+				if (config != null) {
+					resolver.buildGraph(config.getIgnore(), config.getTriggers());
+				} else {
+					resolver.buildGraph();
+				}
+				scripts = resolver.findTestsByFiles(testPaths);
+				if (coverage) {
+					new Coverage(resolver).getAll().print();
+				}
+			}
+
+			if (graph != null) {
+				DependencyExporter.generateDotFile(resolver, graph);
+			}
+
+
+			if (scripts.isEmpty()) {
 				System.out.println(AnsiColors
 						.red("Error: No tests or test directories containing scripts that end with *.test provided."));
 				log.error("No tests ot directories found containing test files.");
@@ -150,30 +258,35 @@ public class RunTestsCommand extends AbstractCommand {
 
 			loadPlugins(manager, plugins);
 
-			GroupTestExecutionListener listener = new GroupTestExecutionListener();
-			listener.addListener(new AnsiTestExecutionListener());
-			if (tap != null) {
-				listener.addListener(new TapTestReportWriter(tap));
-			}
-
-			if (junitXml != null) {
-				listener.addListener(new XmlReportWriter(junitXml));
-			}
+			GroupTestExecutionListener listener = setupExecutionListeners();
 
 			NextflowCommand.setVerbose(verbose);
-			
-			TagQuery tagQuery = new TagQuery(tags);
+
+			Environment environment = new Environment();
+			environment.setLibDir(libDir);
+			environment.setPluginManager(manager);
+
+			TestSuiteResolver testSuiteResolver = new TestSuiteResolver(environment);
+			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, new TagQuery(tags));
+
+			testSuits.sort(TestSuiteSorter.getDefault());
+			if (shard != null) {
+				if (shardStrategy.equalsIgnoreCase(SHARD_STRATEGY_ROUND_ROBIN)){
+					testSuits = TestSuiteSharder.shardWithRoundRobin(testSuits, shard);
+				} else {
+					testSuits = TestSuiteSharder.shard(testSuits, shard);
+				}
+			}
 
 			TestExecutionEngine engine = new TestExecutionEngine();
 			engine.setListener(listener);
-			engine.setScripts(scripts);
-			engine.setTagQuery(tagQuery);
+			engine.setTestSuites(testSuits);
 			engine.setDebug(debug);
 			engine.setUpdateSnapshot(updateSnapshot);
 			engine.setCleanSnapshot(cleanSnapshot);
-			engine.setLibDir(libDir);
-			engine.setPluginManager(manager);
+			engine.setCIMode(ciMode);
 			engine.addProfile(profile);
+			engine.setDryRun(dryRun);
 			if (withoutTrace) {
 				engine.setWithTrace(false);
 			} else {
@@ -181,6 +294,11 @@ public class RunTestsCommand extends AbstractCommand {
 			}
 
 			engine.setConfigFile(defaultConfigFile);
+
+			if (dryRun) {
+				System.out.println(AnsiColors.yellow("Dry run mode activated: tests are not executed, just listed."));
+			}
+
 			return engine.execute();
 
 		} catch (Throwable e) {
@@ -196,6 +314,23 @@ public class RunTestsCommand extends AbstractCommand {
 
 		}
 
+	}
+
+	private GroupTestExecutionListener setupExecutionListeners() throws IOException {
+		GroupTestExecutionListener listener = new GroupTestExecutionListener();
+		listener.addListener(new AnsiTestExecutionListener());
+		if (tap != null) {
+			listener.addListener(new TapTestReportWriter(tap));
+		}
+
+		if (junitXml != null) {
+			listener.addListener(new XmlReportWriter(junitXml));
+		}
+
+		if (csv != null) {
+			listener.addListener(new CsvReportWriter(csv));
+		}
+		return listener;
 	}
 
 	private void loadPlugins(PluginManager manager, String plugins) throws IOException {
