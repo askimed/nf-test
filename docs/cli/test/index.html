@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.22">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.24">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.732c4fb1.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6543a935.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
@@ -240,6 +240,23 @@
         </a>
       </li>
     
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tutorials/" class="md-tabs__link">
+        
+  
+    
+  
+  Tutorials
+
+      </a>
+    </li>
   
 
       
@@ -978,6 +995,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#-dry-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      --dry-run
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#-verbose" class="md-nav__link">
     <span class="md-ellipsis">
       --verbose
@@ -1005,6 +1031,30 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#-debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      --debug
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Reports
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Output Reports">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#-tap-filename" class="md-nav__link">
     <span class="md-ellipsis">
       --tap &lt;filename&gt;
@@ -1023,9 +1073,120 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#-debug" class="md-nav__link">
+  <a href="#-csv-filename" class="md-nav__link">
     <span class="md-ellipsis">
-      --debug
+      --csv &lt;filename&gt;
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      --ci
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimizing-test-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optimizing Test Execution
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optimizing Test Execution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-related-tests-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      --related-tests &lt;files&gt;
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-follow-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      --follow-dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-only-changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      --only-changed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-changed-since-commit_hashbranch_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      --changed-since &lt;commit_hash|branch_name&gt;
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-changed-until-commit_hashbranch_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      --changed-until &lt;commit_hash|branch_name&gt;
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-graph-filename" class="md-nav__link">
+    <span class="md-ellipsis">
+      --graph &lt;filename&gt;
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sharding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sharding
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sharding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-shard-shard" class="md-nav__link">
+    <span class="md-ellipsis">
+      --shard &lt;shard&gt;
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-shard-strategy-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      --shard-strategy &lt;strategy&gt;
     </span>
   </a>
   
@@ -1253,6 +1414,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../tutorials/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../resources/" class="md-nav__link">
         
   
@@ -1311,18 +1492,55 @@
 <h3 id="optional-arguments">Optional Arguments</h3>
 <h4 id="-profile-nextflow_profile"><code>--profile &lt;NEXTFLOW_PROFILE&gt;</code></h4>
 <p>To run your test using a specific Nextflow profile, you can use the <code>--profile</code> argument. <a href="/docs/docs/configuration#managing-profiles">Learn more</a>.</p>
+<h4 id="-dry-run"><code>--dry-run</code></h4>
+<p>This flag allows users to simulate the execution of tests.</p>
 <h4 id="-verbose"><code>--verbose</code></h4>
 <p>Prints out the Nextflow output during test runs.</p>
 <h4 id="-without-trace"><code>--without-trace</code></h4>
 <p>The Linux tool <code>procps</code> is required to run Nextflow tracing. In case your container does not support this tool, you can also run nf-test without tracing. Please note that the <code>workflow.trace</code> are not available when running it with this flag.</p>
 <h4 id="-tag-tag"><code>--tag &lt;tag&gt;</code></h4>
 <p>Execute only tests with the provided tag. Multiple tags can be used and have to be separated by commas (e.g. <code>tag1,tag2</code>).</p>
+<h4 id="-debug"><code>--debug</code></h4>
+<p>The debug parameter prints out debugging messages and all available output channels which can be accessed in the <code>then</code> clause.</p>
+<h3 id="output-reports">Output Reports</h3>
 <h4 id="-tap-filename"><code>--tap &lt;filename&gt;</code></h4>
 <p>Writes test results in <a href="https://testanything.org">TAP format</a> to file.</p>
 <h4 id="-junitxml-filename"><code>--junitxml &lt;filename&gt;</code></h4>
 <p>Writes test results in <a href="https://junit.org/">JUnit XML format</a> to file, which conforms to <a href="https://github.com/junit-team/junit5/blob/242f3b3ef84cfd96c9de26992588812a68cdef8b/platform-tests/src/test/resources/jenkins-junit.xsd">the standard schema</a>.</p>
-<h4 id="-debug"><code>--debug</code></h4>
-<p>The debug parameter prints out debugging messages and all available output channels which can be accessed in the <code>then</code> clause.</p>
+<h4 id="-csv-filename"><code>--csv &lt;filename&gt;</code></h4>
+<p>Writes test results in csv file.</p>
+<h4 id="-ci"><code>--ci</code></h4>
+<p>By default,nf-test automatically stores a new snapshot. When CI mode is activated, nf-test will fail the test instead of storing the snapshot automatically.</p>
+<h3 id="optimizing-test-execution">Optimizing Test Execution</h3>
+<h4 id="-related-tests-files"><code>--related-tests &lt;files&gt;</code></h4>
+<p>Finds and executes all related tests for the provided .nf or nf.test files. Multiple files can be provided space separated.</p>
+<h4 id="-follow-dependencies"><code>--follow-dependencies</code></h4>
+<p>When this flag is set, nf-test will traverse all dependencies when the related-tests flag is set.
+This option is particularly useful when you need to ensure that
+all dependent tests are executed, bypassing the firewall calculation process.</p>
+<h4 id="-only-changed"><code>--only-changed</code></h4>
+<p>When enabled, this parameter instructs nf-test to execute tests only for files that have been modified within the
+current git working tree.</p>
+<h4 id="-changed-since-commit_hashbranch_name"><code>--changed-since &lt;commit_hash|branch_name&gt;</code></h4>
+<p>This parameter triggers the execution of tests related to changes made since the specifie commit.
+e.g. <code>--changed-since HEAD^</code> for all changes between the HEAD and HEAD - 1.</p>
+<h4 id="-changed-until-commit_hashbranch_name"><code>--changed-until &lt;commit_hash|branch_name&gt;</code></h4>
+<p>This parameter initiates the execution of tests related to changes made until the specified commit hash.</p>
+<h4 id="-graph-filename"><code>--graph &lt;filename&gt;</code></h4>
+<p>Enables the export of the dependency graph as a dot file.
+The dot file format is commonly used for representing graphs in graphviz and other related software.</p>
+<h3 id="sharding">Sharding</h3>
+<p>This parameter allows users to divide the execution workload into manageable chunks, which can be useful for
+parallel or distributed processing.</p>
+<h4 id="-shard-shard"><code>--shard &lt;shard&gt;</code></h4>
+<p>Splits the execution into arbitrary chunks defined by the format <code>i/n</code>, where <code>i</code> denotes the index of the current
+chunk and <code>n</code> represents the total number of chunks. For instance, <code>2/5</code> executes the second chunk out of five.</p>
+<h4 id="-shard-strategy-strategy"><code>--shard-strategy &lt;strategy&gt;</code></h4>
+<p>Description: Specifies the strategy used to build shards when the <code>--shard</code> parameter is utilized.
+Accepted values are <code>round-robin</code> or <code>none.</code>. This parameter determines the method employed to distribute workload
+chunks among available resources. With the round-robin strategy, shards are distributed evenly among resources in
+a cyclic manner. The none strategy implies that shards won't be distributed automatically, and it's up to the
+user to manage the assignment of shards. Default value is <code>round-robin</code>.</p>
 <h2 id="examples">Examples</h2>
 <ul>
 <li>Run all test scripts that can be found in the <code>testDir</code> defined in the <code>nf-test.config</code> file in the current working directory:</li>
@@ -1345,6 +1563,28 @@ nf-test test tests/modules tests/modules/bwa_index.nf.test
 <li>Run all tests and write results to <code>report.tap</code>:</li>
 </ul>
 <div class="highlight"><pre><span></span><code>nf-test test --tap report.tap
+</code></pre></div>
+<ul>
+<li>Run all tests (and possible integration tests) for module <code>modules/module_a.nf</code> and <code>modules/module_b.nf</code>;</li>
+</ul>
+<div class="highlight"><pre><span></span><code>nf-test test --related-tests modules/module_a.nf modules/module_b.nf
+</code></pre></div>
+<ul>
+<li>If your project is a Git directory and you have modified files, you can run tests only for these changed files by
+using the following command:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>nf-test test --only-changed
+</code></pre></div>
+<ul>
+<li>If you want to test all changes made between the current state of the repository and the last commit,
+you can use the following command:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>nf-test test --changed-since HEAD^
+</code></pre></div>
+<ul>
+<li>Run only the second of four shards:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>nf-test test --shard 2/4 
 </code></pre></div>
 
 
@@ -1441,7 +1681,7 @@ nf-test test tests/modules tests/modules/bwa_index.nf.test
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.5cfa9459.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.081f42fc.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       
