@@ -243,7 +243,6 @@ public class DependencyResolver {
 
 
     public PathMatcher pathMatcher(String pattern) {
-        System.out.println(pattern);
         return FileSystems.getDefault().getPathMatcher(pattern);
     }
 
