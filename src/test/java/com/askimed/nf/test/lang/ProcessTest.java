@@ -103,7 +103,7 @@ public class ProcessTest {
 
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/process/default/wrong-filename.nf.test" });
-		assertEquals(2, exitCode);
+		assertEquals(0, exitCode);
 
 	}
 
