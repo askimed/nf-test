@@ -13,6 +13,7 @@ import com.askimed.nf.test.core.reports.CsvReportWriter;
 import com.askimed.nf.test.lang.dependencies.Coverage;
 import com.askimed.nf.test.lang.dependencies.DependencyExporter;
 import com.askimed.nf.test.lang.dependencies.DependencyResolver;
+import com.askimed.nf.test.lang.dependencies.IMetaFile;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.GitCommand;
 import org.slf4j.Logger;
@@ -79,6 +80,9 @@ public class RunTestsCommand extends AbstractCommand {
 
 	@Option(names = { "--follow-dependencies", "--followDependencies"}, description = "Follows all dependencies when related-tests is set.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean followDependencies = false;
+
+	@Option(names = { "--filter" }, description =  "Filter test cases by specified types (e.g., module, pipeline, workflow or function). Multiple types can be separated by commas.", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String dependencies = "all";
 
 	@Option(names = { "--only-changed", "--onlyChanged"}, description = "Runs tests only for those files which are modified in the current git repository", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean onlyChanged = false;
@@ -188,6 +192,7 @@ public class RunTestsCommand extends AbstractCommand {
 			File baseDir = new File(new File("").getAbsolutePath());
 			DependencyResolver resolver = new DependencyResolver(baseDir);
 			resolver.setFollowingDependencies(followDependencies);
+			resolver.setTargets(IMetaFile.TargetType.parse(dependencies));
 
 			if (onlyChanged || changedSince != null) {
 

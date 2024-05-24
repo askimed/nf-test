@@ -9,8 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -81,6 +80,82 @@ class DependencyResolverTest {
         Coverage coverage = new Coverage(resolver);
         assertEquals(17, coverage.getAll().getCoveredItems());
         assertEquals(17, coverage.getAll().getItems().size());
+    }
+
+    @Test
+    void findRelatedTestAndFilterDependencies() throws Exception {
+
+        File root = getFetchNgs();
+
+        DependencyResolver resolver = new DependencyResolver(root);
+        resolver.setFollowingDependencies(false);
+
+        resolver.buildGraph();
+        assertEquals(10, resolver.findRelatedTestsByFiles(
+                new File(root, "modules/local/sra_to_samplesheet/main.nf")
+        ).size());
+
+        resolver = new DependencyResolver(root);
+        Set<IMetaFile.TargetType> targets = new HashSet<IMetaFile.TargetType>();
+        targets.add(IMetaFile.TargetType.PROCESS);
+        resolver.setTargets(targets);
+
+        resolver.buildGraph();
+        assertEquals(1, resolver.findRelatedTestsByFiles(
+                new File(root, "modules/local/sra_to_samplesheet/main.nf")
+        ).size());
+
+        resolver = new DependencyResolver(root);
+         targets = new HashSet<IMetaFile.TargetType>();
+        targets.add(IMetaFile.TargetType.PROCESS);
+        targets.add(IMetaFile.TargetType.WORKFLOW);
+        resolver.setTargets(targets);
+
+        resolver.buildGraph();
+        assertEquals(10, resolver.findRelatedTestsByFiles(
+                new File(root, "modules/local/sra_to_samplesheet/main.nf")
+        ).size());
+
+        resolver = new DependencyResolver(root);
+        targets = new HashSet<IMetaFile.TargetType>();
+        targets.add(IMetaFile.TargetType.WORKFLOW);
+        resolver.setTargets(targets);
+
+        resolver.buildGraph();
+        assertEquals(9, resolver.findRelatedTestsByFiles(
+                new File(root, "modules/local/sra_to_samplesheet/main.nf")
+        ).size());
+
+        resolver = new DependencyResolver(root);
+        targets = new HashSet<IMetaFile.TargetType>();
+        targets.add(IMetaFile.TargetType.PIPELINE);
+        resolver.setTargets(targets);
+        resolver.setFollowingDependencies(true);
+        resolver.buildGraph();
+        assertEquals(1, resolver.findRelatedTestsByFiles(
+                new File(root, "modules/local/sra_to_samplesheet/main.nf")
+        ).size());
+
+        resolver = new DependencyResolver(root);
+        targets = new HashSet<IMetaFile.TargetType>();
+        targets.add(IMetaFile.TargetType.PIPELINE);
+        targets.add(IMetaFile.TargetType.WORKFLOW);
+        resolver.setTargets(targets);
+        resolver.setFollowingDependencies(true);
+        resolver.buildGraph();
+        assertEquals(10, resolver.findRelatedTestsByFiles(
+                new File(root, "modules/local/sra_to_samplesheet/main.nf")
+        ).size());
+
+        resolver = new DependencyResolver(root);
+        targets = new HashSet<IMetaFile.TargetType>();
+        targets.add(IMetaFile.TargetType.WORKFLOW);
+        resolver.setTargets(targets);
+        resolver.setFollowingDependencies(true);
+        resolver.buildGraph();
+        assertEquals(9, resolver.findRelatedTestsByFiles(
+                new File(root, "modules/local/sra_to_samplesheet/main.nf")
+        ).size());
     }
 
     @Test

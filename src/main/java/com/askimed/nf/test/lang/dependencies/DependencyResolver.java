@@ -20,6 +20,8 @@ public class DependencyResolver {
 
     private boolean followingDependencies = false;
 
+    private Set<IMetaFile.TargetType> targets = new HashSet<IMetaFile.TargetType>();
+
     private static Logger log = LoggerFactory.getLogger(DependencyResolver.class);
 
     public DependencyResolver(File baseDir) {
@@ -38,11 +40,15 @@ public class DependencyResolver {
         this.followingDependencies = followingDependencies;
     }
 
+    public void setTargets(Set<IMetaFile.TargetType> targets) {
+        this.targets = targets;
+    }
+
     public List<File> findAllTests() throws Exception {
 
         List<File> results = new Vector<File>();
         for (IMetaFile metaFile: graph.getFiles()) {
-            if (metaFile.getType() == IMetaFile.MetaFileType.TEST_FILE) {
+            if (metaFile.getType() == IMetaFile.MetaFileType.TEST_FILE && acceptMetaFile(metaFile)) {
                 results.add(new File(metaFile.getFilename()));
             }
         }
@@ -61,7 +67,7 @@ public class DependencyResolver {
 
         List<File> results = new Vector<File>();
         for (IMetaFile metaFile: graph.getFiles()) {
-            if (metaFile.getType() == IMetaFile.MetaFileType.TEST_FILE) {
+            if (metaFile.getType() == IMetaFile.MetaFileType.TEST_FILE && acceptMetaFile(metaFile)) {
                 File file = new File(metaFile.getFilename());
                 TestFilePattern matchedPattern = matches(file.toPath(), patterns);
                 if (matchedPattern != null) {
@@ -102,7 +108,7 @@ public class DependencyResolver {
 
         long time0 = System.currentTimeMillis();
         for (File file: files) {
-            results.addAll(findRelatedTestsByFile(file.getAbsoluteFile(), followingDependencies));
+            results.addAll(findRelatedTestsByFile(file.getAbsoluteFile()));
         }
         long time1 = System.currentTimeMillis();
         log.info("Found {} tests for file {} in {} sec", results.size(), files, (time1 - time0) / 1000.0);
@@ -110,7 +116,7 @@ public class DependencyResolver {
         return new Vector<File>(results);
     }
 
-    private Set<File> findRelatedTestsByFile(File file, boolean followingDependencies) throws Exception {
+    private Set<File> findRelatedTestsByFile(File file) throws Exception {
 
         Set<File> results = new HashSet<File>();
 
@@ -123,7 +129,9 @@ public class DependencyResolver {
 
         // the file is a test file
         if (metaFile.getType() == IMetaFile.MetaFileType.TEST_FILE){
-            results.add(new File(metaFile.getFilename()));
+            if (acceptMetaFile(metaFile)) {
+                results.add(new File(metaFile.getFilename()));
+            }
             return results;
         }
 
@@ -134,21 +142,24 @@ public class DependencyResolver {
 
             if (dependency.getType() == IMetaFile.MetaFileType.TEST_FILE) {
                 // is a test file --> return
-                results.add(dependencyFile);
+                if (acceptMetaFile(dependency)) {
+                    results.add(dependencyFile);
+                }
             } else {
                 // if a source file
                 DependencyGraph.Node node = graph.getNode(dependency.getFilename());
-                //TODO: add && !followingDependencies
                 if (node.hasDependencyOfType(IMetaFile.MetaFileType.TEST_FILE) && !followingDependencies) {
                     //has a test --> add all test and then stop
                     for (DependencyGraph.Node dependencyOfDependency: node.getDependencies()) {
                         if (dependencyOfDependency.getMetaFile().getType() == IMetaFile.MetaFileType.TEST_FILE) {
-                            results.add(new File(dependencyOfDependency.getFilename()));
+                            if (acceptMetaFile(dependencyOfDependency.getMetaFile())) {
+                                results.add(new File(dependencyOfDependency.getFilename()));
+                            }
                         }
                     }
                 } else {
                      //has no tests --> find related tests in a recursive way
-                    results.addAll(findRelatedTestsByFile(dependencyFile, followingDependencies));
+                    results.addAll(findRelatedTestsByFile(dependencyFile));
                 }
             }
         }
@@ -266,5 +277,11 @@ public class DependencyResolver {
         return false;
     }
 
+    public boolean acceptMetaFile(IMetaFile file) {
+        if (targets == null || targets.isEmpty()) {
+            return true;
+        }
+        return targets.contains(file.getTarget());
+    }
 
 }

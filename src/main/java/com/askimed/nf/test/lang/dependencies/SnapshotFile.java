@@ -45,4 +45,9 @@ public class SnapshotFile implements  IMetaFile {
         return dependencies;
     }
 
+    @Override
+    public TargetType getTarget() {
+        return TargetType.UNDEFINED;
+    }
+
 }
