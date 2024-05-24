@@ -249,9 +249,9 @@ public class RunTestsCommand extends AbstractCommand {
 
 			if (scripts.isEmpty()) {
 				System.out.println(AnsiColors
-						.red("Error: No tests or test directories containing scripts that end with *.test provided."));
-				log.error("No tests ot directories found containing test files.");
-				return 2;
+						.yellow("No tests to execute."));
+				log.warn("No tests or directories found containing test files. Or all testcases were filtered.");
+				return 0;
 			} else {
 				log.info("Detected {} test files.", scripts.size());
 			}
