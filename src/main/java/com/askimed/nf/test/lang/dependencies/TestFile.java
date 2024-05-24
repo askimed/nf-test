@@ -1,13 +1,16 @@
 package com.askimed.nf.test.lang.dependencies;
 
 import com.askimed.nf.test.util.FileUtil;
+import org.apache.tools.ant.taskdefs.Tar;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +22,8 @@ public class TestFile implements  IMetaFile {
 
     private Set<String> dependencies = new HashSet<String>();
 
+    private TargetType target = TargetType.UNDEFINED;
+
     public TestFile(File baseDir, File file) {
         this.baseDir = baseDir;
         this.file = file;
@@ -26,6 +31,45 @@ public class TestFile implements  IMetaFile {
 
     public void parseDependencies() throws IOException {
         String script = FileUtil.readFileAsString(file);
+        target = parseType(script);
+        parseDependencies(script);
+    }
+
+    private TargetType parseType(String script) {
+
+        TargetType type = parseType(script, "nextflow_pipeline", TargetType.PIPELINE);
+        if (type != TargetType.UNDEFINED) {
+            return type;
+        }
+        type = parseType(script, "nextflow_process", TargetType.PROCESS);
+        if (type != TargetType.UNDEFINED) {
+            return type;
+        }
+        type = parseType(script, "nextflow_workflow", TargetType.WORKFLOW);
+        if (type != TargetType.UNDEFINED) {
+            return type;
+        }
+        type = parseType(script, "nextflow_function", TargetType.FUNCTION);
+        return type;
+
+    }
+
+    private TargetType parseType(String script, String type, TargetType targetType) {
+
+        String patternType = "(?i)^\\s*" + type + "\\s*(.+)(\\s*\\{|\\{)";
+
+        Pattern r = Pattern.compile(patternType, Pattern.MULTILINE);
+
+        Matcher m = r.matcher(script);
+        if (m.find()) {
+            return targetType;
+        } else {
+            return TargetType.UNDEFINED;
+        }
+    }
+
+    private void parseDependencies(String script) throws IOException {
+
         String regex = "(?i)script\\s+\"(.+)\"";
 
         Pattern pattern = Pattern.compile(regex);
@@ -73,4 +117,8 @@ public class TestFile implements  IMetaFile {
         return dependencies;
     }
 
+    @Override
+    public TargetType getTarget() {
+        return target;
+    }
 }

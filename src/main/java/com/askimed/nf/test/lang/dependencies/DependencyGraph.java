@@ -57,7 +57,6 @@ public class DependencyGraph {
     public void connectDependencies(){
             for (Node node: nodes.values()) {
                 for (String dependency: node.getMetaFile().getDependencies()) {
-                    //addDependency(dependency, node.getFilename());
                     addDependency(dependency, node.getFilename());
                 }
             }

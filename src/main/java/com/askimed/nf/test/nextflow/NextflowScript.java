@@ -163,6 +163,11 @@ public class NextflowScript implements IMetaFile {
 
 	}
 
+	@Override
+	public TargetType getTarget() {
+		return TargetType.UNDEFINED;
+	}
+
 	protected static Path resolve(File file, String dependency) {
 		if (dependency.startsWith("./") || dependency.startsWith("../")) {
 			return Paths.get(file.getParentFile().getAbsolutePath()).resolve(dependency);
