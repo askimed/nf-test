@@ -12,3 +12,4 @@ test_mock.nf
 site
 /tests
 /.nf-test.log
+/temp

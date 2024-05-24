@@ -48,7 +48,7 @@ jobs:
           sudo mv nf-test /usr/local/bin/
 
       - name: Run Tests
-        run: nf-test test
+        run: nf-test test --ci
 ```
 
 ### Explanation:
@@ -57,7 +57,7 @@ jobs:
 2. **Set up JDK 11**: Uses the `actions/setup-java@v2` action to set up Java Development Kit version 11.
 3. **Setup Nextflow**: Uses the `nf-core/setup-nextflow@v1` action to install the latest-edge version of Nextflow.
 4. **Install nf-test**: Downloads and installs nf-test.
-5. **Run Tests**: Runs nf-test without sharding.
+5. **Run Tests**: Runs nf-test with the `--ci` flag. This activates the CI mode. Instead of automatically storing a new snapshot as per usual, it will now fail the test if no reference snapshot is available. This enables tests to fail when a snapshot file was forgotten to be committed.
 
 ## Step 2: Extending to Use Sharding
 
@@ -95,7 +95,7 @@ jobs:
           sudo mv nf-test /usr/local/bin/
 
       - name: Run Tests (Shard ${{ matrix.shard }}/${{ strategy.job-total }})
-        run: nf-test test --shard ${{ matrix.shard }}/${{ strategy.job-total }}
+        run: nf-test test --ci --shard ${{ matrix.shard }}/${{ strategy.job-total }}
 ```
 
 ### Explanation of Sharding:
@@ -141,7 +141,7 @@ jobs:
           sudo mv nf-test /usr/local/bin/
 
       - name: Run Tests (Shard ${{ matrix.shard }}/${{ strategy.job-total }})
-        run: nf-test test --shard ${{ matrix.shard }}/${{ strategy.job-total }} --changed-since HEAD^
+        run: nf-test test --ci --shard ${{ matrix.shard }}/${{ strategy.job-total }} --changed-since HEAD^
 ```
 
 ### Explanation of Changes:
@@ -171,6 +171,16 @@ config {
     - `'test-data/**/*'`: Changes to any files within the `test-data` directory will trigger a full test run.
 
 This configuration ensures that critical changes always result in a comprehensive validation of the pipeline, providing additional confidence in your CI process.
+
+## Step 5: Additional useful Options
+
+The `--filter` flag allows you to selectively run test cases based on their specified types. For example, you can filter tests by module, pipeline, workflow, or function. This is particularly useful when you have a large suite of tests and need to focus on specific areas of functionality. By separating multiple types with commas, you can run a customized subset of tests that match the exact criteria you're interested in, thereby saving time and resources.
+
+The `--related-tests` flag enables you to identify and execute all tests related to the provided `.nf` or `nf.test` files. This is ideal for scenarios where you have made changes to specific files and want to ensure that only the relevant tests are run. You can provide multiple files by separating them with spaces, which makes it easy to manage and test multiple changes at once, ensuring thorough validation of your updates.
+
+When the `--follow-dependencies` flag is set, the nf-test tool will automatically traverse and execute all tests for dependencies related to the files specified with the `--related-tests` flag. This ensures that any interdependent components are also tested, providing comprehensive coverage. This option is particularly useful for complex projects with multiple dependencies, as it bypasses the firewall calculation process and guarantees that all necessary tests are executed.
+
+The `--changed-until` flag allows you to run tests based on changes made up until a specified commit hash or branch name. By default, this parameter uses `HEAD`, but you can specify any commit or branch to target the changes made up to that point. This is particularly useful for validating changes over a specific range of commits, ensuring that all modifications within that period are tested comprehensively.
 
 ## Summary
 
