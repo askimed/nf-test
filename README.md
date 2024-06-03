@@ -64,6 +64,12 @@ Show the world your Nextflow pipeline is using nf-test:
 [![nf-test](https://img.shields.io/badge/tested_with-nf--test-337ab7.svg)](https://github.com/askimed/nf-test)
 ```
 
+## Citation
+
+If you test your pipeline with nf-test, please cite:
+
+Forer, L., & Schönherr, S. (2024). Improving the Reliability and Quality of Nextflow Pipelines with nf-test. *bioRxiv*. [https://doi.org/10.1101/2024.05.25.595877](https://doi.org/10.1101/2024.05.25.595877)
+
 ## Contact
 
 - Lukas Forer [@lukfor](https://twitter.com/lukfor)
