@@ -62,7 +62,7 @@ nav:
           - clean: docs/cli/clean.md
       - Configuration: docs/configuration.md
       - Plugins:
-          - Available Plugins: https://code.askimed.com/nf-test-plugins
+          - Available Plugins: https://plugins.nf-test.com
           - Using Plugins: docs/plugins/using-plugins.md
           - Developing Plugins: docs/plugins/developing-plugins.md
   - Tutorials: tutorials.md
