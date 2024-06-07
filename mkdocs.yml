@@ -62,9 +62,9 @@ nav:
           - clean: docs/cli/clean.md
       - Configuration: docs/configuration.md
       - Plugins:
-          - Available Plugins: https://plugins.nf-test.com
           - Using Plugins: docs/plugins/using-plugins.md
           - Developing Plugins: docs/plugins/developing-plugins.md
+  - Plugins: https://plugins.nf-test.com
   - Tutorials: tutorials.md
   - Resources: resources.md
   - About: about.md
