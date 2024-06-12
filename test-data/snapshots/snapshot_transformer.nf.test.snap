@@ -16,7 +16,7 @@
                     8,
                     9
                 ],
-                "value": "1,36",
+                "value": "1.36",
                 "files": [
                     [
                         "ID,Name,Quantity,Price",
@@ -49,6 +49,6 @@
             "nf-test": "0.9.0-rc2",
             "nextflow": "23.04.3"
         },
-        "timestamp": "2024-06-11T16:48:22.553889"
+        "timestamp": "2024-06-12T17:08:37.459381"
     }
 }

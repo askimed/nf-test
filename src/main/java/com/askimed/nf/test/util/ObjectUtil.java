@@ -2,6 +2,7 @@ package com.askimed.nf.test.util;
 
 import com.askimed.nf.test.lang.extensions.SnapshotFile;
 import com.askimed.nf.test.lang.extensions.util.PathConverter;
+import com.askimed.nf.test.lang.extensions.util.PathConverterRaw;
 import groovy.json.JsonGenerator;
 import groovy.json.JsonOutput;
 import groovy.json.JsonSlurper;
@@ -60,9 +61,9 @@ public class ObjectUtil {
     }
 
     public static JsonGenerator createJsonGeneratorRaw() {
-        return new JsonGenerator.Options().excludeFieldsByName("mapping").build();
+        return new JsonGenerator.Options().excludeFieldsByName("mapping")
+                .addConverter(new PathConverterRaw()).build();
     }
-
 
     public static Object toMap(Object object) {
         JsonGenerator jsonGenerator = createJsonGeneratorRaw();
