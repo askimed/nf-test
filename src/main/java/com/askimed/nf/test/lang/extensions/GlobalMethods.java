@@ -4,7 +4,9 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 
 import com.askimed.nf.test.util.ObjectUtil;
 import groovy.lang.Closure;
@@ -63,7 +65,7 @@ public class GlobalMethods {
 	}
 
 	public static String format(String format, Number number) {
-		DecimalFormat df = new DecimalFormat(format);
+		DecimalFormat df = new DecimalFormat(format, DecimalFormatSymbols.getInstance(Locale.US));
 		return df.format(number);
 	}
 
