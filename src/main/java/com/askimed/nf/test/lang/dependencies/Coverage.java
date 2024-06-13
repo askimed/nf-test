@@ -1,23 +1,30 @@
 package com.askimed.nf.test.lang.dependencies;
 
+import com.askimed.nf.test.commands.init.InitTemplates;
 import com.askimed.nf.test.core.TestExecutionResult;
 import com.askimed.nf.test.core.TestSuiteExecutionResult;
 import com.askimed.nf.test.core.reports.CsvReportWriter;
 import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
+import com.askimed.nf.test.util.FileUtil;
 import com.opencsv.CSVWriter;
+import groovy.lang.Writable;
+import groovy.text.SimpleTemplateEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Vector;
+import java.text.DecimalFormatSymbols;
+import java.util.*;
 
 public class Coverage {
+
+    private static final String HTML_TEMPLATE = "coverage-report.html";
 
     private int coveredItems = 0;
 
@@ -118,10 +125,7 @@ public class Coverage {
         System.out.println();
         System.out.println("Files:");
         for (Coverage.CoverageItem item : getItems()) {
-            String label = item.getFile().getAbsolutePath();
-            if (baseDir != null) {
-                label = Paths.get(baseDir.getAbsolutePath()).relativize(item.getFile().toPath()).toString();
-            }
+            String label = getFileLabel(item.getFile());
             System.out.println("  \u2022 " + (item.isCovered() ? AnsiColors.green(label) : AnsiColors.red(label)));
         }
         System.out.println();
@@ -129,10 +133,22 @@ public class Coverage {
         System.out.println();
     }
 
+    public String getFileLabel(File file) {
+        String label = file.getAbsolutePath();
+        if (baseDir != null) {
+            label = Paths.get(baseDir.getAbsolutePath()).relativize(file.toPath()).toString();
+        }
+        return label;
+    }
+
     private void printLabel() {
         float coverage = getCoveredItems() / (float) getItems().size();
         System.out.print(getColor("COVERAGE:", coverage) + " " +  formatCoverage(coverage));
         System.out.println( " [" + getCoveredItems() + " of " + getItems().size() + " files]");
+    }
+
+    public float getCoverage() {
+        return getCoveredItems() / (float) getItems().size();
     }
 
     private String getColor(String label, float value) {
@@ -146,7 +162,7 @@ public class Coverage {
     }
 
     private String formatCoverage(float value) {
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        DecimalFormat decimalFormat = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.US));
         return decimalFormat.format(value * 100) + "%";
     }
 
@@ -177,11 +193,22 @@ public class Coverage {
 
     }
 
+    public void exportAsHtml(String filename) throws IOException, ClassNotFoundException {
+        Map<Object, Object> binding = new HashMap<Object, Object>();
+        binding.put("coverage", this);
+        URL templateUrl = Coverage.class.getResource(HTML_TEMPLATE);
+        SimpleTemplateEngine engine = new SimpleTemplateEngine();
+        Writable template = engine.createTemplate(templateUrl).make(binding);
+        FileUtil.write(new File(filename), template);
+    }
+
     public static class CoverageItem {
 
         private File file;
 
         private boolean covered = false;
+
+        //TODO: add number of tests??
 
         public CoverageItem(File file, boolean covered) {
             this.file = file;

@@ -23,6 +23,11 @@ public class CoverageCommand extends AbstractCommand {
 			"--csv" }, description = "Write coverage results in csv format", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String csv = null;
 
+	@Option(names = {
+			"--html" }, description = "Write coverage results in html format", required = false, showDefaultValue = Visibility.ALWAYS)
+	private String html = null;
+
+
 	@Option(names = { "--config",
 			"-c" }, description = "nf-test.config filename", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String configFilename = Config.FILENAME;
@@ -71,6 +76,8 @@ public class CoverageCommand extends AbstractCommand {
 			Coverage coverage = new Coverage(resolver).getAll();
 			if (csv != null) {
 				coverage.exportAsCsv(csv);
+			} else if (html != null) {
+				coverage.exportAsHtml(html);
 			} else {
 				coverage.printDetails();
 			}
