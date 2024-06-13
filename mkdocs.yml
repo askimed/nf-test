@@ -59,6 +59,7 @@ nav:
           - generate: docs/cli/generate.md
           - test: docs/cli/test.md
           - list: docs/cli/list.md
+          - coverage: docs/cli/coverage.md
           - clean: docs/cli/clean.md
       - Configuration: docs/configuration.md
       - Plugins:
