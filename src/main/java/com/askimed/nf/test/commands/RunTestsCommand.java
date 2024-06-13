@@ -188,7 +188,6 @@ public class RunTestsCommand extends AbstractCommand {
 				return 2;
 			}
 
-			List<PathMatcher> ignorePatterns = new Vector<PathMatcher>();
 			File baseDir = new File(new File("").getAbsolutePath());
 			DependencyResolver resolver = new DependencyResolver(baseDir);
 			resolver.setFollowingDependencies(followDependencies);
@@ -231,10 +230,6 @@ public class RunTestsCommand extends AbstractCommand {
 
 				AnsiText.printBulletList(scripts);
 
-				if (coverage) {
-					new Coverage(resolver).getByFiles(testPaths).print();
-				}
-
 			} else {
 				if (config != null) {
 					resolver.buildGraph(config.getIgnore(), config.getTriggers());
@@ -242,9 +237,6 @@ public class RunTestsCommand extends AbstractCommand {
 					resolver.buildGraph();
 				}
 				scripts = resolver.findTestsByFiles(testPaths);
-				if (coverage) {
-					new Coverage(resolver).getAll().print();
-				}
 			}
 
 			if (graph != null) {
@@ -304,7 +296,15 @@ public class RunTestsCommand extends AbstractCommand {
 				System.out.println(AnsiColors.yellow("Dry run mode activated: tests are not executed, just listed."));
 			}
 
-			return engine.execute();
+			int exitStatus = engine.execute();
+
+			if (coverage && findRelatedTests) {
+				new Coverage(resolver).getByFiles(testPaths).print();
+			} else if (coverage) {
+				new Coverage(resolver).getAll().print();
+			}
+
+			return exitStatus;
 
 		} catch (Throwable e) {
 
