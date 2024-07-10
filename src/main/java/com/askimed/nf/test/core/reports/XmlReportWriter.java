@@ -52,7 +52,7 @@ public class XmlReportWriter extends AbstractTestReportWriter {
 
 				for (TestExecutionResult test : testSuite.getTests()) {
 					writer.writeStartElement("testcase");
-					writer.writeAttribute("classname", testSuite.getTestSuite().getName())
+					writer.writeAttribute("classname", testSuite.getTestSuite().getName());
 					writer.writeAttribute("name", test.getTest().getName());
 					writer.writeAttribute("time", Double.toString(test.getExecutionTimeInSecs()));
 					writer.writeAttribute("status", test.getStatus().toString());
