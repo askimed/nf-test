@@ -108,14 +108,14 @@
 		<dependency>
 		    <groupId>ch.qos.logback</groupId>
 		    <artifactId>logback-classic</artifactId>
-		    <version>1.4.11</version>
+		    <version>1.5.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
 		<dependency>
 		    <groupId>ch.qos.logback</groupId>
 		    <artifactId>logback-core</artifactId>
-		    <version>1.4.11</version>
+		    <version>1.5.6</version>
 		</dependency>
 
 	</dependencies>
