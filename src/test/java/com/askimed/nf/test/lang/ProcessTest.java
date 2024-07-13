@@ -81,6 +81,15 @@ public class ProcessTest {
 	}
 
 	@Test
+	public void testNullValuesInChannels() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/channels/null-values/return_null.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+
+	@Test
 	public void testWithNoOutputs() throws Exception {
 
 		App app = new App();
