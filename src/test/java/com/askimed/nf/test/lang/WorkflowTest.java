@@ -193,4 +193,13 @@ public class WorkflowTest {
 
 	}
 
+	@Test
+	public void testWorkflowWithSymlinks() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/symlinks/workflow.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+
 }

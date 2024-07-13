@@ -1,0 +1,27 @@
+nextflow_workflow {
+
+    name "Test Workflow TEST"
+    script "./workflow.nf"
+    workflow "TEST"
+
+    test("Should run without failures") {
+
+        when {
+            workflow {
+                """
+                // define inputs of the workflow here. Example:
+                input[0] = Channel.of(
+                    file("${moduleDir}/test-file.txt")
+                )
+                """
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+}
