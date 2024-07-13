@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.askimed</groupId>
 	<artifactId>nf-test</artifactId>
-	<version>0.8.3</version>
+	<version>0.9.0-rc2</version>
 	<name>nf-test</name>
 	<description>Simple test framework for Nextflow pipelines</description>
 	<url>https://github.com/askimed/nf-test</url>
@@ -37,20 +37,20 @@
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
-			<version>3.0.19</version>
+			<version>3.0.22</version>
 			<type>pom</type>
 		</dependency>
 
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-nio</artifactId>
-			<version>3.0.19</version>
+			<version>3.0.22</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-yaml</artifactId>
-			<version>3.0.19</version>
+			<version>3.0.22</version>
 		</dependency>
 
 		<dependency>
@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
-			<version>5.5.2</version>
+			<version>5.9</version>
 		</dependency>
 
 		<dependency>
@@ -108,14 +108,14 @@
 		<dependency>
 		    <groupId>ch.qos.logback</groupId>
 		    <artifactId>logback-classic</artifactId>
-		    <version>1.4.11</version>
+		    <version>1.5.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
 		<dependency>
 		    <groupId>ch.qos.logback</groupId>
 		    <artifactId>logback-core</artifactId>
-		    <version>1.4.11</version>
+		    <version>1.5.6</version>
 		</dependency>
 
 	</dependencies>

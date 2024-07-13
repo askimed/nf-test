@@ -59,12 +59,14 @@ nav:
           - generate: docs/cli/generate.md
           - test: docs/cli/test.md
           - list: docs/cli/list.md
+          - coverage: docs/cli/coverage.md
           - clean: docs/cli/clean.md
       - Configuration: docs/configuration.md
       - Plugins:
-          - Available Plugins: https://code.askimed.com/nf-test-plugins
           - Using Plugins: docs/plugins/using-plugins.md
           - Developing Plugins: docs/plugins/developing-plugins.md
+  - Plugins: https://plugins.nf-test.com
+  - Tutorials: tutorials.md
   - Resources: resources.md
   - About: about.md
 

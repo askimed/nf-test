@@ -20,6 +20,8 @@ import groovy.json.JsonSlurper;
 
 public class SnapshotFile {
 
+	public static final String EXTENSION = ".snap";
+
 	private String filename;
 
 	private Map<String, SnapshotFileItem> snapshots = new HashMap<String, SnapshotFileItem>();
@@ -137,7 +139,7 @@ public class SnapshotFile {
 	}
 
 	protected static String createFilename(ITestSuite suite) {
-		return suite.getFilename() + ".snap";
+		return suite.getFilename() + EXTENSION;
 	}
 
 	public static JsonGenerator createJsonGenerator() {

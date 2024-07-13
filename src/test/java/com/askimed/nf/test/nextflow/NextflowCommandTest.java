@@ -1,6 +1,7 @@
 package com.askimed.nf.test.nextflow;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.List;
 
@@ -21,4 +22,8 @@ public class NextflowCommandTest {
 		assertEquals("--b", options.get(2));
 	}
 
+    @Test
+    void getVersion() {
+		assertNotEquals("unknown", NextflowCommand.getVersion());
+    }
 }

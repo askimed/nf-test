@@ -13,7 +13,7 @@ For this purpose, we integrated the following plugin system that provides (a) th
 
 ## Using Plugins
 
-Available plugins are listed [here](https://code.askimed.com/nf-test-plugins).
+Available plugins are listed [here](https://plugins.nf-test.com).
 
 A plugin can be activated via the `nf-test.config` by adding the `plugin` section and by using `load` method to specify the plugin and its version:
 

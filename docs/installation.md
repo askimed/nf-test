@@ -5,13 +5,13 @@
 nf-test has the same requirements as Nextflow and can be used on POSIX compatible systems like Linux or OS X. You can install nf-test using the following command:
 
 ```bash
-curl -fsSL https://code.askimed.com/install/nf-test | bash
+curl -fsSL https://get.nf-test.com | bash
 ```
 
 If you don't have curl installed, you could use wget:
 
 ```bash
-wget -qO- https://code.askimed.com/install/nf-test | bash
+wget -qO- https://get.nf-test.com | bash
 ```
 
 It will create the `nf-test` executable file in the current directory. Optionally, move the `nf-test` file to a directory accessible by your `$PATH` variable.
@@ -48,7 +48,7 @@ Now you are ready to write your [first testcase](docs/getting-started.md).
 If you want to install a specific version pass it to the install script as so
 
 ```sh
-curl -fsSL https://code.askimed.com/install/nf-test | bash -s 0.7.0
+curl -fsSL https://get.nf-test.com | bash -s 0.7.0
 ```
 
 ### Manual installation

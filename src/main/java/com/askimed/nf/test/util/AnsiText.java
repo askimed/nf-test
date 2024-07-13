@@ -1,5 +1,7 @@
 package com.askimed.nf.test.util;
 
+import java.util.List;
+
 public class AnsiText {
 
 	public static boolean active = true;
@@ -39,6 +41,12 @@ public class AnsiText {
 		String result = padding + string;
 		result = result.replaceAll("\n", "\n" + padding);
 		return result;
+	}
+
+	public static void printBulletList(List list) {
+		for (Object item : list) {
+			System.out.println("  \u2022 " + item);
+		}
 	}
 
 }

@@ -1,12 +1,6 @@
 package com.askimed.nf.test;
 
-import com.askimed.nf.test.commands.CleanCommand;
-import com.askimed.nf.test.commands.GenerateTestsCommand;
-import com.askimed.nf.test.commands.InitCommand;
-import com.askimed.nf.test.commands.ListTestsCommand;
-import com.askimed.nf.test.commands.RunTestsCommand;
-import com.askimed.nf.test.commands.UpdatePluginsCommand;
-import com.askimed.nf.test.commands.VersionCommand;
+import com.askimed.nf.test.commands.*;
 
 import ch.qos.logback.classic.Level;
 import picocli.CommandLine;
@@ -17,7 +11,7 @@ public class App {
 
 	public static final String NAME = "nf-test";
 
-	public static final String VERSION = "0.8.3";
+	public static final String VERSION = "0.9.0-rc2";
 
 	public static final String PACKAGE =  "com.askimed.nf.test";
 	
@@ -35,6 +29,7 @@ public class App {
 		commandLine.addSubcommand("clean", new CleanCommand());
 		commandLine.addSubcommand("init", new InitCommand());
 		commandLine.addSubcommand("test", new RunTestsCommand());
+		commandLine.addSubcommand("coverage", new CoverageCommand());
 		commandLine.addSubcommand("list", new ListTestsCommand());
 		commandLine.addSubcommand("ls", new ListTestsCommand());
 		commandLine.addSubcommand("generate", new GenerateTestsCommand());

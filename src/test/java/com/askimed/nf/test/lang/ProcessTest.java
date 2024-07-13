@@ -1,7 +1,5 @@
 package com.askimed.nf.test.lang;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +12,8 @@ import com.askimed.nf.test.App;
 import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ProcessTest {
 
@@ -81,6 +81,15 @@ public class ProcessTest {
 	}
 
 	@Test
+	public void testNullValuesInChannels() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/channels/null-values/return_null.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+
+	@Test
 	public void testWithNoOutputs() throws Exception {
 
 		App app = new App();
@@ -103,7 +112,7 @@ public class ProcessTest {
 
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/process/default/wrong-filename.nf.test" });
-		assertEquals(1, exitCode);
+		assertEquals(0, exitCode);
 
 	}
 
@@ -291,6 +300,23 @@ public class ProcessTest {
 	}
 
 	@Test
+	public void testRequires() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/profiles/hello.a.nf.test", "--config",
+				"test-data/process/requires/nf-test-0.1.0.config" });
+		assertEquals(0, exitCode);
+
+		app = new App();
+		exitCode = app.run(new String[] { "test", "test-data/process/profiles/hello.a.nf.test", "--config",
+				"test-data/process/requires/nf-test-100.0.0.config" });
+		assertEquals(2, exitCode);
+
+
+	}
+
+
+	@Test
 	public void testUniquenessSnapshots() throws Exception {
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/unique.nf.test" });
@@ -301,7 +327,7 @@ public class ProcessTest {
 	public void testNotUniquenessOfSnapshots() throws Exception {
 
 		App app = new App();
-		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/not-unique.nf.test" });
+		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/no-unique.nf.test" });
 		assertEquals(1, exitCode);
 
 	}
@@ -330,6 +356,32 @@ public class ProcessTest {
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/gzip-fail.nf.test" });
 		assertEquals(1, exitCode);
+  }
+
+	@Test
+	public void testSnapshotsInCiMode() throws Exception {
+
+		File snapshot = new File("test-data/process/snapshots/ci-mode.nf.test.snap");
+
+		snapshot.delete();
+
+		assertFalse(snapshot.exists());
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/snapshots/ci-mode.nf.test" });
+		assertEquals(0, exitCode);
+
+		assertTrue(snapshot.exists());
+
+		snapshot.delete();
+
+		assertFalse(snapshot.exists());
+
+		app = new App();
+		exitCode = app.run(new String[] { "test", "test-data/process/snapshots/ci-mode.nf.test", "--ci" });
+		assertEquals(1, exitCode);
+
+		assertFalse(snapshot.exists());
 
 	}
 

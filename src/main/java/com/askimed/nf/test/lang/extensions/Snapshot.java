@@ -43,6 +43,9 @@ public class Snapshot {
 		SnapshotFileItem expected = file.getSnapshot(id);
 		// new snapshot --> create snapshot
 		if (expected == null) {
+			if (test.isCIMode()) {
+				throw new RuntimeException("CI mode activated and snapshot with id '" + id + "' not found.");
+			}
 			log.debug("Snapshot '{}' not found.", id);
 			file.createSnapshot(id, actual);
 			file.save();
