@@ -37,20 +37,20 @@
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
-			<version>3.0.19</version>
+			<version>3.0.22</version>
 			<type>pom</type>
 		</dependency>
 
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-nio</artifactId>
-			<version>3.0.19</version>
+			<version>3.0.22</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-yaml</artifactId>
-			<version>3.0.19</version>
+			<version>3.0.22</version>
 		</dependency>
 
 		<dependency>
@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
-			<version>5.5.2</version>
+			<version>5.9</version>
 		</dependency>
 
 		<dependency>
