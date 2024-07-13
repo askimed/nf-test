@@ -11,7 +11,7 @@ nextflow_workflow {
                 """
                 // define inputs of the workflow here. Example:
                 input[0] = Channel.of(
-                    file("${moduleDir}/test-file.txt")
+                    file("${moduleDir}/test-file2.txt", checkIfExists: true)
                 )
                 """
             }
