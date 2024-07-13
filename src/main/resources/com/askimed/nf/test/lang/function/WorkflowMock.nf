@@ -20,9 +20,10 @@ include { ${include} } from '${script}'
 // define custom rules for JSON that will be generated.
 def jsonOutput =
     new JsonGenerator.Options()
-        .excludeNulls()  // Do not include fields with value null..
         .addConverter(Path) { value -> value.toAbsolutePath().toString() } // Custom converter for Path. Only filename
         .build()
+
+def jsonWorkflowOutput = new JsonGenerator.Options().excludeNulls().build()
 
 
 workflow {
@@ -43,6 +44,6 @@ workflow.onComplete {
 		errorMessage: workflow.errorMessage,
 		errorReport: workflow.errorReport
 	]
-    new File("\${params.nf_test_output}/workflow.json").text = jsonOutput.toJson(result)
+    new File("\${params.nf_test_output}/workflow.json").text = jsonWorkflowOutput.toJson(result)
     
 }

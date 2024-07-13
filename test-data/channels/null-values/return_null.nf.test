@@ -1,0 +1,24 @@
+nextflow_process {
+
+    name "Test Process return_null"
+    script "./return_null.nf"
+    process "return_null"
+
+    test("Should run without failures") {
+
+        when {
+            params {}
+            process {}
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                assert null_list == [["0", "1", "", null, "4"]]
+            }
+        }
+
+    }
+
+}
