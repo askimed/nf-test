@@ -44,7 +44,7 @@ jobs:
 
       - name: Install nf-test
         run: |
-          wget -qO- https://code.askimed.com/install/nf-test | bash
+          wget -qO- https://get.nf-test.com | bash
           sudo mv nf-test /usr/local/bin/
 
       - name: Run Tests
@@ -91,7 +91,7 @@ jobs:
 
       - name: Install nf-test
         run: |
-          wget -qO- https://code.askimed.com/install/nf-test | bash
+          wget -qO- https://get.nf-test.com | bash
           sudo mv nf-test /usr/local/bin/
 
       - name: Run Tests (Shard ${{ matrix.shard }}/${{ strategy.job-total }})
@@ -137,7 +137,7 @@ jobs:
 
       - name: Install nf-test
         run: |
-          wget -qO- https://code.askimed.com/install/nf-test | bash
+          wget -qO- https://get.nf-test.com | bash
           sudo mv nf-test /usr/local/bin/
 
       - name: Run Tests (Shard ${{ matrix.shard }}/${{ strategy.job-total }})
