@@ -2,7 +2,7 @@
 
 !!! warning
 
-    This feature is experimental and requires nf-test 0.9.0-rc1 or higher
+    This feature requires nf-test 0.9.0 or higher
 
 In this tutorial, we will guide you through setting up and running `nf-test` on GitHub Actions. We will start with a simple example where all tests run in a single job, then extend it to demonstrate how you can use sharding to distribute tests across multiple jobs for improved efficiency. Finally, we will show you how to run only the tests affected by the changed files using the `--changes-since` option.
 
