@@ -90,7 +90,7 @@ public class RunTestsCommand extends AbstractCommand {
 	@Option(names = { "--changed-since", "--changedSince"}, description = "Runs tests related to the changes since the provided branch or commit hash", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String changedSince = null;
 
-	@Option(names = { "--changed-until", "--changdUntil"}, description = "Runs tests related to the changes until the provided branch or commit hash", required = false, showDefaultValue = Visibility.ALWAYS)
+	@Option(names = { "--changed-until", "--changedUntil"}, description = "Runs tests related to the changes until the provided branch or commit hash", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String changedUntil = null;
 
 	@Option(names = { "--coverage"}, description = "Print simple coverage calculation.", required = false, showDefaultValue = Visibility.ALWAYS)
