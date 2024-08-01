@@ -25,6 +25,16 @@ Reproducibility is an important attribute of all good science. This is specially
 
 ---
 
+### :fontawesome-brands-youtube:{ style="color: #EE0F0F" } nf-core/bytesize: nft-bam
+
+**Nicolas Vannieuwkerke** presents *nft-bam* a nf-test plugin to get stable nf-test snapshots for SAM, BAM or CRAM files.
+
+<iframe width="560" height="315" src="https://youtu.be/wyIpQLg7JxM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+The presentation was recored as part of the [nf-core/nft-bam](https://nf-co.re/events/2024/bytesize_nft_bam) series.
+
+---
+
 ### :fontawesome-brands-youtube:{ style="color: #EE0F0F" } nf-core/bytesize: Converting pytest modules to nf-test
 
 **Adam Talbot** & **Sateesh Peri** do a live demo of converting nf-core DSL2 modules pytests to nf-test
