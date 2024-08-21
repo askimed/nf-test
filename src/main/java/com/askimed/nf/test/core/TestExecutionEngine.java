@@ -17,6 +17,11 @@ import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
 import com.askimed.nf.test.util.OutputFormat;
 import com.github.javaparser.utils.Log;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import groovy.json.JsonOutput;
 
@@ -113,100 +118,147 @@ public class TestExecutionEngine {
 
 		listener.setDebug(debug);
 
-		int totalTests = 0;
-		int failedTests = 0;
-
+		AtomicInteger totalTests = new AtomicInteger(0);
+		AtomicInteger failedTests = new AtomicInteger(0);
+	
 		log.info("Started test plan");
 
 		listener.testPlanExecutionStarted();
 
-		boolean failed = false;
-		for (ITestSuite testSuite : testSuits) {
-
-			for (String profile : profiles) {
-				testSuite.addProfile(profile);
+		AtomicBoolean failed = new AtomicBoolean(false);
+		ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+		try {
+			List<Future<Boolean>> suiteFutures = new Vector<>();
+	
+			for (ITestSuite testSuite : testSuits) {
+				Future<Boolean> suiteFuture = executorService.submit(() -> {
+					for (String profile : profiles) {
+						testSuite.addProfile(profile);
+					}
+	
+					if (configFile != null) {
+						testSuite.setGlobalConfigFile(configFile);
+					}
+	
+					log.info("Running testsuite '{}' from file '{}'.", testSuite, testSuite.getFilename());
+	
+					listener.testSuiteExecutionStarted(testSuite);
+	
+					List<Future<TestExecutionResult>> futures = new Vector<>();
+	
+					for (ITest test : testSuite.getTests()) {
+						totalTests.incrementAndGet();
+						Future<TestExecutionResult> future = executorService.submit(() -> {
+							TestExecutionResult result = new TestExecutionResult(test);
+							if (test.isSkipped()) {
+								log.info("Test '{}' skipped.", test);
+								listener.executionSkipped(test, "");
+								return result;
+							}
+	
+							log.info("Run test '{}'. type: {}", test, test.getClass().getName());
+	
+							try {
+								testSuite.setupTest(test);
+							} catch (Throwable e) {
+								throw new RuntimeException("Error setting up test", e);
+							}
+	
+							listener.executionStarted(test);
+							test.setWithTrace(withTrace);
+							test.setUpdateSnapshot(updateSnapshot);
+							test.setCIMode(ciMode);
+							result.setStartTime(System.currentTimeMillis());
+	
+							try {
+								if (debug) {
+									test.setDebug(true);
+								}
+	
+								if (!dryRun) {
+									test.execute();
+								}
+								result.setStatus(TestExecutionResultStatus.PASSED);
+							} catch (Throwable e) {
+								result.setStatus(TestExecutionResultStatus.FAILED);
+								result.setThrowable(e);
+								try {
+									result.setErrorReport(test.getErrorReport());
+								} catch (Throwable e1) {
+									throw new RuntimeException("Error getting error report", e1);
+								}
+								testSuite.setFailedTests(true);
+								synchronized (this) {
+									failedTests.incrementAndGet();
+								}
+							}
+	
+							try {
+								test.cleanup();
+							} catch (Throwable e) {
+								throw new RuntimeException("Error cleaning up test", e);
+							}
+							result.setEndTime(System.currentTimeMillis());
+	
+							log.info("Test '{}' finished. status: {}", result.getTest(), result.getStatus(), result.getThrowable());
+	
+							listener.executionFinished(test, result);
+	
+							return result;
+						});
+						futures.add(future);
+					}
+	
+					for (Future<TestExecutionResult> future : futures) {
+						try {
+							TestExecutionResult result = future.get();
+							if (result.getStatus() == TestExecutionResultStatus.FAILED) {
+								failed.set(true);
+							}
+						} catch (Exception e) {
+							log.error("Error while executing test", e);
+							failed.set(true);
+						}
+					}
+	
+					if (cleanSnapshot && !testSuite.hasSkippedTests() && !testSuite.hasFailedTests()
+							&& testSuite.hasSnapshotLoaded()) {
+						log.info("Clean up obsolete snapshots");
+						SnapshotFile snapshot = testSuite.getSnapshot();
+						snapshot.removeObsoleteSnapshots();
+						snapshot.save();
+					}
+	
+					log.info("Testsuite '{}' finished. snapshot file: {}, skipped tests: {}, failed tests: {}", testSuite,
+							testSuite.hasSnapshotLoaded(), testSuite.hasSkippedTests(), testSuite.hasFailedTests());
+	
+					listener.testSuiteExecutionFinished(testSuite);
+	
+					return true;
+				});
+				suiteFutures.add(suiteFuture);
 			}
-
-			if (configFile != null) {
-				// TODO: addConfig as list
-				testSuite.setGlobalConfigFile(configFile);
-			}
-
-			log.info("Running testsuite '{}' from file '{}'.", testSuite, testSuite.getFilename());
-
-			listener.testSuiteExecutionStarted(testSuite);
-
-			for (ITest test : testSuite.getTests()) {
-				if (test.isSkipped()) {
-					log.info("Test '{}' skipped.", test);
-					listener.executionSkipped(test, "");
-					continue;
-				}
-
-				log.info("Run test '{}'. type: {}", test, test.getClass().getName());
-				totalTests++;
-
-				testSuite.setupTest(test);
-
-				listener.executionStarted(test);
-				TestExecutionResult result = new TestExecutionResult(test);
-				test.setWithTrace(withTrace);
-				test.setUpdateSnapshot(updateSnapshot);
-				test.setCIMode(ciMode);
+	
+			for (Future<Boolean> suiteFuture : suiteFutures) {
 				try {
-
-					// override debug flag from CLI
-					if (debug) {
-						test.setDebug(true);
+					if (!suiteFuture.get()) {
+						failed.set(true);
 					}
-
-					result.setStartTime(System.currentTimeMillis());
-					if (!dryRun) {
-						test.execute();
-					}
-					result.setStatus(TestExecutionResultStatus.PASSED);
-
-				} catch (Throwable e) {
-
-					result.setStatus(TestExecutionResultStatus.FAILED);
-					result.setThrowable(e);
-					result.setErrorReport(test.getErrorReport());
-					failed = true;
-					testSuite.setFailedTests(true);
-					failedTests++;
-
+				} catch (Exception e) {
+					log.error("Error while executing test suite", e);
+					failed.set(true);
 				}
-				test.cleanup();
-				result.setEndTime(System.currentTimeMillis());
-
-				log.info("Test '{}' finished. status: {}", result.getTest(), result.getStatus(), result.getThrowable());
-
-				listener.executionFinished(test, result);
-
 			}
-
-			// Remove obsolete snapshots when no test was skipped and no test failed.
-			if (cleanSnapshot && !testSuite.hasSkippedTests() && !testSuite.hasFailedTests()
-					&& testSuite.hasSnapshotLoaded()) {
-				log.info("Clean up obsolete snapshots");
-				SnapshotFile snapshot = testSuite.getSnapshot();
-				snapshot.removeObsoleteSnapshots();
-				snapshot.save();
-			}
-
-			log.info("Testsuite '{}' finished. snapshot file: {}, skipped tests: {}, failed tests: {}", testSuite,
-					testSuite.hasSnapshotLoaded(), testSuite.hasSkippedTests(), testSuite.hasFailedTests());
-
-			listener.testSuiteExecutionFinished(testSuite);
-
+	
+		} finally {
+			executorService.shutdown();
 		}
-
-		log.info("Executed {} tests. {} tests failed. Done!", totalTests, failedTests);
-
+	
+		log.info("Executed {} tests. {} tests failed. Done!", totalTests.get(), failedTests.get());
+	
 		listener.testPlanExecutionFinished();
-
-		return (failed) ? 1 : 0;
-
+	
+		return (failed.get()) ? 1 : 0;
 	}
 
 	public void setTestSuites(List<ITestSuite> testSuits) {
