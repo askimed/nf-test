@@ -131,6 +131,7 @@ public class TestExecutionEngine {
 			List<Future<Boolean>> suiteFutures = new Vector<>();
 	
 			for (ITestSuite testSuite : testSuits) {
+				System.out.println("Test suite: " + testSuite);
 				Future<Boolean> suiteFuture = executorService.submit(() -> {
 					for (String profile : profiles) {
 						testSuite.addProfile(profile);
@@ -141,13 +142,22 @@ public class TestExecutionEngine {
 					}
 	
 					log.info("Running testsuite '{}' from file '{}'.", testSuite, testSuite.getFilename());
-	
-					listener.testSuiteExecutionStarted(testSuite);
+					System.out.println("Running testsuite '" + testSuite + "' from file '" + testSuite.getFilename() + "'.");
+					
+
+					try {	
+						listener.testSuiteExecutionStarted(testSuite);
+					} catch (Throwable e) {
+						throw new RuntimeException("Error starting test suite", e);
+					}
+					System.out.println("After staring execution");
 	
 					List<Future<TestExecutionResult>> futures = new Vector<>();
-	
+					
+					System.out.println("Test suite tests: " + testSuite.getTests().size());
 					for (ITest test : testSuite.getTests()) {
 						totalTests.incrementAndGet();
+						System.out.println("Total tests: " + totalTests.get());
 						Future<TestExecutionResult> future = executorService.submit(() -> {
 							TestExecutionResult result = new TestExecutionResult(test);
 							if (test.isSkipped()) {
@@ -157,7 +167,7 @@ public class TestExecutionEngine {
 							}
 	
 							log.info("Run test '{}'. type: {}", test, test.getClass().getName());
-	
+							System.out.println("Run test '" + test + "'. type: " + test.getClass().getName());
 							try {
 								testSuite.setupTest(test);
 							} catch (Throwable e) {
@@ -179,7 +189,9 @@ public class TestExecutionEngine {
 									test.execute();
 								}
 								result.setStatus(TestExecutionResultStatus.PASSED);
+								System.out.println(AnsiColors.green("Test passed"));
 							} catch (Throwable e) {
+								System.out.println(AnsiColors.red("Test failed: " + e.getMessage()));
 								result.setStatus(TestExecutionResultStatus.FAILED);
 								result.setThrowable(e);
 								try {
@@ -196,6 +208,7 @@ public class TestExecutionEngine {
 							try {
 								test.cleanup();
 							} catch (Throwable e) {
+								System.out.println("Error cleaning up test: " + e.getMessage());
 								throw new RuntimeException("Error cleaning up test", e);
 							}
 							result.setEndTime(System.currentTimeMillis());
@@ -203,20 +216,28 @@ public class TestExecutionEngine {
 							log.info("Test '{}' finished. status: {}", result.getTest(), result.getStatus(), result.getThrowable());
 	
 							listener.executionFinished(test, result);
-	
+							System.out.println("FINISHED MAN!");
 							return result;
 						});
 						futures.add(future);
 					}
-	
+
 					for (Future<TestExecutionResult> future : futures) {
 						try {
 							TestExecutionResult result = future.get();
 							if (result.getStatus() == TestExecutionResultStatus.FAILED) {
+								System.out.println("Test failed: " + result.getThrowable().getMessage());
 								failed.set(true);
 							}
 						} catch (Exception e) {
 							log.error("Error while executing test", e);
+							System.out.println("Error while executing test: " + e);
+							failed.set(true);
+						}
+						catch (Throwable e) {
+							log.error("Throwable while executing test", e);
+							System.out.println("Throwable while executing test: ");
+							e.printStackTrace();
 							failed.set(true);
 						}
 					}
@@ -242,15 +263,22 @@ public class TestExecutionEngine {
 			for (Future<Boolean> suiteFuture : suiteFutures) {
 				try {
 					if (!suiteFuture.get()) {
+						// System.out.println("Test suite failed");
 						failed.set(true);
 					}
 				} catch (Exception e) {
 					log.error("Error while executing test suite", e);
+					// System.out.println("Error while executing test suite: " + e);
 					failed.set(true);
 				}
 			}
 	
+		} catch (Throwable e) {
+			log.error("Error in the full try", e);
+			// System.out.println("Error in the full try: " + e.getMessage());
+			failed.set(true);
 		} finally {
+			// System.out.println("Something else happened");
 			executorService.shutdown();
 		}
 	

@@ -2,14 +2,24 @@
     "process_test_1": {
         "content": [
             {
+                "0": [
+                    "input.txt.gz:md5,2e5841fccf3395e69054657e1f06c3a7"
+                ],
+                "1": [
+                    "output.json:md5,a49d148b49ae6ddae967636d940c1654"
+                ],
                 "output_file": [
-                    "input.txt.gz:md5,cad0b2b72339e92e6e53c4d4e6f3a3bc"
+                    "input.txt.gz:md5,2e5841fccf3395e69054657e1f06c3a7"
                 ],
                 "output_json": [
                     "output.json:md5,a49d148b49ae6ddae967636d940c1654"
                 ]
             }
         ],
-        "timestamp": "2022-10-18T11:22:31+0000"
+        "meta": {
+            "nf-test": "0.9.0",
+            "nextflow": "23.10.0"
+        },
+        "timestamp": "2024-08-27T14:43:28.204545"
     }
 }
