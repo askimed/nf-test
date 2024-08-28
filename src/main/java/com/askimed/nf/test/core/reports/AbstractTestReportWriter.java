@@ -10,6 +10,8 @@ import com.askimed.nf.test.core.ITestSuite;
 import com.askimed.nf.test.core.TestExecutionResult;
 import com.askimed.nf.test.core.TestSuiteExecutionResult;
 
+
+// FIXME: Should I make this change to all the classes that implement ITestExecutionListener?
 public abstract class AbstractTestReportWriter implements ITestExecutionListener {
 
     // Using Vector for thread-safe operations
