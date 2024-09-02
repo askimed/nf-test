@@ -4,6 +4,8 @@
 
 The following plugin can be used as a boilerplate: [https://github.com/askimed/nft-fasta](https://github.com/askimed/nft-fasta)
 
+The [nf-test plugin cookiecutter template](https://github.com/nvnieuwk/cookiecutter-nftest-plugin) can also be used to set up the plugin base and immediately start developing.
+
 ## Developing Plugins
 
 A plugin has the possibility:
