@@ -26,14 +26,14 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 	public static final int TEST_PADDING = 2;
 
 	@Override
-	public void testPlanExecutionStarted() {
+	public synchronized void testPlanExecutionStarted() {
 
 		start = System.currentTimeMillis();
 
 	}
 
 	@Override
-	public void testPlanExecutionFinished() {
+	public synchronized void testPlanExecutionFinished() {
 
 		end = System.currentTimeMillis();
 
@@ -75,7 +75,7 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 	}
 
 	@Override
-	public void testSuiteExecutionStarted(ITestSuite testSuite) {
+	public synchronized void testSuiteExecutionStarted(ITestSuite testSuite) {
 
 		System.out.println();
 		System.out.println(AnsiText.bold(testSuite.getName()));
@@ -84,7 +84,7 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 	}
 
 	@Override
-	public void testSuiteExecutionFinished(ITestSuite testSuite) {
+	public synchronized void testSuiteExecutionFinished(ITestSuite testSuite) {
 
 		if (!testSuite.hasSnapshotLoaded()) {
 			return;
@@ -129,7 +129,7 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 	}
 
 	@Override
-	public void executionSkipped(ITest test, String reason) {
+	public synchronized void executionSkipped(ITest test, String reason) {
 
 	}
 
@@ -144,7 +144,7 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 	}
 
 	@Override
-	public void executionFinished(ITest test, TestExecutionResult result) {
+	public synchronized void executionFinished(ITest test, TestExecutionResult result) {
 
 		switch (result.getStatus()) {
 
@@ -174,12 +174,12 @@ public class AnsiTestExecutionListener implements ITestExecutionListener {
 
 	}
 
-	public int getCount() {
+	public synchronized int getCount() {
 		return count;
 	}
 
 	@Override
-	public void setDebug(boolean debug) {
+	public synchronized void setDebug(boolean debug) {
 		this.debug = debug;
 	}
 

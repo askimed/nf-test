@@ -11,7 +11,6 @@ import com.askimed.nf.test.core.TestExecutionResult;
 import com.askimed.nf.test.core.TestSuiteExecutionResult;
 
 
-// FIXME: Should I make this change to all the classes that implement ITestExecutionListener?
 public abstract class AbstractTestReportWriter implements ITestExecutionListener {
 
     // Using Vector for thread-safe operations
@@ -60,12 +59,12 @@ public abstract class AbstractTestReportWriter implements ITestExecutionListener
 
     @Override
     public synchronized void executionSkipped(ITest test, String reason) {
-        // TODO: create TestExectionResult and handle skipped cases
+		// TODO: create TestExectionResult
     }
 
     @Override
     public synchronized void executionStarted(ITest test) {
-        // No specific action needed at the start of a test
+
     }
 
     @Override
@@ -104,7 +103,7 @@ public abstract class AbstractTestReportWriter implements ITestExecutionListener
 
     @Override
     public synchronized void setDebug(boolean debug) {
-        // No debug functionality in this base class
+
     }
 
     abstract public void writeToFile(List<TestSuiteExecutionResult> testSuites) throws Exception;
