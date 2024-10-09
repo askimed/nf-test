@@ -50,5 +50,5 @@ if [ "${JAVA_PROGRAM_ARGS}" = "update" ]; then
   cd "${FOLDER}"
   update
 else
-  java -Xmx10G -jar "${FILE_PATH_JAR}" "$@"
+  "${JAVA_CMD}" -Xmx10G -jar "${FILE_PATH_JAR}" "$@"
 fi
