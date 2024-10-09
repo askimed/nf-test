@@ -43,6 +43,11 @@ else
   FILE_PATH_JAR=${APP_HOME}/${APP_JAR}
 fi
 
+JAVA_ARGS="-Xmx10G"
+if [[ "$NFT_JAVA_ARGS" ]]; then
+  JAVA_ARGS="$NFT_JAVA_ARGS"
+fi
+
 export JAVA_PROGRAM_ARGS=`echo "$@"`
 
 if [ "${JAVA_PROGRAM_ARGS}" = "update" ]; then
@@ -50,5 +55,5 @@ if [ "${JAVA_PROGRAM_ARGS}" = "update" ]; then
   cd "${FOLDER}"
   update
 else
-  "${JAVA_CMD}" -Xmx10G -jar "${FILE_PATH_JAR}" "$@"
+  exec ${JAVA_CMD} ${JAVA_ARGS} -jar "${FILE_PATH_JAR}" "$@"
 fi
