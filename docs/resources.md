@@ -25,6 +25,16 @@ Reproducibility is an important attribute of all good science. This is specially
 
 ---
 
+### :fontawesome-brands-youtube:{ style="color: #EE0F0F" } nf-core/bytesize: Making pipeline level tests with nf-test
+
+In this nf-core bytesize session, **Maxime Garcia** shows how to make pipeline level tests with nf-test. If you like snapshots, CI/CD, and testing, this is for you!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VaKcd_qgBJc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+The presentation was recored as part of the [nf-core/nft-utils](https://nf-co.re/events/2024/bytesize_pipeline_level_tests_with_nftest) series.
+
+---
+
 ### :fontawesome-brands-youtube:{ style="color: #EE0F0F" } nf-core/bytesize: nft-bam
 
 **Nicolas Vannieuwkerke** presents *nft-bam* a nf-test plugin to get stable nf-test snapshots for SAM, BAM or CRAM files.
