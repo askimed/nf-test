@@ -11,7 +11,7 @@ public class App {
 
 	public static final String NAME = "nf-test";
 
-	public static final String VERSION = "0.9.0";
+	public static final String VERSION = "0.9.1";
 
 	public static final String PACKAGE =  "com.askimed.nf.test";
 	
