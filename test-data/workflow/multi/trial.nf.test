@@ -3,7 +3,7 @@ nextflow_workflow {
     name "Test workflow"
     script "test-data/workflow/multi/trial.nf"
     workflow "hello"
-    tag "x"
+
     test("Test say hello") {
 
         then {
