@@ -257,7 +257,7 @@ public class RunTestsCommand extends AbstractCommand {
 			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, new TagQuery(tags));
 
 			testSuits.sort(TestSuiteSorter.getDefault());
-			if (shard != null) {
+			if (shard != null && !testSuits.isEmpty()) {
 				if (shardStrategy.equalsIgnoreCase(SHARD_STRATEGY_ROUND_ROBIN)){
 					testSuits = TestSuiteSharder.shardWithRoundRobin(testSuits, shard);
 				} else {
