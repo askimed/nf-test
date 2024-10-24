@@ -3,6 +3,8 @@ package com.askimed.nf.test.core;
 import com.askimed.nf.test.lang.TestSuiteBuilder;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Vector;
 
@@ -24,9 +26,13 @@ public class TestSuiteResolver {
 
         for (File script : scripts) {
             String testId = null;
-            if (script.getAbsolutePath().contains("@")) {
-                String[] tiles = script.getAbsolutePath().split("@");
-                script = new File(tiles[0]);
+            Path path = Paths.get(script.getAbsolutePath());
+            String fileName = path.getFileName().toString();
+
+            if (fileName.contains("@")) {
+                String[] tiles = fileName.split("@");
+                String basePath = path.getParent().toString();
+                script = new File(Paths.get(basePath, tiles[0]).toString());
                 testId = tiles[1];
             }
             if (!script.exists()) {
