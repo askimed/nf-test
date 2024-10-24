@@ -106,8 +106,9 @@ public class TestExecutionEngine {
 		}
 
 		if (testSuits.isEmpty()) {
-			System.out.println("Warning: no valid tests found.");
+			System.out.println(AnsiColors.red("Error: no valid tests found."));
 			System.out.println();
+			return 1;
 		}
 
 		listener.setDebug(debug);

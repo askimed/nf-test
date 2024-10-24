@@ -257,23 +257,22 @@ public class RunTestsCommand extends AbstractCommand {
 			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, new TagQuery(tags));
 
 			testSuits.sort(TestSuiteSorter.getDefault());
-			
-      if (shard != null) {
+			if (shard != null) {
 				if (shardStrategy.equalsIgnoreCase(SHARD_STRATEGY_ROUND_ROBIN)){
 					testSuits = TestSuiteSharder.shardWithRoundRobin(testSuits, shard);
 				} else {
-					  testSuits = TestSuiteSharder.shard(testSuits, shard);
+					testSuits = TestSuiteSharder.shard(testSuits, shard);
 				}
 			}
       
-      int numberOfTests = testSuits.stream().mapToInt(testSuite -> testSuite.getTests().size()).sum();
-			log.info("Found {} tests to execute.", numberOfTests);
+			int totalTests = testSuits.stream().mapToInt(testSuite -> testSuite.getTests().size()).sum();
+			log.info("Found {} tests to execute.", totalTests);
       
-      if (testSuits.isEmpty()) {
+			if (testSuits.isEmpty()) {
 				System.out.println(AnsiColors
-						.yellow("No tests to execute."));
+					.yellow("No tests to execute."));
 				return 0;
-      }
+			}
 
 			TestExecutionEngine engine = new TestExecutionEngine();
 			engine.setListener(listener);
