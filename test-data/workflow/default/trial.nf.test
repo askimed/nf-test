@@ -3,7 +3,7 @@ nextflow_workflow {
     name "Test workflow"
     script "test-data/workflow/default/trial.nf"
     workflow "trial"
-
+    tag "default" 
     test("Should run without failures") {
         when {
             params {
