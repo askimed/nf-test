@@ -11,7 +11,7 @@ process sayHello {
 
     script:
     """
-    echo -n $cheers!
+    echo -n $cheers
     echo -n $cheers > ${cheers}.txt
     """
 }
