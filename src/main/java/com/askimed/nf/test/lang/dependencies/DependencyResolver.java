@@ -53,7 +53,7 @@ public class DependencyResolver {
             }
         }
 
-        log.info("Found {} tests.", results.size());
+        log.info("Found {} files containing tests.", results.size());
 
         return results;
     }
@@ -80,8 +80,8 @@ public class DependencyResolver {
             }
         }
 
-        log.info("Found {} tests.", results.size());
-        log.debug("Found tests: " + results);
+        log.info("Found {} files containing tests.", results.size());
+        log.debug("Found files: " + results);
 
         return results;
     }
@@ -111,7 +111,7 @@ public class DependencyResolver {
             results.addAll(findRelatedTestsByFile(file.getAbsoluteFile()));
         }
         long time1 = System.currentTimeMillis();
-        log.info("Found {} tests for file {} in {} sec", results.size(), files, (time1 - time0) / 1000.0);
+        log.info("Found {} files containing tests for file {} in {} sec", results.size(), files, (time1 - time0) / 1000.0);
 
         return new Vector<File>(results);
     }

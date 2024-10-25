@@ -243,16 +243,6 @@ public class RunTestsCommand extends AbstractCommand {
 				DependencyExporter.generateDotFile(resolver, graph);
 			}
 
-
-			if (scripts.isEmpty()) {
-				System.out.println(AnsiColors
-						.yellow("No tests to execute."));
-				log.warn("No tests or directories found containing test files. Or all testcases were filtered.");
-				return 0;
-			} else {
-				log.info("Detected {} test files.", scripts.size());
-			}
-
 			loadPlugins(manager, plugins);
 
 			GroupTestExecutionListener listener = setupExecutionListeners();
@@ -267,12 +257,21 @@ public class RunTestsCommand extends AbstractCommand {
 			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, new TagQuery(tags));
 
 			testSuits.sort(TestSuiteSorter.getDefault());
-			if (shard != null) {
+			if (shard != null && !testSuits.isEmpty()) {
 				if (shardStrategy.equalsIgnoreCase(SHARD_STRATEGY_ROUND_ROBIN)){
 					testSuits = TestSuiteSharder.shardWithRoundRobin(testSuits, shard);
 				} else {
 					testSuits = TestSuiteSharder.shard(testSuits, shard);
 				}
+			}
+      
+			int totalTests = testSuits.stream().mapToInt(testSuite -> testSuite.getTests().size()).sum();
+			log.info("Found {} tests to execute.", totalTests);
+      
+			if (testSuits.isEmpty()) {
+				System.out.println(AnsiColors
+					.yellow("No tests to execute."));
+				return 0;
 			}
 
 			TestExecutionEngine engine = new TestExecutionEngine();
