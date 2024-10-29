@@ -56,7 +56,7 @@ To clear the cache and to force redownloading plugins and repositories you can e
 One or multiple plugins can be activated also via the `--plugins` parameter:
 
 ```
-nf-test test my-test.nf.test --plugins nft-fasta@1.0.0,plugin2@1.0.0
+nf-test test my-test.nf.test --plugins nft-fasta@1.0.0:plugin2@1.0.0
 ```
 
 or
