@@ -1,6 +1,7 @@
 package com.askimed.nf.test.lang.extensions;
 
 import com.askimed.nf.test.core.ITest;
+import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.ObjectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,8 @@ public class Snapshot {
 				file.save();
 				return true;
 			} else {
-				log.debug("Snapshots '{}' do not match.", id);
+				log.error("Snapshots '{}' do not match.", id);
+				System.out.println(AnsiColors.red("Error: Snapshots '" + id + "' do not match."));
 				throw e;
 			}
 		}
