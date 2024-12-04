@@ -162,6 +162,7 @@ public class NextflowCommand {
 	public int execute() throws IOException {
 
 		if (binary == null) {
+			System.out.println("HEY BINARU WHERE ARE YOU!");
 			throw new IOException(ERROR);
 		}
 
