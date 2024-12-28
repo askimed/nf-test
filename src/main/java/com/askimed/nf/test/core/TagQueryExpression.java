@@ -1,5 +1,7 @@
 package com.askimed.nf.test.core;
 
+import groovy.lang.Binding;
+import groovy.lang.GroovyShell;
 import groovy.util.Eval;
 
 import java.util.Arrays;
@@ -20,18 +22,18 @@ public class TagQueryExpression extends TagQuery {
 			return true;
 		}
 
-		Map<String, Object> bindingContext = createBindingContext(taggable);
+		Binding binding = createBindingContext(taggable);
 
 		try {
-			return (Boolean) Eval.me("tags", bindingContext.get("tags"), query);
-		} catch (Exception e) {
+			GroovyShell shell = new GroovyShell(binding);
+			return (Boolean) shell.evaluate(query);		} catch (Exception e) {
 			throw new IllegalArgumentException("Invalid query: " + query, e);
 		}
 	}
 
-	private Map<String, Object> createBindingContext(ITaggable taggable) {
+	private Binding createBindingContext(ITaggable taggable) {
 		Map<String, Boolean> tagMap = new HashMap<>();
-		Map<String, Object> context = new HashMap<>();
+		Binding binding = new groovy.lang.Binding();
 
 		// Add tags from the current taggable
 		taggable.getTags().forEach(tag -> {
@@ -49,10 +51,18 @@ public class TagQueryExpression extends TagQuery {
 			parent = parent.getParent();
 		}
 
-		context.put("tags", new DefaultTagMap(tagMap)); // Map for key-based access
-		context.put("query", query); // The actual query as a string
+		binding.setVariable("tags", new DefaultTagMap(tagMap)); // Map for key-based access
 
-		return context;
+		if (taggable instanceof  AbstractTest) {
+			binding.setVariable("test", taggable.getName());
+			binding.setVariable("name", taggable.getParent().getName());
+		} else {
+			binding.setVariable("test", "");
+			binding.setVariable("name", "");
+		}
+
+
+		return binding;
 	}
 
 	@Override

@@ -36,6 +36,30 @@ public class TestSuiteResolverTest {
 	}
 
 	@Test
+	public void executeTestByTestNameQuery() throws Throwable {
+
+		TagQuery query = new TagQueryExpression("test == 'test 1'");
+		List<String> tests = collectTests(query);
+		Assertions.assertEquals(1, tests.size());
+		Assertions.assertTrue(tests.contains("test 1"));
+		Assertions.assertFalse(tests.contains("test 2"));
+		Assertions.assertFalse(tests.contains("test 3"));
+
+	}
+
+	@Test
+	public void executeTestByNameQuery() throws Throwable {
+
+		TagQuery query = new TagQueryExpression("name == 'suite 1'");
+		List<String> tests = collectTests(query);
+		Assertions.assertEquals(2, tests.size());
+		Assertions.assertTrue(tests.contains("test 1"));
+		Assertions.assertTrue(tests.contains("test 2"));
+		Assertions.assertFalse(tests.contains("test 3"));
+
+	}
+
+	@Test
 	public void executeTestByWrongHash() throws Throwable {
 		List<File> scripts = new Vector<File>();
 		scripts.add(new File("test-data/suite1.nf.test@aaa"));
