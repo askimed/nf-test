@@ -5,7 +5,7 @@ The following variables are available and can be used in `setup`, `when`, `then`
 |Name|Description| Example |
 |---|---|---|
 |`baseDir` or<br/>`projectDir`| The directory where the `nf-test.config` script is located. | `mypipeline`|
-|`moduleDir`| The directory where the module script is located  | `mypipeline/modules/mymodule` |
+|`moduleDir`| The directory where the module script is located. Also works for tesing subworkflows  | Modules: `mypipeline/modules/mymodule` \\ Subworkflows: `mypipeline/subworkflows/myworkflow` |
 |`moduleTestDir`| The directory where the test script is located  | `mypipeline/tests/modules/mymodule` |
 |`launchDir`| The directory where the test is run. | `mypipeline/.nf-test/tests/<test_hash>` |
 |`metaDir`| The directory where all meta are located (e.g. `mock.nf`).| `mypipeline/.nf-test/tests/<test_hash>/meta` |
