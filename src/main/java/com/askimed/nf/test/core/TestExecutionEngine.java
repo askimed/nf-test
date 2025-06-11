@@ -70,7 +70,7 @@ public class TestExecutionEngine {
 
 	public void setUpdateSnapshot(boolean updateSnapshot) {
 		if (updateSnapshot) {
-			System.out.println("Warning: every snapshot that fails during this test run is re-record.");
+			System.out.println("Warning: every snapshot that fails during this test run is re-recorded.");
 		}
 		this.updateSnapshot = updateSnapshot;
 	}
