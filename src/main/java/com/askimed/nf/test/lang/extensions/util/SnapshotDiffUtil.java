@@ -5,14 +5,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import com.askimed.nf.test.lang.extensions.SnapshotFile;
 import com.askimed.nf.test.lang.extensions.SnapshotFileItem;
 import com.askimed.nf.test.util.BinaryFinder;
 import com.askimed.nf.test.util.Command;
 import com.askimed.nf.test.util.FileUtil;
 
-import groovy.json.JsonGenerator;
-import groovy.json.JsonOutput;
+import com.askimed.nf.test.util.ObjectUtil;
 
 public class SnapshotDiffUtil {
 
@@ -91,9 +89,7 @@ public class SnapshotDiffUtil {
 	}
 
 	private static void writeSnapshotToFile(File file, SnapshotFileItem snapshot) throws IOException {
-		JsonGenerator jsonGenerator = SnapshotFile.createJsonGenerator();
-		String json = jsonGenerator.toJson(snapshot.getContent());
-		String prettyJson = JsonOutput.prettyPrint(json);
+		String prettyJson = ObjectUtil.toJson(snapshot.getContent());
 		FileWriter fileWriter = new FileWriter(file);
 		fileWriter.append(prettyJson);
 		fileWriter.close();
