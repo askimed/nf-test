@@ -81,7 +81,7 @@ public class RunTestsCommand extends AbstractCommand {
 	@Option(names = { "--follow-dependencies", "--followDependencies"}, description = "Follows all dependencies when related-tests is set.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean followDependencies = false;
 
-	@Option(names = { "--filter" }, description =  "Filter test cases by specified types (e.g., module, pipeline, workflow or function). Multiple types can be separated by commas.", required = false, showDefaultValue = Visibility.ALWAYS)
+	@Option(names = { "--filter" }, description =  "Filter test cases by specified types (e.g., process, pipeline, workflow or function). Multiple types can be separated by commas.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String dependencies = "all";
 
 	@Option(names = { "--only-changed", "--onlyChanged"}, description = "Runs tests only for those files which are modified in the current git repository", required = false, showDefaultValue = Visibility.ALWAYS)

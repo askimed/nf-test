@@ -53,7 +53,7 @@ By default,nf-test automatically stores a new snapshot. When CI mode is activate
 
 ### `--filter <types>`
 
-Filter test cases by specified types (e.g., module, pipeline, workflow or function). Multiple types can be separated by commas.
+Filter test cases by specified types (e.g., process, pipeline, workflow or function). Multiple types can be separated by commas.
 
 
 ### Optimizing Test Execution

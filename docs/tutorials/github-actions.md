@@ -174,7 +174,7 @@ This configuration ensures that critical changes always result in a comprehensiv
 
 ## Step 5: Additional useful Options
 
-The `--filter` flag allows you to selectively run test cases based on their specified types. For example, you can filter tests by module, pipeline, workflow, or function. This is particularly useful when you have a large suite of tests and need to focus on specific areas of functionality. By separating multiple types with commas, you can run a customized subset of tests that match the exact criteria you're interested in, thereby saving time and resources.
+The `--filter` flag allows you to selectively run test cases based on their specified types. For example, you can filter tests by process, pipeline, workflow, or function. This is particularly useful when you have a large suite of tests and need to focus on specific areas of functionality. By separating multiple types with commas, you can run a customized subset of tests that match the exact criteria you're interested in, thereby saving time and resources.
 
 The `--related-tests` flag enables you to identify and execute all tests related to the provided `.nf` or `nf.test` files. This is ideal for scenarios where you have made changes to specific files and want to ensure that only the relevant tests are run. You can provide multiple files by separating them with spaces, which makes it easy to manage and test multiple changes at once, ensuring thorough validation of your updates.
 
