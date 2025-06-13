@@ -132,6 +132,11 @@ public class RunTestsCommand extends AbstractCommand {
 			"--tag" }, split = ",", description = "Execute only tests with this tag", required = false, showDefaultValue = Visibility.ALWAYS)
 	private List<String> tags = new Vector<String>();
 
+	@Option(names = {
+			"--query" }, description = "Execute only tests that match this expression", required = false)
+	private String query = null;
+
+
 	private static Logger log = LoggerFactory.getLogger(RunTestsCommand.class);
 
 	@Override
@@ -254,7 +259,13 @@ public class RunTestsCommand extends AbstractCommand {
 			environment.setPluginManager(manager);
 
 			TestSuiteResolver testSuiteResolver = new TestSuiteResolver(environment);
-			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, new TagQuery(tags));
+
+			TagQuery tagQuery = new TagQuery(tags);
+			if (query != null) {
+				tagQuery = new TagQueryExpression(query);
+			}
+
+			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, tagQuery);
 
 			testSuits.sort(TestSuiteSorter.getDefault());
 			if (shard != null && !testSuits.isEmpty()) {

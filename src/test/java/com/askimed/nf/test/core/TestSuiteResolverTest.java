@@ -36,6 +36,30 @@ public class TestSuiteResolverTest {
 	}
 
 	@Test
+	public void executeTestByTestNameQuery() throws Throwable {
+
+		TagQuery query = new TagQueryExpression("test == 'test 1'");
+		List<String> tests = collectTests(query);
+		Assertions.assertEquals(1, tests.size());
+		Assertions.assertTrue(tests.contains("test 1"));
+		Assertions.assertFalse(tests.contains("test 2"));
+		Assertions.assertFalse(tests.contains("test 3"));
+
+	}
+
+	@Test
+	public void executeTestByNameQuery() throws Throwable {
+
+		TagQuery query = new TagQueryExpression("name == 'suite 1'");
+		List<String> tests = collectTests(query);
+		Assertions.assertEquals(2, tests.size());
+		Assertions.assertTrue(tests.contains("test 1"));
+		Assertions.assertTrue(tests.contains("test 2"));
+		Assertions.assertFalse(tests.contains("test 3"));
+
+	}
+
+	@Test
 	public void executeTestByWrongHash() throws Throwable {
 		List<File> scripts = new Vector<File>();
 		scripts.add(new File("test-data/suite1.nf.test@aaa"));
@@ -79,6 +103,13 @@ public class TestSuiteResolverTest {
 			Assertions.assertTrue(tests.contains("test 1"));
 			Assertions.assertTrue(tests.contains("test 2"));
 		}
+		{
+			TagQuery query = new TagQueryExpression("tags['suite 1']");
+			List<String> tests = collectTests(query);
+			Assertions.assertEquals(2, tests.size());
+			Assertions.assertTrue(tests.contains("test 1"));
+			Assertions.assertTrue(tests.contains("test 2"));
+		}
 	}
 
 	@Test
@@ -95,36 +126,80 @@ public class TestSuiteResolverTest {
 			Assertions.assertEquals(1, tests.size());
 			Assertions.assertTrue(tests.contains("test 1"));
 		}
+		{
+			TagQuery query = new TagQueryExpression("tags['tag2']");
+			List<String> tests = collectTests(query);
+			Assertions.assertEquals(1, tests.size());
+			Assertions.assertTrue(tests.contains("test 1"));
+		}
 	}
 
 	@Test
 	public void executeTestsByTagAcrossSuites() throws Throwable {
-
-		TagQuery query = new TagQuery("tag5");
-		List<String> tests = collectTests(query);
-		Assertions.assertEquals(2, tests.size());
-		Assertions.assertTrue(tests.contains("test 2"));
-		Assertions.assertTrue(tests.contains("test 3"));
+		{
+			TagQuery query = new TagQuery("tag5");
+			List<String> tests = collectTests(query);
+			Assertions.assertEquals(2, tests.size());
+			Assertions.assertTrue(tests.contains("test 2"));
+			Assertions.assertTrue(tests.contains("test 3"));
+		}
+		{
+			TagQuery query = new TagQueryExpression("tags['tag5']");
+			List<String> tests = collectTests(query);
+			Assertions.assertEquals(2, tests.size());
+			Assertions.assertTrue(tests.contains("test 2"));
+			Assertions.assertTrue(tests.contains("test 3"));
+		}
+		{
+			TagQuery query = new TagQuery("!tag5");
+			List<String> tests = collectTests(query);
+			Assertions.assertEquals(1, tests.size());
+			Assertions.assertTrue(!tests.contains("test 2"));
+			Assertions.assertTrue(!tests.contains("test 3"));
+		}
+		{
+			TagQuery query = new TagQueryExpression("!tags['tag5']");
+			List<String> tests = collectTests(query);
+			Assertions.assertEquals(1, tests.size());
+			Assertions.assertTrue(!tests.contains("test 2"));
+			Assertions.assertTrue(!tests.contains("test 3"));
+		}
 	}
 
 	@Test
 	public void executeTestsBySuiteTag() throws Throwable {
-
-		TagQuery query = new TagQuery("tag1");
-		List<String> tests = collectTests(query);
-		Assertions.assertEquals(2, tests.size());
-		Assertions.assertTrue(tests.contains("test 1"));
-		Assertions.assertTrue(tests.contains("test 2"));
+		{
+			TagQuery query = new TagQuery("tag1");
+			List<String> tests = collectTests(query);
+			Assertions.assertEquals(2, tests.size());
+			Assertions.assertTrue(tests.contains("test 1"));
+			Assertions.assertTrue(tests.contains("test 2"));
+		}
+		{
+			TagQuery query = new TagQueryExpression("tags['tag1']");
+			List<String> tests = collectTests(query);
+			Assertions.assertEquals(2, tests.size());
+			Assertions.assertTrue(tests.contains("test 1"));
+			Assertions.assertTrue(tests.contains("test 2"));
+		}
 	}
 
 	@Test
 	public void executeTestsByMultipleTags() throws Throwable {
-
-		TagQuery query = new TagQuery("tag3", "tag4");
-		List<String> tests = collectTests(query);
-		Assertions.assertEquals(2, tests.size());
-		Assertions.assertTrue(tests.contains("test 1"));
-		Assertions.assertTrue(tests.contains("test 2"));
+		{
+			TagQuery query = new TagQuery("tag3", "tag4");
+			List<String> tests = collectTests(query);
+			Assertions.assertEquals(2, tests.size());
+			Assertions.assertTrue(tests.contains("test 1"));
+			Assertions.assertTrue(tests.contains("test 2"));
+		}
+		{
+			TagQueryExpression query = new TagQueryExpression("tags['tag3'] || tags['tag4']");
+			List<String> tests = collectTests(query);
+			Assertions.assertEquals(2, tests.size());
+			Assertions.assertTrue(tests.contains("test 1"));
+			Assertions.assertTrue(tests.contains("test 2"));
+		}
 	}
 
 	protected List<String> collectTests(TagQuery query) throws Throwable {
