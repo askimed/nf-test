@@ -302,11 +302,9 @@ public class RunTestsCommand extends AbstractCommand {
 			} else if (coverage) {
 				new Coverage(resolver).getAll().print();
 			}
-
 			return exitStatus;
 
 		} catch (Throwable e) {
-
 			System.out.println(AnsiColors.red("Error: " + e));
 			log.error("Running tests failed.", e);
 
