@@ -248,4 +248,13 @@ public class ProcessTest extends AbstractTest {
 		}
 	}
 
+	@Override
+	public void setParameters(Map<String, Object> parameters) {
+		super.setParameters(parameters);
+		// Also update the TestContext with the parameters
+		if (context != null && parameters != null) {
+			context.setTestParameters(parameters);
+		}
+	}
+
 }
