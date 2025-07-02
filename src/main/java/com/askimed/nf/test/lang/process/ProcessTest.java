@@ -218,4 +218,34 @@ public class ProcessTest extends AbstractTest {
 
 	}
 
+	@Override
+	public void setWithTrace(boolean withTrace) {
+		this.withTrace = withTrace;
+	}
+
+	// Setter methods for data-driven testing
+	public void setSetupClosure(Closure closure) {
+		if (closure != null) {
+			setup(closure);
+		}
+	}
+
+	public void setWhenClosure(Closure closure) {
+		if (closure != null) {
+			when(closure);
+		}
+	}
+
+	public void setThenClosure(Closure closure) {
+		if (closure != null) {
+			then(closure);
+		}
+	}
+
+	public void setCleanupClosure(Closure closure) {
+		if (closure != null) {
+			cleanup(closure);
+		}
+	}
+
 }
