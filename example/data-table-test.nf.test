@@ -1,0 +1,31 @@
+nextflow_process {
+
+    name "Data table syntax test"
+    script "example/say-hello.nf"
+    process "SAY_HELLO"
+
+    // Test the pipe-separated data table syntax
+    testEach("Table test with #name and #number") {
+        when {
+            process {
+                """
+                input[0] = "$name"
+                input[1] = Channel.of($number)
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.my_tuples[0][1] == name
+            assert process.out.my_tuples[0][0] == number
+        }
+
+        where("""
+        name      | number
+        "alice"   | 1
+        "bob"     | 2
+        "charlie" | 3
+        """)
+    }
+}
