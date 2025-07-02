@@ -22,13 +22,12 @@ nextflow_process {
             assert process.out.my_tuples[0][1] == name
         }
 
-        where:
-        """
+        where("""
         name      | number | expectedSize
         "alice"   | 1      | 1
         "bob"     | 2      | 1  
         "charlie" | 3      | 1
-        """
+        """)
     }
 
     // Spock-style data pipes testing
@@ -51,12 +50,11 @@ nextflow_process {
             }
         }
 
-        where:
-        """
+        where("""
         name << ["", "valid-name", "special!@#", "normal"]
         number << [1, 2, 3, 4]
         shouldFail << [true, false, true, false]
-        """
+        """)
     }
 
     // Mixed data pipes and assignments
@@ -76,12 +74,11 @@ nextflow_process {
             assert result.contains(name)
         }
 
-        where:
-        """
+        where("""
         name << ["test1", "test2", "test3"]
         number << [10, 20, 30]
         result = name + "-" + number
-        """
+        """)
     }
 
     // Alternative: Data table with || separator (like Spock)
@@ -103,13 +100,12 @@ nextflow_process {
             }
         }
 
-        where:
-        """
+        where("""
         input           || expected
         "valid"         || true
         ""              || false
         "special!@#"    || false
         "normal-name"   || true
-        """
+        """)
     }
 }
