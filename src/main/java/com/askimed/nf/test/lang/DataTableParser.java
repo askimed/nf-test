@@ -214,17 +214,46 @@ public class DataTableParser {
      */
     private static Object evaluateSimpleExpression(String expression, Map<String, Object> variables) {
         // This is a very simplified evaluator
-        // In a real implementation, you'd want a proper expression parser
+        // Handle basic string concatenation with + operator
         
         // Replace variables in the expression
         for (Map.Entry<String, Object> var : variables.entrySet()) {
             String varName = var.getKey();
             Object varValue = var.getValue();
-            expression = expression.replace(varName, String.valueOf(varValue));
+            // Use word boundaries to avoid partial replacements
+            expression = expression.replaceAll("\\b" + varName + "\\b", 
+                varValue instanceof String ? "\"" + varValue + "\"" : String.valueOf(varValue));
+        }
+        
+        // Handle simple string concatenation: "a" + "b" + "c"
+        if (expression.contains(" + ")) {
+            return evaluateStringConcatenation(expression);
         }
         
         // Try to evaluate as a simple value
         return parseValue(expression);
+    }
+    
+    /**
+     * Evaluate simple string concatenation expressions
+     */
+    private static String evaluateStringConcatenation(String expression) {
+        String[] parts = expression.split("\\s*\\+\\s*");
+        StringBuilder result = new StringBuilder();
+        
+        for (String part : parts) {
+            part = part.trim();
+            // Remove quotes if present
+            if ((part.startsWith("\"") && part.endsWith("\"")) || 
+                (part.startsWith("'") && part.endsWith("'"))) {
+                result.append(part.substring(1, part.length() - 1));
+            } else {
+                // It's a number or unquoted value
+                result.append(part);
+            }
+        }
+        
+        return result.toString();
     }
 
     /**
