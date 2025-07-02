@@ -1,0 +1,115 @@
+nextflow_process {
+
+    name "Test process SAY_HELLO with Spock-style data-driven testing"
+    script "example/say-hello.nf"
+    process "SAY_HELLO"
+
+    // Spock-style data table testing
+    testEach("Test with name=#name and number=#number") {
+        when {
+            process {
+                """
+                input[0] = "$name"
+                input[1] = Channel.of($number)
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.my_tuples.size() == expectedSize
+            assert process.out.my_tuples[0][0] == number
+            assert process.out.my_tuples[0][1] == name
+        }
+
+        where:
+        """
+        name      | number | expectedSize
+        "alice"   | 1      | 1
+        "bob"     | 2      | 1  
+        "charlie" | 3      | 1
+        """
+    }
+
+    // Spock-style data pipes testing
+    testEach("Data pipes test #name-#number") {
+        when {
+            process {
+                """
+                input[0] = "$name"
+                input[1] = Channel.of($number)
+                """
+            }
+        }
+
+        then {
+            if (shouldFail) {
+                assert process.failed
+            } else {
+                assert process.success
+                assert process.out.my_tuples[0][1] == name
+            }
+        }
+
+        where:
+        """
+        name << ["", "valid-name", "special!@#", "normal"]
+        number << [1, 2, 3, 4]
+        shouldFail << [true, false, true, false]
+        """
+    }
+
+    // Mixed data pipes and assignments
+    testEach("Complex test #name with #result") {
+        when {
+            process {
+                """
+                input[0] = "$name"
+                input[1] = Channel.of($number)
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.my_tuples[0][0] == number
+            assert result.contains(name)
+        }
+
+        where:
+        """
+        name << ["test1", "test2", "test3"]
+        number << [10, 20, 30]
+        result = name + "-" + number
+        """
+    }
+
+    // Alternative: Data table with || separator (like Spock)
+    testEach("Edge cases #input || #expected") {
+        when {
+            process {
+                """
+                input[0] = "$input"
+                input[1] = Channel.of(1)
+                """
+            }
+        }
+
+        then {
+            if (expected) {
+                assert process.success
+            } else {
+                assert process.failed
+            }
+        }
+
+        where:
+        """
+        input           || expected
+        "valid"         || true
+        ""              || false
+        "special!@#"    || false
+        "normal-name"   || true
+        """
+    }
+}
