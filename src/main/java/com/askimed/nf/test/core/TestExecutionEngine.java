@@ -44,6 +44,8 @@ public class TestExecutionEngine {
 
 	private boolean dryRun = false;
 
+	private boolean stopOnFirstFailure = false;
+
 	private static Logger log = LoggerFactory.getLogger(TestExecutionEngine.class);
 
 	public void setDebug(boolean debug) {
@@ -94,6 +96,10 @@ public class TestExecutionEngine {
 		this.listener = listener;
 	}
 
+	public void setStopOnFirstFailure(boolean stopOnFirstFailure) {
+		this.stopOnFirstFailure = stopOnFirstFailure;
+	}
+
 	public int execute() throws Throwable {
 
 		if (configFile != null) {
@@ -136,6 +142,7 @@ public class TestExecutionEngine {
 
 			listener.testSuiteExecutionStarted(testSuite);
 
+			outer:
 			for (ITest test : testSuite.getTests()) {
 				if (test.isSkipped()) {
 					log.info("Test '{}' skipped.", test);
@@ -182,6 +189,11 @@ public class TestExecutionEngine {
 				log.info("Test '{}' finished. status: {}", result.getTest(), result.getStatus(), result.getThrowable());
 
 				listener.executionFinished(test, result);
+
+				if (failedTests > 0 && stopOnFirstFailure) {
+					log.warn("Stopping test execution due to first failure (stopOnFirstFailure enabled).");
+					break outer;
+				}
 
 			}
 
