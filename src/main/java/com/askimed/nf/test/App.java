@@ -29,7 +29,7 @@ public class App {
 		commandLine.addSubcommand("clean", new CleanCommand());
 		commandLine.addSubcommand("init", new InitCommand());
 		commandLine.addSubcommand("test", new RunTestsCommand());
-		commandLine.addSubcommand("coverage", new CoverageCommand());
+		commandLine.addSubcommand("coverage", new StatusCommand());
 		commandLine.addSubcommand("list", new ListTestsCommand());
 		commandLine.addSubcommand("ls", new ListTestsCommand());
 		commandLine.addSubcommand("generate", new GenerateTestsCommand());

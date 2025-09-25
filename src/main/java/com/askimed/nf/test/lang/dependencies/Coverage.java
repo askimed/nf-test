@@ -142,9 +142,13 @@ public class Coverage {
     }
 
     private void printLabel() {
-        float coverage = getCoveredItems() / (float) getItems().size();
-        System.out.print(getColor("COVERAGE:", coverage) + " " +  formatCoverage(coverage));
-        System.out.println( " [" + getCoveredItems() + " of " + getItems().size() + " files]");
+        int covered = getCoveredItems();
+        int total = getItems().size();
+        float coverage = covered / (float) total;;
+        System.out.print("Status: " + covered + " of " + total +
+                        " modules and workflows are covered with at least one testcase "
+        );
+        System.out.println("(" + formatCoverage(coverage) + ")");
     }
 
     public float getCoverage() {
