@@ -14,17 +14,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-@Command(name = "coverage")
-public class CoverageCommand extends AbstractCommand {
+@Command(name = "status")
+public class StatusCommand extends AbstractCommand {
 
 	private static final String SHARD_STRATEGY_ROUND_ROBIN = "round-robin";
 
 	@Option(names = {
-			"--csv" }, description = "Write coverage results in csv format", required = false, showDefaultValue = Visibility.ALWAYS)
+			"--csv" }, description = "Write status results in csv format", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String csv = null;
 
 	@Option(names = {
-			"--html" }, description = "Write coverage results in html format", required = false, showDefaultValue = Visibility.ALWAYS)
+			"--html" }, description = "Write status results in html format", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String html = null;
 
 
@@ -32,7 +32,7 @@ public class CoverageCommand extends AbstractCommand {
 			"-c" }, description = "nf-test.config filename", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String configFilename = Config.FILENAME;
 
-	private static Logger log = LoggerFactory.getLogger(CoverageCommand.class);
+	private static Logger log = LoggerFactory.getLogger(StatusCommand.class);
 
 	@Override
 	public Integer execute() throws Exception {
