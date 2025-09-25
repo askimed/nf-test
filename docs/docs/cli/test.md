@@ -54,6 +54,9 @@ Writes test results in csv file.
 
 By default,nf-test automatically stores a new snapshot. When CI mode is activated, nf-test will fail the test instead of storing the snapshot automatically.
 
+#### `--smart-testing`
+
+Runs in smart testing mode (equivalent to --ci --changed-since HEAD^).
 
 ### `--filter <types>`
 
