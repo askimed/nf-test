@@ -132,10 +132,25 @@ public class RunTestsCommand extends AbstractCommand {
 			"--tag" }, split = ",", description = "Execute only tests with this tag", required = false, showDefaultValue = Visibility.ALWAYS)
 	private List<String> tags = new Vector<String>();
 
+	@Option(
+			names = { "--smart-testing", "--smartTesting" },
+			description = "Runs in smart testing mode (equivalent to --ci --changed-since HEAD^).",
+			required = false,
+			showDefaultValue = Visibility.ALWAYS
+	)
+	private boolean smartTesting = false;
+
 	private static Logger log = LoggerFactory.getLogger(RunTestsCommand.class);
 
 	@Override
 	public Integer execute() throws Exception {
+
+		if (smartTesting) {
+			this.ciMode = true;
+			if (this.changedSince == null) {
+				this.changedSince = "HEAD^";
+			}
+		}
 
 		List<File> scripts = new ArrayList<File>();
 		Config config = null;
