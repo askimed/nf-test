@@ -13,7 +13,7 @@ This page collects videos and blog posts about nf-test created by the community.
 
 This training modules introduces nf-test in a simple and easy to follow-along hello-nextflow style aimed for beginners.
 
-[hello nf-test training module](https://training.nextflow.io/fr/hello_nextflow/08_hello_nf-test/)
+[hello nf-test training module](https://training.nextflow.io/latest/side_quests/nf-test/)
 
 ---
 
