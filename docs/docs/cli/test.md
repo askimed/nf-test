@@ -28,6 +28,10 @@ The Linux tool `procps` is required to run Nextflow tracing. In case your contai
 
 Execute only tests with the provided tag. Multiple tags can be used and have to be separated by commas (e.g. `tag1,tag2`).
 
+#### `--stop-on-first-failure`
+
+Stops execution after the first test failure.
+
 #### `--debug`
 
 The debug parameter prints out debugging messages and all available output channels which can be accessed in the `then` clause.
