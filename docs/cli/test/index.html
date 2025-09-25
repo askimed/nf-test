@@ -1187,6 +1187,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#-smart-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      --smart-testing
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1663,6 +1672,8 @@
 <p>Writes test results in csv file.</p>
 <h4 id="-ci"><code>--ci</code></h4>
 <p>By default,nf-test automatically stores a new snapshot. When CI mode is activated, nf-test will fail the test instead of storing the snapshot automatically.</p>
+<h4 id="-smart-testing"><code>--smart-testing</code></h4>
+<p>Runs in smart testing mode (equivalent to --ci --changed-since HEAD^).</p>
 <h3 id="-filter-types"><code>--filter &lt;types&gt;</code></h3>
 <p>Filter test cases by specified types (e.g., process, pipeline, workflow or function). Multiple types can be separated by commas.</p>
 <h3 id="optimizing-test-execution">Optimizing Test Execution</h3>
