@@ -139,6 +139,14 @@ public class RunTestsCommand extends AbstractCommand {
 			showDefaultValue = Visibility.ALWAYS
 	)
 	private boolean smartTesting = false;
+  
+  @Option(
+			names = {"--stop-on-first-failure", "--stopOnFirstFailure"},
+			description = "Stop execution immediately after the first test failure",
+			required = false,
+			showDefaultValue = Visibility.ALWAYS
+	)
+	private boolean stopOnFirstFailure = false;
 
 	private static Logger log = LoggerFactory.getLogger(RunTestsCommand.class);
 
@@ -297,6 +305,7 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.setCleanSnapshot(cleanSnapshot);
 			engine.setCIMode(ciMode);
 			engine.addProfile(profile);
+			engine.setStopOnFirstFailure(stopOnFirstFailure);
 			engine.setDryRun(dryRun);
 			if (withoutTrace) {
 				engine.setWithTrace(false);
