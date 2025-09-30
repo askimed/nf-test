@@ -170,7 +170,6 @@ public class TestExecutionEngine {
 					result.setStartTime(System.currentTimeMillis());
 					if (!dryRun) {
 						test.execute();
-						test.cleanup();
 					}
 					result.setStatus(TestExecutionResultStatus.PASSED);
 
@@ -183,6 +182,9 @@ public class TestExecutionEngine {
 					testSuite.setFailedTests(true);
 					failedTests++;
 
+				}
+				if (!dryRun) {
+					test.cleanup();
 				}
 				result.setEndTime(System.currentTimeMillis());
 
