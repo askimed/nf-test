@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         java: ['17', '21', '23']
-        nextflow: ['latest-edge', 'latest-stable' ]
+        nextflow: ['latest-stable' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
