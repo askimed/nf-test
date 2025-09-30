@@ -170,6 +170,7 @@ public class TestExecutionEngine {
 					result.setStartTime(System.currentTimeMillis());
 					if (!dryRun) {
 						test.execute();
+						test.cleanup();
 					}
 					result.setStatus(TestExecutionResultStatus.PASSED);
 
@@ -183,7 +184,6 @@ public class TestExecutionEngine {
 					failedTests++;
 
 				}
-				test.cleanup();
 				result.setEndTime(System.currentTimeMillis());
 
 				log.info("Test '{}' finished. status: {}", result.getTest(), result.getStatus(), result.getThrowable());
