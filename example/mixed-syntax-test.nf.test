@@ -1,0 +1,31 @@
+nextflow_process {
+
+    name "Mixed syntax test"
+    script "example/say-hello.nf"
+    process "SAY_HELLO"
+
+    // Test mixed data pipes and computed assignments
+    testEach("Test #name with result=#result") {
+        when {
+            process {
+                """
+                input[0] = "$name"
+                input[1] = Channel.of($number)
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.my_tuples[0][1] == name
+            assert process.out.my_tuples[0][0] == number
+            assert result == name + "-" + number
+        }
+
+        where("""
+        name << ["test1", "test2", "test3"]
+        number << [10, 20, 30]
+        result = name + "-" + number
+        """)
+    }
+}
