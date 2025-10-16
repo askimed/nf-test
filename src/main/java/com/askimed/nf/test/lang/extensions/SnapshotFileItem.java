@@ -9,8 +9,7 @@ import com.askimed.nf.test.App;
 import com.askimed.nf.test.lang.extensions.util.SnapshotDiffUtil;
 
 import com.askimed.nf.test.nextflow.NextflowCommand;
-import groovy.json.JsonGenerator;
-import groovy.json.JsonOutput;
+import com.askimed.nf.test.util.ObjectUtil;
 
 public class SnapshotFileItem {
 
@@ -76,11 +75,7 @@ public class SnapshotFileItem {
 
 	@Override
 	public String toString() {
-		JsonGenerator jsonGenerator = SnapshotFile.createJsonGenerator();
-		String json = jsonGenerator.toJson(getContent());
-		String prettyJson = JsonOutput.prettyPrint(json);
-		return prettyJson;
+		return ObjectUtil.toJson(getContent());
 	}
-
 
 }
