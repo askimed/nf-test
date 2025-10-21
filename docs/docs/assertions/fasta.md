@@ -17,7 +17,7 @@ config {
 }
 ```
 
-More about plugins can be fond [here](/plugins/using-plugins).
+More about plugins can be found [here](/docs/plugins/using-plugins).
 
 ## Comparing files
 
