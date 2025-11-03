@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
@@ -969,13 +969,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-maven-artifcats-with-grab" class="md-nav__link">
+  <a href="#using-maven-artifacts-with-grab" class="md-nav__link">
     <span class="md-ellipsis">
-      Using Maven Artifcats with @Grab
+      Using Maven Artifacts with @Grab
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Using Maven Artifcats with @Grab">
+    <nav class="md-nav" aria-label="Using Maven Artifacts with @Grab">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1432,7 +1432,7 @@
 <p>nf-test supports including third party libraries (e.g. jar files ) or functions from groovy files to either extend it functionality or to avoid duplicate code and to keep the logic in test cases simple.</p>
 <h2 id="using-local-groovy-files">Using Local Groovy Files</h2>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.75 6.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"/><path d="M2.5 1h8.44a1.5 1.5 0 0 1 1.06.44l10.25 10.25a1.5 1.5 0 0 1 0 2.12l-8.44 8.44a1.5 1.5 0 0 1-2.12 0L1.44 12A1.5 1.5 0 0 1 1 10.94V2.5A1.5 1.5 0 0 1 2.5 1m0 1.5v8.44l10.25 10.25 8.44-8.44L10.94 2.5Z"/></svg></span> 0.7.0 ·</p>
-<p>If nf-test detects a <code>lib</code> folder in the directory of a tescase, then it adds it automatically to the classpath.</p>
+<p>If nf-test detects a <code>lib</code> folder in the directory of a testcase, then it adds it automatically to the classpath.</p>
 <h3 id="examples">Examples</h3>
 <p>We have a Groovy script <code>MyWordUtils.groovy</code> that contains the following class:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">MyWordUtils</span><span class="w"> </span><span class="o">{</span>
@@ -1541,7 +1541,7 @@
 
 <span class="o">}</span>
 </code></pre></div>
-<h2 id="using-maven-artifcats-with-grab">Using Maven Artifcats with <code>@Grab</code></h2>
+<h2 id="using-maven-artifacts-with-grab">Using Maven Artifacts with <code>@Grab</code></h2>
 <p>nf-test supports the <code>@Grab</code> annotation to include third-party libraries that are available in a maven repository. As the dependency is defined as a maven artifact, there is no local copy of the jar file needed and maven enables to include an exact version as well as provides an easy update process.</p>
 <h3 id="example">Example</h3>
 <p>The following example uses the <code>WordUtil</code> class from <code>commons-lang</code>:</p>
