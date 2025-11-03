@@ -29,7 +29,7 @@ config {
 }
 ```
 
-It is also possible to add one ore more additional repositories. (Example: repository with development/snapshot versions, in-house repository, ...)
+It is also possible to add one or more additional repositories. (Example: repository with development/snapshot versions, in-house repository, ...)
 
 ```
 config {
