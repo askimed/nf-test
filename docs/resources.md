@@ -31,7 +31,7 @@ In this nf-core bytesize session, **Maxime Garcia** shows how to make pipeline l
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VaKcd_qgBJc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-The presentation was recored as part of the [nf-core/nft-utils](https://nf-co.re/events/2024/bytesize_pipeline_level_tests_with_nftest) series.
+The presentation was recorded as part of the [nf-core/nft-utils](https://nf-co.re/events/2024/bytesize_pipeline_level_tests_with_nftest) series.
 
 ---
 
@@ -40,7 +40,7 @@ The presentation was recored as part of the [nf-core/nft-utils](https://nf-co.re
 **Nicolas Vannieuwkerke** presents *nft-bam* a nf-test plugin to get stable nf-test snapshots for SAM, BAM or CRAM files.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/wyIpQLg7JxM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-The presentation was recored as part of the [nf-core/nft-bam](https://nf-co.re/events/2024/bytesize_nft_bam) series.
+The presentation was recorded as part of the [nf-core/nft-bam](https://nf-co.re/events/2024/bytesize_nft_bam) series.
 
 ---
 
@@ -50,7 +50,7 @@ The presentation was recored as part of the [nf-core/nft-bam](https://nf-co.re/e
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/MuwluoKFnwM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-The presentation was recored as part of the [nf-core/bytesize](https://nf-co.re/events/2023/bytesize_converting_pytest_modules_to_nf-test) series.
+The presentation was recorded as part of the [nf-core/bytesize](https://nf-co.re/events/2023/bytesize_converting_pytest_modules_to_nf-test) series.
 
 ---
 
@@ -82,7 +82,7 @@ The presentation was recorded as part of the Workflows Community Meetup - All Th
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/K9B7JRkMpQ4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-The presentation was recored as part of the nf-core/bytesize 
+The presentation was recorded as part of the nf-core/bytesize 
 
 ---
 

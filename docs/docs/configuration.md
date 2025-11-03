@@ -73,7 +73,7 @@ nextflow_process {
 }
 ```
 
-It is also possible to overwrite these properties for specific test. Depending on the used Nextflow option, also add the `--debug` nf-test option on the command-line to see the addtional output.
+It is also possible to overwrite these properties for specific test. Depending on the used Nextflow option, also add the `--debug` nf-test option on the command-line to see the additional output.
 
 ```
 nextflow_process {
