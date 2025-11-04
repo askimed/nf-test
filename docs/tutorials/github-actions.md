@@ -19,36 +19,111 @@ Whether you are maintaining a complex bioinformatics pipeline or a simple data a
 Create a file named `.github/workflows/ci-tests.yml` in your repository with the following content:
 
 ```yaml
-name: CI Tests
+name: nf-test CI Tests
 
 on: [push, pull_request]
+
+env:
+  # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # renovate: datasource=github-releases depName=askimed/nf-test versioning=semver
+  NFT_VER: "0.9.2"
+  NXF_ANSI_LOG: false
+  NXF_SINGULARITY_CACHEDIR: ${{ github.workspace }}/.singularity
+  NXF_SINGULARITY_LIBRARYDIR: ${{ github.workspace }}/.singularity
+  # renovate: datasource=github-releases depName=nextflow/nextflow versioning=semver
+  NXF_VER: "24.10.2"
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
         with:
-          java-version: '11'
-          distribution: 'adopt'
+          fetch-depth: 0
 
-      - name: Setup Nextflow latest-edge
-        uses: nf-core/setup-nextflow@v1
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4
         with:
-          version: "latest-edge"
+          distribution: "temurin"
+          java-version: "17"
 
-      - name: Install nf-test
+      - name: Set up Nextflow
+        uses: nf-core/setup-nextflow@v2
+        with:
+          version: "${{ env.NXF_VERSION }}"
+
+      - name: Set up Python
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5
+        with:
+          python-version: "3.13"
+
+      - name: Setup apptainer
+        uses: eWaterCycle/setup-apptainer@3f706d898c9db585b1d741b4692e66755f3a1b40 #v2
+
+      - name: Set up Singularity
+        shell: bash
         run: |
-          wget -qO- https://get.nf-test.com | bash
-          sudo mv nf-test /usr/local/bin/
+          mkdir -p $NXF_SINGULARITY_CACHEDIR
+          mkdir -p $NXF_SINGULARITY_LIBRARYDIR
 
-      - name: Run Tests
-        run: nf-test test --ci
+      - name: Set up nf-test
+        uses: nf-core/setup-nf-test@v1
+        with:
+          version: "${{ env.NFT_VER }}"
+          install-pdiff: true
+
+      - name: Run nf-test
+        shell: bash
+        run: |
+          # NFT_WORKDIR=~ \
+          # NFT_DIFF=pdiff \
+          # NFT_DIFF_ARGS="--line-numbers --expand-tabs=2"
+
+          nf-test test \
+            --profile=singularity \
+            --tap=test.tap \
+            --verbose \
+            --ci
+
+            # Save the absolute path of the test.tap file to the output
+            echo "tap_file_path=$(realpath test.tap)" >> $GITHUB_OUTPUT
+
+      - name: Generate test summary
+        if: always()
+        shell: bash
+        run: |
+          # Add header if it doesn't exist (using a token file to track this)
+          if [ ! -f ".summary_header" ]; then
+            echo "# 🚀 nf-test Results" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Status | Test Name | Profile | Shard |" >> $GITHUB_STEP_SUMMARY
+            echo "|:------:|-----------|---------|-------|" >> $GITHUB_STEP_SUMMARY
+            touch .summary_header
+          fi
+
+          if [ -f test.tap ]; then
+            while IFS= read -r line; do
+              if [[ $line =~ ^ok ]]; then
+                test_name="${line#ok }"
+                # Remove the test number from the beginning
+                test_name="${test_name#* }"
+                echo "| ✅ | ${test_name} | ${{ inputs.profile }} | ${{ inputs.shard }}/${{ inputs.total_shards }} |" >> $GITHUB_STEP_SUMMARY
+              elif [[ $line =~ ^not\ ok ]]; then
+                test_name="${line#not ok }"
+                # Remove the test number from the beginning
+                test_name="${test_name#* }"
+                echo "| ❌ | ${test_name} | ${{ inputs.profile }} | ${{ inputs.shard }}/${{ inputs.total_shards }} |" >> $GITHUB_STEP_SUMMARY
+              fi
+            done < test.tap
+          else
+            echo "| ⚠️ | No test results found | ${{ inputs.profile }} | ${{ inputs.shard }}/${{ inputs.total_shards }} |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Clean up
+        if: always()
+        shell: bash
+        run: |
+          sudo rm -rf /home/ubuntu/tests/
 ```
 
 ### Explanation:
@@ -58,6 +133,21 @@ jobs:
 3. **Setup Nextflow**: Uses the `nf-core/setup-nextflow@v1` action to install the latest-edge version of Nextflow.
 4. **Install nf-test**: Downloads and installs nf-test.
 5. **Run Tests**: Runs nf-test with the `--ci` flag. This activates the CI mode. Instead of automatically storing a new snapshot as per usual, it will now fail the test if no reference snapshot is available. This enables tests to fail when a snapshot file was forgotten to be committed.
+
+### Configuration
+
+If you're testing a pipeline and all the tests in the modules and subworkflows, you might need to change your `nf-test.config` file to use `testsDir "."` instead of `testsDir "tests"`, so that `nf-tests` looks for `main.nf.test` files in all subdirectories. Your `nf-test.config` file might look like this:
+
+```json
+config {
+
+    testsDir "."
+    workDir ".nf-test"
+    configFile "tests/nextflow.config"
+    profile ""
+
+}
+```
 
 ## Step 2: Extending to Use Sharding
 
