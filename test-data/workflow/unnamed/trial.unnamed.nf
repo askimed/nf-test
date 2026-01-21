@@ -1,7 +1,4 @@
-#!/usr/bin/env nextflow
-nextflow.enable.dsl=2
-
-process sayHello {
+    process sayHello {
     input:
         val cheers
 
@@ -20,11 +17,13 @@ workflow trial {
     take: things
     main:
         sayHello(things)
+        def out1 = sayHello.out.verbiage
+        def out2 = sayHello.out.output_files
     emit:
-        sayHello.out.verbiage
-        sayHello.out.output_files
+        out1
+        out2
 }
 
 workflow {
-    Channel.from('a','b') | trial
+    channel.from('a','b') | trial
 }

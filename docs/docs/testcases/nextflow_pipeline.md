@@ -45,9 +45,6 @@ assert workflow.trace.tasks().size() == 3
 Create a new file and name it `pipeline.nf`.
 
 ```Groovy
-#!/usr/bin/env nextflow
-nextflow.enable.dsl=2
-
 process SAY_HELLO {
     input:
         val cheers

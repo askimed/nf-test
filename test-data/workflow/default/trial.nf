@@ -1,6 +1,3 @@
-#!/usr/bin/env nextflow
-nextflow.enable.dsl=2
-
 process sayHello {
     input:
         val cheers
@@ -26,5 +23,5 @@ workflow trial {
 }
 
 workflow {
-    Channel.from('a','b') | trial
+    channel.from('a','b') | trial
 }

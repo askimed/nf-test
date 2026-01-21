@@ -6,6 +6,7 @@ process TEST_PROCESS {
     val number
     val name
 
+  script:
   """
   echo "lukas forer" > "${number}_${name}.txt"
   """

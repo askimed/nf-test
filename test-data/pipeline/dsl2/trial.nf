@@ -1,8 +1,5 @@
-#!/usr/bin/env nextflow
-nextflow.enable.dsl=2
-
 process sayHello {
-  
+
     publishDir params.output
 
     input:
@@ -29,5 +26,5 @@ workflow trial {
 }
 
 workflow {
-    Channel.from(params.input.split(',')) | trial
+    channel.from(params.input.split(',')) | trial
 }
