@@ -81,14 +81,42 @@ def serializeChannel(name, channel, jsonOutput, outputDir) {
 
 def createJsonOutput(_input = null) {
     // _input is needed because a closure is provided to all functions called in the process
-    return new groovy.json.JsonGenerator.Options()
-        .addConverter(Path) { value -> value.toAbsolutePath().toString() } // Custom converter for Path. Only filename
-        .build()
+    return [
+        toJson: { obj ->
+            def converted = convertPathsToStrings(obj)
+            return groovy.json.JsonOutput.toJson(converted)
+        }
+    ]
+}
+
+def convertPathsToStrings(obj) {
+    if (obj instanceof java.nio.file.Path) {
+        return obj.toAbsolutePath().toString()
+    } else if (obj instanceof Map) {
+        return obj.collectEntries { k, v -> [k, convertPathsToStrings(v)] }
+    } else if (obj instanceof Collection) {
+        return obj.collect { it -> convertPathsToStrings(it) }
+    } else {
+        return obj
+    }
 }
 
 def createJsonWorkflowOutput(_input = null) {
     // _input is needed because a closure is provided to all functions called in the workflow
-    def options = new groovy.json.JsonGenerator.Options()
-    options.excludeNulls()
-    return options.build()
+    return [
+        toJson: { obj ->
+            def filtered = removeNullValues(obj)
+            return groovy.json.JsonOutput.toJson(filtered)
+        }
+    ]
+}
+
+def removeNullValues(obj) {
+    if (obj instanceof Map) {
+        return obj.findAll { _k, v -> v != null }.collectEntries { k, v -> [k, removeNullValues(v)] }
+    } else if (obj instanceof Collection) {
+        return obj.findAll { it -> it != null }.collect { it -> removeNullValues(it) }
+    } else {
+        return obj
+    }
 }
