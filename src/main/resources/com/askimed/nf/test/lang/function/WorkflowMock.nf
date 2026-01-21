@@ -16,7 +16,11 @@ workflow {
     ${mapping}
     //----
 
+    <% if (script == null) { %>
+    def functionResult = ${function.tokenize('.')[0]}.invokeMethod("${function.tokenize('.')[1]}", input.toArray())
+    <% } else { %>
     def functionResult = ${function}.invoke_a(input.toArray())
+    <% } %>
     if (functionResult != null) {
         new File("\${params.nf_test_output}/function.json").text = jsonOutput.toJson(functionResult)
     }
