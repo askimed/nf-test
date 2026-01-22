@@ -4,7 +4,7 @@ process TEST_PROCESS {
     val number
 
   output:
-    val number, emit: my_output_numbers
+    val(task.ext.args ?: ''), emit: arguments
 
   script:
   """

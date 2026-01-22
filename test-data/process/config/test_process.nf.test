@@ -13,14 +13,14 @@ nextflow_process {
     when {
       process {
         """
-        input[0] = Channel.from(params.input)
+        input[0] = channel.from(1)
         """
       }
     }
 
     then {
       assert process.success
-      assert process.out.my_output_numbers == [1,2,3,4,5]      
+      assert process.out.arguments == ["nextflow.config"]      
       
     }
 
@@ -33,14 +33,14 @@ nextflow_process {
     when {
       process {
         """
-        input[0] = Channel.from(params.input)
+        input[0] = channel.from(1)
         """
       }
     }
 
     then {
       assert process.success
-      assert process.out.my_output_numbers == [1,2,3]      
+      assert process.out.arguments == ["nextflow2.config"]      
       
     }
 
