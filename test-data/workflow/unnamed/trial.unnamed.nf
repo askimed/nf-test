@@ -17,8 +17,8 @@ workflow trial {
     take: things
     main:
         sayHello(things)
-        def out1 = sayHello.out.verbiage
-        def out2 = sayHello.out.output_files
+        out1 = sayHello.out.verbiage
+        out2 = sayHello.out.output_files
     emit:
         out1
         out2

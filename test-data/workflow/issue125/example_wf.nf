@@ -15,9 +15,9 @@ process exampleProc {
 
     script:
         """
-        mkdir -p !{localOutputDir}
-        touch "!{localOutputDir}/example1.txt"
-        touch "!{localOutputDir}/example2.txt"
+        mkdir -p ${localOutputDir}
+        touch "${localOutputDir}/example1.txt"
+        touch "${localOutputDir}/example2.txt"
         """
 }
 

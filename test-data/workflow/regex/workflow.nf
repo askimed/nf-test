@@ -16,8 +16,8 @@ process exampleProc {
 
     script:
         """
-        mkdir -p !{localOutputDir}
-        echo !{someRegexString} > "!{localOutputDir}/example1.txt"
+        mkdir -p ${localOutputDir}
+        echo ${someRegexString} > "${localOutputDir}/example1.txt"
         """
 }
 
