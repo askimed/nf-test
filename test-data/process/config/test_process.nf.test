@@ -20,7 +20,7 @@ nextflow_process {
 
     then {
       assert process.success
-      assert process.out.arguments == ["nextflow.config"]      
+      assert process.out.arguments == ["nextflow.config\n"]      
       
     }
 
@@ -40,7 +40,7 @@ nextflow_process {
 
     then {
       assert process.success
-      assert process.out.arguments == ["nextflow2.config"]      
+      assert process.out.arguments == ["nextflow2.config\n"]      
       
     }
 
