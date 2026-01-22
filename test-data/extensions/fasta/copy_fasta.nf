@@ -4,9 +4,9 @@ process COPY_FASTA {
     path fasta
 
   output:
-     path "output.fasta", emit: fasta
+    path "output.fasta", emit: fasta
 
-
+  script:
   """
 	cp ${fasta} output.fasta
   """
