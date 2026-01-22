@@ -4,9 +4,12 @@ process TEST_PROCESS {
     val number
 
   output:
-     val number, emit: my_output_numbers
+    stdout emit: arguments
 
+  script:
+  def args = task.ext.args ?: ''
   """
+  echo "${args}"
   """
 
 }

@@ -70,9 +70,6 @@ assert workflow.out.my_channel.get(0) == "hello"
 Create a new file and name it `trial.nf`.
 
 ```Groovy
-#!/usr/bin/env nextflow
-nextflow.enable.dsl=2
-
 process sayHello {
     input:
         val cheers

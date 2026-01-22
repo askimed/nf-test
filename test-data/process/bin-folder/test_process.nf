@@ -11,6 +11,7 @@ process TEST_PROCESS {
      tuple val(number), val(name), path("*.txt"), emit: my_output_tuple
      val number, emit: my_output_numbers
 
+  script:
   """
   test-script.sh > "${number}_${name}.txt"
   """

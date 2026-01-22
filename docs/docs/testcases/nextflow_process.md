@@ -74,9 +74,6 @@ assert process.out[0].get(0) == "hello"
 Create a new file and name it `say_hello.nf`.
 
 ```Groovy
-#!/usr/bin/env nextflow
-nextflow.enable.dsl=2
-
 process SAY_HELLO {
     input:
         val cheers

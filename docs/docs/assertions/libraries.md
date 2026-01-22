@@ -34,9 +34,6 @@ testcase_1
 The file `capitalizer.nf` contains the `CAPITALIZER` process:
 
 ```Groovy
-#!/usr/bin/env nextflow
-nextflow.enable.dsl=2
-
 process CAPITALIZER {
     input:
         val cheers

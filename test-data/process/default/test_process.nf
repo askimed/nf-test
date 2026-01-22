@@ -7,10 +7,11 @@ process TEST_PROCESS {
     val name
 
   output:
-     path "*.txt", emit: my_output_files
-     tuple val(number), val(name), path("*.txt"), emit: my_output_tuple
-     val number, emit: my_output_numbers
+    path "*.txt", emit: my_output_files
+    tuple val(number), val(name), path("*.txt"), emit: my_output_tuple
+    val number, emit: my_output_numbers
 
+  script:
   """
   echo "lukas forer" > "${number}_${name}.txt"
   """
