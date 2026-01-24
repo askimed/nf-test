@@ -1,0 +1,35 @@
+nextflow_process {
+
+    name "Double pipe syntax test"
+    script "example/say-hello.nf"
+    process "SAY_HELLO"
+
+    // Test the double pipe separator syntax (input || expected)
+    testEach("Test #name || should be #expected") {
+        when {
+            process {
+                """
+                input[0] = "$name"
+                input[1] = Channel.of(1)
+                """
+            }
+        }
+
+        then {
+            if (expected) {
+                assert process.success
+                assert process.out.my_tuples[0][1] == name
+            } else {
+                // For this test, all should succeed, but this shows the pattern
+                assert process.success
+            }
+        }
+
+        where("""
+        name        || expected
+        "alice"     || true
+        "bob"       || true
+        "charlie"   || true
+        """)
+    }
+}

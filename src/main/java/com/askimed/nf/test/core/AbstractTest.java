@@ -8,6 +8,11 @@ import java.util.Vector;
 import com.askimed.nf.test.util.HashUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.askimed.nf.test.config.Config;
 import com.askimed.nf.test.util.FileUtil;
@@ -63,6 +68,9 @@ public abstract class AbstractTest implements ITest {
 	private boolean updateSnapshot = false;
 
 	private boolean ciMode = false;
+	private Map<String, Object> parameters = new HashMap<String, Object>();
+
+	public AbstractTest() {
 
 	private boolean debug = false;
 
@@ -261,4 +269,12 @@ public abstract class AbstractTest implements ITest {
 		return getHash().substring(0, 8) + ": " + getName();
 	}
 
+	public void setParameters(Map<String, Object> parameters) {
+		this.parameters = parameters;
+	}
+
+	public Map<String, Object> getParameters() {
+		return parameters;
+	}
+	
 }

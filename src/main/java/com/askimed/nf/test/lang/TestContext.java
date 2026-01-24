@@ -1,6 +1,8 @@
 package com.askimed.nf.test.lang;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.codehaus.groovy.control.CompilationFailedException;
 
@@ -10,8 +12,9 @@ import com.askimed.nf.test.lang.extensions.Snapshot;
 import com.askimed.nf.test.lang.workflow.Workflow;
 
 import groovy.lang.Closure;
+import groovy.lang.GroovyObjectSupport;
 
-public class TestContext {
+public class TestContext extends GroovyObjectSupport {
 
 	private ParamsMap params;
 
@@ -35,9 +38,15 @@ public class TestContext {
 
 	private WorkflowMeta workflow = new WorkflowMeta();
 
+	private Map<String, Object> testParameters = new HashMap<String, Object>();
+
 	public TestContext(ITest test) {
 		params = new ParamsMap(this);
 		this.test = test;
+		// Initialize test parameters from the test
+		if (test != null && test.getParameters() != null) {
+			this.testParameters = new HashMap<String, Object>(test.getParameters());
+		}
 	}
 
 	public void init(AbstractTest test) {
@@ -125,4 +134,35 @@ public class TestContext {
 		throw new RuntimeException("Variable 'workDir' is read only");
 	}
 
+	public void setTestParameters(Map<String, Object> parameters) {
+		if (parameters != null) {
+			this.testParameters = new HashMap<String, Object>(parameters);
+		}
+	}
+
+	public Map<String, Object> getTestParameters() {
+		return testParameters;
+	}
+
+	@Override
+	public Object getProperty(String name) {
+		// First check if it's a test parameter
+		if (testParameters.containsKey(name)) {
+			return testParameters.get(name);
+		}
+		// Fall back to default Groovy property resolution
+		return super.getProperty(name);
+	}
+
+	@Override
+	public void setProperty(String name, Object value) {
+		// Allow setting test parameters dynamically
+		if (testParameters.containsKey(name)) {
+			testParameters.put(name, value);
+		} else {
+			// Fall back to default Groovy property resolution
+			super.setProperty(name, value);
+		}
+	}
+	
 }
