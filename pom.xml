@@ -24,7 +24,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
@@ -33,22 +33,26 @@
 	</properties>
 
 	<dependencies>
-
 		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
+			<groupId>org.apache.groovy</groupId>
+			<artifactId>groovy</artifactId>
 			<version>4.0.30</version>
-			<type>pom</type>
 		</dependency>
 
 		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
+			<groupId>org.apache.groovy</groupId>
 			<artifactId>groovy-nio</artifactId>
 			<version>4.0.30</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
+			<groupId>org.apache.groovy</groupId>
+			<artifactId>groovy-templates</artifactId>
+			<version>4.0.30</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.groovy</groupId>
 			<artifactId>groovy-yaml</artifactId>
 			<version>4.0.30</version>
 		</dependency>
