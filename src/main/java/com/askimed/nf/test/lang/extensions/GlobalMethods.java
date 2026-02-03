@@ -6,7 +6,6 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import groovy.lang.Closure;
-import junit.framework.AssertionFailedError;
 
 import org.codehaus.groovy.runtime.powerassert.PowerAssertionError;
 

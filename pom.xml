@@ -29,6 +29,7 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<junit.version>5.9.1</junit.version>
+		<groovy.version>4.0.30</groovy.version>
 		<additionalparam>-Xdoclint:none</additionalparam>
 	</properties>
 
@@ -36,25 +37,25 @@
 		<dependency>
 			<groupId>org.apache.groovy</groupId>
 			<artifactId>groovy</artifactId>
-			<version>4.0.30</version>
+			<version>${groovy.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.groovy</groupId>
 			<artifactId>groovy-nio</artifactId>
-			<version>4.0.30</version>
+			<version>${groovy.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.groovy</groupId>
 			<artifactId>groovy-templates</artifactId>
-			<version>4.0.30</version>
+			<version>${groovy.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.groovy</groupId>
 			<artifactId>groovy-yaml</artifactId>
-			<version>4.0.30</version>
+			<version>${groovy.version}</version>
 		</dependency>
 
 		<dependency>
@@ -94,6 +95,32 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<version>1.9.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javaparser</groupId>
+			<artifactId>javaparser-core</artifactId>
+			<version>3.26.2</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
 		<dependency>
 			<groupId>org.hamcrest</groupId>
@@ -103,23 +130,23 @@
 
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
 		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-api</artifactId>
-		    <version>2.0.7</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>2.0.7</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
 		<dependency>
-		    <groupId>ch.qos.logback</groupId>
-		    <artifactId>logback-classic</artifactId>
-		    <version>1.5.6</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.5.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
 		<dependency>
-		    <groupId>ch.qos.logback</groupId>
-		    <artifactId>logback-core</artifactId>
-		    <version>1.5.6</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.5.6</version>
 		</dependency>
 
 	</dependencies>
@@ -177,7 +204,7 @@
 					<dependency>
 						<groupId>org.junit.jupiter</groupId>
 						<artifactId>junit-jupiter-engine</artifactId>
-						<version>5.3.2</version>
+						<version>${junit.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
