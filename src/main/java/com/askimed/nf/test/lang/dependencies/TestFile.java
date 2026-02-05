@@ -1,7 +1,6 @@
 package com.askimed.nf.test.lang.dependencies;
 
 import com.askimed.nf.test.util.FileUtil;
-import org.apache.tools.ant.taskdefs.Tar;
 
 import java.io.File;
 import java.io.IOException;

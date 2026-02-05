@@ -2,26 +2,30 @@
     "forer lukas": {
         "content": [
             {
-                "stderr": [
-                    
-                ],
-                "errorReport": null,
+                "success": true,
                 "exitStatus": 0,
+                "errorMessage": null,
+                "errorReport": null,
                 "failed": false,
-                "result": "Hello aaron",
+                "trace": {
+                    "tasksCount": 0,
+                    "tasksFailed": 0,
+                    "tasksSucceeded": 0
+                },
                 "stdout": [
                     "Hello aaron"
                 ],
-                "errorMessage": null,
-                "trace": {
-                    "tasksFailed": 0,
-                    "tasksCount": 0,
-                    "tasksSucceeded": 0
-                },
-                "name": "say_hello",
-                "success": true
+                "stderr": [
+                    
+                ],
+                "result": "Hello aaron",
+                "name": "say_hello"
             }
         ],
-        "timestamp": "2023-08-26T15:20:15.069134"
+        "timestamp": "2026-02-03T13:45:08.036944867",
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.3"
+        }
     }
 }
