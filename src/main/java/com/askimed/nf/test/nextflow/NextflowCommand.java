@@ -49,6 +49,8 @@ public class NextflowCommand {
 
 	private static boolean verbose = false;
 
+	private boolean resume = false;
+
 	public static String ERROR = "Nextflow Binary not found. Please check if Nextflow is in a directory accessible by your $PATH variable or set $NEXTFLOW_HOME.";
 
 	public NextflowCommand() {
@@ -159,18 +161,11 @@ public class NextflowCommand {
 		return options;
 	}
 
-	public int execute() throws IOException {
+	public void setResume(boolean resume) {
+		this.resume = resume;
+	}
 
-		if (binary == null) {
-			throw new IOException(ERROR);
-		}
-
-		if (paramsFile == null) {
-			paramsFile = File.createTempFile("params", ".json");
-			paramsFile.deleteOnExit();
-		}
-
-		writeParamsJson(params, paramsFile);
+	protected List<String> buildArgs() throws IOException {
 
 		List<String> args = new Vector<String>();
 		if (!verbose) {
@@ -182,6 +177,9 @@ public class NextflowCommand {
 		}
 		args.add("run");
 		args.add(script);
+		if (resume) {
+			args.add("-resume");
+		}
 		for (File config : configs) {
 			args.add("-c");
 			args.add(config.getAbsolutePath());
@@ -205,6 +203,25 @@ public class NextflowCommand {
 
 		args.addAll(parseOptions(options));
 
+		return args;
+
+	}
+
+	public int execute() throws IOException {
+
+		if (binary == null) {
+			throw new IOException(ERROR);
+		}
+
+		if (paramsFile == null) {
+			paramsFile = File.createTempFile("params", ".json");
+			paramsFile.deleteOnExit();
+		}
+
+		writeParamsJson(params, paramsFile);
+
+		List<String> args = buildArgs();
+
 		Command nextflow = new Command(binary);
 		if (launchDir != null) {
 			nextflow.setDirectory(launchDir.getAbsolutePath());
@@ -225,6 +242,12 @@ public class NextflowCommand {
 			System.out.println("    Profiles: " + profiles);
 			System.out.println("    Configs: " + configs);
 			System.out.println("    Command: " + nextflow.getExecutedCommand());
+		}
+
+		if (resume && launchDir != null) {
+			File nxfHome = new File(launchDir, ".nxf-home");
+			nxfHome.mkdirs();
+			nextflow.addEnvironment("NXF_HOME", nxfHome.getAbsolutePath());
 		}
 
 		int result = nextflow.execute();
