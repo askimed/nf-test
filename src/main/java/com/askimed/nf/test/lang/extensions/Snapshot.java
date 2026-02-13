@@ -1,11 +1,16 @@
 package com.askimed.nf.test.lang.extensions;
 
 import com.askimed.nf.test.core.ITest;
-import com.askimed.nf.test.util.ObjectUtil;
+import com.askimed.nf.test.util.*;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
+import groovy.lang.Closure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Snapshot {
 
@@ -17,8 +22,11 @@ public class Snapshot {
 
 	private static Logger log = LoggerFactory.getLogger(Snapshot.class);
 
+	public static String ROOT_OBJECT = "contents";
+
 	public Snapshot(Object actual, ITest test) {
-		this.actual = actual;
+		//this.actual = actual;
+		this.actual = ObjectUtil.toMap(actual);
 		this.file = test.getTestSuite().getSnapshot();
 		this.test = test;
 	}
@@ -72,8 +80,61 @@ public class Snapshot {
 
 	}
 
-	public void view() {
+	private DocumentContext createDocumentContext() {
+		Map<String, Object> snapshots = new HashMap<String, Object>();
+		snapshots.put(ROOT_OBJECT, actual);
+		return JsonPath.parse(snapshots);
+	}
 
+	public Snapshot replace(Object value) {
+		return replace("$..*", value);
+	}
+
+	public Snapshot replace(String selector, Object value) {
+		DocumentContext json = createDocumentContext();
+		json.set(selector, value);
+		return this;
+	}
+
+	public Snapshot map(Closure closure) {
+		return map("$..*", closure);
+	}
+
+	public Snapshot map(String selector, Closure closure) {
+		DocumentContext json = createDocumentContext();
+		json.map(selector, (currentValue, configuration) -> {
+			return closure.call(currentValue);
+		});
+		return this;
+	}
+
+	public Snapshot traverse(Closure closure) {
+
+		MapTraverser.traverse(ROOT_OBJECT, actual, new MapOperation() {
+			@Override
+			public Object map(String path, Object value) {
+				return closure.call(path, value);
+			}
+		});
+
+		return this;
+	}
+
+	public Snapshot remove(String selector) {
+		DocumentContext json = createDocumentContext();
+		json.delete(selector);
+		return this;
+	}
+
+	public Snapshot view() {
+		return view(false);
+	}
+
+	public Snapshot view(boolean raw) {
+		String json = raw ? ObjectUtil.toJsonRaw(actual) : ObjectUtil.toJson(actual);
+		System.out.println();
+		System.out.println(AnsiText.padding(AnsiColors.cyan("Snapshot: \n" + json), 6));
+		return this;
 	}
 
 }

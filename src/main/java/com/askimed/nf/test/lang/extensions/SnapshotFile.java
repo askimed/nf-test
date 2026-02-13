@@ -8,14 +8,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.askimed.nf.test.util.ObjectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.askimed.nf.test.core.ITestSuite;
-import com.askimed.nf.test.lang.extensions.util.PathConverter;
 
-import groovy.json.JsonGenerator;
-import groovy.json.JsonOutput;
 import groovy.json.JsonSlurper;
 
 public class SnapshotFile {
@@ -127,9 +125,7 @@ public class SnapshotFile {
 	}
 
 	public void save() throws IOException {
-		JsonGenerator jsonGenerator = createJsonGenerator();
-		String json = jsonGenerator.toJson(snapshots);
-		String prettyJson = JsonOutput.prettyPrint(json);
+		String prettyJson = ObjectUtil.toJson(snapshots);
 		File file = new File(filename);
 		FileWriter writer;
 		writer = new FileWriter(file);
@@ -140,12 +136,6 @@ public class SnapshotFile {
 
 	protected static String createFilename(ITestSuite suite) {
 		return suite.getFilename() + EXTENSION;
-	}
-
-	public static JsonGenerator createJsonGenerator() {
-		JsonGenerator jsonGenerator = new JsonGenerator.Options().excludeFieldsByName("mapping")
-				.addConverter(new PathConverter()).build();
-		return jsonGenerator;
 	}
 
 }
