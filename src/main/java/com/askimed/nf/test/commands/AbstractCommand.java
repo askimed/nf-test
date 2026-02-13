@@ -50,7 +50,7 @@ public abstract class AbstractCommand implements Callable<Integer> {
 		System.out.println();
 		System.out.println(Emoji.ROCKET + AnsiText.bold(" " + App.NAME + " " + App.VERSION));
 		System.out.println("https://www.nf-test.com");
-		System.out.println("Please cite: https://doi.org/10.1093/gigascience/giaf130")
+		System.out.println("Please cite: https://doi.org/10.1093/gigascience/giaf130");
 		System.out.println("(c) 2021 - 2026 Lukas Forer and Sebastian Schoenherr");
 		System.out.println();
 
