@@ -1,6 +1,7 @@
 package com.askimed.nf.test.core;
 
 import java.io.File;
+import java.util.Map;
 
 import com.askimed.nf.test.config.Config;
 
@@ -37,5 +38,9 @@ public interface ITest extends ITaggable {
 	public void setCIMode(boolean ciMode);
 
 	public boolean isCIMode();
+
+	public void setParameters(Map<String, Object> parameters);
+
+	public Map<String, Object> getParameters();
 
 }

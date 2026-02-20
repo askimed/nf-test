@@ -1,0 +1,27 @@
+nextflow_process {
+
+    name "Simple data-driven test"
+    script "example/say-hello.nf"
+    process "SAY_HELLO"
+
+    // Basic data table test
+    testEach("Simple test with #name") {
+        when {
+            process {
+                """
+                input[0] = "$name"
+                input[1] = Channel.of(1)
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.my_tuples[0][1] == name
+        }
+
+        where("""
+        name << ["alice", "bob"]
+        """)
+    }
+}
