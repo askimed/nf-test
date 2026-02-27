@@ -183,7 +183,9 @@ public class TestExecutionEngine {
 					failedTests++;
 
 				}
-				test.cleanup();
+				if (!dryRun) {
+					test.cleanup();
+				}
 				result.setEndTime(System.currentTimeMillis());
 
 				log.info("Test '{}' finished. status: {}", result.getTest(), result.getStatus(), result.getThrowable());
