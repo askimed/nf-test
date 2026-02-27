@@ -1,0 +1,14 @@
+{
+    "Should succeed because valid gz file": {
+        "content": [
+            [
+                "output.gz:md5,725fe503106b990f4cf2a906c7219cf0"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.8.3",
+            "nextflow": "23.04.3"
+        },
+        "timestamp": "2024-01-28T16:18:48.680744"
+    }
+}
