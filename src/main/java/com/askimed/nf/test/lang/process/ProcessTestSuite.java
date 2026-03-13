@@ -73,7 +73,7 @@ public class ProcessTestSuite extends AbstractTestSuite {
 	 * @param topics A list of topics channel names to be checked for in the test suite.
 	 */
 	public void setTopics(String... topics) {
-		this.topics = List.of(topics);
+		this.topics = new Vector<String>(List.of(topics));
 	}
 	
 	/**

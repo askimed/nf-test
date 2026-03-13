@@ -11,34 +11,70 @@ import com.askimed.nf.test.lang.TestContext;
 
 import groovy.lang.Closure;
 
+/**
+ * ProcessContext is a class that holds the context of a process test case.
+ * It contains the process definition and the dependencies to be executed before the test case.
+ */
 public class ProcessContext extends TestContext {
 
+	/**
+	 * The process definition to define testable output in
+	 */
 	private Process process = new Process();
 
+	/**
+	 * The closure to define the process mapping
+	 */
 	private Closure processClosure;
 
+	/**
+	 * The list of dependencies to be executed before the test case.
+	 */
 	private List<Dependency> dependencies = new Vector<Dependency>();
 
+	/**
+	 * Create a new process context.
+	 * @param test The test case to which this context belongs.
+	 */
 	public ProcessContext(ITest test) {
 		super(test);
 	}
 
+	/**
+	 * Set the name of the process to be tested.
+	 * @param name The name of the process.
+	 */
 	public void setName(String name) {
 		process.setName(name);
 	}
 
+	/**
+	 * Get the process definition.
+	 * @return The process definition.
+	 */
 	public Process getProcess() {
 		return process;
 	}
 
+	/**
+	 * Set the process definition. Alias of {@link #setProcess(Process)}.
+	 * @param process The process definition.
+	 */
 	public void setProcess(Process process) {
 		this.process = process;
 	}
 
+	/**
+	 * Set the closure to define the process mapping. Alias of {@link #process(Closure)}.
+	 * @param closure The closure to define the process mapping.
+	 */
 	public void process(Closure<Object> closure) {
 		processClosure = closure;
 	}
 
+	/**
+	 * Evaluate the process closure to define the process mapping.
+	 */
 	public void evaluateProcessClosure() {
 		if (processClosure == null) {
 			return;
@@ -52,15 +88,30 @@ public class ProcessContext extends TestContext {
 
 	}
 
+	/**
+	 * Add a dependency to be executed before the test case.
+	 * @param attributes The attributes of the dependency.
+	 * @param process The name of the process to which the dependency belongs.
+	 * @param closure The closure containing the code to be executed for the dependency.
+	 */
 	public void run(Map<String, Object> attributes, String process, Closure closure) {
 		Dependency dependency = new Dependency(process, attributes, closure);
 		dependencies.add(dependency);
 	}
 
+	/**
+	 * Add a dependency to be executed before the test case.
+	 * @param process The name of the process to which the dependency belongs.
+	 * @param closure The closure containing the code to be executed for the dependency.
+	 */
 	public void run(String process, Closure closure) {
 		run(new LinkedHashMap<String, Object>(), process, closure);
 	}
 
+	/**
+	 * Get the list of dependencies to be executed before the test case.
+	 * @return A list of dependencies to be executed before the test case.
+	 */
 	public List<Dependency> getDependencies() {
 		return dependencies;
 	}
