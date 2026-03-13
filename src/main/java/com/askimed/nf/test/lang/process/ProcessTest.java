@@ -253,6 +253,7 @@ public class ProcessTest extends AbstractTest {
 		context.getWorkflow().failed = (exitCode != 0);
 
 		context.getTopics().loadFromFolder(metaDir, autoSort, "topic_");
+
 		if (isDebug()) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.getProcess().viewChannels();
