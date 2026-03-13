@@ -16,7 +16,6 @@ import com.askimed.nf.test.lang.TestCode;
 import com.askimed.nf.test.nextflow.NextflowCommand;
 import com.askimed.nf.test.util.AnsiText;
 import com.askimed.nf.test.util.FileUtil;
-import com.askimed.nf.test.lang.Topics;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
@@ -251,9 +250,13 @@ public class ProcessTest extends AbstractTest {
 		context.getWorkflow().exitStatus = exitCode;
 		context.getWorkflow().success = (exitCode == 0);
 		context.getWorkflow().failed = (exitCode != 0);
+
+		context.getTopics().loadFromFolder(metaDir, autoSort, "topic_");
 		if (isDebug()) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.getProcess().viewChannels();
+			System.out.println(AnsiText.padding("Topics Channels:", 4));
+			context.getTopics().view();
 		}
 
 		then.execute(context);

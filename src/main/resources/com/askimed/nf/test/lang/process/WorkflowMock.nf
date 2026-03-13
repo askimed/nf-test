@@ -49,8 +49,8 @@ workflow {
 
     }
 
-    // get topics
-<% for (topic in topics) { %>    serializeTopic("${topic}", channel.topic("${topic}"), jsonOutput, params.nf_test_output)<% } %>
+    // get topics<% for (topic in topics) { %>    
+    serializeTopic("${topic}", channel.topic("${topic}"), jsonOutput, params.nf_test_output)<% } %>
 
     // finalize test
     workflow.onComplete = {
