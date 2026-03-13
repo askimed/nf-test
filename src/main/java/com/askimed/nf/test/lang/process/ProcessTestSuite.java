@@ -31,7 +31,7 @@ public class ProcessTestSuite extends AbstractTestSuite {
 	/**
 	 * The list of topics channel names to be checked for in the test suite.
 	 */
-	private List<String> topics = new Vector<String>();
+	private Vector<String> topics = new Vector<String>();
 	
 	/**
 	 * Set a process name. Alias of {@link #setProcess(String)}.
@@ -73,14 +73,18 @@ public class ProcessTestSuite extends AbstractTestSuite {
 	 * @param topics A list of topics channel names to be checked for in the test suite.
 	 */
 	public void setTopics(String... topics) {
-		this.topics = new Vector<String>(List.of(topics));
+		for (String topic : topics) {
+			if (!this.topics.contains(topic)) {
+				this.topics.add(topic);
+			}
+		}
 	}
 	
 	/**
 	 * Get a list of topics channel names to be checked for in the test suite.
 	 * @return A list of topics channel names to be checked for in the test suite.
 	 */
-	public List<String> getTopics() {
+	public Vector<String> getTopics() {
 		return topics;
 	}
 

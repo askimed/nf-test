@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 import java.util.Vector;
 
 import org.codehaus.groovy.control.CompilationFailedException;
@@ -72,7 +71,7 @@ public class ProcessTest extends AbstractTest {
 	 * The list of topics channel names to be checked for in the test case. 
 	 * This is inherited from the test suite, but can be expanded by the test itself.
 	 */
-	private List<String> topics = new Vector<String>();
+	private Vector<String> topics = new Vector<String>();
 
 	/**
 	 * Create a new process test case.
@@ -81,7 +80,7 @@ public class ProcessTest extends AbstractTest {
 	public ProcessTest(ProcessTestSuite parent) {
 		super(parent);
 		this.parent = parent;
-		this.topics = new Vector<String>(parent.getTopics());
+		this.topics = parent.getTopics();
 		this.autoSort = parent.isAutoSort();
 		context = new ProcessContext(this);
 		context.setName(parent.getProcess());
@@ -158,7 +157,9 @@ public class ProcessTest extends AbstractTest {
 	 */
 	public void topics(String... topics) {
 		for (String topic : topics) {
-			this.topics.add(topic);
+			if (!this.topics.contains(topic)) {
+				this.topics.add(topic);
+			}
 		}
 	}
 
@@ -255,7 +256,7 @@ public class ProcessTest extends AbstractTest {
 		if (isDebug()) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.getProcess().viewChannels();
-			System.out.println(AnsiText.padding("Topics Channels:", 4));
+			System.out.println(AnsiText.padding("Topic Channels:", 4));
 			context.getTopics().view();
 		}
 
