@@ -1,7 +1,6 @@
 package com.askimed.nf.test.lang.process;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Vector;
 
 import com.askimed.nf.test.core.AbstractTestSuite;
