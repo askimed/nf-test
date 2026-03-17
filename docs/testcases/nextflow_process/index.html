@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
     
     
       
@@ -716,6 +716,17 @@
     <span class="md-ellipsis">
       
         Output Channels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#topic-channels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Topic channels
       
     </span>
   </a>
@@ -1717,6 +1728,32 @@
 <span class="c1">// first element is &quot;hello&quot;</span>
 <span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span>
 </code></pre></div>
+<h3 id="topic-channels">Topic channels</h3>
+<p>Topic channels are a special type of output channel that can be used to share data between processes without explicitly connecting them in the Nextflow script.</p>
+<p>Before you can get access to the content of a topic channel, you need to define it in the test script using the <code>topics</code> keyword. This allows you to specify which topic channels you want to access and analyze in your tests:</p>
+<div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="w">    </span><span class="n">topics</span><span class="w"> </span><span class="s2">&quot;my_topic_channel&quot;</span><span class="o">,</span><span class="w"> </span><span class="s2">&quot;your_topic_channel&quot;</span>
+<span class="w">    </span><span class="n">topics</span><span class="w"> </span><span class="s2">&quot;look_im_a_topic&quot;</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;test_name&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">topics</span><span class="w"> </span><span class="s2">&quot;test_specific_topic&quot;</span><span class="o">,</span><span class="w"> </span><span class="s2">&quot;another_test_specific_topic&quot;</span>
+
+<span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{...}</span>
+<span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{...}</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>This example will watch for the topic channels <code>my_topic_channel</code>, <code>your_topic_channel</code>, <code>look_im_a_topic</code>, <code>test_specific_topic</code> and <code>another_test_specific_topic</code>. The content of these channels can then be accessed using the <code>topics</code> object in the <code>then</code> or <code>expect</code> block:</p>
+<div class="highlight"><pre><span></span><code><span class="n">then</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="c1">// topic channel exists and contains &quot;hello&quot;</span>
+<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">topics</span><span class="o">.</span><span class="na">my_topic_channel</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span>
+
+<span class="w">    </span><span class="c1">// topic channel is not used</span>
+<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">topics</span><span class="o">.</span><span class="na">your_topic_channel</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">[]</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>Topic channels function the same as the <code>process.out</code> object specified in the <a href="#output-channels">Output channels</a> section.</p>
 <h2 id="example">Example</h2>
 <h3 id="nextflow-script">Nextflow script</h3>
 <p>Create a new file and name it <code>say_hello.nf</code>.</p>
