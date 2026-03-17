@@ -98,7 +98,7 @@ when {
     }
     process {
         """
-        // Use transcriptome.fa as a first input paramter for our process
+        // Use transcriptome.fa as a first input parameter for our process
         input[0] = file("${projectDir}/test_data/transcriptome.fa")
         """
     }

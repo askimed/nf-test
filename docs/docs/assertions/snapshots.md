@@ -129,7 +129,7 @@ By default, nf-test uses the `diff` tool for comparing snapshots. It employs the
 
 These default arguments are applied when no custom settings are specified.
 
->:bulb: If `diff`is not installed on the system, nf-test will print exepcted and found snapshots without highlighting differences.
+>:bulb: If `diff`is not installed on the system, nf-test will print expected and found snapshots without highlighting differences.
 
 
 ### Customizing Diff Tool Arguments

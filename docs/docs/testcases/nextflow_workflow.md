@@ -63,6 +63,41 @@ assert workflow.out.my_channel.size() == 3
 assert workflow.out.my_channel.get(0) == "hello"
 ```
 
+### Topic channels
+
+Topic channels are a special type of output channel that can be used to share data between processes without explicitly connecting them in the Nextflow script.
+
+Before you can get access to the content of a topic channel, you need to define it in the test script using the `topics` keyword. This allows you to specify which topic channels you want to access and analyze in your tests:
+
+```groovy
+nextflow_workflow {
+    ...
+    topics "my_topic_channel", "your_topic_channel"
+    topics "look_im_a_topic"
+    ...
+    test("test_name") {
+        topics "test_specific_topic", "another_test_specific_topic"
+
+        when {...}
+        then {...}
+    }
+}
+```
+
+This example will watch for the topic channels `my_topic_channel`, `your_topic_channel`, `look_im_a_topic`, `test_specific_topic` and `another_test_specific_topic`. The content of these channels can then be accessed using the `topics` object in the `then` or `expect` block:
+
+```groovy
+then {
+    // topic channel exists and contains "hello"
+    assert topics.my_topic_channel == "hello"
+
+    // topic channel is not used
+    assert topics.your_topic_channel == []
+}
+```
+
+Topic channels function the same as the `workflow.out` object specified in the [Output channels](#output-channels) section.
+
 
 ## Example
 
@@ -70,9 +105,6 @@ assert workflow.out.my_channel.get(0) == "hello"
 Create a new file and name it `trial.nf`.
 
 ```Groovy
-#!/usr/bin/env nextflow
-nextflow.enable.dsl=2
-
 process sayHello {
     input:
         val cheers

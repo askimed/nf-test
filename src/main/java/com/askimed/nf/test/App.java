@@ -11,7 +11,7 @@ public class App {
 
 	public static final String NAME = "nf-test";
 
-	public static final String VERSION = "0.9.2";
+	public static final String VERSION = "0.9.4";
 
 	public static final String PACKAGE =  "com.askimed.nf.test";
 	
@@ -29,7 +29,7 @@ public class App {
 		commandLine.addSubcommand("clean", new CleanCommand());
 		commandLine.addSubcommand("init", new InitCommand());
 		commandLine.addSubcommand("test", new RunTestsCommand());
-		commandLine.addSubcommand("coverage", new CoverageCommand());
+		commandLine.addSubcommand("coverage", new StatusCommand());
 		commandLine.addSubcommand("list", new ListTestsCommand());
 		commandLine.addSubcommand("ls", new ListTestsCommand());
 		commandLine.addSubcommand("generate", new GenerateTestsCommand());

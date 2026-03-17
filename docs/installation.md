@@ -69,14 +69,14 @@ Nextflow Runtime:
 Error: Nextflow Binary not found. Please check if Nextflow is in a directory accessible by your $PATH variable or set $NEXTFLOW_HOME.
 ```
 
-To solve this issue you have two possibilites:
+To solve this issue you have two possibilities:
 
 - Move your Nextflow binary to a directory accessible by your `$PATH` variable.
 - Set the environment variable `NEXTFLOW_HOME` to the directory that contains the Nextflow binary.
 
 ## Updating
 
-To update an existing nf-test installtion to the latest version, run the following command:
+To update an existing nf-test installation to the latest version, run the following command:
 
 ```sh
 nf-test update

@@ -4,8 +4,9 @@ process GENERATE_DATA {
     val name
 
   output:
-     path "*.txt", emit: results
+    path "*.txt", emit: results
 
+  script:
   """
   echo "hello ${name}!" > "data.txt"
   """

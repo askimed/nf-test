@@ -13,11 +13,11 @@ process exampleProc {
             path("example_output/example*.txt")
         )
 
-    shell:
+    script:
         """
-        mkdir -p !{localOutputDir}
-        touch "!{localOutputDir}/example1.txt"
-        touch "!{localOutputDir}/example2.txt"
+        mkdir -p ${localOutputDir}
+        touch "${localOutputDir}/example1.txt"
+        touch "${localOutputDir}/example2.txt"
         """
 }
 

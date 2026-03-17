@@ -10,7 +10,7 @@ nf-test test [<NEXTFLOW_FILES>|<SCRIPT_FOLDERS>]
 
 #### `--profile <NEXTFLOW_PROFILE>`
 
-To run your test using a specific Nextflow profile, you can use the `--profile` argument. [Learn more](/docs/docs/configuration#managing-profiles).
+To run your test using a specific Nextflow profile, you can use the `--profile` argument. [Learn more](/docs/configuration#managing-profiles).
 
 #### `--dry-run`
 
@@ -27,6 +27,10 @@ The Linux tool `procps` is required to run Nextflow tracing. In case your contai
 #### `--tag <tag>`
 
 Execute only tests with the provided tag. Multiple tags can be used and have to be separated by commas (e.g. `tag1,tag2`).
+
+#### `--stop-on-first-failure`
+
+Stops execution after the first test failure.
 
 #### `--debug`
 
@@ -50,10 +54,13 @@ Writes test results in csv file.
 
 By default,nf-test automatically stores a new snapshot. When CI mode is activated, nf-test will fail the test instead of storing the snapshot automatically.
 
+#### `--smart-testing`
+
+Runs in smart testing mode (equivalent to --ci --changed-since HEAD^).
 
 ### `--filter <types>`
 
-Filter test cases by specified types (e.g., module, pipeline, workflow or function). Multiple types can be separated by commas.
+Filter test cases by specified types (e.g., process, pipeline, workflow or function). Multiple types can be separated by commas.
 
 
 ### Optimizing Test Execution

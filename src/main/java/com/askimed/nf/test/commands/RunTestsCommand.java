@@ -81,7 +81,7 @@ public class RunTestsCommand extends AbstractCommand {
 	@Option(names = { "--follow-dependencies", "--followDependencies"}, description = "Follows all dependencies when related-tests is set.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private boolean followDependencies = false;
 
-	@Option(names = { "--filter" }, description =  "Filter test cases by specified types (e.g., module, pipeline, workflow or function). Multiple types can be separated by commas.", required = false, showDefaultValue = Visibility.ALWAYS)
+	@Option(names = { "--filter" }, description =  "Filter test cases by specified types (e.g., process, pipeline, workflow or function). Multiple types can be separated by commas.", required = false, showDefaultValue = Visibility.ALWAYS)
 	private String dependencies = "all";
 
 	@Option(names = { "--only-changed", "--onlyChanged"}, description = "Runs tests only for those files which are modified in the current git repository", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -136,11 +136,33 @@ public class RunTestsCommand extends AbstractCommand {
 			"--query" }, description = "Execute only tests that match this expression", required = false)
 	private String query = null;
 
+	@Option(
+			names = { "--smart-testing", "--smartTesting" },
+			description = "Runs in smart testing mode (equivalent to --ci --changed-since HEAD^).",
+			required = false,
+			showDefaultValue = Visibility.ALWAYS
+	)
+	private boolean smartTesting = false;
+  
+  @Option(
+			names = {"--stop-on-first-failure", "--stopOnFirstFailure"},
+			description = "Stop execution immediately after the first test failure",
+			required = false,
+			showDefaultValue = Visibility.ALWAYS
+	)
+	private boolean stopOnFirstFailure = false;
 
 	private static Logger log = LoggerFactory.getLogger(RunTestsCommand.class);
 
 	@Override
 	public Integer execute() throws Exception {
+
+		if (smartTesting) {
+			this.ciMode = true;
+			if (this.changedSince == null) {
+				this.changedSince = "HEAD^";
+			}
+		}
 
 		List<File> scripts = new ArrayList<File>();
 		Config config = null;
@@ -293,6 +315,7 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.setCleanSnapshot(cleanSnapshot);
 			engine.setCIMode(ciMode);
 			engine.addProfile(profile);
+			engine.setStopOnFirstFailure(stopOnFirstFailure);
 			engine.setDryRun(dryRun);
 			if (withoutTrace) {
 				engine.setWithTrace(false);

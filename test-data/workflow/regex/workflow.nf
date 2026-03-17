@@ -14,10 +14,10 @@ process exampleProc {
             path("example_output/example*.txt")
         )
 
-    shell:
+    script:
         """
-        mkdir -p !{localOutputDir}
-        echo !{someRegexString} > "!{localOutputDir}/example1.txt"
+        mkdir -p ${localOutputDir}
+        echo ${someRegexString} > "${localOutputDir}/example1.txt"
         """
 }
 
@@ -27,9 +27,8 @@ workflow PipeWf {
         inputCh
 
     main:
-        inputCh
-            | exampleProc
-            | set { outputCh }
+        exampleProc(inputCh)
+            .set { outputCh }
 
     emit:
         outputCh

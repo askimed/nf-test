@@ -1,13 +1,10 @@
-#!/usr/bin/env nextflow
-nextflow.enable.dsl=2
-
 process sayHello {
     input:
         val cheers
     output:
         stdout emit: output
     script:
-       println "Hello $cheers"    
+        println "Hello $cheers"    
     """
     """
 
@@ -19,17 +16,17 @@ process sayBye {
     output:
         stdout emit: output
     script:
-       println "Bye $cheers"    
+        println "Bye $cheers"    
     """
     """
 }
 
 workflow hello {
     main:
-        sayHello(Channel.of('lukas'))
+        sayHello(channel.of('lukas'))
 }
 
 workflow bye {
     main:
-        sayBye(Channel.of('lukas'))
+        sayBye(channel.of('lukas'))
 }

@@ -6,7 +6,7 @@ nf-test supports including third party libraries (e.g. jar files ) or functions 
 
 :octicons-tag-24: 0.7.0 ·
 
-If nf-test detects a `lib` folder in the directory of a tescase, then it adds it automatically to the classpath.
+If nf-test detects a `lib` folder in the directory of a testcase, then it adds it automatically to the classpath.
 
 ### Examples
 We have a Groovy script `MyWordUtils.groovy` that contains the following class:
@@ -34,9 +34,6 @@ testcase_1
 The file `capitalizer.nf` contains the `CAPITALIZER` process:
 
 ```Groovy
-#!/usr/bin/env nextflow
-nextflow.enable.dsl=2
-
 process CAPITALIZER {
     input:
         val cheers
@@ -146,7 +143,7 @@ nextflow_process {
 }
 ```
 
-## Using Maven Artifcats with `@Grab`
+## Using Maven Artifacts with `@Grab`
 
 nf-test supports the `@Grab` annotation to include third-party libraries that are available in a maven repository. As the dependency is defined as a maven artifact, there is no local copy of the jar file needed and maven enables to include an exact version as well as provides an easy update process.
 

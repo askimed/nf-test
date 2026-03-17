@@ -5,12 +5,12 @@ The following variables are available and can be used in `setup`, `when`, `then`
 |Name|Description| Example |
 |---|---|---|
 |`baseDir` or<br/>`projectDir`| The directory where the `nf-test.config` script is located. | `mypipeline`|
-|`moduleDir`| The directory where the module script is located  | `mypipeline/modules/mymodule` |
+|`moduleDir`| The directory where the module script is located. Also works for tesing subworkflows  | Modules: `mypipeline/modules/mymodule` <br> Subworkflows: `mypipeline/subworkflows/myworkflow` |
 |`moduleTestDir`| The directory where the test script is located  | `mypipeline/tests/modules/mymodule` |
 |`launchDir`| The directory where the test is run. | `mypipeline/.nf-test/tests/<test_hash>` |
 |`metaDir`| The directory where all meta are located (e.g. `mock.nf`).| `mypipeline/.nf-test/tests/<test_hash>/meta` |
 |`workDir`| The directory where tasks temporary files are created.| `mypipeline/.nf-test/tests/<test_hash>/work` |
-|`outputDir`| An output directory in the `$launchDir` that can be used to store output files. The variable contains the absolute path. If you need a relative outpu directory see [`launchDir` example](#launchdir). | `mypipeline/.nf-test/tests/<test_hash>/output` |
+|`outputDir`| An output directory in the `$launchDir` that can be used to store output files. The variable contains the absolute path. If you need a relative output directory see [`launchDir` example](#launchdir). | `mypipeline/.nf-test/tests/<test_hash>/output` |
 |`params`| Dictionary like object holding all parameters. | |
 
 ## Examples

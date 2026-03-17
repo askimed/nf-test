@@ -48,7 +48,7 @@ nf-test list --format json --silent
 ["/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@69b98c67","/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@fdb6c1cc","/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@d1c219eb","/Users/lukfor/Development/git/nf-gwas/tests/main.nf.test@3c54e3cb",...]
 ```
 
-* List of all testcases as unformatted ist:
+* List of all testcases as unformatted list:
 
 ```
 nf-test list --format raw --silent
