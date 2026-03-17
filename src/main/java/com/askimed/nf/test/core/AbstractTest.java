@@ -68,6 +68,8 @@ public abstract class AbstractTest implements ITest {
 
 	private boolean withTrace = true;
 
+	private boolean devResume = false;
+
 	private List<String> tags = new Vector<String>();
 
 	private AbstractTestSuite parent;
@@ -138,8 +140,22 @@ public abstract class AbstractTest implements ITest {
 	private void setupDirectory(String name, File directory) throws IOException {
 
 		try {
+			if (devResume && DIRECTORY_WORK.equals(directory.getName())) {
+
+				if (!directory.exists()) {
+					FileUtil.createDirectory(directory);
+				}
+
+				if (debug) {
+					System.out.println("    Dev resume enabled → keeping existing work directory: " + directory);
+				}
+
+				return;
+			}
+
 			FileUtil.deleteDirectory(directory);
 			FileUtil.createDirectory(directory);
+
 		} catch (Exception e) {
 			throw new IOException(name + " '" + directory + "' could not be deleted or created:\n" + e);
 		}
@@ -259,6 +275,11 @@ public abstract class AbstractTest implements ITest {
 	@Override
 	public String toString() {
 		return getHash().substring(0, 8) + ": " + getName();
+	}
+
+	@Override
+		public void setDevResume(boolean devResume) {
+			this.devResume = devResume;
 	}
 
 }

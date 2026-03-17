@@ -2,8 +2,11 @@ package com.askimed.nf.test.nextflow;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +24,36 @@ public class NextflowCommandTest {
 		assertEquals("value with space", options.get(1));
 		assertEquals("--b", options.get(2));
 	}
+
+	@Test
+    void resumeFlagIsInjectedWhenEnabled() throws Exception {
+
+        NextflowCommand command = new NextflowCommand();
+
+        command.setScript("main.nf");
+        command.setParams(new HashMap<>());
+        command.setResume(true);
+
+        List<String> args = command.buildArgs();
+
+        assertTrue(args.contains("-resume"),
+                "Expected -resume to be present in arguments when resume=true");
+    }
+
+	@Test
+    void resumeFlagIsNotInjectedWhenDisabled() throws Exception {
+
+        NextflowCommand command = new NextflowCommand();
+
+        command.setScript("main.nf");
+        command.setParams(new HashMap<>());
+        command.setResume(false);
+
+        List<String> args = command.buildArgs();
+
+        assertFalse(args.contains("-resume"),
+                "Did not expect -resume when resume=false");
+    }
 
     @Test
     void getVersion() {

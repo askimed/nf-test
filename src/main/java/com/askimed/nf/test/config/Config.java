@@ -47,7 +47,7 @@ public class Config {
 	private String stageMode = FileStaging.MODE_COPY;
 
 	private List<String> ignore = new Vector<String>();
-  
+
 	private Map<String, Object> requires = null;
 
 	private List<String> triggers = new Vector<String>();
