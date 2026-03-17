@@ -1,0 +1,30 @@
+nextflow_process {
+
+    name "Test topic channels"
+
+    script "./main.nf"
+    process "TEST_TOPICS"
+
+    topics "output_tuple"
+    topics "also_not_a_topic"
+
+    test("Should test topic channels correctly") {
+
+        topics "output_file", "not_a_topic"
+
+        when {
+            process {
+                """
+                input[0] = "Lukas"
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert snapshot(topics).match()
+        }
+
+    }
+
+}
