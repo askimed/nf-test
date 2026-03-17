@@ -1,0 +1,22 @@
+nextflow_workflow {
+
+    name "Test topic channels"
+
+    script "./main.nf"
+    workflow "TEST_TOPICS_WORKFLOW"
+
+    topics "output_tuple"
+    topics "also_not_a_topic"
+
+    test("Should test topic channels correctly") {
+
+        topics "output_file", "not_a_topic"
+
+        expect {
+            assert workflow.success
+            assert snapshot(topics).match()
+        }
+
+    }
+
+}

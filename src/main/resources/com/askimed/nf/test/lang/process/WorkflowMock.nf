@@ -49,6 +49,10 @@ workflow {
 
     }
 
+    // get topics<% for (topic in topics) { %>    
+    serializeTopic("${topic}", channel.topic("${topic}"), jsonOutput, params.nf_test_output)<% } %>
+
+    // finalize test
     workflow.onComplete = {
         def result = [
             success: workflow.success,
@@ -72,6 +76,21 @@ def serializeChannel(name, channel, jsonOutput, outputDir) {
             def map = new HashMap()
             map[_name] = list
             def filename = "\${outputDir}/output_\${_name}.json"
+            new File(filename).text = jsonOutput.toJson(map)		  		
+        } 
+    )
+}
+
+def serializeTopic(name, topic, jsonOutput, outputDir) {
+    def list = [ ]
+    topic.subscribe(
+        onNext: { entry ->
+            list.add(entry)
+        },
+        onComplete: {
+            def map = new HashMap()
+            map[name] = list
+            def filename = "\${outputDir}/topic_\${name}.json"
             new File(filename).text = jsonOutput.toJson(map)		  		
         } 
     )
