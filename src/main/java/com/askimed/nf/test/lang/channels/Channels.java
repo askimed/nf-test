@@ -18,8 +18,12 @@ public class Channels extends TreeMap<Object, Object> {
 	private static final long serialVersionUID = 1L;
 
 	public void loadFromFolder(File folder, boolean autoSort) {
+		loadFromFolder(folder, autoSort, OUTPUT_CHANNEL_PREFIX);
+	}
+
+	public void loadFromFolder(File folder, boolean autoSort, String filePrefix) {
 		for (File file : folder.listFiles()) {
-			if (file.getName().startsWith(OUTPUT_CHANNEL_PREFIX)) {
+			if (file.getName().startsWith(filePrefix)) {
 				loadFromFile(file, autoSort);
 			}
 		}

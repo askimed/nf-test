@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 import org.codehaus.groovy.control.CompilationFailedException;
 
@@ -41,9 +42,16 @@ public class WorkflowTest extends AbstractTest {
 
 	private WorkflowContext context;
 
+	/**
+	 * The list of topics channel names to be checked for in the test case. 
+	 * This is inherited from the test suite, but can be expanded by the test itself.
+	 */
+	private Vector<String> topics = new Vector<String>();
+
 	public WorkflowTest(WorkflowTestSuite parent) {
 		super(parent);
 		this.parent = parent;
+		this.topics = parent.getTopics();
 		this.autoSort = parent.isAutoSort();
 		context = new WorkflowContext(this);
 	}
@@ -89,6 +97,18 @@ public class WorkflowTest extends AbstractTest {
 
 	public void autoSort(boolean autoSort) {
 		this.autoSort = autoSort;
+	}
+
+	/**
+	 * Expand the topic channel names to be checked by a list specified for this specific test.
+	 * @param topics A list of topic channel names
+	 */
+	public void topics(String... topics) {
+		for (String topic : topics) {
+			if (!this.topics.contains(topic)) {
+				this.topics.add(topic);
+			}
+		}
 	}
 
 	@Override
@@ -171,9 +191,14 @@ public class WorkflowTest extends AbstractTest {
 		context.getWorkflow().success = (exitCode == 0);
 		context.getWorkflow().failed = (exitCode != 0);
 
+		context.getTopics().loadFromFolder(metaDir, autoSort, "topic_");
+
 		if (isDebug()) {
 			System.out.println(AnsiText.padding("Output Channels:", 4));
 			context.getWorkflow().viewChannels();
+			System.out.println(AnsiText.padding("Topic Channels:", 4));
+			context.getTopics().view();
+
 		}
 
 		then.execute(context);
@@ -216,6 +241,7 @@ public class WorkflowTest extends AbstractTest {
 		binding.put("workflow", name);
 		binding.put("script", script);
 		binding.put("dependencies", context.getDependencies());
+		binding.put("topics", topics);
 
 		// Get body of when closure
 		binding.put("mapping", context.getWorkflow().getMapping());

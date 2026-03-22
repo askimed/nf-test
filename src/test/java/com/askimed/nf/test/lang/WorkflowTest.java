@@ -228,6 +228,15 @@ public class WorkflowTest {
 
 		assertTrue(stdOut.contains("Stored process"),
 			"Expected stored execution in std.out file");
+  }
+
+	@Test
+	public void testWorkflowTopics() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/topics/main.nf.test" });
+		assertEquals(0, exitCode);
+
 	}
 
 }

@@ -368,4 +368,14 @@ public class ProcessTest {
 
 	}
 
+	@Test
+	public void testTopicChannels() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/topics/main.nf.test" });
+		// Fails, because expects sorted channels
+		assertEquals(0, exitCode);
+
+	}
+
 }
