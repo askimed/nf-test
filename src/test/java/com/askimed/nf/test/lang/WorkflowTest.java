@@ -228,7 +228,7 @@ public class WorkflowTest {
 
 		assertTrue(stdOut.contains("Stored process"),
 			"Expected stored execution in std.out file");
-  }
+	}
 
 	@Test
 	public void testWorkflowTopics() throws Exception {
