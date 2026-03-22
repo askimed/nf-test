@@ -149,7 +149,6 @@ public abstract class AbstractTest implements ITest {
 				}
 				return;
 			}
-			System.out.println("Recreate: " + directory);
 			FileUtil.deleteDirectory(directory);
 			FileUtil.createDirectory(directory);
 
