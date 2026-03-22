@@ -1,6 +1,6 @@
 package com.askimed.nf.test.lang;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -191,6 +191,43 @@ public class WorkflowTest {
 		int exitCode = app.run(new String[] { "test", "test-data/workflow/regex/workflow.nf.test" });
 		assertEquals(0, exitCode);
 
+	}
+
+	private File findStdOutFile(File root) {
+		if (root.isFile() && root.getName().equals("std.out")) {
+			return root;
+		}
+		if (root.isDirectory()) {
+			for (File f : root.listFiles()) {
+				File found = findStdOutFile(f);
+				if (found != null) return found;
+			}
+		}
+		return null;
+	}
+
+	@Test
+	public void testWorkflowDevResume() throws Exception {
+
+		App app = new App();
+
+		String testPath = "test-data/workflow/regex/workflow.nf.test";
+
+		// First run (no resume)
+		int exitCode1 = app.run(new String[] { "test", testPath, "--verbose" });
+		assertEquals(0, exitCode1);
+
+		// Second run (with resume)
+		int exitCode2 = app.run(new String[] { "test", testPath, "--dev-resume", "--verbose" });
+		assertEquals(0, exitCode2);
+
+		// Locate Nextflow log
+		File nfTestDir = new File(".nf-test");
+		File stdOutFile = findStdOutFile(new File(".nf-test"));
+		String stdOut = FileUtil.readFileAsString(stdOutFile);
+
+		assertTrue(stdOut.contains("Stored process"),
+			"Expected stored execution in std.out file");
 	}
 
 }

@@ -159,6 +159,7 @@ public class TestExecutionEngine {
 				log.info("Run test '{}'. type: {}", test, test.getClass().getName());
 				totalTests++;
 
+				test.setDevResume(devResume);
 				testSuite.setupTest(test);
 
 				listener.executionStarted(test);
@@ -166,7 +167,7 @@ public class TestExecutionEngine {
 				test.setWithTrace(withTrace);
 				test.setUpdateSnapshot(updateSnapshot);
 				test.setCIMode(ciMode);
-				test.setDevResume(devResume);
+
 				try {
 
 					// override debug flag from CLI

@@ -140,19 +140,16 @@ public abstract class AbstractTest implements ITest {
 	private void setupDirectory(String name, File directory) throws IOException {
 
 		try {
-			if (devResume && DIRECTORY_WORK.equals(directory.getName())) {
-
+			if (devResume) {
 				if (!directory.exists()) {
 					FileUtil.createDirectory(directory);
 				}
-
 				if (debug) {
-					System.out.println("    Dev resume enabled → keeping existing work directory: " + directory);
+					System.out.println("Dev resume enabled -> keeping existing work directory: " + directory);
 				}
-
 				return;
 			}
-
+			System.out.println("Recreate: " + directory);
 			FileUtil.deleteDirectory(directory);
 			FileUtil.createDirectory(directory);
 
@@ -278,8 +275,12 @@ public abstract class AbstractTest implements ITest {
 	}
 
 	@Override
-		public void setDevResume(boolean devResume) {
-			this.devResume = devResume;
+	public void setDevResume(boolean devResume) {
+		this.devResume = devResume;
+	}
+
+	public boolean isDevResume() {
+		return devResume;
 	}
 
 }

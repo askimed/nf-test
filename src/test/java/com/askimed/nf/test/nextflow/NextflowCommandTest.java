@@ -36,8 +36,10 @@ public class NextflowCommandTest {
 
         List<String> args = command.buildArgs();
 
-        assertTrue(args.contains("-resume"),
-                "Expected -resume to be present in arguments when resume=true");
+        assertTrue(
+            args.contains("-resume"),
+            "Expected -resume to be present in arguments when resume=true"
+        );
     }
 
 	@Test
@@ -51,8 +53,10 @@ public class NextflowCommandTest {
 
         List<String> args = command.buildArgs();
 
-        assertFalse(args.contains("-resume"),
-                "Did not expect -resume when resume=false");
+        assertFalse(
+            args.contains("-resume"),
+            "Did not expect -resume when resume=false"
+        );
     }
 
     @Test
