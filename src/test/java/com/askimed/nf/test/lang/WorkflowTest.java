@@ -207,6 +207,12 @@ public class WorkflowTest {
 
 		File testsRoot = new File(".nf-test/tests");
 		File[] testDirs = testsRoot.listFiles(File::isDirectory);
+		assertNotNull(testDirs, "Could not list test directories");
+
+		assertTrue(
+			testDirs.length == 1,
+			"Expected test directories to exist without --no-save"
+		);
 
 		for (File testDir : testDirs) {
 			File workDir = new File(testDir, "work");
@@ -236,8 +242,6 @@ public class WorkflowTest {
 
 		// Locate .nf-test directory
 		File nfTestDir = new File(".nf-test/tests");
-
-		// There should be NO remaining test directories inside
 		File[] remaining = nfTestDir.listFiles(file -> file.isDirectory());
 
 		assertNotNull(remaining, "Could not list test directories");
