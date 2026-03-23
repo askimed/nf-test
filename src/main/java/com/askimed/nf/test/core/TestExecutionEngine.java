@@ -46,6 +46,8 @@ public class TestExecutionEngine {
 
 	private boolean stopOnFirstFailure = false;
 
+	private boolean noSave = false;
+
 	private static Logger log = LoggerFactory.getLogger(TestExecutionEngine.class);
 
 	public void setDebug(boolean debug) {
@@ -98,6 +100,10 @@ public class TestExecutionEngine {
 
 	public void setStopOnFirstFailure(boolean stopOnFirstFailure) {
 		this.stopOnFirstFailure = stopOnFirstFailure;
+	}
+
+	public void setNoSave(boolean noSave) {
+		this.noSave = noSave;
 	}
 
 	public int execute() throws Throwable {
@@ -184,6 +190,22 @@ public class TestExecutionEngine {
 
 				}
 				test.cleanup();
+
+				if (noSave 
+					&& result.getStatus() == TestExecutionResultStatus.PASSED
+					&& !debug
+				) {
+					try {
+						File launchDir = test.getLaunchDir();
+						if (launchDir != null && launchDir.exists()) {
+							log.info("Deleting launch directory due to --no-save: {}", launchDir);
+							FileUtil.deleteDirectory(launchDir);
+						}
+					} catch (Exception e) {
+						log.warn("Failed to delete launch directory for test '{}': {}", test, e.getMessage());
+					}
+				}
+
 				result.setEndTime(System.currentTimeMillis());
 
 				log.info("Test '{}' finished. status: {}", result.getTest(), result.getStatus(), result.getThrowable());

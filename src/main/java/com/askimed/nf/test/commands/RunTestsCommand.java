@@ -140,13 +140,21 @@ public class RunTestsCommand extends AbstractCommand {
 	)
 	private boolean smartTesting = false;
   
-  @Option(
+  	@Option(
 			names = {"--stop-on-first-failure", "--stopOnFirstFailure"},
 			description = "Stop execution immediately after the first test failure",
 			required = false,
 			showDefaultValue = Visibility.ALWAYS
 	)
 	private boolean stopOnFirstFailure = false;
+
+	@Option(
+			names = {"--no-save", "--noSave"},
+			description = "Delete working directory after successfull run",
+			required = false,
+			showDefaultValue = Visibility.ALWAYS
+	)
+	private boolean noSave = false;
 
 	private static Logger log = LoggerFactory.getLogger(RunTestsCommand.class);
 
@@ -306,6 +314,7 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.setCIMode(ciMode);
 			engine.addProfile(profile);
 			engine.setStopOnFirstFailure(stopOnFirstFailure);
+			engine.setNoSave(noSave);
 			engine.setDryRun(dryRun);
 			if (withoutTrace) {
 				engine.setWithTrace(false);
