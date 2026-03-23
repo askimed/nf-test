@@ -166,6 +166,10 @@ public class NextflowCommand {
 	}
 
 	protected List<String> buildArgs() throws IOException {
+		if (paramsFile == null) {
+			paramsFile = File.createTempFile("params", ".json");
+			paramsFile.deleteOnExit();
+		}
 
 		List<String> args = new Vector<String>();
 		if (!verbose) {
