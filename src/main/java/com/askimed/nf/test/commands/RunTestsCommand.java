@@ -150,7 +150,7 @@ public class RunTestsCommand extends AbstractCommand {
 
 	@Option(
 			names = {"--no-save", "--noSave"},
-			description = "Delete test launch directory after successfull run",
+			description = "Delete test launch directory after successful run",
 			required = false,
 			showDefaultValue = Visibility.ALWAYS
 	)
