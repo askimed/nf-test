@@ -46,6 +46,42 @@ public class ProcessTest {
 		int exitCode = app.run(new String[] { "test", "test-data/process/example/test1.nf.test" });
 		assertEquals(0, exitCode);
 
+		File testsRoot = new File(".nf-test/tests");
+		File[] testDirs = testsRoot.listFiles(File::isDirectory);
+		assertNotNull(testDirs, "Could not list test directories");
+
+		assertTrue(
+			testDirs.length == 5,
+			"Expected test directories to exist without --no-save"
+		);
+
+		for (File testDir : testDirs) {
+			File workDir = new File(testDir, "work");
+			assertTrue(
+				workDir.exists(),
+				"Launch and Work directory should exist without --no-save"
+			);
+		}
+
+	}
+
+	@Test
+	public void testExampleNoSaveDeletesLaunchDir() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/example/test1.nf.test", "--no-save" });
+		assertEquals(0, exitCode);
+
+		File testsRoot = new File(".nf-test/tests");
+		File[] testDirs = testsRoot.listFiles(File::isDirectory);
+		assertNotNull(testDirs, "Could not list test directories");
+
+		assertEquals(
+			0,
+			testDirs.length,
+			"Expected all test directories to be deleted with --no-save"
+		);
+
 	}
 
 	/*
@@ -122,6 +158,33 @@ public class ProcessTest {
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/process/default/test_process_failed.nf.test" });
 		assertEquals(1, exitCode);
+
+	}
+
+	@Test
+	public void testScriptFailedKeepsWorkDirWithNoSave() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/default/test_process_failed.nf.test", "--no-save" });
+		assertEquals(1, exitCode);
+
+		File testsRoot = new File(".nf-test/tests");
+		File[] testDirs = testsRoot.listFiles(File::isDirectory);
+		assertNotNull(testDirs, "Could not list test directories");
+
+		assertTrue(
+			testDirs.length == 1,
+			"Expected test directories to exist without --no-save"
+		);
+
+		for (File testDir : testDirs) {
+			File workDir = new File(testDir, "work");
+
+			assertTrue(
+				workDir.exists(),
+				"Launch and Work directory should still exist with --no-save if process failed"
+			);
+		}
 
 	}
 
