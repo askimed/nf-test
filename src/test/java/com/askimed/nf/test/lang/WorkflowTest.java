@@ -50,7 +50,7 @@ public class WorkflowTest {
 		int exitCode = app.run(new String[] { "test", "test-data/workflow/unnamed/trial.unnamed.nf.test" });
 		assertEquals(0, exitCode);
 
-	}Expected test directories to exist without --no-save
+	}
 
 	@Test
 	public void testWorkflowAndSnapshot() throws Exception {
