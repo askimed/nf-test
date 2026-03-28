@@ -3,8 +3,12 @@ package com.askimed.nf.test.lang.extensions;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 
+import com.askimed.nf.test.util.ObjectUtil;
 import groovy.lang.Closure;
 
 import org.codehaus.groovy.runtime.powerassert.PowerAssertionError;
@@ -57,5 +61,14 @@ public class GlobalMethods {
 		catch (Throwable thrown) {
 			throw new PowerAssertionError(thrown.getMessage());
 		}
+	}
+
+	public static String format(String format, Number number) {
+		DecimalFormat df = new DecimalFormat(format, DecimalFormatSymbols.getInstance(Locale.US));
+		return df.format(number);
+	}
+
+	public static String md5(Object object) {
+		return ObjectUtil.getMd5(object);
 	}
 }
