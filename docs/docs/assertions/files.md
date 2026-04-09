@@ -2,6 +2,8 @@
 
 The `path` class in **nf-test** provides several properties and methods to simplify the validation of output files within your pipeline tests.
 
+---
+
 ## md5 Checksum
 
 nf-test extends `path` with an `md5` property that can be used to compare the file content with an expected checksum:
@@ -20,8 +22,9 @@ To assert that two JSON files are identical:
 
 assert path(process.out.out_ch.get(0)).json == path('./expected_output.json').json
 
-To verify a specific field, use dot notation. For example, if your JSON contains { "tool": "nf-test", "version": "1.0" }:
+To verify a specific field, use dot notation. For example, if your JSON contains:
 
+{ "tool": "nf-test", "version": "1.0" }
 // Use dot notation to access the value of a specific field by name
 assert path(process.out.out_ch.get(0)).json.tool == "nf-test"
 assert path(process.out.out_ch.get(0)).json.version == "1.0"
@@ -35,9 +38,8 @@ assert path(process.out.out_ch.get(0)).yaml == path('./expected_output.yaml').ya
 
 Individual keys can also be asserted using the same semantic logic as JSON:
 
-// For a YAML structure like:
-// process:
-//   tool: nf-test
+process:
+  tool: nf-test
 assert path(process.out.out_ch.get(0)).yaml.process.tool == "nf-test"
 GZip Files
 
@@ -71,6 +73,6 @@ def header = path(process.out.gzip.get(0)).grepLineGzip(0)
 assert header.contains("instrument_id")
 Snapshot Support
 
-The ability to filter lines from a *.gz file can also be combined with the Snapshot functionality to ensure consistency.
+The ability to filter lines from a .gz file can also be combined with the Snapshot functionality to ensure consistency.
 
-assert snapshot(path(process.out.gzip.get(0)).linesGzip[0]).match()
+assert snapshot(path(process.out.gzip.get(0)).grepLinesGzip(0, 5)).match()
