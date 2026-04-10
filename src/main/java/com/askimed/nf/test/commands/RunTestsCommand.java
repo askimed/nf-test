@@ -132,6 +132,10 @@ public class RunTestsCommand extends AbstractCommand {
 			"--tag" }, split = ",", description = "Execute only tests with this tag", required = false, showDefaultValue = Visibility.ALWAYS)
 	private List<String> tags = new Vector<String>();
 
+	@Option(names = {
+			"--exclude-tag" }, split = ",", description = "Exclude tests with this tag", required = false, showDefaultValue = Visibility.ALWAYS)
+	private List<String> excludeTags = new Vector<String>();
+
 	@Option(
 			names = { "--smart-testing", "--smartTesting" },
 			description = "Runs in smart testing mode (equivalent to --ci --changed-since HEAD^).",
@@ -277,7 +281,7 @@ public class RunTestsCommand extends AbstractCommand {
 			environment.setPluginManager(manager);
 
 			TestSuiteResolver testSuiteResolver = new TestSuiteResolver(environment);
-			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, new TagQuery(tags));
+			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, new TagQuery(tags, excludeTags));
 
 			testSuits.sort(TestSuiteSorter.getDefault());
 			if (shard != null && !testSuits.isEmpty()) {
