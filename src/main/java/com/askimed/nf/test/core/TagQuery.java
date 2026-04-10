@@ -1,5 +1,7 @@
 package com.askimed.nf.test.core;
 
+import com.askimed.nf.test.core.tagquery.TagExpression;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -9,6 +11,8 @@ public class TagQuery {
 	private List<String> tags = new Vector<String>();
 
 	private List<String> excludeTags = new Vector<String>();
+
+	private TagExpression expression = null;
 
 	public TagQuery() {
 
@@ -23,6 +27,10 @@ public class TagQuery {
 		this.excludeTags = toLowerCase(excludeTags);
 	}
 
+	public TagQuery(TagExpression expression) {
+		this.expression = expression;
+	}
+
 	protected List<String> toLowerCase(List<String> tags) {
 		List<String> result = new Vector<String>();
 		for (String tag : tags) {
@@ -32,6 +40,10 @@ public class TagQuery {
 	}
 
 	public boolean matches(ITaggable taggable) {
+
+		if (expression != null) {
+			return expression.evaluate(taggable);
+		}
 
 		if (isExcluded(taggable)) {
 			return false;
