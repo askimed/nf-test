@@ -83,6 +83,35 @@ Adding an explicit inclusion will still not cause `test1` to run
 nf-test test --tag tag3 --exclude-tag tag2  # collects test2
 ```
 
+#### Complex tag queries
+
+The `--tag-query` option allows the user to construct a complex query to select specific to run tests. This parameter is mutually exclusive to the `--tag` and `--exclude-tag` options.
+
+The query language supports the following operators in order of precedence:
+
+- `!`: `NOT`
+- `&&`: `AND`
+- `||`: `OR`
+
+Parentheses can be used to group conditions.
+Tags with spaces (normally test names used as a tag) can be escaped with `'` or `""`
+
+e.g.
+
+```
+# Match all tests with tag1 + tag2 OR with tag3
+--tag-query "(tag1 && tag2) || tag3"
+
+# Match all tests with tag3 OR without tag4
+--tag-query "tag3 || !tag4"
+
+# Match tests called 'complex test' AND tag1
+--tag-query "'complex test' && tag1"
+
+# Match everything that does not have tag1 OR tag2
+--tag-query "!(tag1 || tag2)"
+```
+
 ## Create a TAP output
 
 To run all tests and create a `report.tap` [file](https://testanything.org/), use the following command.
