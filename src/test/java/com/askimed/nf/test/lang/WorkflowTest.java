@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.askimed.nf.test.App;
@@ -20,8 +20,8 @@ public class WorkflowTest {
 
 	}
 
-	@BeforeAll
-	public static void setUp() throws IOException {
+	@BeforeEach
+	public void setUp() throws IOException {
 		FileUtil.deleteDirectory(new File(".nf-test"));
 		new File("nf-test.config").delete();
 	}
