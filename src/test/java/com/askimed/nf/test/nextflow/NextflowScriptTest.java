@@ -221,5 +221,43 @@ public class NextflowScriptTest {
 		assertEquals(0, names.size());
 	}
 
+	@Test
+	public void testGetWorkflowNamesIgnoresOnComplete() {
+		List<String> names = NextflowScript.getWorkflowNames(
+			"workflow myWorkflow { some content }\n" +
+			"workflow.onComplete { println 'done' }");
+		assertEquals(1, names.size());
+		assertEquals("myWorkflow", names.get(0));
+	}
+
+	@Test
+	public void testGetWorkflowNamesIgnoresOnError() {
+		List<String> names = NextflowScript.getWorkflowNames(
+			"workflow myWorkflow { some content }\n" +
+			"workflow.onError { println 'error' }");
+		assertEquals(1, names.size());
+		assertEquals("myWorkflow", names.get(0));
+	}
+
+	@Test
+	public void testGetWorkflowNamesIgnoresOnSuccess() {
+		List<String> names = NextflowScript.getWorkflowNames(
+			"workflow myWorkflow { some content }\n" +
+			"workflow.onSuccess { println 'success' }");
+		assertEquals(1, names.size());
+		assertEquals("myWorkflow", names.get(0));
+	}
+
+	@Test
+	public void testGetWorkflowNamesIgnoresMultipleLifecycleHooks() {
+		List<String> names = NextflowScript.getWorkflowNames(
+			"workflow myWorkflow { some content }\n" +
+			"workflow.onComplete { println 'done' }\n" +
+			"workflow.onError { println 'error' }\n" +
+			"workflow.onSuccess { println 'success' }");
+		assertEquals(1, names.size());
+		assertEquals("myWorkflow", names.get(0));
+	}
+
 	
 }

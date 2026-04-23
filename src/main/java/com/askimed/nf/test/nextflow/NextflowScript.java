@@ -106,14 +106,16 @@ public class NextflowScript implements IMetaFile {
 
 		List<String> names = new Vector<String>();
 
-		String patternProcessName = "(?i)^\\s*workflow\\s*(.+)(\\s*\\{|\\{)";
+		// Match only valid identifiers (letters, digits, underscores) not dot notation like .onComplete
+		String patternProcessName = "(?i)^\\s*workflow\\s+([a-zA-Z_][a-zA-Z0-9_]*)(\\s*\\{|\\{)";
 
 		Pattern r = Pattern.compile(patternProcessName, Pattern.MULTILINE);
 
 		Matcher m = r.matcher(content);
 		while (m.find()) {
-			if (!m.group(1).trim().isEmpty()) {
-				names.add(m.group(1).trim());
+			String workflowName = m.group(1).trim();
+			if (!workflowName.isEmpty()) {
+				names.add(workflowName);
 			}
 		}
 
