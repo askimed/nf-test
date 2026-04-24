@@ -66,13 +66,17 @@ public class NextflowScript implements IMetaFile {
 
 		List<String> names = new Vector<String>();
 
-		String patternProcessName = "(?i)^\\s*process\\s*(.+)(\\s*\\{|\\{)";
+		// Match only valid identifiers (letters, digits, underscores), not dot notation
+		String patternProcessName = "(?i)^\\s*process\\s+([a-zA-Z_][a-zA-Z0-9_]*)(\\s*\\{|\\{)";
 
 		Pattern r = Pattern.compile(patternProcessName, Pattern.MULTILINE);
 
 		Matcher m = r.matcher(content);
 		while (m.find()) {
-			names.add(m.group(1).trim());
+			String processName = m.group(1).trim();
+			if (!processName.isEmpty()) {
+				names.add(processName);
+			}
 		}
 
 		return names;
@@ -86,13 +90,17 @@ public class NextflowScript implements IMetaFile {
 
 		List<String> names = new Vector<String>();
 
-		String patternFunctionName = "(?i)^\\s*def\\s*(.+)(\\s*\\(|\\()";
+		// Match only valid identifiers (letters, digits, underscores), not dot notation
+		String patternFunctionName = "(?i)^\\s*def\\s+([a-zA-Z_][a-zA-Z0-9_]*)(\\s*\\(|\\()";
 
 		Pattern r = Pattern.compile(patternFunctionName, Pattern.MULTILINE);
 
 		Matcher m = r.matcher(content);
 		while (m.find()) {
-			names.add(m.group(1).trim());
+			String functionName = m.group(1).trim();
+			if (!functionName.isEmpty()) {
+				names.add(functionName);
+			}
 		}
 
 		return names;

@@ -259,5 +259,37 @@ public class NextflowScriptTest {
 		assertEquals("myWorkflow", names.get(0));
 	}
 
+	@Test
+	public void testGetProcessNamesIgnoresDotNotation() {
+		List<String> names = NextflowScript.getProcesseNames(
+			"process myProcess { some content }\n" +
+			"process.ext { println 'extension' }");
+		assertEquals(1, names.size());
+		assertEquals("myProcess", names.get(0));
+	}
+
+	@Test
+	public void testGetFunctionNamesIgnoresDotNotation() {
+		List<String> names = NextflowScript.getFunctionNames(
+			"def myFunction() { some content }\n" +
+			"def.extension() { println 'extension' }");
+		assertEquals(1, names.size());
+		assertEquals("myFunction", names.get(0));
+	}
+
+	@Test
+	public void testGetProcessNamesRequiresSpace() {
+		// Should not match process without space between keyword and name
+		List<String> names = NextflowScript.getProcesseNames("process{myProcess { some content }");
+		assertEquals(0, names.size());
+	}
+
+	@Test
+	public void testGetFunctionNamesRequiresSpace() {
+		// Should not match def without space between keyword and name
+		List<String> names = NextflowScript.getFunctionNames("def{myFunction() { some content }");
+		assertEquals(0, names.size());
+	}
+
 	
 }
