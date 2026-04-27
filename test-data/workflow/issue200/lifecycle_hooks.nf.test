@@ -1,0 +1,22 @@
+nextflow_workflow {
+
+    name "Test workflow with lifecycle hooks"
+    script "./lifecycle_hooks.nf"
+    workflow "myWorkflow"
+
+    test("Workflow with onComplete and onError should generate test file") {
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of("Hello, World!")
+                """
+            }
+        }
+
+        then {
+            assert workflow.success
+        }
+    }
+
+}
