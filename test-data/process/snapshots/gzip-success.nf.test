@@ -1,0 +1,25 @@
+nextflow_process {
+
+  name "Test process xy"
+
+  script "./copy.nf"
+  process "COPY"
+
+  test("Should succeed because valid gz file") {
+
+    when {
+      process {
+        """
+        input[0] = file("${moduleTestDir}/valid.txt.gz")
+        """
+      }
+    }
+
+    then {
+      assert process.success
+      assert snapshot(process.out.gzip).match()
+    }
+
+  }
+
+}
