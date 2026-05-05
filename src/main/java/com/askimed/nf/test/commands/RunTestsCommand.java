@@ -9,6 +9,8 @@ import java.util.Vector;
 import java.util.function.Consumer;
 
 import com.askimed.nf.test.core.*;
+import com.askimed.nf.test.core.tagquery.TagQueryParseException;
+import com.askimed.nf.test.core.tagquery.TagQueryParser;
 import com.askimed.nf.test.core.reports.CsvReportWriter;
 import com.askimed.nf.test.lang.dependencies.Coverage;
 import com.askimed.nf.test.lang.dependencies.DependencyExporter;
@@ -131,6 +133,14 @@ public class RunTestsCommand extends AbstractCommand {
 	@Option(names = {
 			"--tag" }, split = ",", description = "Execute only tests with this tag", required = false, showDefaultValue = Visibility.ALWAYS)
 	private List<String> tags = new Vector<String>();
+
+	@Option(names = {
+			"--exclude-tag" }, split = ",", description = "Exclude tests with this tag", required = false, showDefaultValue = Visibility.ALWAYS)
+	private List<String> excludeTags = new Vector<String>();
+
+	@Option(names = {
+			"--tag-query" }, description = "Filter tests using a boolean tag expression (e.g. '(!tag1 && tag2) || tag3')", required = false)
+	private String tagQuery = null;
 
 	@Option(
 			names = { "--smart-testing", "--smartTesting" },
@@ -277,7 +287,22 @@ public class RunTestsCommand extends AbstractCommand {
 			environment.setPluginManager(manager);
 
 			TestSuiteResolver testSuiteResolver = new TestSuiteResolver(environment);
-			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, new TagQuery(tags));
+			TagQuery query;
+			if (tagQuery != null) {
+				if (!tags.isEmpty() || !excludeTags.isEmpty()) {
+					System.out.println(AnsiColors.red("Error: --tag-query cannot be combined with --tag or --exclude-tag"));
+					return 1;
+				}
+				try {
+					query = new TagQuery(TagQueryParser.parse(tagQuery));
+				} catch (TagQueryParseException e) {
+					System.out.println(AnsiColors.red("Error: " + e.getMessage()));
+					return 1;
+				}
+			} else {
+				query = new TagQuery(tags, excludeTags);
+			}
+			List<ITestSuite> testSuits = testSuiteResolver.parse(scripts, query);
 
 			testSuits.sort(TestSuiteSorter.getDefault());
 			if (shard != null && !testSuits.isEmpty()) {

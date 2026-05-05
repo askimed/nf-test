@@ -26,7 +26,17 @@ The Linux tool `procps` is required to run Nextflow tracing. In case your contai
 
 #### `--tag <tag>`
 
-Execute only tests with the provided tag. Multiple tags can be used and have to be separated by commas (e.g. `tag1,tag2`).
+Execute only tests with the provided tag. Multiple tags can be used and have to be separated by commas (e.g. `tag1,tag2`). Tag matching is case-insensitive.
+
+#### `--exclude-tag <tag>`
+
+Don't execute tests with the provided tag. Multiple tags can be used and have to be separated by commas (e.g. `tag1,tag2`). `--exclude-tag` can be used with `--tag` and the exclusion will supersede the inclusion. Tag matching is case-insensitive.
+
+e.g. For `--tag tag1 --exclude-tag tag2` then all tests with `tag1` will be run _except_ those also having `tag2`.
+
+#### `--tag-query <query>`
+
+Use a complex query based on tags to select the tests to run. A simple query-language is supported with negation `!`, and `&&`, and or `||`. As with `--tag` and `--exclude-tag` the tag matching is case insensitive. This option is mutually exclusive to `--tag` and `--exclude-tag`.
 
 #### `--stop-on-first-failure`
 
@@ -62,7 +72,6 @@ Runs in smart testing mode (equivalent to --ci --changed-since HEAD^).
 
 Filter test cases by specified types (e.g., process, pipeline, workflow or function). Multiple types can be separated by commas.
 
-
 ### Optimizing Test Execution
 
 #### `--related-tests <files>`
@@ -94,16 +103,18 @@ This parameter initiates the execution of tests related to changes made until th
 Enables the export of the dependency graph as a dot file.
 The dot file format is commonly used for representing graphs in graphviz and other related software.
 
-### Sharding 
+### Sharding
 
 This parameter allows users to divide the execution workload into manageable chunks, which can be useful for
 parallel or distributed processing.
 
 #### `--shard <shard>`
+
 Splits the execution into arbitrary chunks defined by the format `i/n`, where `i` denotes the index of the current
 chunk and `n` represents the total number of chunks. For instance, `2/5` executes the second chunk out of five.
 
 #### `--shard-strategy <strategy>`
+
 Description: Specifies the strategy used to build shards when the `--shard` parameter is utilized.
 Accepted values are `round-robin` or `none.`. This parameter determines the method employed to distribute workload
 chunks among available resources. With the round-robin strategy, shards are distributed evenly among resources in
@@ -143,16 +154,16 @@ user to manage the assignment of shards. Default value is `round-robin`.
   ```
   nf-test test --related-tests modules/module_a.nf modules/module_b.nf
   ```
-  
+
 - If your project is a Git directory and you have modified files, you can run tests only for these changed files by
-using the following command:
+  using the following command:
 
   ```
   nf-test test --only-changed
   ```
-  
+
 - If you want to test all changes made between the current state of the repository and the last commit,
-you can use the following command:
+  you can use the following command:
 
   ```
   nf-test test --changed-since HEAD^
@@ -161,5 +172,5 @@ you can use the following command:
 - Run only the second of four shards:
 
   ```
-  nf-test test --shard 2/4 
+  nf-test test --shard 2/4
   ```

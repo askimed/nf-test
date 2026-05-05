@@ -1,5 +1,7 @@
 package com.askimed.nf.test.core;
 
+import com.askimed.nf.test.core.tagquery.TagExpression;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -8,16 +10,25 @@ public class TagQuery {
 
 	private List<String> tags = new Vector<String>();
 
+	private List<String> excludeTags = new Vector<String>();
+
+	private TagExpression expression = null;
+
 	public TagQuery() {
 
 	}
 
-	public TagQuery(String... tags) {
-		this.tags = toLowerCase(Arrays.asList(tags));
-	}
-
 	public TagQuery(List<String> tags) {
 		this.tags = toLowerCase(tags);
+	}
+
+	public TagQuery(List<String> tags, List<String> excludeTags) {
+		this.tags = toLowerCase(tags);
+		this.excludeTags = toLowerCase(excludeTags);
+	}
+
+	public TagQuery(TagExpression expression) {
+		this.expression = expression;
 	}
 
 	protected List<String> toLowerCase(List<String> tags) {
@@ -29,6 +40,14 @@ public class TagQuery {
 	}
 
 	public boolean matches(ITaggable taggable) {
+
+		if (expression != null) {
+			return expression.evaluate(taggable);
+		}
+
+		if (isExcluded(taggable)) {
+			return false;
+		}
 
 		if (tags == null || tags.size() == 0) {
 			return true;
@@ -46,6 +65,29 @@ public class TagQuery {
 
 		if (taggable.getParent() != null) {
 			return matches(taggable.getParent());
+		}
+
+		return false;
+	}
+
+	private boolean isExcluded(ITaggable taggable) {
+
+		if (excludeTags == null || excludeTags.isEmpty()) {
+			return false;
+		}
+
+		if (excludeTags.contains(taggable.getName().toLowerCase())) {
+			return true;
+		}
+
+		for (String tag : taggable.getTags()) {
+			if (excludeTags.contains(tag.toLowerCase())) {
+				return true;
+			}
+		}
+
+		if (taggable.getParent() != null) {
+			return isExcluded(taggable.getParent());
 		}
 
 		return false;

@@ -25,7 +25,7 @@ public class TestSuiteResolverTest {
 	@Test
 	public void executeTestByName() throws Throwable {
 
-		TagQuery query = new TagQuery("test 1");
+		TagQuery query = new TagQuery(List.of("test 1"));
 		List<String> tests = collectTests(query);
 		Assertions.assertEquals(1, tests.size());
 		Assertions.assertTrue(tests.contains("test 1"));
@@ -62,7 +62,7 @@ public class TestSuiteResolverTest {
 	@Test
 	public void executeTestSuiteByName() throws Throwable {
 		{
-			TagQuery query = new TagQuery("suite 1");
+			TagQuery query = new TagQuery(List.of("suite 1"));
 			List<String> tests = collectTests(query);
 			Assertions.assertEquals(2, tests.size());
 			Assertions.assertTrue(tests.contains("test 1"));
@@ -70,7 +70,7 @@ public class TestSuiteResolverTest {
 		}
 
 		{
-			TagQuery query = new TagQuery("SUITE 1");
+			TagQuery query = new TagQuery(List.of("SUITE 1"));
 			List<String> tests = collectTests(query);
 			Assertions.assertEquals(2, tests.size());
 			Assertions.assertTrue(tests.contains("test 1"));
@@ -81,13 +81,13 @@ public class TestSuiteResolverTest {
 	@Test
 	public void executeTestsByTag() throws Throwable {
 		{
-			TagQuery query = new TagQuery("tag2");
+			TagQuery query = new TagQuery(List.of("tag2"));
 			List<String> tests = collectTests(query);
 			Assertions.assertEquals(1, tests.size());
 			Assertions.assertTrue(tests.contains("test 1"));
 		}
 		{
-			TagQuery query = new TagQuery("TAG2");
+			TagQuery query = new TagQuery(List.of("TAG2"));
 			List<String> tests = collectTests(query);
 			Assertions.assertEquals(1, tests.size());
 			Assertions.assertTrue(tests.contains("test 1"));
@@ -97,7 +97,7 @@ public class TestSuiteResolverTest {
 	@Test
 	public void executeTestsByTagAcrossSuites() throws Throwable {
 
-		TagQuery query = new TagQuery("tag5");
+		TagQuery query = new TagQuery(List.of("tag5"));
 		List<String> tests = collectTests(query);
 		Assertions.assertEquals(2, tests.size());
 		Assertions.assertTrue(tests.contains("test 2"));
@@ -107,7 +107,7 @@ public class TestSuiteResolverTest {
 	@Test
 	public void executeTestsBySuiteTag() throws Throwable {
 
-		TagQuery query = new TagQuery("tag1");
+		TagQuery query = new TagQuery(List.of("tag1"));
 		List<String> tests = collectTests(query);
 		Assertions.assertEquals(2, tests.size());
 		Assertions.assertTrue(tests.contains("test 1"));
@@ -117,10 +117,50 @@ public class TestSuiteResolverTest {
 	@Test
 	public void executeTestsByMultipleTags() throws Throwable {
 
-		TagQuery query = new TagQuery("tag3", "tag4");
+		TagQuery query = new TagQuery(List.of("tag3", "tag4"));
 		List<String> tests = collectTests(query);
 		Assertions.assertEquals(2, tests.size());
 		Assertions.assertTrue(tests.contains("test 1"));
+		Assertions.assertTrue(tests.contains("test 2"));
+	}
+
+	@Test
+	public void excludeTestsByTag() throws Throwable {
+
+		TagQuery query = new TagQuery(List.of(), List.of("tag2"));
+		List<String> tests = collectTests(query);
+		Assertions.assertEquals(2, tests.size());
+		Assertions.assertFalse(tests.contains("test 1"));
+		Assertions.assertTrue(tests.contains("test 2"));
+		Assertions.assertTrue(tests.contains("test 3"));
+	}
+
+	@Test
+	public void excludeTestsBySuiteTag() throws Throwable {
+
+		TagQuery query = new TagQuery(List.of(), List.of("tag1"));
+		List<String> tests = collectTests(query);
+		Assertions.assertEquals(1, tests.size());
+		Assertions.assertTrue(tests.contains("test 3"));
+	}
+
+	@Test
+	public void excludeTestsByName() throws Throwable {
+
+		TagQuery query = new TagQuery(List.of(), List.of("test 1"));
+		List<String> tests = collectTests(query);
+		Assertions.assertEquals(2, tests.size());
+		Assertions.assertFalse(tests.contains("test 1"));
+		Assertions.assertTrue(tests.contains("test 2"));
+		Assertions.assertTrue(tests.contains("test 3"));
+	}
+
+	@Test
+	public void includeAndExcludeTags() throws Throwable {
+
+		TagQuery query = new TagQuery(List.of("tag1"), List.of("tag3"));
+		List<String> tests = collectTests(query);
+		Assertions.assertEquals(1, tests.size());
 		Assertions.assertTrue(tests.contains("test 2"));
 	}
 
