@@ -19,7 +19,7 @@ assert path(process.out.out_ch.get(0)).json == path('./some.json').json
 Individual keys can also be asserted:
 
 ```Groovy
-assert path(process.out.out_ch.get(0)).json.key == "value"
+assert path(process.out.out_ch.get(0)).json.tool == "nf-test"
 ```
 
 ## YAML Files
