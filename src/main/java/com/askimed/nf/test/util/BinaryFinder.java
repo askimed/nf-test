@@ -54,11 +54,16 @@ public class BinaryFinder {
 		if (envPath != null && !envPath.isEmpty()) {
 			String[] paths = envPath.split(":");
 			for (String path : paths) {
-				String binary = FileUtil.path(path, name);
-				if (new File(binary).exists()) {
-					location = binary;
-					return this;
-				}
+			    // Handle the tilde expansion
+		            if (path.startsWith("~")) {
+		                path = path.replaceFirst("~", System.getProperty("user.home"));
+		            }
+		
+		            String binary = FileUtil.path(path, name);
+		            if (new File(binary).exists()) {
+		                location = binary;
+		                break; // Stop searching once the binary is found
+		            }
 			}
 		}
 
