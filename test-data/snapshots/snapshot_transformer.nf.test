@@ -1,0 +1,50 @@
+nextflow_function {
+
+  name "Test Function Say Hello"
+
+  script "./functions.nf"
+  function "create_object"
+
+  test("Passing case") {
+
+    when {
+      function {
+        """
+        input[0] = "aaron"
+        """
+      }
+    }
+
+    then {
+      assert snapshot(function.result).
+          view().
+          view(true).
+          remove('.start_time').
+          replace('.end_time', "<END_TIME>").
+          map('.chunks', chunks -> chunks.sort()).
+
+          // vs. value is each element. no the list itself.
+          // map('.chunks[*]', value -> 27).
+
+          map('contents[0].value', value -> format("#0.00", value)).
+          //remove('contents[0].files[?(@ == "output.log")]').
+          //remove('contents[0].files[?(@ =~ /.*\\.log$/)]').
+
+          //traverse( (key, value) ->  {
+          //  value == "output.log" ? "<LOG>" : value
+          //}).
+          //traverse( (key, value) ->  {
+          //  value.toString().endsWith(".log") ? "<LOG>" : value
+          //}).
+          traverse( (key, value) ->  {
+            return value.toString().endsWith(".log") ? file(value).name : value
+          }).
+          map('contents[0].files[0]', value -> file(value).readLines()).
+
+          view().
+          match()
+    }
+
+  }
+
+}
