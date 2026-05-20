@@ -26,6 +26,8 @@ public class Config {
 
 	private String workDir = ".nf-test";
 
+	private boolean useWorkDir = true;
+
 	private String testsDir = "tests";
 
 	private String libDir = "tests/lib";
@@ -66,6 +68,14 @@ public class Config {
 
 	public String getWorkDir() {
 		return workDir;
+	}
+
+	public void useWorkDir(boolean useWorkDir) {
+		this.useWorkDir = useWorkDir;
+	}
+
+	public boolean isUseWorkDir() {
+		return useWorkDir;
 	}
 
 	public void requires(Map<String, Object> requires) {
