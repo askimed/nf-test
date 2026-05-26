@@ -46,6 +46,8 @@ public class TestExecutionEngine {
 
 	private boolean stopOnFirstFailure = false;
 
+	private boolean devResume = false;
+
 	private static Logger log = LoggerFactory.getLogger(TestExecutionEngine.class);
 
 	public void setDebug(boolean debug) {
@@ -98,6 +100,10 @@ public class TestExecutionEngine {
 
 	public void setStopOnFirstFailure(boolean stopOnFirstFailure) {
 		this.stopOnFirstFailure = stopOnFirstFailure;
+	}
+
+	public void setDevResume(boolean devResume) {
+		this.devResume = devResume;
 	}
 
 	public int execute() throws Throwable {
@@ -153,6 +159,7 @@ public class TestExecutionEngine {
 				log.info("Run test '{}'. type: {}", test, test.getClass().getName());
 				totalTests++;
 
+				test.setDevResume(devResume);
 				testSuite.setupTest(test);
 
 				listener.executionStarted(test);
@@ -160,6 +167,7 @@ public class TestExecutionEngine {
 				test.setWithTrace(withTrace);
 				test.setUpdateSnapshot(updateSnapshot);
 				test.setCIMode(ciMode);
+
 				try {
 
 					// override debug flag from CLI

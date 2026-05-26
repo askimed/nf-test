@@ -139,14 +139,22 @@ public class RunTestsCommand extends AbstractCommand {
 			showDefaultValue = Visibility.ALWAYS
 	)
 	private boolean smartTesting = false;
-  
-  @Option(
+
+	@Option(
 			names = {"--stop-on-first-failure", "--stopOnFirstFailure"},
 			description = "Stop execution immediately after the first test failure",
 			required = false,
 			showDefaultValue = Visibility.ALWAYS
 	)
 	private boolean stopOnFirstFailure = false;
+
+	@Option(
+		names = {"--dev-resume", "--resume-dev"},
+		description = "Developer mode: reuse previous Nextflow work directory and enable -resume",
+		required = false,
+		showDefaultValue = Visibility.ALWAYS
+	)
+	private boolean devResume = false;
 
 	private static Logger log = LoggerFactory.getLogger(RunTestsCommand.class);
 
@@ -287,10 +295,10 @@ public class RunTestsCommand extends AbstractCommand {
 					testSuits = TestSuiteSharder.shard(testSuits, shard);
 				}
 			}
-      
+
 			int totalTests = testSuits.stream().mapToInt(testSuite -> testSuite.getTests().size()).sum();
 			log.info("Found {} tests to execute.", totalTests);
-      
+
 			if (testSuits.isEmpty()) {
 				System.out.println(AnsiColors
 					.yellow("No tests to execute."));
@@ -307,6 +315,7 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.addProfile(profile);
 			engine.setStopOnFirstFailure(stopOnFirstFailure);
 			engine.setDryRun(dryRun);
+			engine.setDevResume(devResume);
 			if (withoutTrace) {
 				engine.setWithTrace(false);
 			} else {

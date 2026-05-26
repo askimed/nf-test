@@ -38,4 +38,6 @@ public interface ITest extends ITaggable {
 
 	public boolean isCIMode();
 
+	public void setDevResume(boolean devResume);
+
 }

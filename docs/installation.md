@@ -86,14 +86,16 @@ nf-test update
 
 To compile nf-test from source you shall have maven installed. This will produce a `nf-test/target/nf-test.jar` file.
 
-```
+```bash
 git clone git@github.com:askimed/nf-test.git
 cd nf-test
 mvn install
 ```
+
 To use the newly compiled `nf-test.jar`, update the `nf-test` bash script that is on your PATH to point to the new `.jar` file.
 First locate it with `which nf-test`, and then modify `APP_HOME` and `APP_JAR` vars at the top:
-```
+
+```bash
 #!/bin/bash
 APP_HOME="/PATH/TO/nf-test/target/"
 APP_JAR="nf-test.jar"
