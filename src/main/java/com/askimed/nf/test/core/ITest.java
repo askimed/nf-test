@@ -28,6 +28,8 @@ public interface ITest extends ITaggable {
 
 	public ITestSuite getTestSuite();
 
+	public File getLaunchDir();
+
 	public void setWithTrace(boolean withTrace);
 
 	public void setUpdateSnapshot(boolean updateSnapshot);
