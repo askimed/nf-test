@@ -148,12 +148,13 @@ public class RunTestsCommand extends AbstractCommand {
 	)
 	private boolean stopOnFirstFailure = false;
 
-	private static Logger log = LoggerFactory.getLogger(RunTestsCommand.class);
-
-	@Override
-	public Integer execute() throws Exception {
-
-		if (smartTesting) {
+	@Option(
+			names = {"--retries"},
+			description = "Number of times to retry a test on transient network/IO failures (0 = no retry)",
+			required = false,
+			showDefaultValue = Visibility.ALWAYS
+	)
+	private int retries = -1;
 			this.ciMode = true;
 			if (this.changedSince == null) {
 				this.changedSince = "HEAD^";
@@ -307,6 +308,8 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.addProfile(profile);
 			engine.setStopOnFirstFailure(stopOnFirstFailure);
 			engine.setDryRun(dryRun);
+			// CLI --retries overrides config file value
+			engine.setRetries(retries >= 0 ? retries : (config != null ? config.getRetries() : 0));
 			if (withoutTrace) {
 				engine.setWithTrace(false);
 			} else {

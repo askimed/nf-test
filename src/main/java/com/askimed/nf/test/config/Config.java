@@ -52,6 +52,8 @@ public class Config {
 
 	private List<String> triggers = new Vector<String>();
 
+	private int retries = 0;
+
 	public void testsDir(String testsDir) {
 		this.testsDir = testsDir;
 	}
@@ -194,6 +196,14 @@ public class Config {
 
 	public void trigger(String trigger) {
 		this.triggers.add(trigger);
+	}
+
+	public void retries(int retries) {
+		this.retries = retries;
+	}
+
+	public int getRetries() {
+		return retries;
 	}
 
 	public void stage(Closure closure) {

@@ -1,6 +1,7 @@
 package com.askimed.nf.test.core;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,6 +46,23 @@ public class TestExecutionEngine {
 	private boolean dryRun = false;
 
 	private boolean stopOnFirstFailure = false;
+
+	private int retries = 0;
+
+	// Patterns that indicate transient network or file-staging failures worth retrying
+	private static final List<String> TRANSIENT_ERROR_PATTERNS = Arrays.asList(
+		"Could not resolve host",
+		"Can't stage file https://",
+		"Can't stage file http://",
+		"No such file or directory: https://",
+		"No such file or directory: http://",
+		"curl: (6)",
+		"curl: (7)",
+		"curl: (28)",
+		"curl: (35)",
+		"Connection timed out",
+		"Connection refused"
+	);
 
 	private static Logger log = LoggerFactory.getLogger(TestExecutionEngine.class);
 
@@ -98,6 +116,10 @@ public class TestExecutionEngine {
 
 	public void setStopOnFirstFailure(boolean stopOnFirstFailure) {
 		this.stopOnFirstFailure = stopOnFirstFailure;
+	}
+
+	public void setRetries(int retries) {
+		this.retries = retries;
 	}
 
 	public int execute() throws Throwable {
@@ -160,29 +182,53 @@ public class TestExecutionEngine {
 				test.setWithTrace(withTrace);
 				test.setUpdateSnapshot(updateSnapshot);
 				test.setCIMode(ciMode);
-				try {
 
-					// override debug flag from CLI
-					if (debug) {
-						test.setDebug(true);
-					}
+				if (debug) {
+					test.setDebug(true);
+				}
 
-					result.setStartTime(System.currentTimeMillis());
-					if (!dryRun) {
-						test.execute();
+				int attempt = 0;
+				boolean passed = false;
+				Throwable lastThrowable = null;
+				String lastErrorReport = null;
+
+				result.setStartTime(System.currentTimeMillis());
+				do {
+					try {
+						if (!dryRun) {
+							test.execute();
+						}
+						passed = true;
+						lastThrowable = null;
+					} catch (Throwable e) {
+						String errorReport = null;
+						try { errorReport = test.getErrorReport(); } catch (Throwable ignored) {}
+						if (attempt < retries && isTransientNetworkError(errorReport, e)) {
+							attempt++;
+							log.warn("Test '{}' failed with transient network/IO error (attempt {}/{}). Retrying...",
+								test, attempt, retries);
+							System.out.println(AnsiColors.yellow(AnsiText.padding(
+								"Retrying (attempt " + attempt + "/" + retries + ") after network/IO error...", 4)));
+							testSuite.setupTest(test);
+						} else {
+							lastThrowable = e;
+							lastErrorReport = errorReport;
+							break;
+						}
 					}
+				} while (!passed);
+
+				if (passed) {
 					result.setStatus(TestExecutionResultStatus.PASSED);
-
-				} catch (Throwable e) {
-
+				} else {
 					result.setStatus(TestExecutionResultStatus.FAILED);
-					result.setThrowable(e);
-					result.setErrorReport(test.getErrorReport());
+					result.setThrowable(lastThrowable);
+					result.setErrorReport(lastErrorReport);
 					failed = true;
 					testSuite.setFailedTests(true);
 					failedTests++;
-
 				}
+
 				test.cleanup();
 				result.setEndTime(System.currentTimeMillis());
 
@@ -223,5 +269,21 @@ public class TestExecutionEngine {
 
 	public void setTestSuites(List<ITestSuite> testSuits) {
 		this.testSuits = testSuits;
+	}
+
+	private boolean isTransientNetworkError(String errorReport, Throwable e) {
+		String haystack = "";
+		if (errorReport != null) {
+			haystack += errorReport;
+		}
+		if (e != null && e.getMessage() != null) {
+			haystack += e.getMessage();
+		}
+		for (String pattern : TRANSIENT_ERROR_PATTERNS) {
+			if (haystack.contains(pattern)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
