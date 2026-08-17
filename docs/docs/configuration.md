@@ -8,6 +8,7 @@ The `nf-test.config` file is a configuration file used to customize settings and
 |--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------------------- |
 | `testsDir`   | Location for storing all nf-test cases (test scripts). If you want all test files to be in the same directory as the script itself, you can set the testDir to `.` | `"tests"`                 |
 | `workDir`    | Directory for storing temporary files and working directories for each test. This directory should be added to `.gitignore`.                                       | `".nf-test"`              |
+| `useWorkDir` | Setting to `false` delegates work directory management to Nextflow. Useful for running tests in cloud environments.                                                | `true`                    |
 | `configFile` | Location of an optional `nextflow.config` file specifically used for executing tests. [Learn more](#testsnextflowconfig).                                          | `"tests/nextflow.config"` |
 | `libDir`     | Location of a library folder that is automatically added to the classpath during testing to include additional libraries or resources needed for test cases.       | `"tests/lib"`             |
 | `profile`    | Default profile to use for running tests defined in the Nextflow configuration. See [Learn more](#managing-profiles).                                              | `"docker"`                |

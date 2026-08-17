@@ -234,7 +234,9 @@ public class ProcessTest extends AbstractTest {
 		nextflow.setDebug(isDebug());
 		nextflow.setLog(logFile);
 		nextflow.setLaunchDir(launchDir);
-		nextflow.setWorkDir(workDir);
+		if (config.isUseWorkDir()) {
+			nextflow.setWorkDir(workDir);
+		}
 		nextflow.setParamsFile(paramsFile);
 		nextflow.setOptions(getOptions());
 
