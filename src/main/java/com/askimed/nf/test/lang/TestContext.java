@@ -45,7 +45,7 @@ public class TestContext {
 		this.baseDir = test.baseDir.getAbsolutePath();
 		this.projectDir = test.baseDir.getAbsolutePath();
 		this.launchDir = test.launchDir.getAbsolutePath();
-		this.workDir = test.workDir.getAbsolutePath();
+		this.workDir = (test.workDir != null) ? test.workDir.getAbsolutePath() : null;
 		this.outputDir = test.outputDir.getAbsolutePath();
 		if (test.moduleDir != null) {
 			this.moduleDir = test.moduleDir.getAbsolutePath();

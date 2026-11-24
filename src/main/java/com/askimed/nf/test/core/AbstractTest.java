@@ -105,7 +105,10 @@ public abstract class AbstractTest implements ITest {
 		launchDir = constructDirectory(testDirectory, DIRECTORY_TESTS, getHash());
 		metaDir = constructDirectory(launchDir, DIRECTORY_META);
 		outputDir = constructDirectory(launchDir, DIRECTORY_OUTPUT);
-		workDir = constructDirectory(launchDir, DIRECTORY_WORK);
+
+		if (config.isUseWorkDir()) {
+			workDir = constructDirectory(launchDir, DIRECTORY_WORK);
+		}
 
 		mockFile = new File( ".nf-test-" + getHash() + ".nf");
 		mockFile.deleteOnExit();
@@ -116,7 +119,9 @@ public abstract class AbstractTest implements ITest {
 		setupDirectory("Launch Directory", launchDir);
 		setupDirectory("Meta Directory", metaDir);
 		setupDirectory("Output Directory", outputDir);
-		setupDirectory("Working Directory", workDir);
+		if (config.isUseWorkDir()) {
+			setupDirectory("Working Directory", workDir);
+		}
 	}
 
 	@Override
