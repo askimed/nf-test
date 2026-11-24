@@ -14,7 +14,7 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = channel.of([params.outDir,params.localOutputDir])
+                input[0] = channel.of([params.outDir,params.localOutputDir,params.someRegex])
                 """
             }
         }
