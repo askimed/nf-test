@@ -1,0 +1,18 @@
+nextflow_workflow {
+    name "Test fileRoot support"
+    script "./hello.nf"
+    workflow "HELLO"
+
+    test("Should access fileRoot env variable") {
+        when {
+            params {
+                // Relative path should be resolved correctly from the project directory
+                input = "test-data/fileroot/empty_samplesheet.csv"
+            }
+        }
+
+        then {
+            assert workflow.success
+        }
+    }
+}

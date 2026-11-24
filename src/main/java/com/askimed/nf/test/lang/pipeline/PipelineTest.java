@@ -120,7 +120,7 @@ public class PipelineTest extends AbstractTest {
 		nextflow.setErr(errFile);
 		nextflow.setDebug(isDebug());
 		nextflow.setLog(logFile);
-		nextflow.setLaunchDir(launchDir);
+		nextflow.setLaunchDir(baseDir);
 		nextflow.setWorkDir(workDir);
 		nextflow.setParamsFile(paramsFile);
 		nextflow.setOptions(getOptions());
