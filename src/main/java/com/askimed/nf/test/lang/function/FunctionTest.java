@@ -93,6 +93,9 @@ public class FunctionTest extends AbstractTest {
 
 		context.init(this);
 
+		NextflowCommand nextflow = createNextflowCommand();
+		context.loadConfigParams(nextflow);
+
 		if (setup != null) {
 			setup.execute(context);
 		}
@@ -122,19 +125,8 @@ public class FunctionTest extends AbstractTest {
 		File logFile = new File(metaDir, FILE_NEXTFLOW_LOG);
 		File paramsFile = new File(metaDir, FILE_PARAMS);
 
-		NextflowCommand nextflow = new NextflowCommand();
 		nextflow.setScript(mockFile.getAbsolutePath());
-		nextflow.setParams(context.getParams());
-		for (String profile: parent.getProfiles()) {
-			nextflow.addProfile(profile);
-		}
-		File projectConfig = new File("nextflow.config");
-		if (projectConfig.exists()) {
-			nextflow.addConfig(projectConfig);	
-		}		
-		nextflow.addConfig(parent.getGlobalConfigFile());
-		nextflow.addConfig(parent.getLocalConfig());
-		nextflow.addConfig(getConfig());
+		nextflow.setParams(context.getParamsForNextflow());
 		if (isWithTrace()) {
 			nextflow.setTrace(traceFile);
 		}

@@ -6,16 +6,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.askimed.nf.test.util.AnsiColors;
 import com.askimed.nf.test.util.BinaryFinder;
 import com.askimed.nf.test.util.Command;
 
 import groovy.json.JsonOutput;
+import groovy.json.JsonSlurper;
 
 public class NextflowCommand {
 
@@ -293,6 +296,57 @@ public class NextflowCommand {
 		nextflow.setSilent(false);
 
 		return nextflow.execute();
+
+	}
+
+	private static Map<String, String> configParamsCache = new HashMap<String, String>();
+
+	/**
+	 * Resolves the params set by the configs and profiles of this command with
+	 * `nextflow config -o json`. The output is cached per configs and profiles.
+	 * @return The params, or an empty map if Nextflow is missing or fails
+	 */
+	public Map<String, Object> resolveConfigParams() {
+
+		if (binary == null) {
+			return new HashMap<String, Object>();
+		}
+
+		List<String> args = new Vector<String>();
+		args.add("-quiet");
+		for (File config : configs) {
+			args.add("-c");
+			args.add(config.getAbsolutePath());
+		}
+		args.add("config");
+		if (!profiles.isEmpty()) {
+			args.add("-profile");
+			args.add(String.join(",", profiles));
+		}
+		args.add("-o");
+		args.add("json");
+		args.add(new File(".").getAbsolutePath());
+
+		String key = String.join(" ", args);
+		if (!configParamsCache.containsKey(key)) {
+			Command nextflow = new Command(binary);
+			nextflow.setParams(args);
+			nextflow.setSilent(true);
+			StringBuffer output = new StringBuffer();
+			nextflow.writeStdout(output);
+			int exitCode = nextflow.execute();
+			String json = output.toString();
+			if (exitCode != 0 || !json.trim().startsWith("{")) {
+				System.out.println(AnsiColors.yellow("Warning: Could not resolve params from Nextflow configs ("
+						+ "`nextflow config -o json` requires Nextflow 24.10 or later, exit code " + exitCode + ")."));
+				json = "{}";
+			}
+			configParamsCache.put(key, json);
+		}
+
+		Map<String, Object> config = (Map<String, Object>) new JsonSlurper().parseText(configParamsCache.get(key));
+		Map<String, Object> params = (Map<String, Object>) config.get("params");
+		return params == null ? new HashMap<String, Object>() : params;
 
 	}
 

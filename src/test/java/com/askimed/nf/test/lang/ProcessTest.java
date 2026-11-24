@@ -280,6 +280,15 @@ public class ProcessTest {
 	}
 	
 	@Test
+	public void testParamsFromConfig() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/process/config-params/hello.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+
+	@Test
 	public void testProfilesOverwriteInConfig() throws Exception {
 
 		App app = new App();

@@ -30,6 +30,18 @@ then {
 }
 ```
 
+## Params from config files
+
+The `params` map starts with the params set by the config files and profiles of the test (resolved with `nextflow config`), so they are available in the `setup`, `when` and `then` blocks:
+
+```Groovy
+setup {
+    archive = file(params.modules_testdata_base_path + 'genomics/archive.tar.gz')
+}
+```
+
+Params set in the `params` block overwrite them. Resolving them requires Nextflow 24.10 or later (`nextflow config -o json`).
+
 ## Load params from files
 
 In addition, you can load the `params` from a JSON file:
