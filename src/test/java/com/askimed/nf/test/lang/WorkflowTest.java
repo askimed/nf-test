@@ -1,6 +1,6 @@
 package com.askimed.nf.test.lang;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -191,6 +191,66 @@ public class WorkflowTest {
 		int exitCode = app.run(new String[] { "test", "test-data/workflow/regex/workflow.nf.test" });
 		assertEquals(0, exitCode);
 
+	}
+
+	@Test
+	public void testWorkflowKeepsLaunchDirByDefault() throws Exception {
+
+		App app = new App();
+
+		int exitCode = app.run(new String[] {
+			"test",
+			"test-data/workflow/regex/workflow.nf.test"
+		});
+
+		assertEquals(0, exitCode);
+
+		File testsRoot = new File(".nf-test/tests");
+		File[] testDirs = testsRoot.listFiles(File::isDirectory);
+		assertNotNull(testDirs, "Could not list test directories");
+
+		assertTrue(
+			testDirs.length > 0,
+			"Expected test directories to exist without --no-save"
+		);
+
+		for (File testDir : testDirs) {
+			File workDir = new File(testDir, "work");
+
+			assertTrue(
+				workDir.exists(),
+				"Launch and Work directory should exist without --no-save"
+			);
+		}
+	}
+
+	@Test
+	public void testWorkflowNoSaveDeletesLaunchDir() throws Exception {
+
+		App app = new App();
+
+		String testPath = "test-data/workflow/regex/workflow.nf.test";
+
+		// Run test with --no-save
+		int exitCode = app.run(new String[] {
+			"test",
+			testPath,
+			"--no-save"
+		});
+
+		assertEquals(0, exitCode);
+
+		// Locate .nf-test directory
+		File nfTestDir = new File(".nf-test/tests");
+		File[] remaining = nfTestDir.listFiles(file -> file.isDirectory());
+
+		assertNotNull(remaining, "Could not list test directories");
+
+		assertEquals(
+			0,
+			remaining.length,
+			"Expected no test directories to remain when --no-save is enabled"
+		);
 	}
 
 	@Test
