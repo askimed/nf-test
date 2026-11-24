@@ -189,7 +189,9 @@ public class TestExecutionEngine {
 					failedTests++;
 
 				}
-				test.cleanup();
+				if (!dryRun) {
+					test.cleanup();
+				}
 
 				if (noSave 
 					&& result.getStatus() == TestExecutionResultStatus.PASSED
