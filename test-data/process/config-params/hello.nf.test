@@ -1,0 +1,51 @@
+nextflow_process {
+
+  name "Test process HELLO"
+
+  script "../profiles/hello.nf"
+  process "HELLO"
+  config "test-data/process/config-params/nextflow.config"
+
+  test("Should read params from config") {
+
+    setup {
+      assert params.who == "config"
+    }
+
+    when {
+      process {
+        """
+        input[0] = params.who
+        """
+      }
+    }
+
+    then {
+      assert process.success
+      assert params.greeting == "Hello"
+      assert "Hello config!" in workflow.stdout
+    }
+
+  }
+
+  test("Should override params from config") {
+
+    when {
+      params {
+        who = "${greeting} test"
+      }
+      process {
+        """
+        input[0] = params.who
+        """
+      }
+    }
+
+    then {
+      assert process.success
+      assert "Hello Hello test!" in workflow.stdout
+    }
+
+  }
+
+}

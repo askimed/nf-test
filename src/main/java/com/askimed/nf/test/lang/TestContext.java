@@ -1,6 +1,9 @@
 package com.askimed.nf.test.lang;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import org.codehaus.groovy.control.CompilationFailedException;
 
@@ -8,6 +11,7 @@ import com.askimed.nf.test.core.AbstractTest;
 import com.askimed.nf.test.core.ITest;
 import com.askimed.nf.test.lang.extensions.Snapshot;
 import com.askimed.nf.test.lang.workflow.Workflow;
+import com.askimed.nf.test.nextflow.NextflowCommand;
 
 import groovy.lang.Closure;
 
@@ -16,6 +20,8 @@ public class TestContext {
 	private ParamsMap params;
 
 	private Closure paramsClosure;
+
+	private Map<String, Object> configParams = new HashMap<String, Object>();
 
 	public String baseDir;
 
@@ -61,6 +67,29 @@ public class TestContext {
 
 	public void setParams(ParamsMap params) {
 		this.params = params;
+	}
+
+	/**
+	 * Adds the params resolved from the Nextflow configs, so they are available
+	 * in setup, when and then blocks.
+	 * @param nextflow The Nextflow command with the configs and profiles of the test
+	 */
+	public void loadConfigParams(NextflowCommand nextflow) {
+		// separate copies: tests may change nested values of params
+		configParams = nextflow.resolveConfigParams();
+		params.putAll(nextflow.resolveConfigParams());
+	}
+
+	/**
+	 * Returns the params to pass to Nextflow, without the config params the test
+	 * left unchanged, so Nextflow still resolves them from the configs.
+	 * @return The params to pass to Nextflow
+	 */
+	public Map<String, Object> getParamsForNextflow() {
+		Map<String, Object> result = new HashMap<String, Object>(params);
+		result.entrySet().removeIf(entry -> configParams.containsKey(entry.getKey())
+				&& Objects.equals(entry.getValue(), configParams.get(entry.getKey())));
+		return result;
 	}
 
 	public void params(Closure closure) {

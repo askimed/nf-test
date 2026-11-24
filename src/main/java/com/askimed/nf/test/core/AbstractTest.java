@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.askimed.nf.test.config.Config;
+import com.askimed.nf.test.nextflow.NextflowCommand;
 import com.askimed.nf.test.util.FileUtil;
 
 public abstract class AbstractTest implements ITest {
@@ -94,6 +95,25 @@ public abstract class AbstractTest implements ITest {
 
 	public File getConfig() {
 		return config;
+	}
+
+	/**
+	 * Creates a Nextflow command with the profiles and configs of this test.
+	 * @return The Nextflow command
+	 */
+	protected NextflowCommand createNextflowCommand() {
+		NextflowCommand nextflow = new NextflowCommand();
+		for (String profile : parent.getProfiles()) {
+			nextflow.addProfile(profile);
+		}
+		File projectConfig = new File("nextflow.config");
+		if (projectConfig.exists()) {
+			nextflow.addConfig(projectConfig);
+		}
+		nextflow.addConfig(parent.getGlobalConfigFile());
+		nextflow.addConfig(parent.getLocalConfig());
+		nextflow.addConfig(getConfig());
+		return nextflow;
 	}
 
 	@Override
