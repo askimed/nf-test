@@ -137,25 +137,29 @@ public class ListTestsCommand extends AbstractCommand {
 
 	public int listTags(List<ITestSuite> testSuits, OutputFormat format) throws Throwable {
 
-		Set<String> tags = new HashSet<String>();
+		Map<String, Map<String, Set<String>>> tests = new HashMap<>();
 		for (ITestSuite testSuite : testSuits) {
-			tags.addAll(testSuite.getTags());
+			Set<String> tagList = new HashSet<>();
+			tagList.addAll(testSuite.getTags());
 			for (ITest test : testSuite.getTests()) {
-				tags.addAll(test.getTags());
+				tagList.addAll(test.getTags());
 			}
+			Map<String, Set<String>> tags = new HashMap<>();
+			tags.put("tags", tagList);
+			tests.put(testSuite.getName(), tags);
 		}
 
 		switch (format) {
 			case JSON:
 			case json:
-				printTagsAsJson(tags);
+				printTagsAsJson(tests);
 				break;
 			case CSV:
 			case csv:
-				printTagsAsCsv(tags);
+				printTagsAsCsv(tests);
 				break;
 			default:
-				printTagsPretty(tags);
+				printTagsPretty(tests);
 				break;
 		}
 
@@ -215,17 +219,23 @@ public class ListTestsCommand extends AbstractCommand {
 		System.out.println();
 	}
 
-	private void printTagsAsJson(Set<String> tags) {
+	private void printTagsAsJson(Map<String, Map<String, Set<String>>> tags) {
 		System.out.println(JsonOutput.toJson(tags));
 	}
 
-	private void printTagsAsCsv(Set<String> tags) {
-		System.out.println(String.join(",", tags));
+	private void printTagsAsCsv(Map<String, Map<String, Set<String>>> tags) {
+		for (Map.Entry<String, Map<String, Set<String>>> entry : tags.entrySet()) {
+			System.out.print(entry.getKey() + ",");
+			for(String tag : entry.getValue().get("tags")) {
+				System.out.print(tag + ",");
+			}
+			System.out.println();
+		}
 	}
 
-	private void printTagsPretty(Set<String> tags) {
-		for (String tag : tags) {
-			System.out.println(tag);
+	private void printTagsPretty(Map<String, Map<String, Set<String>>> tags) {
+		for (Map.Entry<String, Map<String, Set<String>>> entry : tags.entrySet()) {
+			System.out.println("Test: " + entry.getKey() + " Tags:" + entry.getValue().get("tags"));
 		}
 	}
 
