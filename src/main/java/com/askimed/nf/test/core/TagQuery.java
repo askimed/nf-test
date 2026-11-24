@@ -34,12 +34,36 @@ public class TagQuery {
 			return true;
 		}
 
-		if (tags.contains(taggable.getName().toLowerCase())) {
+		// Separate positive and negative tags
+		List<String> positiveTags = new Vector<String>();
+		List<String> negativeTags = new Vector<String>();
+
+		for (String tag : tags) {
+			if (tag.startsWith("!")) {
+				negativeTags.add(tag.substring(1).toLowerCase()); // Remove '!' prefix for negative tags
+			} else {
+				positiveTags.add(tag.toLowerCase());
+			}
+		}
+
+		// Check for negative matches
+		if (negativeTags.contains(taggable.getName().toLowerCase())) {
+			return false;
+		}
+
+		for (String tag : taggable.getTags()) {
+			if (negativeTags.contains(tag.toLowerCase())) {
+				return false;
+			}
+		}
+
+		// Check for positive matches
+		if (positiveTags.contains(taggable.getName().toLowerCase())) {
 			return true;
 		}
 
 		for (String tag : taggable.getTags()) {
-			if (tags.contains(tag.toLowerCase())) {
+			if (positiveTags.contains(tag.toLowerCase())) {
 				return true;
 			}
 		}
@@ -48,12 +72,11 @@ public class TagQuery {
 			return matches(taggable.getParent());
 		}
 
-		return false;
+		return !negativeTags.isEmpty();
 	}
 
 	@Override
 	public String toString() {
 		return tags.toString();
 	}
-
 }
