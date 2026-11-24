@@ -8,6 +8,7 @@ process TEST_PROCESS {
   output:
      path "folder", emit: my_output_folder
 
+  script:
   """
   mkdir folder
   echo "lukas forer" > "folder/${number}_a.txt"

@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.askimed.nf.test.util.FileUtil;
 
 import groovy.json.JsonSlurper;
@@ -23,19 +26,23 @@ public class PluginRepository {
 
 	public static final File PLUGINS_LOCATION = new File(".nf-test/plugins");
 
+	private List<String> urls;
+
 	private List<List<Plugin>> repositories = new Vector<List<Plugin>>();
 
+	private boolean alreadyUpdated = false;
+
+	private static Logger log = LoggerFactory.getLogger(PluginRepository.class);
+
 	public PluginRepository(List<String> urls, boolean forceUpdate) throws IOException {
+		this.urls = urls;
 
 		PLUGINS_LOCATION.mkdirs();
-
-		for (String url : urls) {
-			repositories.add(loadFromUrl(url, forceUpdate));
-		}
+		updateRepositories(urls, forceUpdate);
 
 	}
 
-	public PluginRelease findById(String id) {
+	public PluginRelease findById(String id) throws IOException {
 		String[] tiles = id.split("@", 2);
 		String name = tiles[0];
 		String version = LATEST_VERSION;
@@ -44,7 +51,13 @@ public class PluginRepository {
 		} else {
 			throw new RuntimeException("Please specify a version. Latest is not yet supported.");
 		}
-		return findByNameAndVersion(name, version);
+		try {
+			return findByNameAndVersion(name, version);
+		} catch (RuntimeException e) {
+			log.info("Could not find plugin '" + name + "' with version '" + version + "'. Updating plugin repositories and trying again.");
+			updateRepositories(urls, true);
+			return findByNameAndVersion(name, version);
+		}
 	}
 
 	public PluginRelease findByNameAndVersion(String name, String version) {
@@ -105,6 +118,35 @@ public class PluginRepository {
 
 	}
 
+	/**
+	 * Update the plugin repositories by downloading the index files from the given urls.
+	 * If the file already exists and forceUpdate is false, the file will not be redownloaded.
+	 * @param urls
+	 * @param forceUpdate
+	 * @throws IOException
+	 */
+	private void updateRepositories(List<String> urls, boolean forceUpdate) throws IOException {
+		if (alreadyUpdated) {
+			return;
+		}
+		repositories = new Vector<List<Plugin>>();
+		for (String url : urls) {
+			File indexFile = null;
+			if (isHttpProtocol(url)) {
+				indexFile = new File(PLUGINS_LOCATION, getNameForUrl(url) + ".json");
+				if(!indexFile.exists() || forceUpdate) {
+					download(url, indexFile);
+				}
+			} else {
+				indexFile = new File(url);
+			}
+			repositories.add(loadFromFile(indexFile));
+		}
+		if (forceUpdate) {
+			alreadyUpdated = true;
+		}
+	}
+
 	protected void download(String url, File target) throws IOException {
 
 		InputStream in = new URL(url).openStream();
@@ -114,22 +156,6 @@ public class PluginRepository {
 
 	protected boolean isHttpProtocol(String url) {
 		return url.toLowerCase().startsWith("http://") || url.toLowerCase().startsWith("https://");
-	}
-
-	private List<Plugin> loadFromUrl(String url, boolean forceUpdate) throws IOException {
-		
-		File indexFile = null;
-		
-		if (isHttpProtocol(url)) {
-			indexFile = new File(PLUGINS_LOCATION, getNameForUrl(url) + ".json");
-			if (!indexFile.exists() || forceUpdate) {
-				download(url, indexFile);
-			}
-		} else {
-			indexFile = new File(url);
-		}
-
-		return loadFromFile(indexFile);
 	}
 
 	private List<Plugin> loadFromFile(File file) throws IOException {

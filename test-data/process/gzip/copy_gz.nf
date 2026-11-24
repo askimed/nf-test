@@ -4,9 +4,9 @@ process COPY_GZIP {
     path gzip_file
 
   output:
-     path "output.gz", emit: gzip
+    path "output.gz", emit: gzip
 
-
+  script:
   """
 	cp ${gzip_file} output.gz
   """

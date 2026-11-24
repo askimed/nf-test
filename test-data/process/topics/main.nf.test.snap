@@ -1,0 +1,28 @@
+{
+    "Should test topic channels correctly": {
+        "content": [
+            {
+                "also_not_a_topic": [
+                    
+                ],
+                "not_a_topic": [
+                    
+                ],
+                "output_file": [
+                    "Lukas.txt:md5,086e29e2872195015ce2d3104909b20f"
+                ],
+                "output_tuple": [
+                    [
+                        "Lukas",
+                        "Lukas.txt:md5,086e29e2872195015ce2d3104909b20f"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-03-16T10:44:52.782468205",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    }
+}

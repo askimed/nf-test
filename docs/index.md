@@ -157,8 +157,7 @@ Show the world your Nextflow pipeline is using nf-test and add the following bad
 
 If you test your pipeline with nf-test, please cite:
 
-Forer, L., & Schönherr, S. (2024). Improving the Reliability and Quality of Nextflow Pipelines with nf-test. *bioRxiv*. [https://doi.org/10.1101/2024.05.25.595877](https://doi.org/10.1101/2024.05.25.595877)
-
+Forer, L., & Schönherr, S. Improving the reliability, quality, and maintainability of bioinformatics pipelines with nf-test, GigaScience, Volume 14, 2025, giaf130, [https://doi.org/10.1093/gigascience/giaf130](https://doi.org/10.1093/gigascience/giaf130)
 
 ----
 

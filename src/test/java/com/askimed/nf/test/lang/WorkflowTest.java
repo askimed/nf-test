@@ -193,4 +193,13 @@ public class WorkflowTest {
 
 	}
 
+	@Test
+	public void testWorkflowTopics() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/topics/main.nf.test" });
+		assertEquals(0, exitCode);
+
+	}
+
 }

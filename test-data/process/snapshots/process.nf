@@ -4,8 +4,9 @@ process TEST_PROCESS {
     val name
 
   output:
-     path "*.txt", emit: my_output_files
+    path "*.txt", emit: my_output_files
 
+  script:
   """
   echo "Hello ${name}!" > output.txt
   """

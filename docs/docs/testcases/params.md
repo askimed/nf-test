@@ -52,7 +52,7 @@ when {
 }
 ```
 
-nf-test allows to combine both techniques and therefor it is possible to overwrite one or more `params` from the json file:
+nf-test allows to combine both techniques and therefore it is possible to overwrite one or more `params` from the json file:
 
 ```Groovy
 when {

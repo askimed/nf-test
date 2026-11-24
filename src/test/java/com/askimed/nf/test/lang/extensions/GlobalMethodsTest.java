@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.codehaus.groovy.control.customizers.ImportCustomizer;

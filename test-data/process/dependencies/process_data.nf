@@ -7,10 +7,11 @@ process PROCESS_DATA {
     path input
 
   output:
-     path "output.txt", emit: results
+    path "output.txt", emit: results
 
+  script:
   """
-  	cp ${input} output.txt
+    cp ${input} output.txt
   	echo "hey ${name}!" >> "output.txt"
   """
 

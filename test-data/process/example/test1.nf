@@ -6,11 +6,11 @@ process test {
     val number
 
   output:
-     file "*.txt"
+    file "*.txt"
 
   script:
   if (params.outdir == null) {
-    exit 1 "No outdir set"
+    error("No outdir set")
   }
 
 
