@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1735,11 +1735,11 @@
 <h2 id="syntax">Syntax</h2>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_function</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;&lt;NAME&gt;&quot;</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;&lt;PATH/TO/NEXTFLOW_SCRIPT.nf&gt;&quot;</span>
-<span class="w">    </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;&lt;FUNCTION_NAME&gt;&quot;</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">"&lt;NAME&gt;"</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"&lt;PATH/TO/NEXTFLOW_SCRIPT.nf&gt;"</span>
+<span class="w">    </span><span class="n">function</span><span class="w"> </span><span class="s2">"&lt;FUNCTION_NAME&gt;"</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;&lt;TEST_NAME&gt;&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"&lt;TEST_NAME&gt;"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
@@ -1761,16 +1761,16 @@
 <h4 id="functionsnftest"><code>functions.nf.test</code></h4>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_function</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test functions&quot;</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;functions.nf&quot;</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">"Test functions"</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"functions.nf"</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Test function1&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;function1&quot;</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"Test function1"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">"function1"</span>
 <span class="w">      </span><span class="o">...</span>
 <span class="w">    </span><span class="o">}</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Test function2&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;function2&quot;</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"Test function2"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">"function2"</span>
 <span class="w">      </span><span class="o">...</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
@@ -1782,10 +1782,10 @@
 
     public static void sayHello(name) {
         if (name == null) {
-            error(&#39;Cannot greet a null person&#39;)
+            error('Cannot greet a null person')
         }
 
-        def greeting = &quot;Hello ${name}&quot;
+        def greeting = "Hello ${name}"
 
         println(greeting)
     }
@@ -1795,10 +1795,10 @@
 <h4 id="testslibutilsgroovytest"><code>tests\lib\Utils.groovy.test</code></h4>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_function</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Utils.groovy&quot;</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">"Test Utils.groovy"</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Test function1&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;Utils.sayHello&quot;</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"Test function1"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">"Utils.sayHello"</span>
 <span class="w">      </span><span class="o">...</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
@@ -1814,17 +1814,17 @@
 <span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">result</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">27</span>
 
 <span class="c1">//returns a list containing all lines from stdout</span>
-<span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Hello World&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">"Hello World"</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span>
 </code></pre></div>
 <h2 id="example">Example</h2>
 <h3 id="nextflow-script">Nextflow script</h3>
 <p>Create a new file and name it <code>functions.nf</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="kt">def</span><span class="w"> </span><span class="nf">say_hello</span><span class="o">(</span><span class="n">name</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">(</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">error</span><span class="o">(</span><span class="s1">&#39;Cannot greet a null person&#39;</span><span class="o">)</span>
+<span class="w">        </span><span class="n">error</span><span class="o">(</span><span class="s1">'Cannot greet a null person'</span><span class="o">)</span>
 <span class="w">    </span><span class="o">}</span>
 
-<span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="n">greeting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello ${name}&quot;</span>
+<span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="n">greeting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Hello ${name}"</span>
 
 <span class="w">    </span><span class="n">println</span><span class="o">(</span><span class="n">greeting</span><span class="o">)</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">greeting</span>
@@ -1834,44 +1834,44 @@
 <p>Create a new file and name it <code>functions.nf.test</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_function</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Function Say Hello&quot;</span>
+<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="s2">"Test Function Say Hello"</span>
 
-<span class="w">  </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;functions.nf&quot;</span>
-<span class="w">  </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;say_hello&quot;</span>
+<span class="w">  </span><span class="n">script</span><span class="w"> </span><span class="s2">"functions.nf"</span>
+<span class="w">  </span><span class="n">function</span><span class="w"> </span><span class="s2">"say_hello"</span>
 
-<span class="w">  </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Passing case&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="n">test</span><span class="o">(</span><span class="s2">"Passing case"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">    </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        input[0] = &quot;aaron&quot;</span>
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="s2">"""</span>
+<span class="s2">        input[0] = "aaron"</span>
+<span class="s2">        """</span>
 <span class="w">      </span><span class="o">}</span>
 <span class="w">    </span><span class="o">}</span>
 
 <span class="w">    </span><span class="n">then</span><span class="w"> </span><span class="o">{</span>
 <span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">success</span>
-<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">result</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;Hello aaron&quot;</span>
-<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Hello aaron&quot;</span><span class="o">)</span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">result</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Hello aaron"</span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">"Hello aaron"</span><span class="o">)</span>
 <span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">stderr</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()</span>
 <span class="w">    </span><span class="o">}</span>
 
 <span class="w">  </span><span class="o">}</span>
 
-<span class="w">  </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Failure Case&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="n">test</span><span class="o">(</span><span class="s2">"Failure Case"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">    </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="s2">"""</span>
 <span class="s2">        input[0] = null</span>
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="s2">        """</span>
 <span class="w">      </span><span class="o">}</span>
 <span class="w">    </span><span class="o">}</span>
 
 <span class="w">    </span><span class="n">then</span><span class="w"> </span><span class="o">{</span>
 <span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">failed</span>
 <span class="w">      </span><span class="c1">//It seems to me that error(..) writes message to stdout</span>
-<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Cannot greet a null person&quot;</span><span class="o">)</span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">function</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">"Cannot greet a null person"</span><span class="o">)</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="w">  </span><span class="o">}</span>
 <span class="o">}</span>
@@ -1974,10 +1974,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       

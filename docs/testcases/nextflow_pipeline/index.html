@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1651,10 +1651,10 @@
 <h2 id="syntax">Syntax</h2>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_pipeline</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;&lt;NAME&gt;&quot;</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;&lt;PATH/TO/NEXTFLOW_SCRIPT.nf&gt;&quot;</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">"&lt;NAME&gt;"</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"&lt;PATH/TO/NEXTFLOW_SCRIPT.nf&gt;"</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;&lt;TEST_NAME&gt;&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"&lt;TEST_NAME&gt;"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
@@ -1667,7 +1667,7 @@
 <span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">exitStatus</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span>
 
 <span class="c1">// workflow error message</span>
-<span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">errorReport</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;....&quot;</span><span class="o">)</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">errorReport</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">"...."</span><span class="o">)</span>
 
 <span class="c1">// trace</span>
 <span class="c1">//returns a list containing succeeded tasks</span>
@@ -1688,17 +1688,17 @@
 
 <span class="w">    </span><span class="nl">output:</span>
 <span class="w">        </span><span class="n">stdout</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">verbiage_ch</span>
-<span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="s1">&#39;*.txt&#39;</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">verbiage_ch2</span>
+<span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="s1">'*.txt'</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">verbiage_ch2</span>
 
 <span class="w">    </span><span class="nl">script:</span>
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="s2">"""</span>
 <span class="s2">    echo -n $cheers</span>
 <span class="s2">    echo -n $cheers &gt; ${cheers}.txt</span>
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="s2">    """</span>
 <span class="o">}</span>
 
 <span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="na">input_text</span><span class="o">.</span><span class="na">trim</span><span class="o">().</span><span class="na">split</span><span class="o">(</span><span class="s1">&#39;,&#39;</span><span class="o">)</span>
+<span class="w">    </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="na">input_text</span><span class="o">.</span><span class="na">trim</span><span class="o">().</span><span class="na">split</span><span class="o">(</span><span class="s1">','</span><span class="o">)</span>
 <span class="w">    </span><span class="n">Channel</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">input</span><span class="o">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">SAY_HELLO</span>
 <span class="o">}</span>
 </code></pre></div>
@@ -1706,14 +1706,14 @@
 <p>Create a new file and name it <code>pipeline.nf.test</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_pipeline</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Pipeline with 1 process&quot;</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;pipeline.nf&quot;</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">"Test Pipeline with 1 process"</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"pipeline.nf"</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run without failures&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"Should run without failures"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">            </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">              </span><span class="n">input_text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;hello,nf-test&quot;</span>
+<span class="w">              </span><span class="n">input_text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"hello,nf-test"</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 
@@ -1825,10 +1825,10 @@ nf-test test pipeline.nf.test
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       

@@ -17,7 +17,7 @@
       
       
       <link rel="icon" href="images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -25,10 +25,10 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1655,18 +1655,18 @@
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_pipeline</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Hello World&quot;</span>
-<span class="w">  </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;nextflow-io/hello&quot;</span>
+<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="s2">"Test Hello World"</span>
+<span class="w">  </span><span class="n">script</span><span class="w"> </span><span class="s2">"nextflow-io/hello"</span>
 
-<span class="w">  </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;hello world example should start 4 processes&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="n">test</span><span class="o">(</span><span class="s2">"hello world example should start 4 processes"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="n">expect</span><span class="w"> </span><span class="o">{</span>
 <span class="w">      </span><span class="n">with</span><span class="o">(</span><span class="n">workflow</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">success</span>
 <span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">4</span>
-<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="s2">&quot;Ciao world!&quot;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stdout</span>
-<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="s2">&quot;Bonjour world!&quot;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stdout</span>
-<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="s2">&quot;Hello world!&quot;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stdout</span>
-<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="s2">&quot;Hola world!&quot;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stdout</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="s2">"Ciao world!"</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stdout</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="s2">"Bonjour world!"</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stdout</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="s2">"Hello world!"</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stdout</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="s2">"Hola world!"</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stdout</span>
 <span class="w">      </span><span class="o">}</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="w">  </span><span class="o">}</span>
@@ -1677,17 +1677,17 @@
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Process SALMON_INDEX&quot;</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;modules/local/salmon_index.nf&quot;</span>
-<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;SALMON_INDEX&quot;</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">"Test Process SALMON_INDEX"</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"modules/local/salmon_index.nf"</span>
+<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">"SALMON_INDEX"</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should create channel index files&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"Should create channel index files"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                input[0] = file(&quot;test_data/transcriptome.fa&quot;)</span>
-<span class="s2">                &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="s2">"""</span>
+<span class="s2">                input[0] = file("test_data/transcriptome.fa")</span>
+<span class="s2">                """</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 
@@ -1702,11 +1702,11 @@
 <span class="w">                </span><span class="c1">// count amount of created files</span>
 <span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">list</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">16</span>
 <span class="w">                </span><span class="c1">// parse info.json file</span>
-<span class="w">                </span><span class="kt">def</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">json</span>
+<span class="w">                </span><span class="kt">def</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">'/info.json'</span><span class="o">).</span><span class="na">json</span>
 <span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">info</span><span class="o">.</span><span class="na">num_kmers</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">375730</span>
 <span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">info</span><span class="o">.</span><span class="na">seq_length</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">443050</span>
 <span class="w">                </span><span class="c1">//verify md5 checksum</span>
-<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">&#39;/info.json&#39;</span><span class="o">).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;80831602e2ac825e3e63ba9df5d23505&quot;</span>
+<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)+</span><span class="s1">'/info.json'</span><span class="o">).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"80831602e2ac825e3e63ba9df5d23505"</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 
@@ -1718,16 +1718,16 @@
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_function</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test functions&quot;</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;functions.nf&quot;</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">"Test functions"</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"functions.nf"</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Test function1&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;function1&quot;</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"Test function1"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">"function1"</span>
 <span class="w">      </span><span class="o">...</span>
 <span class="w">    </span><span class="o">}</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Test function2&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">&quot;function2&quot;</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"Test function2"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">      </span><span class="n">function</span><span class="w"> </span><span class="s2">"function2"</span>
 <span class="w">      </span><span class="o">...</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
@@ -1850,10 +1850,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       

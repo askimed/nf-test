@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1741,16 +1741,16 @@ It ensures that your snapshot file only contains the snapshots required for your
 <p>You can also include output files to a snapshot (e.g. useful in pipeline tests where no channels are available):</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span>
 <span class="w">    </span><span class="n">workflow</span><span class="o">,</span>
-<span class="w">    </span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;${params.outdir}/file1.txt&quot;</span><span class="o">),</span>
-<span class="w">    </span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;${params.outdir}/file2.txt&quot;</span><span class="o">),</span>
-<span class="w">    </span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;${params.outdir}/file3.txt&quot;</span><span class="o">)</span>
+<span class="w">    </span><span class="n">path</span><span class="o">(</span><span class="s2">"${params.outdir}/file1.txt"</span><span class="o">),</span>
+<span class="w">    </span><span class="n">path</span><span class="o">(</span><span class="s2">"${params.outdir}/file2.txt"</span><span class="o">),</span>
+<span class="w">    </span><span class="n">path</span><span class="o">(</span><span class="s2">"${params.outdir}/file3.txt"</span><span class="o">)</span>
 <span class="o">).</span><span class="na">match</span><span class="o">()</span>
 </code></pre></div>
 <p>By default the snapshot has the same name as the test. You can also store a snapshot under a user defined name. This enables you to use multiple snapshots in one single test and to separate them in a logical way. In the following example a workflow snapshot is created, stored under the name "workflow".</p>
-<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">workflow</span><span class="o">).</span><span class="na">match</span><span class="o">(</span><span class="s2">&quot;workflow&quot;</span><span class="o">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">workflow</span><span class="o">).</span><span class="na">match</span><span class="o">(</span><span class="s2">"workflow"</span><span class="o">)</span>
 </code></pre></div>
 <p>The next example creates a snapshot of two files and saves it under "files".</p>
-<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;${params.outdir}/file1.txt&quot;</span><span class="o">),</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;${params.outdir}/file2.txt&quot;</span><span class="o">)).</span><span class="na">match</span><span class="o">(</span><span class="s2">&quot;files&quot;</span><span class="o">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">path</span><span class="o">(</span><span class="s2">"${params.outdir}/file1.txt"</span><span class="o">),</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s2">"${params.outdir}/file2.txt"</span><span class="o">)).</span><span class="na">match</span><span class="o">(</span><span class="s2">"files"</span><span class="o">)</span>
 </code></pre></div>
 <p>You can also use helper methods to add objects to snapshots. For example, you can use the <code>list()</code>method to add all files of a folder to a snapshot:</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">assert</span><span class="w"> </span><span class="n">snapshot</span><span class="o">(</span><span class="n">workflow</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">outdir</span><span class="o">).</span><span class="na">list</span><span class="o">()).</span><span class="na">match</span><span class="o">()</span>
@@ -1778,7 +1778,7 @@ It ensures that your snapshot file only contains the snapshots required for your
 <ol>
 <li>
 <p>Set the <code>NFT_DIFF_ARGS</code> environment variable with your desired arguments.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NFT_DIFF_ARGS</span><span class="o">=</span><span class="s2">&quot;&lt;your_custom_arguments&gt;&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NFT_DIFF_ARGS</span><span class="o">=</span><span class="s2">"&lt;your_custom_arguments&gt;"</span>
 </code></pre></div>
 </li>
 <li>
@@ -1795,12 +1795,12 @@ It ensures that your snapshot file only contains the snapshots required for your
 </li>
 <li>
 <p>Set the <code>NFT_DIFF</code> environment variable to <code>icdiff</code> to specify the new diff tool.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NFT_DIFF</span><span class="o">=</span><span class="s2">&quot;icdiff&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NFT_DIFF</span><span class="o">=</span><span class="s2">"icdiff"</span>
 </code></pre></div>
 </li>
 <li>
 <p>If needed, customize the arguments for <code>icdiff</code> using <code>NFT_DIFF_ARGS</code> as explained in the previous section</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NFT_DIFF_ARGS</span><span class="o">=</span><span class="s2">&quot;-N --cols 200 -L expected -L observed -t&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NFT_DIFF_ARGS</span><span class="o">=</span><span class="s2">"-N --cols 200 -L expected -L observed -t"</span>
 </code></pre></div>
 </li>
 <li>
@@ -1902,10 +1902,10 @@ It ensures that your snapshot file only contains the snapshots required for your
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       

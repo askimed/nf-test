@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1639,7 +1639,7 @@
 <p>The setup method allows you to specify processes or workflows that need to be executed before the primary <code>when</code> block. It serves as a mechanism to prepare the required input data or set up essential steps prior to the primary processing block.</p>
 <h2 id="syntax">Syntax</h2>
 <p>The setup method is typically used within the context of a test case. The basic syntax for the setup method is as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="n">test</span><span class="o">(</span><span class="s2">&quot;my test&quot;</span><span class="o">){</span>
+<div class="highlight"><pre><span></span><code><span class="n">test</span><span class="o">(</span><span class="s2">"my test"</span><span class="o">){</span>
 <span class="w">    </span><span class="n">setup</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="c1">// Define and execute dependent processes or workflows here</span>
 <span class="w">    </span><span class="o">}</span>
@@ -1647,24 +1647,24 @@
 </code></pre></div>
 <p>Within the setup block, you can use the <code>run</code> method to define and execute dependent processes or workflows.</p>
 <p>The <code>run</code> method syntax for a process is as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="n">run</span><span class="o">(</span><span class="s2">&quot;ProcessName&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;path/to/process/script.nf&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="n">run</span><span class="o">(</span><span class="s2">"ProcessName"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"path/to/process/script.nf"</span>
 <span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="c1">// Define the process inputs here</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>The <code>run</code> method syntax for a workflow is as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="n">run</span><span class="o">(</span><span class="s2">&quot;WorkflowName&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;path/to/workflow/script.nf&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="n">run</span><span class="o">(</span><span class="s2">"WorkflowName"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"path/to/workflow/script.nf"</span>
 <span class="w">    </span><span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="c1">// Define the workflow inputs here</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>If you need to run the same process multiple times, you can set the alias of the process:</p>
-<div class="highlight"><pre><span></span><code><span class="n">run</span><span class="o">(</span><span class="s2">&quot;GENERATE_DATA&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">&quot;MY_PROCESS&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;./generate_data.nf&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="n">run</span><span class="o">(</span><span class="s2">"GENERATE_DATA"</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">"MY_PROCESS"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"./generate_data.nf"</span>
 <span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
 <span class="w">       </span><span class="o">...</span>
 <span class="w">    </span><span class="o">}</span>
@@ -1679,27 +1679,27 @@
 <p>In this example, we create a setup method within a Nextflow process definition to execute a dependent process named "ABRICATE_RUN." This process generates input data that is required for the primary process "ABRICATE_SUMMARY." The <code>setup</code> block specifies the execution of "ABRICATE_RUN," and the <code>when</code> block defines the processing logic for "ABRICATE_SUMMARY."</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test process data&quot;</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">"Test process data"</span>
 
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;../main.nf&quot;</span>
-<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;ABRICATE_SUMMARY&quot;</span>
-<span class="w">    </span><span class="n">config</span><span class="w"> </span><span class="s2">&quot;./nextflow.config&quot;</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"../main.nf"</span>
+<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">"ABRICATE_SUMMARY"</span>
+<span class="w">    </span><span class="n">config</span><span class="w"> </span><span class="s2">"./nextflow.config"</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should use process ABRICATE_RUN to generate input data&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"Should use process ABRICATE_RUN to generate input data"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">        </span><span class="n">setup</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">            </span><span class="n">run</span><span class="o">(</span><span class="s2">&quot;ABRICATE_RUN&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;../../run/main.nf&quot;</span>
+<span class="w">            </span><span class="n">run</span><span class="o">(</span><span class="s2">"ABRICATE_RUN"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                </span><span class="n">script</span><span class="w"> </span><span class="s2">"../../run/main.nf"</span>
 <span class="w">                </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                    </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">                    </span><span class="s2">"""</span>
 <span class="s2">                    input[0] =  Channel.fromList([</span>
-<span class="s2">                        tuple([ id:&#39;test1&#39;, single_end:false ], // meta map</span>
-<span class="s2">                            file(params.test_data[&#39;bacteroides_fragilis&#39;][&#39;genome&#39;][&#39;genome_fna_gz&#39;], checkIfExists: true)),</span>
-<span class="s2">                        tuple([ id:&#39;test2&#39;, single_end:false ],</span>
-<span class="s2">                            file(params.test_data[&#39;haemophilus_influenzae&#39;][&#39;genome&#39;][&#39;genome_fna_gz&#39;], checkIfExists: true))</span>
+<span class="s2">                        tuple([ id:'test1', single_end:false ], // meta map</span>
+<span class="s2">                            file(params.test_data['bacteroides_fragilis']['genome']['genome_fna_gz'], checkIfExists: true)),</span>
+<span class="s2">                        tuple([ id:'test2', single_end:false ],</span>
+<span class="s2">                            file(params.test_data['haemophilus_influenzae']['genome']['genome_fna_gz'], checkIfExists: true))</span>
 <span class="s2">                    ])</span>
-<span class="s2">                    &quot;&quot;&quot;</span>
+<span class="s2">                    """</span>
 <span class="w">                </span><span class="o">}</span>
 <span class="w">            </span><span class="o">}</span>
 
@@ -1707,9 +1707,9 @@
 
 <span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                input[0] = ABRICATE_RUN.out.report.collect{ meta, report -&gt; report }.map{ report -&gt; [[ id: &#39;test_summary&#39;], report]}</span>
-<span class="s2">                &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="s2">"""</span>
+<span class="s2">                input[0] = ABRICATE_RUN.out.report.collect{ meta, report -&gt; report }.map{ report -&gt; [[ id: 'test_summary'], report]}</span>
+<span class="s2">                """</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 
@@ -1725,34 +1725,34 @@
 <p>In this example, a global setup method is defined for all tests within a Nextflow process definition. The setup method is applied to multiple test cases, ensuring consistent setup for each test. This approach is useful when multiple tests share the same setup requirements.</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_process</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test process data&quot;</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">"Test process data"</span>
 
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;../main.nf&quot;</span>
-<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">&quot;ABRICATE_SUMMARY&quot;</span>
-<span class="w">    </span><span class="n">config</span><span class="w"> </span><span class="s2">&quot;./nextflow.config&quot;</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"../main.nf"</span>
+<span class="w">    </span><span class="n">process</span><span class="w"> </span><span class="s2">"ABRICATE_SUMMARY"</span>
+<span class="w">    </span><span class="n">config</span><span class="w"> </span><span class="s2">"./nextflow.config"</span>
 
 <span class="w">    </span><span class="n">setup</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">run</span><span class="o">(</span><span class="s2">&quot;ABRICATE_RUN&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;../../run/main.nf&quot;</span>
+<span class="w">        </span><span class="n">run</span><span class="o">(</span><span class="s2">"ABRICATE_RUN"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">script</span><span class="w"> </span><span class="s2">"../../run/main.nf"</span>
 <span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">                </span><span class="s2">"""</span>
 <span class="s2">                input[0] =  Channel.fromList([</span>
-<span class="s2">                    tuple([ id:&#39;test1&#39;, single_end:false ], // meta map</span>
-<span class="s2">                        file(params.test_data[&#39;bacteroides_fragilis&#39;][&#39;genome&#39;][&#39;genome_fna_gz&#39;], checkIfExists: true)),</span>
-<span class="s2">                    tuple([ id:&#39;test2&#39;, single_end:false ],</span>
-<span class="s2">                        file(params.test_data[&#39;haemophilus_influenzae&#39;][&#39;genome&#39;][&#39;genome_fna_gz&#39;], checkIfExists: true))</span>
+<span class="s2">                    tuple([ id:'test1', single_end:false ], // meta map</span>
+<span class="s2">                        file(params.test_data['bacteroides_fragilis']['genome']['genome_fna_gz'], checkIfExists: true)),</span>
+<span class="s2">                    tuple([ id:'test2', single_end:false ],</span>
+<span class="s2">                        file(params.test_data['haemophilus_influenzae']['genome']['genome_fna_gz'], checkIfExists: true))</span>
 <span class="s2">                ])</span>
-<span class="s2">                &quot;&quot;&quot;</span>
+<span class="s2">                """</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 <span class="w">    </span><span class="o">}</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;first test&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"first test"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                input[0] = ABRICATE_RUN.out.report.collect{ meta, report -&gt; report }.map{ report -&gt; [[ id: &#39;test_summary&#39;], report]}</span>
-<span class="s2">                &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="s2">"""</span>
+<span class="s2">                input[0] = ABRICATE_RUN.out.report.collect{ meta, report -&gt; report }.map{ report -&gt; [[ id: 'test_summary'], report]}</span>
+<span class="s2">                """</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 <span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{</span>
@@ -1761,12 +1761,12 @@
 <span class="w">        </span><span class="o">}</span>
 <span class="w">    </span><span class="o">}</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;second test&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"second test"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                input[0] = ABRICATE_RUN.out.report.collect{ meta, report -&gt; report }.map{ report -&gt; [[ id: &#39;test_summary&#39;], report]}</span>
-<span class="s2">                &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="s2">"""</span>
+<span class="s2">                input[0] = ABRICATE_RUN.out.report.collect{ meta, report -&gt; report }.map{ report -&gt; [[ id: 'test_summary'], report]}</span>
+<span class="s2">                """</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 <span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{</span>
@@ -1785,42 +1785,42 @@
 
 <span class="w">    </span><span class="n">setup</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">        </span><span class="n">run</span><span class="o">(</span><span class="s2">&quot;UNTAR&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">&quot;UNTAR1&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;modules/nf-core/untar/main.nf&quot;</span>
+<span class="w">        </span><span class="n">run</span><span class="o">(</span><span class="s2">"UNTAR"</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">"UNTAR1"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">script</span><span class="w"> </span><span class="s2">"modules/nf-core/untar/main.nf"</span>
 <span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="s2">"""</span>
 <span class="s2">            input[0] = Channel.fromList(...)</span>
-<span class="s2">            &quot;&quot;&quot;</span>
+<span class="s2">            """</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 
-<span class="w">        </span><span class="n">run</span><span class="o">(</span><span class="s2">&quot;UNTAR&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">&quot;UNTAR2&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;modules/nf-core/untar/main.nf&quot;</span>
+<span class="w">        </span><span class="n">run</span><span class="o">(</span><span class="s2">"UNTAR"</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">"UNTAR2"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">script</span><span class="w"> </span><span class="s2">"modules/nf-core/untar/main.nf"</span>
 <span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="s2">"""</span>
 <span class="s2">            input[0] = Channel.fromList(...)</span>
-<span class="s2">            &quot;&quot;&quot;</span>
+<span class="s2">            """</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 
-<span class="w">        </span><span class="n">run</span><span class="o">(</span><span class="s2">&quot;UNTAR&quot;</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">&quot;UNTAR3&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;modules/nf-core/untar/main.nf&quot;</span>
+<span class="w">        </span><span class="n">run</span><span class="o">(</span><span class="s2">"UNTAR"</span><span class="o">,</span><span class="w"> </span><span class="nl">alias:</span><span class="w"> </span><span class="s2">"UNTAR3"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="n">script</span><span class="w"> </span><span class="s2">"modules/nf-core/untar/main.nf"</span>
 <span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="s2">"""</span>
 <span class="s2">            input[0] = Channel.fromList(...)</span>
-<span class="s2">            &quot;&quot;&quot;</span>
+<span class="s2">            """</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 <span class="w">    </span><span class="o">}</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Test with three different inputs&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"Test with three different inputs"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">                </span><span class="s2">"""</span>
 <span class="s2">                input[0] = UNTAR1.out.untar.map{ it[1] }</span>
 <span class="s2">                input[1] = UNTAR2.out.untar.map{ it[1] }</span>
 <span class="s2">                input[2] = UNTAR3.out.untar.map{ it[1] }</span>
-<span class="s2">                &quot;&quot;&quot;</span>
+<span class="s2">                """</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 
@@ -1927,10 +1927,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       

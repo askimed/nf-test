@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1804,21 +1804,21 @@
 </table>
 <p>Here's an example of what an <code>nf-test.config</code> file could look like:</p>
 <div class="highlight"><pre><span></span><code><span class="n">config</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">testsDir</span><span class="w"> </span><span class="s2">&quot;tests&quot;</span>
-<span class="w">    </span><span class="n">workDir</span><span class="w"> </span><span class="s2">&quot;.nf-test&quot;</span>
-<span class="w">    </span><span class="n">configFile</span><span class="w"> </span><span class="s2">&quot;tests/nextflow.config&quot;</span>
-<span class="w">    </span><span class="n">libDir</span><span class="w"> </span><span class="s2">&quot;tests/lib&quot;</span>
-<span class="w">    </span><span class="n">profile</span><span class="w"> </span><span class="s2">&quot;docker&quot;</span>
+<span class="w">    </span><span class="n">testsDir</span><span class="w"> </span><span class="s2">"tests"</span>
+<span class="w">    </span><span class="n">workDir</span><span class="w"> </span><span class="s2">".nf-test"</span>
+<span class="w">    </span><span class="n">configFile</span><span class="w"> </span><span class="s2">"tests/nextflow.config"</span>
+<span class="w">    </span><span class="n">libDir</span><span class="w"> </span><span class="s2">"tests/lib"</span>
+<span class="w">    </span><span class="n">profile</span><span class="w"> </span><span class="s2">"docker"</span>
 <span class="w">    </span><span class="n">withTrace</span><span class="w"> </span><span class="kc">false</span>
 <span class="w">    </span><span class="n">autoSort</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">    </span><span class="n">options</span><span class="w"> </span><span class="s2">&quot;-dump-channels -stub-run&quot;</span>
+<span class="w">    </span><span class="n">options</span><span class="w"> </span><span class="s2">"-dump-channels -stub-run"</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>The <code>requires</code> keyword can be used to specify the minimum required version of nf-test.
 For instance, to ensure the use of at least nf-test version 0.9.0, define it as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="n">config</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="n">requires</span><span class="w"> </span><span class="o">(</span>
-<span class="w">        </span><span class="s2">&quot;nf-test&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.9.0&quot;</span>
+<span class="w">        </span><span class="s2">"nf-test"</span><span class="o">:</span><span class="w"> </span><span class="s2">"0.9.0"</span>
 <span class="w">    </span><span class="o">)</span>
 <span class="o">}</span>
 </code></pre></div>
@@ -1833,12 +1833,12 @@ For instance, to ensure the use of at least nf-test version 0.9.0, define it as 
 <p>nf-test allows to set and overwrite the <code>config</code>, <code>autoSort</code> and <code>options</code> properties for a specific testsuite:</p>
 <div class="highlight"><pre><span></span><code>nextflow_process {
 
-    name &quot;Test Process...&quot;
-    script &quot;main.nf&quot;
-    process &quot;my_process&quot;
-    config &quot;path/to/test/nextflow.config&quot;
+    name "Test Process..."
+    script "main.nf"
+    process "my_process"
+    config "path/to/test/nextflow.config"
     autoSort false
-    options &quot;-dump-channels&quot;
+    options "-dump-channels"
     ...
 
 }
@@ -1846,11 +1846,11 @@ For instance, to ensure the use of at least nf-test version 0.9.0, define it as 
 <p>It is also possible to overwrite these properties for specific test. Depending on the used Nextflow option, also add the <code>--debug</code> nf-test option on the command-line to see the additional output.</p>
 <div class="highlight"><pre><span></span><code>nextflow_process {
 
-   test(&quot;my test&quot;) {
+   test("my test") {
 
-      config &quot;path/to/test/nextflow.config&quot;
+      config "path/to/test/nextflow.config"
       autoSort false
-      options &quot;-dump-channels&quot;
+      options "-dump-channels"
       ...
 
     }
@@ -1886,12 +1886,12 @@ For instance, to ensure the use of at least nf-test version 0.9.0, define it as 
 <h3 id="supported-directives">Supported Directives</h3>
 <h4 id="symlink"><code>symlink</code></h4>
 <p>This directive is used to create symbolic links (symlinks) in the test environment. Symlinks are pointers to files or directories and can be useful for creating references to data files or directories required for the test. The syntax for the <code>symlink</code> directive is as follows:</p>
-<div class="highlight"><pre><span></span><code>symlink &quot;source_path&quot;
+<div class="highlight"><pre><span></span><code>symlink "source_path"
 </code></pre></div>
 <p><code>source_path</code>: The path to the source file or directory that you want to symlink.</p>
 <h4 id="copy"><code>copy</code></h4>
 <p>This directive is used to copy files or directories into the test environment. It allows you to duplicate files from a specified source to a location within the test environment. The syntax for the <code>copy</code> directive is as follows:</p>
-<div class="highlight"><pre><span></span><code>copy &quot;source_path&quot;
+<div class="highlight"><pre><span></span><code>copy "source_path"
 </code></pre></div>
 <p><code>source_path</code>: The path to the source file or directory that you want to copy.</p>
 <h3 id="example-usage">Example Usage</h3>
@@ -1899,8 +1899,8 @@ For instance, to ensure the use of at least nf-test version 0.9.0, define it as 
 <div class="highlight"><pre><span></span><code><span class="n">config</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="o">...</span>
 <span class="w">    </span><span class="n">stage</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">symlink</span><span class="w"> </span><span class="s2">&quot;data/original_data.txt&quot;</span>
-<span class="w">        </span><span class="n">copy</span><span class="w"> </span><span class="s2">&quot;resources/config.yml&quot;</span>
+<span class="w">        </span><span class="n">symlink</span><span class="w"> </span><span class="s2">"data/original_data.txt"</span>
+<span class="w">        </span><span class="n">copy</span><span class="w"> </span><span class="s2">"resources/config.yml"</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="w">    </span><span class="o">...</span>
 <span class="o">}</span>
@@ -1914,16 +1914,16 @@ For instance, to ensure the use of at least nf-test version 0.9.0, define it as 
 <p>Furthermore, it is also possible to stage files that are specific to a single testsuite:</p>
 <div class="highlight"><pre><span></span><code>nextflow_workflow {
 
-    name &quot;Test workflow HELLO_WORKFLOW&quot;
+    name "Test workflow HELLO_WORKFLOW"
 
-    script &quot;./hello.nf&quot;
-    workflow &quot;HELLO_WORKFLOW&quot;
+    script "./hello.nf"
+    workflow "HELLO_WORKFLOW"
 
     stage {
-        symlink &quot;test-assets/test.txt&quot;
+        symlink "test-assets/test.txt"
     }
 
-    test(&quot;Should print out test file&quot;) {
+    test("Should print out test file") {
         expect {
             assert workflow.success
         }
@@ -2026,10 +2026,10 @@ For instance, to ensure the use of at least nf-test version 0.9.0, define it as 
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       

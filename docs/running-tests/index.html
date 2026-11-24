@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1643,19 +1643,19 @@ nf-test test tests/modules tests/modules/bwa_index.nf.test
 <p>Tags can be defined for each testsuite or for each testcase using the new <code>tag</code> directive:</p>
 <div class="highlight"><pre><span></span><code>nextflow_process {
 
-    name &quot;suite 1&quot;
-    tag &quot;tag1&quot;
+    name "suite 1"
+    tag "tag1"
 
-    test(&quot;test 1&quot;) {
-        tag &quot;tag2&quot;
-        tag &quot;tag3&quot;   
+    test("test 1") {
+        tag "tag2"
+        tag "tag3"   
         ...
     }
 
-    test(&quot;test 2&quot;) {
+    test("test 2") {
 
-        tag &quot;tag4&quot;
-        tag &quot;tag5&quot;   
+        tag "tag4"
+        tag "tag5"   
         ...
 
     }
@@ -1665,7 +1665,7 @@ nf-test test tests/modules tests/modules/bwa_index.nf.test
 <div class="highlight"><pre><span></span><code>nf-test test --tag tag2  # collects test1
 </code></pre></div>
 <p>Names are automatically added to tags. This enables to execute suits or tests directly. </p>
-<div class="highlight"><pre><span></span><code>nf-test test --tag &quot;suite 1&quot;  # collects test1 and test2
+<div class="highlight"><pre><span></span><code>nf-test test --tag "suite 1"  # collects test1 and test2
 </code></pre></div>
 <p>When more tags are provided, all tests that match at least one tag will be executed. Tags are also <strong>not</strong> case-sensitive, both lines will result the same tests.</p>
 <div class="highlight"><pre><span></span><code>nf-test test --tag tag3,tag4  # collects test1 and test2
@@ -1774,10 +1774,10 @@ nf-test test --tag TAG3,TAG4  # collects test1 and test2
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       

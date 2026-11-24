@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1681,27 +1681,27 @@
 <h3 id="outputdir"><code>outputDir</code></h3>
 <p>This variable points to the directory within the temporary test directory (<code>.nf-test/tests/&lt;test-dir&gt;/output/</code>). The variable can be set under params:</p>
 <div class="highlight"><pre><span></span><code><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;$outputDir&quot;</span>
+<span class="w">    </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"$outputDir"</span>
 <span class="o">}</span>
 </code></pre></div>
 <h3 id="basedir"><code>baseDir</code></h3>
 <p>This variable points to the directory to locate the base directory of the main nf-test config. The variable can be used e.g. in the process definition to build absolute paths for input files:</p>
 <div class="highlight"><pre><span></span><code><span class="n">process</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    file1 = file(&quot;$baseDir/tests/input/file123.gz&quot;)</span>
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="s2">"""</span>
+<span class="s2">    file1 = file("$baseDir/tests/input/file123.gz")</span>
+<span class="s2">    """</span>
 <span class="o">}</span>
 </code></pre></div>
 <h3 id="launchdir"><code>launchDir</code></h3>
 <p>This variable points to the directory where the test is executed. This can be used get access to results that are created in an relative output directory:</p>
 <div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;results&quot;</span>
+<span class="w">        </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"results"</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="n">then</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s2">&quot;$launchDir/results&quot;</span><span class="o">).</span><span class="na">exists</span><span class="o">()</span>
+<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s2">"$launchDir/results"</span><span class="o">).</span><span class="na">exists</span><span class="o">()</span>
 <span class="o">}</span>
 </code></pre></div>
 
@@ -1799,10 +1799,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       

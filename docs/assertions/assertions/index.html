@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1689,43 +1689,43 @@
 <h2 id="nextflow-channels-and-nf-test-channel-sorting">Nextflow channels and nf-test channel sorting</h2>
 <p>Nextflow channels emit (in a random order) a single value or a tuple of values. </p>
 <p>Channels that emit a single item produce an unordered list of objects, <code>List&lt;Object&gt;</code>, for example:
-<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Bonjour&#39;</span><span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">'Hola'</span><span class="o">,</span><span class="w"> </span><span class="s1">'Hello'</span><span class="o">,</span><span class="w"> </span><span class="s1">'Bonjour'</span><span class="o">]</span>
 </code></pre></div></p>
 <p>Channels that contain Nextflow <code>file</code> values have a unique path each run. For Example:
-<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;</span><span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">'/.nf-test/tests/c563c/work/65/85d0/Hola.json'</span><span class="o">,</span><span class="w"> </span><span class="s1">'/.nf-test/tests/c563c/work/65/fa20/Hello.json'</span><span class="o">,</span><span class="w"> </span><span class="s1">'/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'</span><span class="o">]</span>
 </code></pre></div></p>
 <p>Channels that emit tuples produce an unordered list of ordered objects, <code>List&lt;List&lt;Object&gt;&gt;</code>:
 <div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
-<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span><span class="o">],</span><span class="w"> </span>
-<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;</span><span class="o">],</span><span class="w"> </span>
-<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Bonjour&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;</span><span class="o">]</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">'Hola'</span><span class="o">,</span><span class="w"> </span><span class="s1">'/.nf-test/tests/c563c/work/65/85d0/Hola.json'</span><span class="o">],</span><span class="w"> </span>
+<span class="w">  </span><span class="o">[</span><span class="s1">'Hello'</span><span class="o">,</span><span class="w"> </span><span class="s1">'/.nf-test/tests/c563c/work/65/fa20/Hello.json'</span><span class="o">],</span><span class="w"> </span>
+<span class="w">  </span><span class="o">[</span><span class="s1">'Bonjour'</span><span class="o">,</span><span class="w"> </span><span class="s1">'/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'</span><span class="o">]</span>
 <span class="o">]</span>
 </code></pre></div></p>
 <p>Assertions by channel index are made possible through sorting of the nextflow channel. The sorting is performed automatically by <code>nf-test</code> prior to launch of the <code>then</code> closure via integer, string and path comparisons. For example, the above would be sorted by <code>nf-test</code>:
 <div class="highlight"><pre><span></span><code><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
-<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Bonjour&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;</span><span class="o">],</span>
-<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;</span><span class="o">],</span>
-<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span><span class="o">]</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">'Bonjour'</span><span class="o">,</span><span class="w"> </span><span class="s1">'/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'</span><span class="o">],</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">'Hello'</span><span class="o">,</span><span class="w"> </span><span class="s1">'/.nf-test/tests/c563c/work/65/fa20/Hello.json'</span><span class="o">],</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">'Hola'</span><span class="o">,</span><span class="w"> </span><span class="s1">'/.nf-test/tests/c563c/work/65/85d0/Hola.json'</span><span class="o">]</span>
 <span class="o">]</span>
 </code></pre></div></p>
 <h2 id="using-with">Using <code>with</code></h2>
 <p>This assertions...</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span>
 <span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;example.vcf&quot;</span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.pgen&quot;</span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.psam&quot;</span>
-<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.pvar&quot;</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"example.vcf"</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">".*/example.vcf.pgen"</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">".*/example.vcf.psam"</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">".*/example.vcf.pvar"</span>
 </code></pre></div>
 <p>... can be written by using <code>with(){}</code> to improve readability:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span>
 <span class="n">with</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">imputed_plink2</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">    </span><span class="n">with</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;example.vcf&quot;</span>
-<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.pgen&quot;</span>
-<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.psam&quot;</span>
-<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">&quot;.*/example.vcf.pvar&quot;</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"example.vcf"</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">".*/example.vcf.pgen"</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">".*/example.vcf.psam"</span>
+<span class="w">        </span><span class="k">assert</span><span class="w"> </span><span class="n">get</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span><span class="w"> </span><span class="o">==~</span><span class="w"> </span><span class="s2">".*/example.vcf.pvar"</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
@@ -1734,52 +1734,52 @@
 <p>For example, the below represents a channel that emits a two-element tuple, a string and a json file: 
 <div class="highlight"><pre><span></span><code><span class="cm">/*</span>
 <span class="cm">def process.out.outputCh = [</span>
-<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
-<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
-<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">  ['Bonjour', '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'],</span>
+<span class="cm">  ['Hello', '/.nf-test/tests/c563c/work/65/fa20/Hello.json'],</span>
+<span class="cm">  ['Hola', '/.nf-test/tests/c563c/work/65/85d0/Hola.json']</span>
 <span class="cm">]</span>
 <span class="cm">*/</span>
 </code></pre></div></p>
 <p>To assert the channel contains one of the tuples, parse the json and assert:
 <div class="highlight"><pre><span></span><code><span class="n">testData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">jsonPath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">jsonPath</span><span class="o">).</span><span class="na">json</span><span class="o">]</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>
-<span class="k">assert</span><span class="w"> </span><span class="n">testData</span><span class="o">.</span><span class="na">contains</span><span class="o">([</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">])</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">testData</span><span class="o">.</span><span class="na">contains</span><span class="o">([</span><span class="s1">'Hello'</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">'./myTestData/Hello.json'</span><span class="o">).</span><span class="na">json</span><span class="o">])</span>
 </code></pre></div></p>
 <p>To assert a subset of the tuple data, filter the channel using collect. For example, to assert the greeting only:
 <div class="highlight"><pre><span></span><code><span class="n">testData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">jsonPath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">greeting</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>
-<span class="k">assert</span><span class="w"> </span><span class="n">testData</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s1">&#39;Hello&#39;</span><span class="o">)</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">testData</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s1">'Hello'</span><span class="o">)</span>
 </code></pre></div></p>
 <p>See <a href="../files/">the files page</a> for more information on parsing and asserting various file types.</p>
 <h2 id="using-assertcontainsinanyorder-for-order-agnostic-assertion-of-the-contents-of-a-channel">Using <code>assertContainsInAnyOrder</code> for order-agnostic assertion of the contents of a channel</h2>
 <p><code>assertContainsInAnyOrder(List&lt;object&gt; list1, List&lt;object&gt; list2)</code> performs an order agnostic assertion on channels contents and is available in every <code>nf-test</code> closure. It is a binding for Hamcrest's <a href="http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matchers.html#containsInAnyOrder(org.hamcrest.Matcher)">assertContainsInAnyOrder</a>.</p>
 <p>Some example use-cases are provided below.</p>
 <h3 id="channel-that-emits-strings">Channel that emits strings</h3>
-<div class="highlight"><pre><span></span><code><span class="c1">// process.out.outputCh = [&#39;Bonjour&#39;, &#39;Hello&#39;, &#39;Hola&#39;] </span>
+<div class="highlight"><pre><span></span><code><span class="c1">// process.out.outputCh = ['Bonjour', 'Hello', 'Hola'] </span>
 
-<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Bonjour&#39;</span><span class="o">]</span>
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">'Hola'</span><span class="o">,</span><span class="w"> </span><span class="s1">'Hello'</span><span class="o">,</span><span class="w"> </span><span class="s1">'Bonjour'</span><span class="o">]</span>
 <span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span>
 </code></pre></div>
 <h3 id="channel-that-emits-a-single-maps-eg-valmymap">Channel that emits a single maps, e.g. val(myMap)</h3>
 <div class="highlight"><pre><span></span><code><span class="cm">/*</span>
 <span class="cm">process.out.outputCh = [</span>
 <span class="cm">  [</span>
-<span class="cm">    &#39;D&#39;: [10,11,12],</span>
-<span class="cm">    &#39;C&#39;: [7,8,9]</span>
+<span class="cm">    'D': [10,11,12],</span>
+<span class="cm">    'C': [7,8,9]</span>
 <span class="cm">  ],</span>
 <span class="cm">  [</span>
-<span class="cm">    &#39;B&#39;: [4,5,6],</span>
-<span class="cm">    &#39;A&#39;: [1,2,3]</span>
+<span class="cm">    'B': [4,5,6],</span>
+<span class="cm">    'A': [1,2,3]</span>
 <span class="cm">  ]</span>
 <span class="cm">]</span>
 <span class="cm">*/</span>
 
 <span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
 <span class="w">  </span><span class="o">[</span>
-<span class="w">    </span><span class="s1">&#39;A&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">],</span>
-<span class="w">    </span><span class="s1">&#39;B&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">]</span>
+<span class="w">    </span><span class="s1">'A'</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">],</span>
+<span class="w">    </span><span class="s1">'B'</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">]</span>
 <span class="w">  </span><span class="o">],</span>
 <span class="w">  </span><span class="o">[</span>
-<span class="w">    </span><span class="s1">&#39;C&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">7</span><span class="o">,</span><span class="mi">8</span><span class="o">,</span><span class="mi">9</span><span class="o">],</span>
-<span class="w">    </span><span class="s1">&#39;D&#39;</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">10</span><span class="o">,</span><span class="mi">11</span><span class="o">,</span><span class="mi">12</span><span class="o">]</span>
+<span class="w">    </span><span class="s1">'C'</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">7</span><span class="o">,</span><span class="mi">8</span><span class="o">,</span><span class="mi">9</span><span class="o">],</span>
+<span class="w">    </span><span class="s1">'D'</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="mi">10</span><span class="o">,</span><span class="mi">11</span><span class="o">,</span><span class="mi">12</span><span class="o">]</span>
 <span class="w">  </span><span class="o">]</span>
 <span class="o">]</span>
 
@@ -1790,17 +1790,17 @@
 <p>Since the outputCh filepaths are different between consecutive runs, the files need to be read/parsed prior to comparison</p>
 <div class="highlight"><pre><span></span><code><span class="cm">/*</span>
 <span class="cm">process.out.outputCh = [</span>
-<span class="cm">  &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;,</span>
-<span class="cm">  &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;,</span>
-<span class="cm">  &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;</span>
+<span class="cm">  '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json',</span>
+<span class="cm">  '/.nf-test/tests/c563c/work/65/fa20/Hello.json',</span>
+<span class="cm">  '/.nf-test/tests/c563c/work/65/85d0/Hola.json'</span>
 <span class="cm">]</span>
 <span class="cm">*/</span>
 
 <span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">filepath</span><span class="o">).</span><span class="na">json</span><span class="w"> </span><span class="o">}</span>
 <span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
-<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
-<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hola.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
-<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Bonjour.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">'./myTestData/Hello.json'</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">'./myTestData/Hola.json'</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">'./myTestData/Bonjour.json'</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
 <span class="o">]</span>
 
 <span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span>
@@ -1810,17 +1810,17 @@
 <p>Since the ordering of items within the tuples are consistent, we can assert this case:</p>
 <div class="highlight"><pre><span></span><code><span class="cm">/*</span>
 <span class="cm">process.out.outputCh = [</span>
-<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
-<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
-<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">  ['Bonjour', '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'],</span>
+<span class="cm">  ['Hello', '/.nf-test/tests/c563c/work/65/fa20/Hello.json'],</span>
+<span class="cm">  ['Hola', '/.nf-test/tests/c563c/work/65/85d0/Hola.json']</span>
 <span class="cm">]</span>
 <span class="cm">*/</span>
 
 <span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">filepath</span><span class="o">).</span><span class="na">json</span><span class="o">]</span><span class="w"> </span><span class="o">}</span>
 <span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
-<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hola.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">],</span><span class="w"> </span>
-<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">],</span>
-<span class="w">  </span><span class="o">[</span><span class="s1">&#39;Bonjour&#39;</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Bonjour.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">],</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">'Hola'</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">'./myTestData/Hola.json'</span><span class="o">).</span><span class="na">json</span><span class="o">],</span><span class="w"> </span>
+<span class="w">  </span><span class="o">[</span><span class="s1">'Hello'</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">'./myTestData/Hello.json'</span><span class="o">).</span><span class="na">json</span><span class="o">],</span>
+<span class="w">  </span><span class="o">[</span><span class="s1">'Bonjour'</span><span class="o">,</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="s1">'./myTestData/Bonjour.json'</span><span class="o">).</span><span class="na">json</span><span class="o">],</span>
 <span class="o">]</span>
 
 <span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span>
@@ -1828,17 +1828,17 @@
 <p>To assert the json only and ignore the strings:
 <div class="highlight"><pre><span></span><code><span class="cm">/*</span>
 <span class="cm">process.out.outputCh = [</span>
-<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
-<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
-<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">  ['Bonjour', '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'],</span>
+<span class="cm">  ['Hello', '/.nf-test/tests/c563c/work/65/fa20/Hello.json'],</span>
+<span class="cm">  ['Hola', '/.nf-test/tests/c563c/work/65/85d0/Hola.json']</span>
 <span class="cm">]</span>
 <span class="cm">*/</span>
 
 <span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">filepath</span><span class="o">).</span><span class="na">json</span><span class="w"> </span><span class="o">}</span>
 <span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
-<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hello.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span><span class="w"> </span>
-<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Hola.json&#39;</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
-<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">&#39;./myTestData/Bonjour.json&#39;</span><span class="o">).</span><span class="na">json</span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">'./myTestData/Hello.json'</span><span class="o">).</span><span class="na">json</span><span class="o">,</span><span class="w"> </span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">'./myTestData/Hola.json'</span><span class="o">).</span><span class="na">json</span><span class="o">,</span>
+<span class="w">  </span><span class="n">path</span><span class="o">(</span><span class="s1">'./myTestData/Bonjour.json'</span><span class="o">).</span><span class="na">json</span>
 <span class="o">]</span>
 
 <span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span>
@@ -1846,14 +1846,14 @@
 <p>To assert the strings only and not the json files:
 <div class="highlight"><pre><span></span><code><span class="cm">/*</span>
 <span class="cm">process.out.outputCh = [</span>
-<span class="cm">  [&#39;Bonjour&#39;, &#39;/.nf-test/tests/c563c/work/65/b62f/Bonjour.json&#39;],</span>
-<span class="cm">  [&#39;Hello&#39;, &#39;/.nf-test/tests/c563c/work/65/fa20/Hello.json&#39;],</span>
-<span class="cm">  [&#39;Hola&#39;, &#39;/.nf-test/tests/c563c/work/65/85d0/Hola.json&#39;]</span>
+<span class="cm">  ['Bonjour', '/.nf-test/tests/c563c/work/65/b62f/Bonjour.json'],</span>
+<span class="cm">  ['Hello', '/.nf-test/tests/c563c/work/65/fa20/Hello.json'],</span>
+<span class="cm">  ['Hola', '/.nf-test/tests/c563c/work/65/85d0/Hola.json']</span>
 <span class="cm">]</span>
 <span class="cm">*/</span>
 
 <span class="kt">def</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">process</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">outputCh</span><span class="o">.</span><span class="na">collect</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">greeting</span><span class="o">,</span><span class="w"> </span><span class="n">filepath</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">greeting</span><span class="w"> </span><span class="o">}</span>
-<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="w"> </span><span class="err">&#39;</span><span class="n">Bonjour</span><span class="o">]</span>
+<span class="kt">def</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">'Hello'</span><span class="o">,</span><span class="w"> </span><span class="s1">'Hola'</span><span class="o">,</span><span class="w"> </span><span class="err">'</span><span class="n">Bonjour</span><span class="o">]</span>
 
 <span class="n">assertContainsInAnyOrder</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span><span class="w"> </span><span class="n">expected</span><span class="o">)</span>
 </code></pre></div></p>
@@ -1982,10 +1982,10 @@ The output will look like this:
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       

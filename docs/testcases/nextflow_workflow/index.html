@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1679,11 +1679,11 @@
 <h2 id="syntax">Syntax</h2>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_workflow</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;&lt;NAME&gt;&quot;</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;&lt;PATH/TO/NEXTFLOW_SCRIPT.nf&gt;&quot;</span>
-<span class="w">    </span><span class="n">workflow</span><span class="w"> </span><span class="s2">&quot;&lt;WORKFLOW_NAME&gt;&quot;</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">"&lt;NAME&gt;"</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"&lt;PATH/TO/NEXTFLOW_SCRIPT.nf&gt;"</span>
+<span class="w">    </span><span class="n">workflow</span><span class="w"> </span><span class="s2">"&lt;WORKFLOW_NAME&gt;"</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;&lt;TEST_NAME&gt;&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"&lt;TEST_NAME&gt;"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
@@ -1699,7 +1699,7 @@
 <span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">exitStatus</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span>
 
 <span class="c1">// workflow error message</span>
-<span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">errorReport</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;....&quot;</span><span class="o">)</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">errorReport</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">"...."</span><span class="o">)</span>
 
 <span class="c1">// trace</span>
 <span class="c1">//returns a list containing succeeded tasks</span>
@@ -1712,7 +1712,7 @@
 <span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">trace</span><span class="o">.</span><span class="na">tasks</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span>
 
 <span class="c1">//returns a list containing all lines from stdout</span>
-<span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">&quot;Hello World&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">stdout</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s2">"Hello World"</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span>
 </code></pre></div>
 <h3 id="output-channels">Output Channels</h3>
 <p>The <code>workflow.out</code> object provides access to the content of all named output Channels (see Nextflow <code>emit</code>):</p>
@@ -1722,19 +1722,19 @@
 <span class="c1">// channel contains 3 elements</span>
 <span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="o">.</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span>
 
-<span class="c1">// first element is &quot;hello&quot;</span>
-<span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span>
+<span class="c1">// first element is "hello"</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">workflow</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">my_channel</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"hello"</span>
 </code></pre></div>
 <h3 id="topic-channels">Topic channels</h3>
 <p>Topic channels are a special type of output channel that can be used to share data between processes without explicitly connecting them in the Nextflow script.</p>
 <p>Before you can get access to the content of a topic channel, you need to define it in the test script using the <code>topics</code> keyword. This allows you to specify which topic channels you want to access and analyze in your tests:</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_workflow</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="o">...</span>
-<span class="w">    </span><span class="n">topics</span><span class="w"> </span><span class="s2">&quot;my_topic_channel&quot;</span><span class="o">,</span><span class="w"> </span><span class="s2">&quot;your_topic_channel&quot;</span>
-<span class="w">    </span><span class="n">topics</span><span class="w"> </span><span class="s2">&quot;look_im_a_topic&quot;</span>
+<span class="w">    </span><span class="n">topics</span><span class="w"> </span><span class="s2">"my_topic_channel"</span><span class="o">,</span><span class="w"> </span><span class="s2">"your_topic_channel"</span>
+<span class="w">    </span><span class="n">topics</span><span class="w"> </span><span class="s2">"look_im_a_topic"</span>
 <span class="w">    </span><span class="o">...</span>
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;test_name&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">topics</span><span class="w"> </span><span class="s2">&quot;test_specific_topic&quot;</span><span class="o">,</span><span class="w"> </span><span class="s2">&quot;another_test_specific_topic&quot;</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"test_name"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">topics</span><span class="w"> </span><span class="s2">"test_specific_topic"</span><span class="o">,</span><span class="w"> </span><span class="s2">"another_test_specific_topic"</span>
 
 <span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{...}</span>
 <span class="w">        </span><span class="n">then</span><span class="w"> </span><span class="o">{...}</span>
@@ -1743,8 +1743,8 @@
 </code></pre></div>
 <p>This example will watch for the topic channels <code>my_topic_channel</code>, <code>your_topic_channel</code>, <code>look_im_a_topic</code>, <code>test_specific_topic</code> and <code>another_test_specific_topic</code>. The content of these channels can then be accessed using the <code>topics</code> object in the <code>then</code> or <code>expect</code> block:</p>
 <div class="highlight"><pre><span></span><code><span class="n">then</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="c1">// topic channel exists and contains &quot;hello&quot;</span>
-<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">topics</span><span class="o">.</span><span class="na">my_topic_channel</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span>
+<span class="w">    </span><span class="c1">// topic channel exists and contains "hello"</span>
+<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">topics</span><span class="o">.</span><span class="na">my_topic_channel</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"hello"</span>
 
 <span class="w">    </span><span class="c1">// topic channel is not used</span>
 <span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">topics</span><span class="o">.</span><span class="na">your_topic_channel</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">[]</span>
@@ -1760,13 +1760,13 @@
 
 <span class="w">    </span><span class="nl">output:</span>
 <span class="w">        </span><span class="n">stdout</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">verbiage_ch</span>
-<span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="s1">&#39;*.txt&#39;</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">verbiage_ch2</span>
+<span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="s1">'*.txt'</span><span class="o">,</span><span class="w"> </span><span class="nl">emit:</span><span class="w"> </span><span class="n">verbiage_ch2</span>
 
 <span class="w">    </span><span class="nl">script:</span>
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="s2">"""</span>
 <span class="s2">    echo -n $cheers</span>
 <span class="s2">    echo -n $cheers &gt; ${cheers}.txt</span>
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="s2">    """</span>
 <span class="o">}</span>
 
 <span class="n">workflow</span><span class="w"> </span><span class="n">trial</span><span class="w"> </span><span class="o">{</span>
@@ -1779,24 +1779,24 @@
 <span class="o">}</span>
 
 <span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="n">Channel</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="s1">&#39;hello&#39;</span><span class="o">,</span><span class="s1">&#39;nf-test&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">trial</span>
+<span class="w">    </span><span class="n">Channel</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="s1">'hello'</span><span class="o">,</span><span class="s1">'nf-test'</span><span class="o">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">trial</span>
 <span class="o">}</span>
 </code></pre></div>
 <h3 id="nf-test-script">nf-test script</h3>
 <p>Create a new file and name it <code>trial.nf.test</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">nextflow_workflow</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">&quot;Test Workflow Trial&quot;</span>
-<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">&quot;trial.nf&quot;</span>
-<span class="w">    </span><span class="n">workflow</span><span class="w"> </span><span class="s2">&quot;trial&quot;</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="s2">"Test Workflow Trial"</span>
+<span class="w">    </span><span class="n">script</span><span class="w"> </span><span class="s2">"trial.nf"</span>
+<span class="w">    </span><span class="n">workflow</span><span class="w"> </span><span class="s2">"trial"</span>
 
-<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">&quot;Should run without failures&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">test</span><span class="o">(</span><span class="s2">"Should run without failures"</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">        </span><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">            </span><span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                input[0] = Channel.from(&#39;hello&#39;,&#39;nf-test&#39;)</span>
-<span class="s2">                &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="s2">"""</span>
+<span class="s2">                input[0] = Channel.from('hello','nf-test')</span>
+<span class="s2">                """</span>
 <span class="w">            </span><span class="o">}</span>
 <span class="w">        </span><span class="o">}</span>
 
@@ -1808,7 +1808,7 @@
 <span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span>
 <span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">readLines</span><span class="o">().</span><span class="na">size</span><span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;4a17df7a54b41a84df492da3f1bab1e3&quot;</span>
+<span class="w">                </span><span class="k">assert</span><span class="w"> </span><span class="n">path</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">md5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"4a17df7a54b41a84df492da3f1bab1e3"</span>
 <span class="w">            </span><span class="o">}</span>
 
 <span class="w">        </span><span class="o">}</span>
@@ -1916,10 +1916,10 @@ nf-test test trial.nf.test
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       

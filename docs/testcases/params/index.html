@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1589,7 +1589,7 @@
 <p>The <code>params</code> block is optional and is a simple map that can be used to overwrite Nextflow's input <code>params</code>. The <code>params</code> block is located in the <code>when</code> block of a testcase. You can set params manually:</p>
 <div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;output&quot;</span>
+<span class="w">        </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"output"</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
@@ -1597,36 +1597,36 @@
 <div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="n">output</span><span class="w"> </span><span class="o">{</span>
-<span class="w">          </span><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;output&quot;</span>
+<span class="w">          </span><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"output"</span>
 <span class="w">        </span><span class="o">}</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>The <code>params</code> map can also be used in the <code>then</code> block:</p>
 <div class="highlight"><pre><span></span><code><span class="n">then</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="na">output</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;output&quot;</span><span class="w">    </span>
+<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="na">output</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"output"</span><span class="w">    </span>
 <span class="o">}</span>
 </code></pre></div>
 <h2 id="load-params-from-files">Load params from files</h2>
 <p>In addition, you can load the <code>params</code> from a JSON file:</p>
 <div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">&quot;$baseDir/tests/params.json&quot;</span><span class="o">)</span>
+<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">"$baseDir/tests/params.json"</span><span class="o">)</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>or from a YAML file:</p>
 <div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">&quot;$baseDir/tests/params.yaml&quot;</span><span class="o">)</span>
+<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">"$baseDir/tests/params.yaml"</span><span class="o">)</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>nf-test allows to combine both techniques and therefore it is possible to overwrite one or more <code>params</code> from the json file:</p>
 <div class="highlight"><pre><span></span><code><span class="n">when</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">&quot;$baseDir/tests/params.json&quot;</span><span class="o">)</span>
-<span class="w">        </span><span class="n">outputDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;new/output/path&quot;</span>
+<span class="w">        </span><span class="n">load</span><span class="o">(</span><span class="s2">"$baseDir/tests/params.json"</span><span class="o">)</span>
+<span class="w">        </span><span class="n">outputDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"new/output/path"</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
@@ -1725,10 +1725,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.tooltips", "navigation.footer", "navigation.tabs", "search.highlight", "search.share", "search.suggest", "toc.integrate", "content.tabs.link", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://buttons.github.io/buttons.js"></script>
       
