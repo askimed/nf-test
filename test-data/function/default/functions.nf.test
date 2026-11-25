@@ -36,8 +36,8 @@ nextflow_function {
 
     then {
       assert function.failed
-      //It seems to me that error(..) writes message to stdout
-      assert function.stdout.contains("Cannot greet a null person")
+      // error(..) writes to stdout in older Nextflow versions, to stderr in newer ones
+      assert (function.stdout + function.stderr).contains("Cannot greet a null person")
     }
   }
 }

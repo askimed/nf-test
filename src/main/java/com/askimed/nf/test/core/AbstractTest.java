@@ -98,6 +98,11 @@ public abstract class AbstractTest implements ITest {
 		return config;
 	}
 
+	@Override
+	public File getLaunchDir() {
+		return launchDir;
+	}
+
 	public void defineDirectories(File testDirectory) throws IOException {
 
 		if (testDirectory == null) {

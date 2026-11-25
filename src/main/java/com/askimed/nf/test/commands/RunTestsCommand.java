@@ -156,6 +156,14 @@ public class RunTestsCommand extends AbstractCommand {
 	)
 	private boolean devResume = false;
 
+	@Option(
+			names = {"--no-save", "--noSave"},
+			description = "Delete test launch directory after successful run",
+			required = false,
+			showDefaultValue = Visibility.ALWAYS
+	)
+	private boolean noSave = false;
+
 	private static Logger log = LoggerFactory.getLogger(RunTestsCommand.class);
 
 	@Override
@@ -314,6 +322,7 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.setCIMode(ciMode);
 			engine.addProfile(profile);
 			engine.setStopOnFirstFailure(stopOnFirstFailure);
+			engine.setNoSave(noSave);
 			engine.setDryRun(dryRun);
 			engine.setDevResume(devResume);
 			if (withoutTrace) {
