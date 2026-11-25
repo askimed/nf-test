@@ -32,6 +32,18 @@ Execute only tests with the provided tag. Multiple tags can be used and have to 
 
 Stops execution after the first test failure.
 
+#### `--dev-resume`
+
+Developer mode: reuses the Nextflow work directory of the previous run and enables `-resume`, so unchanged processes are not executed again.
+
+#### `--no-save`
+
+Deletes the launch directory of each test after a successful run.
+
+!!! warning
+
+    Do not combine `--dev-resume` with `--no-save`: the work directories of passed tests are deleted, so the next `--dev-resume` run has nothing to resume from.
+
 #### `--debug`
 
 The debug parameter prints out debugging messages and all available output channels which can be accessed in the `then` clause.

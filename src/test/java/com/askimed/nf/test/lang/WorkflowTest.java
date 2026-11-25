@@ -224,10 +224,12 @@ public class WorkflowTest {
 		// Locate Nextflow log
 		File nfTestDir = new File(".nf-test");
 		File stdOutFile = findStdOutFile(new File(".nf-test"));
-		String stdOut = FileUtil.readFileAsString(stdOutFile);
+		// Nextflow >= 26.x prints process status to stderr
+		String output = FileUtil.readFileAsString(stdOutFile)
+			+ FileUtil.readFileAsString(new File(stdOutFile.getParentFile(), "std.err"));
 
-		assertTrue(stdOut.contains("Stored process"),
-			"Expected stored execution in std.out file");
+		assertTrue(output.contains("Stored process"),
+			"Expected stored execution in std.out or std.err file");
 	}
 
 	@Test
