@@ -49,6 +49,8 @@ public class NextflowCommand {
 
 	private static boolean verbose = false;
 
+	private boolean resume = false;
+
 	public static String ERROR = "Nextflow Binary not found. Please check if Nextflow is in a directory accessible by your $PATH variable or set $NEXTFLOW_HOME.";
 
 	public NextflowCommand() {
@@ -159,18 +161,15 @@ public class NextflowCommand {
 		return options;
 	}
 
-	public int execute() throws IOException {
+	public void setResume(boolean resume) {
+		this.resume = resume;
+	}
 
-		if (binary == null) {
-			throw new IOException(ERROR);
-		}
-
+	protected List<String> buildArgs() throws IOException {
 		if (paramsFile == null) {
 			paramsFile = File.createTempFile("params", ".json");
 			paramsFile.deleteOnExit();
 		}
-
-		writeParamsJson(params, paramsFile);
 
 		List<String> args = new Vector<String>();
 		if (!verbose) {
@@ -182,6 +181,10 @@ public class NextflowCommand {
 		}
 		args.add("run");
 		args.add(script);
+		List<String> parsedOptions = parseOptions(options);
+		if (resume && !parsedOptions.contains("-resume")) {
+			args.add("-resume");
+		}
 		for (File config : configs) {
 			args.add("-c");
 			args.add(config.getAbsolutePath());
@@ -203,7 +206,20 @@ public class NextflowCommand {
 			args.add(workDir.getAbsolutePath());
 		}
 
-		args.addAll(parseOptions(options));
+		args.addAll(parsedOptions);
+
+		return args;
+	}
+
+	public int execute() throws IOException {
+
+		if (binary == null) {
+			throw new IOException(ERROR);
+		}
+
+		List<String> args = buildArgs();
+
+		writeParamsJson(params, paramsFile);
 
 		Command nextflow = new Command(binary);
 		if (launchDir != null) {

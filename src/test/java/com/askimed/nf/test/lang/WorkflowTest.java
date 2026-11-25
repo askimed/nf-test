@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.askimed.nf.test.App;
+import com.askimed.nf.test.core.ITestSuite;
 import com.askimed.nf.test.util.FileUtil;
 
 public class WorkflowTest {
@@ -190,6 +191,36 @@ public class WorkflowTest {
 		App app = new App();
 		int exitCode = app.run(new String[] { "test", "test-data/workflow/regex/workflow.nf.test" });
 		assertEquals(0, exitCode);
+
+	}
+
+	@Test
+	public void testWorkflowDevResume() throws Throwable {
+
+		App app = new App();
+
+		String testPath = "test-data/workflow/default/trial.nf.test";
+		ITestSuite suite = TestSuiteBuilder.parse(new File(testPath));
+		File launchDir = new File(".nf-test/tests", suite.getTests().get(0).getHash());
+
+		int exitCode1 = app.run(new String[] { "test", testPath });
+		assertEquals(0, exitCode1);
+
+		int exitCode2 = app.run(new String[] { "test", testPath, "--dev-resume" });
+		assertEquals(0, exitCode2);
+
+		String trace = FileUtil.readFileAsString(new File(launchDir, "meta/trace.csv"));
+		assertTrue(trace.contains("CACHED"), "Expected cached tasks in trace.csv");
+		assertFalse(new File(launchDir, ".nxf-home").exists(), "NXF_HOME must not be redirected");
+	}
+
+	@Test
+	public void testWorkflowDevResumeRejectsUpdateSnapshot() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/regex/workflow.nf.test",
+				"--dev-resume", "--update-snapshot" });
+		assertEquals(2, exitCode);
 
 	}
 

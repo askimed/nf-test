@@ -46,6 +46,8 @@ public class TestExecutionEngine {
 
 	private boolean stopOnFirstFailure = false;
 
+	private boolean devResume = false;
+
 	private boolean noSave = false;
 
 	private static Logger log = LoggerFactory.getLogger(TestExecutionEngine.class);
@@ -100,6 +102,10 @@ public class TestExecutionEngine {
 
 	public void setStopOnFirstFailure(boolean stopOnFirstFailure) {
 		this.stopOnFirstFailure = stopOnFirstFailure;
+	}
+
+	public void setDevResume(boolean devResume) {
+		this.devResume = devResume;
 	}
 
 	public void setNoSave(boolean noSave) {
@@ -159,6 +165,7 @@ public class TestExecutionEngine {
 				log.info("Run test '{}'. type: {}", test, test.getClass().getName());
 				totalTests++;
 
+				test.setDevResume(devResume);
 				testSuite.setupTest(test);
 
 				listener.executionStarted(test);

@@ -149,6 +149,14 @@ public class RunTestsCommand extends AbstractCommand {
 	private boolean stopOnFirstFailure = false;
 
 	@Option(
+		names = {"--dev-resume", "--resume-dev"},
+		description = "Developer mode: reuse previous Nextflow work directory and enable -resume",
+		required = false,
+		showDefaultValue = Visibility.ALWAYS
+	)
+	private boolean devResume = false;
+
+	@Option(
 			names = {"--no-save", "--noSave"},
 			description = "Delete test launch directory after successful run",
 			required = false,
@@ -160,6 +168,11 @@ public class RunTestsCommand extends AbstractCommand {
 
 	@Override
 	public Integer execute() throws Exception {
+
+		if (devResume && updateSnapshot) {
+			System.out.println(AnsiColors.red("Error: --dev-resume cannot be combined with --update-snapshot: cached tasks can record stale snapshots."));
+			return 2;
+		}
 
 		if (smartTesting) {
 			this.ciMode = true;
@@ -316,6 +329,7 @@ public class RunTestsCommand extends AbstractCommand {
 			engine.setStopOnFirstFailure(stopOnFirstFailure);
 			engine.setNoSave(noSave);
 			engine.setDryRun(dryRun);
+			engine.setDevResume(devResume);
 			if (withoutTrace) {
 				engine.setWithTrace(false);
 			} else {
