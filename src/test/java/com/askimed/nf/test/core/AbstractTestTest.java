@@ -3,67 +3,93 @@ package com.askimed.nf.test.core;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 
 import org.junit.jupiter.api.Test;
 
 import com.askimed.nf.test.config.Config;
 
-class AbstractTestDevResumeTest {
+class AbstractTestTest {
 
-    class DummySuite extends AbstractTestSuite {
+	class DummySuite extends AbstractTestSuite {
 
-        public DummySuite() {
-            super(); // use correct constructor
-        }
+		@Override
+		public AbstractTest getNewTestInstance(String name) {
+			return new DummyTest(this);
+		}
+	}
 
-        @Override
-        public AbstractTest getNewTestInstance(String name) {
-            return new DummyTest(this);
-        }
-    }
+	class DummyTest extends AbstractTest {
 
-    class DummyTest extends AbstractTest {
+		public DummyTest(AbstractTestSuite parent) {
+			super(parent);
+		}
 
-        public DummyTest(AbstractTestSuite parent) {
-            super(parent);
-        }
+		@Override
+		public String getName() {
+			return "dummy-test";
+		}
 
-        @Override
-        public String getName() {
-            return "dummy-test";
-        }
+		@Override
+		public String getHash() {
+			return "dummy-hash";
+		}
+	}
 
-        @Override
-        public String getHash() {
-            return "dummy-hash"; // bypass real hash generation
-        }
-    }
+	private File createMarker(File directory) throws IOException {
+		directory.mkdirs();
+		File marker = new File(directory, "marker.txt");
+		Files.writeString(marker.toPath(), "hello");
+		return marker;
+	}
 
-    @Test
-    void workDirectoryIsDeletedInNormalMode() throws Exception {
+	private DummyTest createTest(boolean devResume) throws IOException {
+		DummyTest test = new DummyTest(new DummySuite());
+		test.defineDirectories(Files.createTempDirectory("nf-test").toFile());
+		test.setDevResume(devResume);
+		return test;
+	}
 
-        File tempDir = Files.createTempDirectory("nf-test").toFile();
+	@Test
+	void setupDeletesAllDirectories() throws Exception {
 
-        DummySuite suite = new DummySuite();
-        DummyTest test = new DummyTest(suite);
+		DummyTest test = createTest(false);
+		File launchMarker = createMarker(test.launchDir);
+		File workMarker = createMarker(test.workDir);
 
-        test.defineDirectories(tempDir);
+		test.setup(new Config());
 
-        // create a file in work directory
-        File testFile = new File(test.workDir, "marker.txt");
-        test.workDir.mkdirs();
-        try (FileWriter writer = new FileWriter(testFile)) {
-            writer.write("hello");
-        }
+		assertFalse(launchMarker.exists());
+		assertFalse(workMarker.exists());
+	}
 
-        assertTrue(testFile.exists());
+	@Test
+	void setupWithDevResumeKeepsLaunchAndWorkDirectories() throws Exception {
 
-        test.setDevResume(false);
-        test.setup(new Config());
+		DummyTest test = createTest(true);
+		File launchMarker = createMarker(test.launchDir);
+		File workMarker = createMarker(test.workDir);
 
-        // file should be gone
-        assertFalse(testFile.exists());
-    }
+		test.setup(new Config());
+
+		assertTrue(launchMarker.exists());
+		assertTrue(workMarker.exists());
+	}
+
+	@Test
+	void setupWithDevResumeClearsOutputAndMetaDirectories() throws Exception {
+
+		DummyTest test = createTest(true);
+		File outputMarker = createMarker(test.outputDir);
+		File metaMarker = createMarker(test.metaDir);
+
+		test.setup(new Config());
+
+		assertFalse(outputMarker.exists());
+		assertFalse(metaMarker.exists());
+		assertTrue(test.outputDir.exists());
+		assertTrue(test.metaDir.exists());
+	}
+
 }

@@ -5,10 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.askimed.nf.test.App;
+import com.askimed.nf.test.core.ITestSuite;
 import com.askimed.nf.test.util.FileUtil;
 
 public class WorkflowTest {
@@ -20,8 +21,8 @@ public class WorkflowTest {
 
 	}
 
-	@BeforeEach
-	public void setUp() throws IOException {
+	@BeforeAll
+	public static void setUp() throws IOException {
 		FileUtil.deleteDirectory(new File(".nf-test"));
 		new File("nf-test.config").delete();
 	}
@@ -193,43 +194,34 @@ public class WorkflowTest {
 
 	}
 
-	private File findStdOutFile(File root) {
-		if (root.isFile() && root.getName().equals("std.out")) {
-			return root;
-		}
-		if (root.isDirectory()) {
-			for (File f : root.listFiles()) {
-				File found = findStdOutFile(f);
-				if (found != null) return found;
-			}
-		}
-		return null;
-	}
-
 	@Test
-	public void testWorkflowDevResume() throws Exception {
+	public void testWorkflowDevResume() throws Throwable {
 
 		App app = new App();
 
-		String testPath = "test-data/workflow/regex/workflow.nf.test";
+		String testPath = "test-data/workflow/default/trial.nf.test";
+		ITestSuite suite = TestSuiteBuilder.parse(new File(testPath));
+		File launchDir = new File(".nf-test/tests", suite.getTests().get(0).getHash());
 
-		// First run (no resume)
-		int exitCode1 = app.run(new String[] { "test", testPath, "--verbose" });
+		int exitCode1 = app.run(new String[] { "test", testPath });
 		assertEquals(0, exitCode1);
 
-		// Second run (with resume)
-		int exitCode2 = app.run(new String[] { "test", testPath, "--dev-resume", "--verbose" });
+		int exitCode2 = app.run(new String[] { "test", testPath, "--dev-resume" });
 		assertEquals(0, exitCode2);
 
-		// Locate Nextflow log
-		File nfTestDir = new File(".nf-test");
-		File stdOutFile = findStdOutFile(new File(".nf-test"));
-		// Nextflow >= 26.x prints process status to stderr
-		String output = FileUtil.readFileAsString(stdOutFile)
-			+ FileUtil.readFileAsString(new File(stdOutFile.getParentFile(), "std.err"));
+		String trace = FileUtil.readFileAsString(new File(launchDir, "meta/trace.csv"));
+		assertTrue(trace.contains("CACHED"), "Expected cached tasks in trace.csv");
+		assertFalse(new File(launchDir, ".nxf-home").exists(), "NXF_HOME must not be redirected");
+	}
 
-		assertTrue(output.contains("Stored process"),
-			"Expected stored execution in std.out or std.err file");
+	@Test
+	public void testWorkflowDevResumeRejectsUpdateSnapshot() throws Exception {
+
+		App app = new App();
+		int exitCode = app.run(new String[] { "test", "test-data/workflow/regex/workflow.nf.test",
+				"--dev-resume", "--update-snapshot" });
+		assertEquals(2, exitCode);
+
 	}
 
 	@Test

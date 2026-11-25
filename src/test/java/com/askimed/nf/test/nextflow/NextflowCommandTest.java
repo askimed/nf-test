@@ -5,8 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.util.List;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,39 +26,36 @@ public class NextflowCommandTest {
 		assertEquals("--b", options.get(2));
 	}
 
-	@Test
-    void resumeFlagIsInjectedWhenEnabled() throws Exception {
-
-        NextflowCommand command = new NextflowCommand();
-
-        command.setScript("main.nf");
-        command.setParams(new HashMap<>());
-        command.setResume(true);
-
-        List<String> args = command.buildArgs();
-
-        assertTrue(
-            args.contains("-resume"),
-            "Expected -resume to be present in arguments when resume=true"
-        );
-    }
+	private List<String> buildArgs(boolean resume, String options) throws Exception {
+		NextflowCommand command = new NextflowCommand();
+		command.setScript("main.nf");
+		command.setParams(new HashMap<>());
+		command.setOptions(options);
+		command.setResume(resume);
+		return command.buildArgs();
+	}
 
 	@Test
-    void resumeFlagIsNotInjectedWhenDisabled() throws Exception {
+	void resumeFlagIsInjectedWhenEnabled() throws Exception {
+		assertEquals(1, Collections.frequency(buildArgs(true, ""), "-resume"));
+	}
 
-        NextflowCommand command = new NextflowCommand();
+	@Test
+	void resumeFlagIsNotInjectedWhenDisabled() throws Exception {
+		assertFalse(buildArgs(false, "").contains("-resume"));
+	}
 
-        command.setScript("main.nf");
-        command.setParams(new HashMap<>());
-        command.setResume(false);
+	@Test
+	void resumeFlagIsNotDuplicatedWhenInOptions() throws Exception {
+		assertEquals(1, Collections.frequency(buildArgs(true, "-resume"), "-resume"));
+	}
 
-        List<String> args = command.buildArgs();
-
-        assertFalse(
-            args.contains("-resume"),
-            "Did not expect -resume when resume=false"
-        );
-    }
+	@Test
+	void doubleDashResumeParamDoesNotEnableResume() throws Exception {
+		List<String> args = buildArgs(false, "--resume true");
+		assertFalse(args.contains("-resume"));
+		assertTrue(args.contains("--resume"));
+	}
 
     @Test
     void getVersion() {

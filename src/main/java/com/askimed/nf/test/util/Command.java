@@ -3,8 +3,6 @@ package com.askimed.nf.test.util;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Command {
 
@@ -23,8 +21,6 @@ public class Command {
 	private StringBuffer stdout;
 
 	private StringBuffer stderr;
-
-	private Map<String, String> environment = new HashMap<>();
 
 	public Command(String cmd, String... params) {
 		this.cmd = cmd;
@@ -63,10 +59,6 @@ public class Command {
 		this.stderrFileName = filename;
 	}
 
-	public void addEnvironment(String key, String value) {
-		environment.put(key, value);
-	}
-
 	public int execute() {
 
 		List<String> command = new ArrayList<String>();
@@ -82,12 +74,6 @@ public class Command {
 		try {
 
 			ProcessBuilder builder = new ProcessBuilder(command);
-
-			// apply custom environment variables
-			if (environment != null) {
-				builder.environment().putAll(environment);
-			}
-
 			// ensure it works on MacOS
 			builder.environment().put("PATH", builder.environment().get("PATH") + ":" + "/usr/local/bin/");
 			if (directory != null) {

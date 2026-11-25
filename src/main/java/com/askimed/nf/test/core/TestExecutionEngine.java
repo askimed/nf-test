@@ -173,7 +173,6 @@ public class TestExecutionEngine {
 				test.setWithTrace(withTrace);
 				test.setUpdateSnapshot(updateSnapshot);
 				test.setCIMode(ciMode);
-
 				try {
 
 					// override debug flag from CLI

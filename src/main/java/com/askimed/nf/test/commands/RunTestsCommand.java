@@ -139,8 +139,8 @@ public class RunTestsCommand extends AbstractCommand {
 			showDefaultValue = Visibility.ALWAYS
 	)
 	private boolean smartTesting = false;
-
-	@Option(
+  
+  	@Option(
 			names = {"--stop-on-first-failure", "--stopOnFirstFailure"},
 			description = "Stop execution immediately after the first test failure",
 			required = false,
@@ -168,6 +168,11 @@ public class RunTestsCommand extends AbstractCommand {
 
 	@Override
 	public Integer execute() throws Exception {
+
+		if (devResume && updateSnapshot) {
+			System.out.println(AnsiColors.red("Error: --dev-resume cannot be combined with --update-snapshot: cached tasks can record stale snapshots."));
+			return 2;
+		}
 
 		if (smartTesting) {
 			this.ciMode = true;
@@ -303,10 +308,10 @@ public class RunTestsCommand extends AbstractCommand {
 					testSuits = TestSuiteSharder.shard(testSuits, shard);
 				}
 			}
-
+      
 			int totalTests = testSuits.stream().mapToInt(testSuite -> testSuite.getTests().size()).sum();
 			log.info("Found {} tests to execute.", totalTests);
-
+      
 			if (testSuits.isEmpty()) {
 				System.out.println(AnsiColors
 					.yellow("No tests to execute."));

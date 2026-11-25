@@ -181,7 +181,8 @@ public class NextflowCommand {
 		}
 		args.add("run");
 		args.add(script);
-		if (resume) {
+		List<String> parsedOptions = parseOptions(options);
+		if (resume && !parsedOptions.contains("-resume")) {
 			args.add("-resume");
 		}
 		for (File config : configs) {
@@ -205,10 +206,9 @@ public class NextflowCommand {
 			args.add(workDir.getAbsolutePath());
 		}
 
-		args.addAll(parseOptions(options));
+		args.addAll(parsedOptions);
 
 		return args;
-
 	}
 
 	public int execute() throws IOException {
@@ -217,14 +217,9 @@ public class NextflowCommand {
 			throw new IOException(ERROR);
 		}
 
-		if (paramsFile == null) {
-			paramsFile = File.createTempFile("params", ".json");
-			paramsFile.deleteOnExit();
-		}
+		List<String> args = buildArgs();
 
 		writeParamsJson(params, paramsFile);
-
-		List<String> args = buildArgs();
 
 		Command nextflow = new Command(binary);
 		if (launchDir != null) {
@@ -246,12 +241,6 @@ public class NextflowCommand {
 			System.out.println("    Profiles: " + profiles);
 			System.out.println("    Configs: " + configs);
 			System.out.println("    Command: " + nextflow.getExecutedCommand());
-		}
-
-		if (resume && launchDir != null) {
-			File nxfHome = new File(launchDir, ".nxf-home");
-			nxfHome.mkdirs();
-			nextflow.addEnvironment("NXF_HOME", nxfHome.getAbsolutePath());
 		}
 
 		int result = nextflow.execute();

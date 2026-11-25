@@ -120,10 +120,11 @@ public abstract class AbstractTest implements ITest {
 
 	@Override
 	public void setup(Config config) throws IOException {
-		setupDirectory("Launch Directory", launchDir);
-		setupDirectory("Meta Directory", metaDir);
-		setupDirectory("Output Directory", outputDir);
-		setupDirectory("Working Directory", workDir);
+		// dev resume keeps launch dir (.nextflow cache) and work dir, but never stale outputs
+		setupDirectory("Launch Directory", launchDir, devResume);
+		setupDirectory("Meta Directory", metaDir, false);
+		setupDirectory("Output Directory", outputDir, false);
+		setupDirectory("Working Directory", workDir, devResume);
 	}
 
 	@Override
@@ -142,21 +143,13 @@ public abstract class AbstractTest implements ITest {
 		return directory;
 	}
 
-	private void setupDirectory(String name, File directory) throws IOException {
+	private void setupDirectory(String name, File directory, boolean keep) throws IOException {
 
 		try {
-			if (devResume) {
-				if (!directory.exists()) {
-					FileUtil.createDirectory(directory);
-				}
-				if (debug) {
-					System.out.println("Dev resume enabled -> keeping existing work directory: " + directory);
-				}
-				return;
+			if (!keep) {
+				FileUtil.deleteDirectory(directory);
 			}
-			FileUtil.deleteDirectory(directory);
 			FileUtil.createDirectory(directory);
-
 		} catch (Exception e) {
 			throw new IOException(name + " '" + directory + "' could not be deleted or created:\n" + e);
 		}
